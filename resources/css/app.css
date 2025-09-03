@@ -68,6 +68,119 @@ body .login .container form .wrapper-input input {
 body .login .container form .wrapper-input span {
   color: red;
 }
+body .wrapper-admin {
+  width: 100vw;
+  height: 100dvh;
+  display: flex;
+  position: relative;
+  color: #273B98;
+}
+body .wrapper-admin .dummy-left,
+body .wrapper-admin .left {
+  min-width: 350px;
+  max-width: 350px;
+  height: 100dvh;
+}
+body .wrapper-admin .left {
+  position: fixed;
+  top: 0;
+  left: 0;
+  border-right: solid 1px #DFDFDF;
+}
+body .wrapper-admin .left .navigation-side {
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-size: 25px;
+}
+body .wrapper-admin .left .navigation-side .wrapper-navigation {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+body .wrapper-admin .left .navigation-side .wrapper-navigation .wrapper-image {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+}
+body .wrapper-admin .left .navigation-side .wrapper-navigation ul {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+body .wrapper-admin .left .navigation-side .wrapper-navigation ul li {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 10px 15px;
+}
+body .wrapper-admin .left .navigation-side .wrapper-navigation ul li img {
+  height: 45px;
+}
+body .wrapper-admin .left .navigation-side .wrapper-navigation ul .active {
+  font-weight: bold;
+  background-color: #DFDFDF;
+  color: #273B98;
+  position: relative;
+}
+body .wrapper-admin .left .navigation-side .wrapper-navigation ul .active::before {
+  content: "";
+  width: 8px;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #273B98;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+body .wrapper-admin .right {
+  width: 100%;
+}
+body .wrapper-admin .right .bar-top {
+  width: 100%;
+  height: 100px;
+  padding: 15px 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #DFDFDF;
+}
+body .wrapper-admin .right .bar-top h4 {
+  font-size: 28px;
+}
+body .wrapper-admin .right .bar-top .profile:hover > ul {
+  display: flex;
+}
+body .wrapper-admin .right .bar-top .profile {
+  position: relative;
+}
+body .wrapper-admin .right .bar-top .profile ul {
+  width: 180px;
+  position: absolute;
+  top: 30px;
+  left: -140px;
+  display: none;
+  flex-direction: column;
+  gap: 15px;
+  box-shadow: 0 0 10px #273B98;
+  padding: 10px;
+  border-radius: 10px;
+}
+body .wrapper-admin .right .bar-top .profile ul li {
+  font-size: 20px;
+}
+body .wrapper-admin .right .bar-top .profile ul li a {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+body .wrapper-admin .right .bar-top .profile ul li a img {
+  height: 25px;
+}
 body .btn {
   height: 50px;
   padding: 10px;
@@ -81,6 +194,19 @@ body .btn {
 body .btn-submit {
   background-color: #273B98;
   color: white;
+}
+body .static {
+  position: static;
+}
+body .transparent {
+  background-color: transparent;
+}
+body ul {
+  list-style: none;
+}
+body a {
+  color: inherit;
+  text-decoration: none;
 }
 
 /*# sourceMappingURL=app.css.map */

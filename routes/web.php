@@ -10,6 +10,8 @@ Route::get('/', function () {
 Route::get('/login', [UserController::class, 'loginPage'])->name('login');
 Route::post('/login', [UserController::class, 'login'])->name('login');
 
+Route::get('/logout', [UserController::class, 'logout'])->name('logout');
+
 Route::get('/products', function(){
     return view('products');
 });
@@ -30,4 +32,9 @@ Route::get('/transaction', function(){
 Route::get('/transaction/{transaction}', function(){
     return view('detailTransaction');
 });
+
+
+// admin
+
+Route::get('admin/dashboard', [UserController::class,'dashboardAdmin'])->name('dashboard.admin');
 

@@ -31,12 +31,18 @@ class UserController extends Controller
         ])->onlyInput("nis");
     }
 
+    public function logout(Request $request){
+        // entah bener atau tidak
+        $request->session()->regenerate(true);
+        return view("login");
+    }
+
 
     // Siswa Controller
 
     // Admin Controller
     public function dashboardAdmin(){
-        return view("admin.dashboard");
+        return view("admin.dashboard", [ "title" => "Dashboard | Bina Tata Usaha" ]);
     }
 
     public function managementProduct(){
