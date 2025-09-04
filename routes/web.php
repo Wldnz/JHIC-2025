@@ -34,5 +34,5 @@ Route::get('/transaction/{transaction}', function(){
 
 // admin
 
-Route::get('admin/dashboard', [UserController::class,'dashboardAdmin'])->name('dashboard.admin');
+Route::get('/admin/dashboard', [UserController::class,'dashboardAdmin'])->name('dashboard.admin');
 

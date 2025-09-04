@@ -41,7 +41,7 @@ class UserController extends Controller
     // Siswa Controller
 
     public function dashboard(){
-        return view("dashboard");
+        return view("dashboard", ["title" => "Dashboard | Bina Tata Usaha"]);
     }
 
     // Admin Controller
