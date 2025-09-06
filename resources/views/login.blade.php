@@ -7,6 +7,11 @@
     @vite(["resources/css/app.css", "resources/js/app.js"])
 </head>
 <body>
+    @if ($errors->any())
+        @php
+            echo var_dump($errors);
+        @endphp
+    @endif
     <div class="login">
         <div class="container">
             <img src="{{ asset("icons/default-logo.png") }}" alt="logo-bitu">

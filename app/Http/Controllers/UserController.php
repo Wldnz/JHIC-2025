@@ -20,10 +20,7 @@ class UserController extends Controller
 
         if(Auth::attempt($credentials)){
             $request->session()->regenerate();
-            $user = Auth::user();
-            $role = $user->getAttribute('role');
-            if($role == 'siswa') return redirect()->route('dashboard');
-            if($role == 'admin' || $role == 'superAdmin') return redirect()->route('admin.dashboard');
+            return redirect()->route('admin.dashboard');
         }
         
         return redirect()->back()->withErrors([
@@ -32,9 +29,11 @@ class UserController extends Controller
     }
 
     public function logout(Request $request){
-        // entah bener atau tidak
-        $request->session()->regenerate(true);
-        return view("login");
+        Auth::logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerate();
+        return redirect()->route('login');
     }
 
 
@@ -43,11 +42,8 @@ class UserController extends Controller
     public function dashboard(){
         return view("dashboard", ["title" => "Dashboard | Bina Tata Usaha"]);
     }
-
+    
     // Admin Controller
-    public function dashboardAdmin(){
-        return view("admin.dashboard", [ "title" => "Dashboard | Bina Tata Usaha" ]);
-    }
 
     public function managementProduct(){
 

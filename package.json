@@ -5,8 +5,7 @@
     "scripts": {
         "build": "vite build",
         "dev": "vite",
-        "watch" : "sass --watch sass/input.scss resources/css/app.css"
-        
+        "watch": "sass --watch sass/input.scss resources/css/app.css"
     },
     "devDependencies": {
         "@tailwindcss/vite": "^4.0.0",
