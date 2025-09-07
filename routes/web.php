@@ -42,7 +42,7 @@ Route::name('admin.')->prefix('admin')->middleware([isLogin::class, isAdmin::cla
     Route::delete('/products/{product}', [ AdminController::class, 'deleteProduct' ])->name('delete-product');
 
     Route::get('/transactions', [ AdminController::class, 'transactions' ])->name('transactions');
-    Route::get('/transactions/{transaction}', [ AdminController::class, 'detailtransaction' ])->name('detail-transaction');
+    Route::get('/transactions/{transaction}', [ AdminController::class, 'detailTransaction' ])->name('detail-transaction');
     Route::post('/transactions', [ AdminController::class, 'storeTransaction' ])->name('store-transaction');
     Route::put('/transactions/{transaction}', [ AdminController::class, 'updateTransaction' ])->name('update-transaction');
     Route::delete('/transactions/{transaction}', [ AdminController::class, 'deleteTransaction' ])->name('delete-transaction');

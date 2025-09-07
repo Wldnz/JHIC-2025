@@ -1,0 +1,28 @@
+<?php
+
+namespace Database\Factories;
+
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Product>
+ */
+class ProductFactory extends Factory
+{
+    /**
+     * Define the model's default state.
+     *
+     * @return array<string, mixed>
+     */
+
+    protected $categorys = [ 'uniform', 'attribute' ];
+    public function definition(): array
+    {
+        return [
+            'id' => fake()->unique()->randomDigit(),
+            'name' => fake()->name(),
+            'category' => $this->categorys[array_rand($this->categorys)],
+            'visible' => true
+        ];
+    }
+}

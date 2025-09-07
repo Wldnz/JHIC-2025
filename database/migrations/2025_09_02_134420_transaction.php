@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create("cart", function(Blueprint $table) {
             $table->id();
             $table->string("user_nis", 16)->nullable(false);
-            $table->foreignId("variant_product_id")->constrained("variant_product")->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId("product_variant_id")->constrained("product_variants")->cascadeOnDelete()->cascadeOnUpdate();
             $table->integer("quantity")->default(1);
             $table->timestamps();
             
@@ -35,10 +35,10 @@ return new class extends Migration
             $table->foreign("user_nis")->references("nis")->on("users")->cascadeOnDelete()->cascadeOnUpdate();
         });
 
-        Schema::create("order", function(Blueprint $table) {
+        Schema::create("order_transaction", function(Blueprint $table) {
             $table->id();
             $table->foreignId("transaction_id")->constrained("transaction")->cascadeOnDelete()->cascadeOnUpdate();
-            $table->foreignId("variant_product_id")->constrained("variant_product")->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId("product_variant_id")->constrained("product_variants")->cascadeOnDelete()->cascadeOnUpdate();
             $table->double("price")->nullable(false);
             $table->integer("quantity")->nullable(false);
             $table->timestamps();
@@ -52,7 +52,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists("cart");
-        Schema::dropIfExists("order");
+        Schema::dropIfExists("order_transaction");
         Schema::dropIfExists("transaction");
     }
 };

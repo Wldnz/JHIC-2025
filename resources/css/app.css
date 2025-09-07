@@ -76,9 +76,7 @@ body .wrapper-admin {
   color: #273B98;
 }
 body .wrapper-admin .left {
-  min-width: 100px;
-  width: 350px;
-  max-width: 350px;
+  min-width: 350px;
   height: 100dvh;
   position: relative;
 }
@@ -157,7 +155,7 @@ body .wrapper-admin .left .navigation-side .wrapper-action svg:last-child {
   display: none;
 }
 body .wrapper-admin .right {
-  width: max-content;
+  width: 100%;
 }
 body .wrapper-admin .right .bar-top {
   width: 100%;
@@ -202,8 +200,7 @@ body .wrapper-admin .right .main-admin .section-summary-data .wrapper-summary-da
   gap: 35px;
 }
 body .wrapper-admin .right .main-admin .section-summary-data .wrapper-summary-data .summary-data {
-  min-width: 325px;
-  width: max-content;
+  min-width: 345px;
   height: 96px;
   padding: 5px 15px;
   display: flex;
@@ -247,10 +244,16 @@ body .statistic .piechart {
   padding: 10px;
   border-radius: 12px;
 }
+body .statistic .piechart canvas {
+  width: 100%;
+}
 body .statistic .barchat {
   min-width: 750px;
   width: 70%;
   height: 350px;
+}
+body .statistic .barchat canvas {
+  width: 100%;
 }
 body .management-data {
   width: 100%;
@@ -270,14 +273,19 @@ body .management-data .wrapper-title .title {
   align-items: center;
   gap: 10px;
 }
-body .management-data .wrapper-title .title .point-active {
+body .management-data .wrapper-title .title .point-active,
+body .management-data .wrapper-title .title .point-deactive {
   width: 30px;
   height: 30px;
   border-radius: 50%;
   background-color: rgb(0, 255, 0);
   animation: kelap-kelip 500ms infinite alternate-reverse;
 }
-body .management-data .wrapper-title .title .point-active:hover {
+body .management-data .wrapper-title .title .point-deactive {
+  background-color: rgb(255, 197, 61);
+}
+body .management-data .wrapper-title .title .point-active:hover,
+body .management-data .wrapper-title .title .point-deactive:hover {
   animation-play-state: paused;
 }
 @keyframes kelap-kelip {
@@ -452,6 +460,32 @@ body .profile .main-menu li:hover::before {
 @keyframes line-break {
   100% {
     width: 100%;
+  }
+}
+body .open-sidebar {
+  animation: openSidebar 200ms forwards;
+}
+body .close-sidebar {
+  animation: closeSidebar 200ms forwards;
+}
+@keyframes openSidebar {
+  0% {
+    width: 100px;
+    min-width: 100px;
+  }
+  100% {
+    width: 350px;
+    min-width: 350px;
+  }
+}
+@keyframes closeSidebar {
+  0% {
+    width: 350px;
+    min-width: 350px;
+  }
+  100% {
+    width: 100px;
+    min-width: 100px;
   }
 }
 body .btn {

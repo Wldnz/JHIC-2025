@@ -5,15 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Activity extends Model
+class Cart extends Model
 {
-    /** @use HasFactory<\Database\Factories\ActivityFactory> */
+    /** @use HasFactory<\Database\Factories\CartFactory> */
     use HasFactory;
-    protected $table = 'activity';
+
+    protected $table = 'cart';
+
     protected $fillable = [
         'id',
         'user_nis',
-        'fullname',
-        'action',
+        'variant_product_id',
+        'quantity',
     ];
+
 }
