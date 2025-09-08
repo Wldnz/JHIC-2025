@@ -10,9 +10,8 @@ Route::post('/login', [UserController::class, 'login'])->name('login');
 
 Route::get('/logout', [UserController::class, 'logout'])->name('logout');
 
-Route::get('/products', function(){
-    return view('products');
-});
+Route::view('/products', 'products')->name('products');
+
 
 Route::get('/products/{transaction}', function(){
     return view('detailProduct');
@@ -22,10 +21,13 @@ Route::get('/cart', function(){
     return view('cart');
 });
 
+Route::view('/', 'dashboard')->name('dashboard');
 
-Route::get('/transaction', function(){
-    return view('transaction');
-});
+Route::view('/about', 'about')->name('about');
+
+Route::view('/transaction', 'transaction')->name('transaction');
+
+
 
 Route::get('/transaction/{transaction}', function(){
     return view('detailTransaction');

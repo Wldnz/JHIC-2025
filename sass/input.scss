@@ -1,6 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
-$primary-color: #273B98;
+$color-primary: #fff;
+$color-secondary: #eaf7f9;
+$color-accent: #273B98;
+
+$font-size-s: .85rem;
+$font-size-m: 1rem;
+$font-size-l: 1.15rem;
+$font-size-xl: 2rem;
+
+$border-radius: 8px;
 
 * {
     margin: 0;
@@ -10,7 +19,126 @@ $primary-color: #273B98;
 
 body {
     font-family: "Montserrat", "sans-serif";
-    font-size: 18px;
+    font-size: $font-size-l;
+
+    .button
+    {
+        cursor: pointer;
+        padding: 10px 15px;
+        border-radius: $border-radius;
+        outline: 1.5px solid $color-accent;
+        background: $color-accent;
+        color: $color-primary;
+        border: none;
+        outline: none;
+        transition: .1s;
+
+        &:hover
+        {
+            outline: 1.5px solid $color-accent;
+            background: $color-primary;
+            color: $color-accent;
+            font-weight: 350;
+        }
+    }
+
+    nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    padding: 20px;
+    width: 100vw;
+
+    .left
+    {
+        width: 33%;
+        height: 100%;
+        display: flex;
+        justify-content: start;
+        
+        a 
+        {
+            width: fit-content;
+        
+            img
+                {
+                    max-width: 65%;
+                    height: auto;
+                }
+        }
+    }
+    .center
+    {
+        width: 33%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+
+        .links{
+            display: flex;
+            gap: 10px;
+
+            a {
+                position: relative;
+                font-weight: 400;
+                color: $color-accent;
+                
+                &::after {
+                    transition: .4s;
+                    content: "";
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    height: 1.5px;
+                    width: 0%;
+                    background-color: $color-accent;
+                }
+                &:hover::after {
+                    width: 100%;
+                }
+            }
+        }
+    }
+    .right
+    {
+        width: 33%;
+        height: 100%;
+        display: flex;
+        justify-content: right;
+    }
+    }
+    .wrapper-user
+    {
+        padding: 20px;
+
+        .hugeimg {
+            width: 100%;
+            object-fit: cover;
+            aspect-ratio: 16/9;
+            border-radius: $border-radius;
+            margin-bottom: 40px;
+        }
+
+        .categories
+        {
+            .category-tab
+            {
+                background-image: url("https://www.svgrepo.com/show/508699/landscape-placeholder.svg");
+                background-repeat: no-repeat;
+                background-size: cover;
+                width: 200px;
+                height: 200px;
+                padding: 10px;
+                border-radius: $border-radius;
+            }
+            .section1
+            {
+                width: 100%;
+
+            }
+        }
+    }
+
 
     .login {
         min-width: 100vw;
@@ -19,7 +147,7 @@ body {
         display: flex;
         justify-content: center;
         align-items: center;
-        background-color: $primary-color;
+        background-color: $color-accent;
 
         .container {
             width: 580px;
@@ -31,8 +159,8 @@ body {
             align-items: center;
             gap: 25px;
 
-            background-color: white;
-            color: $primary-color;
+            background-color: $color-primary;
+            color: $color-accent;
             border-radius: 12px;
 
             * {
@@ -70,8 +198,8 @@ body {
                     input {
                         padding: 15px;
                         border-radius: 16px;
-                        background-color: #273B9831;
-                        color: $primary-color;
+                        background-color: $color-accent;
+                        color: $color-accent;
                         font-size: 18px;
                         border: none;
                         outline: none;
@@ -92,7 +220,7 @@ body {
         display: flex;
         position: relative;
 
-        color: $primary-color;
+        color: $color-accent;
 
         .dummy-left,
         .left {
@@ -107,7 +235,7 @@ body {
             left: 0;
 
 
-            border-right: solid 1px #DFDFDF;
+            border-right: solid 1px $color-secondary;
 
             .navigation-side {
                 height: 100dvh;
@@ -150,8 +278,8 @@ body {
                         .active {
                             font-weight: bold;
 
-                            background-color: #DFDFDF;
-                            color: $primary-color;
+                            background-color: $color-secondary;
+                            color: $color-accent;
 
                             position: relative;
                         }
@@ -165,7 +293,7 @@ body {
                             top: 0;
                             left: 0;
 
-                            background-color: $primary-color;
+                            background-color: $color-accent;
 
                             border-top-right-radius: 10px;
                             border-bottom-right-radius: 10px;
@@ -188,7 +316,7 @@ body {
                 justify-content: space-between;
                 align-items: center;
 
-                border-bottom: 1px solid #DFDFDF;
+                border-bottom: 1px solid $color-secondary;
 
                 h4 {
                     font-size: 28px;
@@ -212,7 +340,7 @@ body {
                         flex-direction: column;
                         gap: 15px;
 
-                        box-shadow: 0 0 10px $primary-color;
+                        box-shadow: 0 0 10px $color-accent;
                         padding: 10px;
                         border-radius: 10px;
 
@@ -243,14 +371,14 @@ body {
         font-size: 20px;
         font-weight: bold;
         border: none;
-        color: $primary-color;
+        color: $color-accent;
         border-radius: 12px;
         cursor: pointer;
     }
 
     .btn-submit {
-        background-color: $primary-color;
-        color: white;
+        background-color: $color-accent;
+        color: $color-primary;
     }
 
     .static {
