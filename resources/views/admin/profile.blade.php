@@ -1,6 +1,6 @@
 @include('_components._headerAdmin')
 @php
-    $currentPath = explode('/admin/', url()->current())[1];
+    $currentPath = 'accounts';
 @endphp
 <main class="wrapper-admin">
     @include('_components._navigation-side')

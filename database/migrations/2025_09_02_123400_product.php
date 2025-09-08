@@ -19,7 +19,7 @@ return new class extends Migration
             $table->boolean("visible")->default(true);
         });
 
-        Schema::create("variant_product", function(Blueprint $table) {
+        Schema::create("product_variants", function(Blueprint $table) {
             $table->id();
             $table->string("product_id", 16)->nullable(false);
             $table->string("name",60)->nullable(false);
@@ -48,7 +48,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists("product_image");     
-        Schema::dropIfExists("variant_product");     
+        Schema::dropIfExists("product_variants");     
         Schema::dropIfExists("products");     
     }
 };

@@ -7,14 +7,19 @@
     @vite(["resources/css/app.css", "resources/js/app.js"])
 </head>
 <body>
+    @if ($errors->any())
+        @php
+            echo var_dump($errors);
+        @endphp
+    @endif
     <div class="login">
         <div class="container">
-            <img src="{{ asset("icons/default-logo.png") }}" alt="logo-bitu">
+            <img src="{{ asset('icons/default-logo.png') }}" alt="logo-bitu">
             <div class="headline">
                 <h4>Selamat Datang</h4>
                 <p>Silahkan Login Terlebih Dahulu</p>
             </div>
-            <form action="{{ route("login") }}" method="post">
+            <form action="{{ route('login') }}" method="post">
                 @csrf
                 <div class="wrapper-input">
                     <label for="nis">Nomor Induk Siswa <span>*</span></label>

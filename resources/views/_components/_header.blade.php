@@ -13,9 +13,9 @@
         <div class="left"><a href="#"><img src="https://smkbinainformatika.sch.id/wp-content/uploads/2022/11/logo.png"></a></div>
         <div class="center">
             <div class="links">
-                <a href="{{ route('dashboard') }}">Home</a>
-                <a href="{{ route('products') }}">Products</a>
-                <a href="{{ route('about') }}">About</a>
+                <a href="{{ route('student.dashboard') }}">Home</a>
+                <a href="{{ route('student.products') }}">Products</a>
+                <a href="{{ route('student.about') }}">About</a>
             </div>
         </div>
         
