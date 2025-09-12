@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId("product_variant_id")->constrained("product_variants")->cascadeOnDelete()->cascadeOnUpdate();
             $table->integer("quantity")->default(1);
             $table->timestamps();
-            
+
             $table->foreign("user_nis")->references("nis")->on("users")->cascadeOnDelete()->cascadeOnUpdate();
         });
 
@@ -28,10 +28,10 @@ return new class extends Migration
             $table->string("received_phone", 12)->nullable(false);
             $table->integer("total_product")->default(1);
             $table->double("total_price")->nullable(false);
-            $table->timestamps();
-            $table->timestamp("expired")->nullable(false);
+            $table->timestamp("expired");
             $table->enum("status", ["pending", "success", "ongoing", "fail"])->default("pending");
-            
+            $table->timestamps();
+
             $table->foreign("user_nis")->references("nis")->on("users")->cascadeOnDelete()->cascadeOnUpdate();
         });
 

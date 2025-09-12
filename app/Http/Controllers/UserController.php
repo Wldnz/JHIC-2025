@@ -2,14 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateCartRequest;
+use App\Models\Cart;
+use App\Models\Product;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
 
     public function loginPage(Request $request){
-       return view('login');
+        return view('login');
     }
 
     public function login(Request $request){
@@ -22,7 +27,7 @@ class UserController extends Controller
             $request->session()->regenerate();
             return redirect()->route('admin.dashboard');
         }
-        
+
         return redirect()->back()->withErrors([
             "message" => "Data yang diberikan tidak valid!"
         ])->onlyInput("nis");
@@ -40,45 +45,112 @@ class UserController extends Controller
     // Siswa Controller
 
     public function dashboard(){
-        return view("dashboard", ["title" => "Dashboard | Bina Tata Usaha"]);
-    }
-    
-    // Admin Controller
-
-    public function managementProduct(){
-
+        return view("dashboard");
     }
 
-    public function managementProductDetail(){
-        
+    public function about(){
+        return view("about");
     }
 
-    public function managementProductAdd(){
+    public function products(Request $request){
+        $searchQuery = $request->query("search", null);
+        $products = $searchQuery ?
+            Product::with("thumbnail")->where("name", "like", "%$searchQuery%")->get() :
+            Product::with("thumbnail")->get();
 
+        return view("products", compact("products"));
     }
 
-    public function managementTransaction(){
+    public function detailProduct(Product $product){
+        $product = $product->with("variants", "thumbnail")->get();
+        $recommendedProducts = Product::selectRaw("SELECT * FROM products WHERE DIFFERENCE('$product->name', name) >= 2")->with("thumbnail")->get();
 
+        return view("detailProduct", compact("product", "recommendedProducts"));
     }
 
-    public function managementTransactionDetail(){
-        
+    public function cart(){
+        $carts = Cart::with('variant_product_id')->get();
+        $totalCost = $carts->sum(function($cart){
+            return $cart->variant_product_id->price * $cart->quantity;
+        });
+
+        return view("cart", compact("carts", "totalCost"));
     }
 
-    public function managementTransactionAdd(){
+    public function updateCart(UpdateCartRequest $request, Cart $cart){
+        if ($request->quantity <= 0) {
+            $cart->delete();
+            return response()->json([
+                "success" => true,
+                "message" => "Cart item deleted",
+                "deleted" => true,
+            ]);
+        } else if ($request->quantity > $cart->variant_product_id->stock) {
+            return response()->json([
+                "success" => false,
+                "message" => "Unsufficient stock",
+                "deleted" => false,
+            ], Response::HTTP_BAD_REQUEST);
+        }
 
+        $cart->quantity = $request->quantity;
+        $isSaved = $cart->save();
+
+        if ($isSaved) {
+            return response()->json([
+                "success" => true,
+                "message" => "Cart item updated",
+                "deleted" => false,
+            ]);
+        } else {
+            return response()->json([
+                "success" => false,
+                "message" => "Failed to update cart item",
+                "deleted" => false,
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 
-    public function managementAccountPage(){
-
+    public function deleteCart(Cart $cart){
+        $isDeleted = $cart->delete();
+        if ($isDeleted) {
+            return response()->json([
+                "success" => true,
+                "message" => "Cart item deleted",
+            ]);
+        } else {
+            return response()->json([
+                "success" => false,
+                "message" => "Failed to delete cart item",
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 
-    public function managementAccountEdit(){
+    public function transactions(Request $request){
+        $statusQuery = $request->query("status", null);
+        $searchQuery = $request->query("search", null);
 
+        $transactions = Transaction::with("firstOrder");
+
+        if ($statusQuery) {
+            $transactions = $transactions
+                ->where("transactions.status", "=", $statusQuery);
+        }
+
+        if ($searchQuery) {
+            $transactions = $transactions
+                ->join("orders", "transactions.id", "=", "orders.transaction_id")
+                ->where("orders.name", "like", "%$searchQuery%")
+                ->where("transactions.id", "like", "%$searchQuery%");
+        }
+
+        $transactions = $transactions->get();
+
+        return view("transactions", compact("transactions"));
     }
 
-    public function managementAccountAdd(){
-
+    public function detailTransaction(Transaction $transaction){
+        $transaction = Transaction::with("orders")->get();
+        return view("detailTransaction", compact("transaction"));
     }
-   
 }

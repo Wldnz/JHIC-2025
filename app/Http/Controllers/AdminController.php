@@ -32,7 +32,7 @@ class AdminController extends Controller
             'total' => count(Activity::get())
         ];
         return view("admin.dashboard", [
-            "title" => "Dashboard | Bina Tata Usaha", 
+            "title" => "Dashboard | Bina Tata Usaha",
             "transaction" => $transaction,
             "product" => $product,
             "account" => $account,
@@ -40,25 +40,54 @@ class AdminController extends Controller
         ]);
     }
 
-    
-    public function products(){
-        return view('admin.products',[ "title" => "Management Products" ]);
+
+
+    public function products(Request $request){
+        $searchQuery = $request->query("search", null);
+        $products = Product::with("variants", "totalStock");
+
+        if ($searchQuery) {
+            $products = $products->where("name", "like", "%$searchQuery%");
+        }
+
+        $products = $products->get();
+        $totalProducts = $products->count();
+        $availableStockProducts = Product::query()
+            ->select("products.*")
+            ->join("product_variants", "products.id", "=", "product_variants.product_id")
+            ->groupBy("product_variants.name")
+            ->where("product_variants.stock", ">", 0)
+            ->count();
+        $lowStockProducts = Product::query()
+            ->select("products.*")
+            ->join("product_variants", "products.id", "=", "product_variants.product_id")
+            ->groupBy("product_variants.name")
+            ->where("product_variants.stock", "<", 5)
+            ->count();
+        $emptyStockProducts = Product::query()
+            ->select("products.*")
+            ->join("product_variants", "products.id", "=", "product_variants.product_id")
+            ->groupBy("product_variants.name")
+            ->where("product_variants.stock", "<=", 0)
+            ->count();
+
+        return view('admin.products', compact("products", "totalProducts", "availableStockProducts", "lowStockProducts", "emptyStockProducts"));
     }
 
-    public function transactions(){ 
-        return view("admin.transactions", [ "title" => "Management Transactions" ]);
+    public function transactions(){
+        return view("admin.transactions");
     }
 
     public function detailTransaction(Request $request, string $id){
         $transaction = Transaction::where('id', '=', $id)->first()->get();
-        return view("admin.detailTransaction", [ "title" => "Detail Trasaction - $id (Edit Mode)", "transaction" => $transaction ]);
+        return view("admin.detailTransaction");
     }
 
     public function accounts(){
-        return view("admin.accounts", [ "title" => "Management Accounts" ]);
+        return view("admin.accounts");
     }
 
     public function profile(){
-        return view("admin.profile", [ "title" => "Management Profile" ]);
+        return view("admin.profile");
     }
 }

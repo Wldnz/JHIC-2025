@@ -18,6 +18,18 @@ class Transaction extends Model
         'total_product',
         'total_price',
         'expired',
-        'sttus'
+        'status'
     ];
+
+    public function user(){
+        return $this->belongsTo(User::class, 'user_nis', 'nis');
+    }
+
+    public function orders(){
+        return $this->hasMany(OrderTransaction::class, 'transaction_id', 'id');
+    }
+
+    public function firstOrder(){
+        return $this->hasMany(OrderTransaction::class, 'transaction_id', 'id')->first();
+    }
 }

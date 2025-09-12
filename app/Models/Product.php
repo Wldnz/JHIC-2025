@@ -16,12 +16,26 @@ class Product extends Model
 
     protected $fillable = [
         "id",
+        "thumbnail_id",
         "name",
         "category",
+        "description",
         "created_at",
         "updated_at",
         "visible"
     ];
 
     protected $hidden = [];
+
+    public function thumbnail(){
+        return $this->belongsTo(ProductImage::class, "thumbnail_id");
+    }
+
+    public function variants(){
+        return $this->hasMany(ProductVariant::class);
+    }
+
+    public function totalStock(){
+        return $this->hasMany(ProductVariant::class)->sum("stock");
+    }
 }
