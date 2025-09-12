@@ -52,7 +52,7 @@
                         <h2>{{ count($transaction['ongoing']) }} Transaction On Going</h2>
                         <div class="{{ count($transaction['ongoing']) > 0 ? 'point-active' : 'point-deactive' }}"></div>
                     </div>
-                    <button class="btn btn-submit" type="button">Add Transaction</button>
+                    <!-- <button class="btn btn-submit" type="button">Add Transaction</button> -->
                 </div>
                 <div class="management-table">
                     <div class="wrapper-filter">

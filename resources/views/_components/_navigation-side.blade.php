@@ -2,8 +2,10 @@
     <nav class="navigation-side">
         <div class="wrapper-navigation">
             <div class="wrapper-image">
-                <img src="{{ asset("icons/default-logo.png") }}" alt="logo-bitu" height="50">
-                @include('_components._sprite-icons', ['name' => 'dashboard', "color" => "black", 'size' => 40])
+                <div class="brand"></div>
+                <div class="logo"></div>
+                <!-- <img src="{{ asset("icons/default-logo.png") }}" alt="logo-bitu" height="50"> -->
+                <!-- @include('_components._sprite-icons', ['name' => 'dashboard', "color" => "black", 'size' => 40]) -->
             </div>
             <ul class="main-menu">
                 <li id="menu-dashboard">

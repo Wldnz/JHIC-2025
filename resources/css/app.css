@@ -26,42 +26,42 @@ body .button:hover {
   color: #273B98;
   font-weight: 350;
 }
-body nav {
+body .navigation-user {
   display: flex;
   align-items: center;
   justify-content: space-evenly;
   padding: 20px;
   width: 100vw;
 }
-body nav .left {
+body .navigation-user .left {
   width: 33%;
   height: 100%;
   display: flex;
   justify-content: start;
 }
-body nav .left a {
+body .navigation-user .left a {
   width: fit-content;
 }
-body nav .left a img {
+body .navigation-user .left a img {
   max-width: 65%;
   height: auto;
 }
-body nav .center {
+body .navigation-user .center {
   width: 33%;
   height: 100%;
   display: flex;
   justify-content: center;
 }
-body nav .center .links {
+body .navigation-user .center .links {
   display: flex;
   gap: 10px;
 }
-body nav .center .links a {
+body .navigation-user .center .links a {
   position: relative;
   font-weight: 400;
   color: #273B98;
 }
-body nav .center .links a::after {
+body .navigation-user .center .links a::after {
   transition: 0.4s;
   content: "";
   position: absolute;
@@ -71,10 +71,10 @@ body nav .center .links a::after {
   width: 0%;
   background-color: #273B98;
 }
-body nav .center .links a:hover::after {
+body .navigation-user .center .links a:hover::after {
   width: 100%;
 }
-body nav .right {
+body .navigation-user .right {
   width: 33%;
   height: 100%;
   display: flex;
@@ -200,8 +200,19 @@ body .wrapper-admin .left .navigation-side .wrapper-navigation .wrapper-image {
   align-items: center;
   height: 100px;
 }
-body .wrapper-admin .left .navigation-side .wrapper-navigation .wrapper-image svg:last-child {
+body .wrapper-admin .left .navigation-side .wrapper-navigation .wrapper-image div {
+  height: 80px;
+  background-image: url("/public/icons/logo-sprite.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+body .wrapper-admin .left .navigation-side .wrapper-navigation .wrapper-image .brand {
+  width: 260px;
+  background-position-x: 0;
+}
+body .wrapper-admin .left .navigation-side .wrapper-navigation .wrapper-image .logo {
   display: none;
+  width: 80px;
 }
 body .wrapper-admin .left .navigation-side .wrapper-navigation .main-menu {
   display: flex;
@@ -296,7 +307,7 @@ body .wrapper-admin .right .main-admin .section-summary-data .wrapper-summary-da
   gap: 35px;
 }
 body .wrapper-admin .right .main-admin .section-summary-data .wrapper-summary-data .summary-data {
-  min-width: 345px;
+  min-width: 300px;
   height: 96px;
   padding: 5px 15px;
   display: flex;
