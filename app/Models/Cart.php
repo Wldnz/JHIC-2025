@@ -10,17 +10,17 @@ class Cart extends Model
     /** @use HasFactory<\Database\Factories\CartFactory> */
     use HasFactory;
 
-    protected $table = 'cart';
+    protected $table = 'carts';
 
     protected $fillable = [
         'id',
         'user_nis',
-        'variant_product_id',
+        'product_variant_id',
         'quantity',
     ];
 
     public function variantProduct(){
-        return $this->belongsTo(ProductVariant::class, 'variant_product_id');
+        return $this->belongsTo(ProductVariant::class, 'product_variant_id');
     }
 
 }

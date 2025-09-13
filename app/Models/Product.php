@@ -16,7 +16,6 @@ class Product extends Model
 
     protected $fillable = [
         "id",
-        "thumbnail_id",
         "name",
         "category",
         "description",
@@ -27,8 +26,12 @@ class Product extends Model
 
     protected $hidden = [];
 
+    public function images(){
+        return $this->hasMany(ProductImage::class, "product_id", "id");
+    }
+
     public function thumbnail(){
-        return $this->belongsTo(ProductImage::class, "thumbnail_id");
+        return $this->images->where("thumbnail", true)->first();
     }
 
     public function variants(){
@@ -36,6 +39,6 @@ class Product extends Model
     }
 
     public function totalStock(){
-        return $this->hasMany(ProductVariant::class)->sum("stock");
+        return $this->variants->query()->sum("stock");
     }
 }

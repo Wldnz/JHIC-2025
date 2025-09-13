@@ -9,7 +9,7 @@ class Transaction extends Model
 {
     /** @use HasFactory<\Database\Factories\TransactionFactory> */
     use HasFactory;
-    protected $table = 'transaction';
+    protected $table = 'transactions';
     protected $fillable = [
         'id',
         'user_nis',
@@ -17,6 +17,7 @@ class Transaction extends Model
         'received_phone',
         'total_product',
         'total_price',
+        'payment_method',
         'expired',
         'status'
     ];
@@ -30,6 +31,6 @@ class Transaction extends Model
     }
 
     public function firstOrder(){
-        return $this->hasMany(OrderTransaction::class, 'transaction_id', 'id')->first();
+        return $this->orders->first();
     }
 }

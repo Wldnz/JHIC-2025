@@ -54,24 +54,29 @@ class UserController extends Controller
 
     public function products(Request $request){
         $searchQuery = $request->query("search", null);
-        $products = $searchQuery ?
-            Product::with("thumbnail")->where("name", "like", "%$searchQuery%")->get() :
-            Product::with("thumbnail")->get();
+        $products = Product::with("images");
+
+        if ($searchQuery) {
+            $products = $products
+                ->where("name", "like", "%$searchQuery%");
+        }
+
+        $products = $products->get();
 
         return view("products", compact("products"));
     }
 
     public function detailProduct(Product $product){
-        $product = $product->with("variants", "thumbnail")->get();
-        $recommendedProducts = Product::selectRaw("SELECT * FROM products WHERE DIFFERENCE('$product->name', name) >= 2")->with("thumbnail")->get();
+        $product->load("variants", "images");
+        $recommendedProducts = Product::with("images")->whereRaw("SOUNDEX('$product->name') = SOUNDEX(products.name)", )->limit(4)->get();
 
         return view("detailProduct", compact("product", "recommendedProducts"));
     }
 
     public function cart(){
-        $carts = Cart::with('variant_product_id')->get();
+        $carts = Cart::with('product_variant_id')->get();
         $totalCost = $carts->sum(function($cart){
-            return $cart->variant_product_id->price * $cart->quantity;
+            return $cart->product_variant_id->price * $cart->quantity;
         });
 
         return view("cart", compact("carts", "totalCost"));
@@ -85,7 +90,7 @@ class UserController extends Controller
                 "message" => "Cart item deleted",
                 "deleted" => true,
             ]);
-        } else if ($request->quantity > $cart->variant_product_id->stock) {
+        } else if ($request->quantity > $cart->product_variant_id->stock) {
             return response()->json([
                 "success" => false,
                 "message" => "Unsufficient stock",
@@ -130,7 +135,7 @@ class UserController extends Controller
         $statusQuery = $request->query("status", null);
         $searchQuery = $request->query("search", null);
 
-        $transactions = Transaction::with("firstOrder");
+        $transactions = Transaction::with("orders");
 
         if ($statusQuery) {
             $transactions = $transactions
@@ -150,7 +155,7 @@ class UserController extends Controller
     }
 
     public function detailTransaction(Transaction $transaction){
-        $transaction = Transaction::with("orders")->get();
+        $transaction->load("orders");
         return view("detailTransaction", compact("transaction"));
     }
 }

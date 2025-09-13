@@ -44,47 +44,85 @@ class AdminController extends Controller
 
     public function products(Request $request){
         $searchQuery = $request->query("search", null);
-        $products = Product::with("variants", "totalStock");
+        $products = Product::with("variants");
 
         if ($searchQuery) {
             $products = $products->where("name", "like", "%$searchQuery%");
         }
 
         $products = $products->get();
-        $totalProducts = $products->count();
-        $availableStockProducts = Product::query()
-            ->select("products.*")
+
+        $initialStockProducts = Product::query()
+            ->select("products.name AS product_name", "product_variants.name AS product_variant_name", "product_variants.stock AS product_variant_stock")
             ->join("product_variants", "products.id", "=", "product_variants.product_id")
-            ->groupBy("product_variants.name")
-            ->where("product_variants.stock", ">", 0)
+            ->groupBy("products.name", "product_variants.name")
+            ->get();
+
+        $totalProducts = $initialStockProducts
             ->count();
-        $lowStockProducts = Product::query()
-            ->select("products.*")
-            ->join("product_variants", "products.id", "=", "product_variants.product_id")
-            ->groupBy("product_variants.name")
-            ->where("product_variants.stock", "<", 5)
+        $availableStockProducts = $initialStockProducts
+            ->where("product_variant_stock", ">", 0)
             ->count();
-        $emptyStockProducts = Product::query()
-            ->select("products.*")
-            ->join("product_variants", "products.id", "=", "product_variants.product_id")
-            ->groupBy("product_variants.name")
-            ->where("product_variants.stock", "<=", 0)
+        $lowStockProducts = $initialStockProducts
+            ->where("product_variant_stock", "<", 5)
+            ->count();
+        $emptyStockProducts = $initialStockProducts
+            ->where("product_variant_stock", "<=", 0)
             ->count();
 
         return view('admin.products', compact("products", "totalProducts", "availableStockProducts", "lowStockProducts", "emptyStockProducts"));
     }
 
-    public function transactions(){
-        return view("admin.transactions");
+    public function detailProduct(Product $product){
+        $product->load("variants", "images");
+        return view("admin.detailProduct", compact("product"));
     }
 
-    public function detailTransaction(Request $request, string $id){
-        $transaction = Transaction::where('id', '=', $id)->first()->get();
-        return view("admin.detailTransaction");
+    public function transactions(Request $request){
+        $searchQuery = $request->query("search", null);
+        $statusQuery = $request->query("status", null);
+        $transactions = Transaction::with("user");
+
+        if ($searchQuery) {
+            $transactions = $transactions
+                ->join("users", "transactions.user_nis", "=", "users.nis")
+                ->where("users.fullname", "like", "%$searchQuery%")
+                ->where("transactions.id", "like", "%$searchQuery%");
+        }
+
+        if ($statusQuery) {
+            $transactions = $transactions
+                ->where("transactions.status", "=", $statusQuery);
+        }
+
+        $transactions = $transactions->get();
+
+        $allTransactions = Transaction::all();
+        $successTransactions = $allTransactions->where('status','=', 'success')->count();
+        $ongoingTransactions = $allTransactions->where('status','=', 'ongoing')->count();
+        $pendingTransactions = $allTransactions->where('status','=', 'pending')->count();
+        $failTransactions = $allTransactions->where('status','=', 'fail')->count();
+
+        return view("admin.transactions", compact("transactions", "successTransactions", "ongoingTransactions", "pendingTransactions", "failTransactions"));
+    }
+
+    public function detailTransaction(Transaction $transaction){
+        $transaction->load("user", "orders", "orders.product_variant", "orders.product_variant.product");
+        return view("admin.detailTransaction", compact("transaction"));
     }
 
     public function accounts(){
-        return view("admin.accounts");
+        $accounts = User::all();
+
+        $totalAccount = $accounts->count();
+        $totalStudent = $accounts->where("role", "=", "siswa")->count();
+        $totalAdmin = $accounts->where("role", "=", "admin")->count();
+
+        return view("admin.accounts", compact("accounts", "totalAccount", "totalStudent", "totalAdmin"));
+    }
+
+    public function detailAccount(User $account){
+        return view("admin.detailAccount", compact("account"));
     }
 
     public function profile(){

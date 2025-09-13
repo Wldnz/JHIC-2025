@@ -7,7 +7,7 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Cart>
  */
 class CartFactory extends Factory
 {
@@ -19,9 +19,9 @@ class CartFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_nis' => User::inRandomOrder()->first()->nis,
-            'product_variant_id' => ProductVariant::inRandomOrder()->first()->id,
-            'quantity' => rand(1,3),
+            'user_nis' => User::query()->inRandomOrder()->first()->nis,
+            'product_variant_id' => ProductVariant::query()->inRandomOrder()->first()->id,
+            'quantity' => fake()->numberBetween(1, 100),
         ];
     }
 }

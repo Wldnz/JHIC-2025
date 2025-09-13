@@ -33,7 +33,7 @@ return new class extends Migration
             $table->foreign("product_id")->references("id")->on("products")->onDelete("cascade")->onUpdate("cascade");
         });
 
-        Schema::create("product_image", function (Blueprint $table) {
+        Schema::create("product_images", function (Blueprint $table) {
             $table->id();
             $table->foreignId("product_id")->nullable(false);
             $table->string("url")->nullable(false);
@@ -50,7 +50,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists("product_image");
+        Schema::dropIfExists("product_images");
         Schema::dropIfExists("product_variants");
         Schema::dropIfExists("products");
     }
