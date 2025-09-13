@@ -1,7 +1,9 @@
 <div class="section-summary-data">
     <div class="title">
         <h4>{{ $title }}</h4>
-        <a href="{{ $destination}}">Manage ></a>
+        @if (isset($destination))
+            <a href="{{ $destination}}">Manage ></a>
+        @endif
     </div>
     <div class="wrapper-summary-data">
         @foreach ($summary_data as $key => $value)
@@ -9,7 +11,7 @@
                 @foreach ($value as $key_2 => $value_2)
                     <div class="summary-data">
                         <div class="icon-data">
-                            @include('_components._sprite-icons', ['name' => $key, 'color' => 'white', 'size' => 45])
+                            @include('_components._sprite-icons', ['name' => $key, 'color' => 'white', 'size' => 30])
                         </div>
                         <div class="info-data">
                             <div class="data">

@@ -24,8 +24,7 @@ body {
     font-family: "Montserrat", "sans-serif";
     font-size: $font-size-l;
 
-    .button
-    {
+    .button {
         cursor: pointer;
         padding: 10px 15px;
         border-radius: $border-radius;
@@ -36,8 +35,7 @@ body {
         outline: none;
         transition: .1s;
 
-        &:hover
-        {
+        &:hover {
             outline: 1.5px solid $color-accent;
             background: $color-primary;
             color: $color-accent;
@@ -45,73 +43,71 @@ body {
         }
     }
 
-    nav {
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
-    padding: 20px;
-    width: 100vw;
-
-    .left
-    {
-        width: 33%;
-        height: 100%;
+    .navigation-user {
         display: flex;
-        justify-content: start;
-        
-        a 
-        {
-            width: fit-content;
-        
-            img
-                {
+        align-items: center;
+        justify-content: space-evenly;
+        padding: 20px;
+        width: 100vw;
+
+        .left {
+            width: 33%;
+            height: 100%;
+            display: flex;
+            justify-content: start;
+
+            a {
+                width: fit-content;
+
+                img {
                     max-width: 65%;
                     height: auto;
                 }
+            }
         }
-    }
-    .center
-    {
-        width: 33%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
 
-        .links{
+        .center {
+            width: 33%;
+            height: 100%;
             display: flex;
-            gap: 10px;
+            justify-content: center;
 
-            a {
-                position: relative;
-                font-weight: 400;
-                color: $color-accent;
-                
-                &::after {
-                    transition: .4s;
-                    content: "";
-                    position: absolute;
-                    bottom: 0;
-                    left: 0;
-                    height: 1.5px;
-                    width: 0%;
-                    background-color: $color-accent;
-                }
-                &:hover::after {
-                    width: 100%;
+            .links {
+                display: flex;
+                gap: 10px;
+
+                a {
+                    position: relative;
+                    font-weight: 400;
+                    color: $color-accent;
+
+                    &::after {
+                        transition: .4s;
+                        content: "";
+                        position: absolute;
+                        bottom: 0;
+                        left: 0;
+                        height: 1.5px;
+                        width: 0%;
+                        background-color: $color-accent;
+                    }
+
+                    &:hover::after {
+                        width: 100%;
+                    }
                 }
             }
         }
+
+        .right {
+            width: 33%;
+            height: 100%;
+            display: flex;
+            justify-content: right;
+        }
     }
-    .right
-    {
-        width: 33%;
-        height: 100%;
-        display: flex;
-        justify-content: right;
-    }
-    }
-    .wrapper-user
-    {
+
+    .wrapper-user {
         padding: 20px;
 
         .hugeimg {
@@ -122,10 +118,8 @@ body {
             margin-bottom: 40px;
         }
 
-        .categories
-        {
-            .category-tab
-            {
+        .categories {
+            .category-tab {
                 background-image: url("https://www.svgrepo.com/show/508699/landscape-placeholder.svg");
                 background-repeat: no-repeat;
                 background-size: cover;
@@ -134,8 +128,8 @@ body {
                 padding: 10px;
                 border-radius: $border-radius;
             }
-            .section1
-            {
+
+            .section1 {
                 width: 100%;
 
             }
@@ -263,9 +257,24 @@ body {
                         align-items: center;
                         height: 100px;
 
-                        svg:last-child {
-                            display: none;
+                        div{
+                            height: 80px;
+
+                            background-image: url('/public/icons/logo-sprite.png');
+                            background-repeat: no-repeat;
+                            background-size: cover;
                         }
+                        
+                        .brand{
+                            width: 260px;
+                            background-position-x: 0;
+                        }
+
+                        .logo{
+                            display: none;
+                            width: 80px;
+                        }
+
                     }
 
                     .main-menu {
@@ -391,7 +400,7 @@ body {
                         gap: 35px;
 
                         .summary-data {
-                            min-width: 345px;
+                            min-width: 300px;
                             height: 96px;
 
                             padding: 5px 15px;
@@ -428,8 +437,6 @@ body {
                                 display: flex;
                                 flex-direction: column;
                                 gap: 3px;
-
-
                             }
 
                         }
@@ -454,7 +461,8 @@ body {
             height: 350px;
             padding: 10px;
             border-radius: 12px;
-            canvas{
+
+            canvas {
                 width: 100%;
             }
         }
@@ -464,7 +472,7 @@ body {
             width: 70%;
             height: 350px;
 
-            canvas{
+            canvas {
                 width: 100%;
             }
         }
@@ -491,7 +499,7 @@ body {
                 gap: 10px;
 
                 .point-active,
-                .point-deactive{
+                .point-deactive {
                     width: 30px;
                     height: 30px;
                     border-radius: 50%;
@@ -499,7 +507,7 @@ body {
                     animation: kelap-kelip 500ms infinite alternate-reverse;
                 }
 
-                .point-deactive{
+                .point-deactive {
                     background-color: rgb(255, 197, 61);
                 }
 
