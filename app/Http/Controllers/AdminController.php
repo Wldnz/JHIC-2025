@@ -11,18 +11,19 @@ use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
+    protected $limitPagination = 8;
     public function dashboard()
     {
         $transaction = [
             'total' => count(Transaction::get()),
             'success' => count(Transaction::where('status','=', 'success')->get()),
-            'ongoing' => Transaction::where('status','=', 'ongoing')->get(),
+            'ongoing' => count(Transaction::where('status','=', 'ongoing')->get()),
             'fail' => count(Transaction::where('status','=', 'fail')->get()),
         ];
         $product = [
             'total' => count(Product::get()),
             'available' => 0,
-            'almost-sold-out' => 0,
+            'almost sold' => 0,
             'soldout' => 0,
         ];
         $account=[
@@ -32,7 +33,6 @@ class AdminController extends Controller
             'total' => count(Activity::get())
         ];
         return view("admin.dashboard", [
-            "title" => "Dashboard | Bina Tata Usaha",
             "transaction" => $transaction,
             "product" => $product,
             "account" => $account,
@@ -44,13 +44,14 @@ class AdminController extends Controller
 
     public function products(Request $request){
         $searchQuery = $request->query("search", null);
+        $currentPage = $request->query("page", 1);
         $products = Product::with("variants");
 
         if ($searchQuery) {
             $products = $products->where("name", "like", "%$searchQuery%");
         }
 
-        $products = $products->get();
+        $products = $products->limit($this->limitPagination)->offset(($currentPage - 1) * $this->limitPagination)->get();
 
         $initialStockProducts = Product::query()
             ->select("products.name AS product_name", "product_variants.name AS product_variant_name", "product_variants.stock AS product_variant_stock")
@@ -58,19 +59,16 @@ class AdminController extends Controller
             ->groupBy("products.name", "product_variants.name")
             ->get();
 
-        $totalProducts = $initialStockProducts
-            ->count();
-        $availableStockProducts = $initialStockProducts
-            ->where("product_variant_stock", ">", 0)
-            ->count();
-        $lowStockProducts = $initialStockProducts
-            ->where("product_variant_stock", "<", 5)
-            ->count();
-        $emptyStockProducts = $initialStockProducts
-            ->where("product_variant_stock", "<=", 0)
-            ->count();
+        $stats = [
+            "total" =>  Product::get()->count(),
+            "available" => $initialStockProducts->where("product_variant_stock", ">", 0)->count(),
+            "low" => $initialStockProducts->where("product_variant_stock", "<", 5)->count(),
+            "empty" => $initialStockProducts->where("product_variant_stock", "<=", 0)->count()
+        ];
 
-        return view('admin.products', compact("products", "totalProducts", "availableStockProducts", "lowStockProducts", "emptyStockProducts"));
+        $maxPage = intval($stats['total'] / $this->limitPagination  + 1);
+
+        return view('admin.products', compact("products", "stats", "currentPage", "maxPage"));
     }
 
     public function detailProduct(Product $product){
