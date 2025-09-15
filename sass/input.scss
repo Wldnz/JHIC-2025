@@ -428,6 +428,58 @@ body {
                         }
                     }
                 }
+                .form-data{
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    gap: 40px;
+
+                    .wrapper-field{
+                        display: flex;
+                        flex-direction: column;
+                        gap: 20px;
+
+                        .wrapper-input{
+                            display: flex;
+                            flex-direction: column;
+                            gap: 10px;
+
+                            label{
+                                font-size: $font-size-xl;
+                                
+                                position: relative;
+
+                                span{
+                                    color: red;
+                                    font-weight: bolder;
+                                }
+                            }
+                            input, textarea, select{
+                                width: 280px;
+                                padding: 10px 5px;
+                                padding-left: 0;
+                                border: none;
+                                font-size: $font-size-m;
+                                border-bottom: 1px solid $color-accent;
+                                outline: none;
+                            }
+
+                            textarea{
+                                min-height: 250px;
+                                resize: none;
+                            }
+                            select{
+                                background-color: transparent;
+                            }
+                        }
+                    }
+                    .wrapper-image{
+                        width: 100%;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                    }
+                }
             }
         }
     }
@@ -707,7 +759,7 @@ body {
     .alert-message{
         width: 100vw;
         height: 100dvh;
-        display: flex;
+        display: none;
         flex-direction: column;
         justify-content: center;
         align-items: center;

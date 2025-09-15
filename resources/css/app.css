@@ -336,6 +336,52 @@ body .wrapper-admin .right .content .summary .wrapper-summary .card-summary .wra
 body .wrapper-admin .right .content .summary .wrapper-summary .card-summary .wrapper-information span {
   font-size: calc(0.85rem - 2px);
 }
+body .wrapper-admin .right .content .form-data {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 40px;
+}
+body .wrapper-admin .right .content .form-data .wrapper-field {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+body .wrapper-admin .right .content .form-data .wrapper-field .wrapper-input {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+body .wrapper-admin .right .content .form-data .wrapper-field .wrapper-input label {
+  font-size: 1.25rem;
+  position: relative;
+}
+body .wrapper-admin .right .content .form-data .wrapper-field .wrapper-input label span {
+  color: red;
+  font-weight: bolder;
+}
+body .wrapper-admin .right .content .form-data .wrapper-field .wrapper-input input, body .wrapper-admin .right .content .form-data .wrapper-field .wrapper-input textarea, body .wrapper-admin .right .content .form-data .wrapper-field .wrapper-input select {
+  width: 280px;
+  padding: 10px 5px;
+  padding-left: 0;
+  border: none;
+  font-size: 1rem;
+  border-bottom: 1px solid #273b98;
+  outline: none;
+}
+body .wrapper-admin .right .content .form-data .wrapper-field .wrapper-input textarea {
+  min-height: 250px;
+  resize: none;
+}
+body .wrapper-admin .right .content .form-data .wrapper-field .wrapper-input select {
+  background-color: transparent;
+}
+body .wrapper-admin .right .content .form-data .wrapper-image {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 body h2 {
   font-size: 2.25rem;
 }
@@ -574,7 +620,7 @@ body .profile .main-menu li:hover::before {
 body .alert-message {
   width: 100vw;
   height: 100dvh;
-  display: flex;
+  display: none;
   flex-direction: column;
   justify-content: center;
   align-items: center;
