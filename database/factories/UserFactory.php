@@ -26,13 +26,13 @@ class UserFactory extends Factory
         $roles = ["siswa", "admin"];
 
         return [
-            "nis" => str_pad(random_int(12,16), 16, str(rand(0,9)), STR_PAD_LEFT),
+            "nis" => fake()->unique()->numerify('################'),
             'fullname' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => Hash::make('admin1234#'),
             'remember_token' => Str::random(10),
-            'role' => $roles[array_rand($roles)]
+            'role' => fake()->randomElement($roles),
         ];
     }
 

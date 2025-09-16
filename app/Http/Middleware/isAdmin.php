@@ -16,10 +16,10 @@ class isAdmin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $roles = ['dummyMummySecretRandom','admin', 'superAdmin'];
-        if(!array_search(Auth::user()->role, $roles, true)){
-            return redirect()->route('student.dashboard');
-        }
+        // $roles = ['dummyMummySecretRandom','admin', 'superAdmin'];
+        // if(!array_search(Auth::user()->role, $roles, true)){
+        //     return redirect()->route('student.dashboard');
+        // }
         return $next($request);
     }
 }

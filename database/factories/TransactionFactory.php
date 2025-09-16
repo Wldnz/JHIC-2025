@@ -20,13 +20,14 @@ class TransactionFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_nis' => User::inRandomOrder()->first()->nis,
+            'user_nis' => User::query()->inRandomOrder()->first()->nis,
             'received_email' => fake()->email(),
-            'received_phone' => 812469653,
-            'total_product' => rand(1,5),
-            'total_price' => rand(20000, 400000),
+            'received_phone' => fake()->phoneNumber(),
+            'total_product' => fake()->numberBetween(1, 10),
+            'total_price' => fake()->numberBetween(100_000, 1_000_000),
+            'payment_method' => fake()->creditCardType(),
             'expired' => now()->addDays(1),
-            'status' => $this->status[array_rand($this->status)]
+            'status' => fake()->randomElement($this->status),
         ];
     }
 }

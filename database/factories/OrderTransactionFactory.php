@@ -18,11 +18,14 @@ class OrderTransactionFactory extends Factory
      */
     public function definition(): array
     {
+        $productVariant = ProductVariant::query()->inRandomOrder()->first();
+        $quantity = fake()->numberBetween(1, 100);
+
         return [
-            'transaction_id' => Transaction::inRandomOrder()->first()->id,
-            'product_variant_id' => ProductVariant::inRandomOrder()->first()->id,
-            'quantity' => rand(1,3),
-            'price' => rand(1,3) * 35000,
+            'transaction_id' => Transaction::query()->inRandomOrder()->first()->id,
+            'product_variant_id' => $productVariant->id,
+            'quantity' => $quantity,
+            'price' => $productVariant->price * $quantity,
         ];
     }
 }

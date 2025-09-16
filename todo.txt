@@ -1,3 +1,37 @@
+Student Tasks:
++ Dashboard
++ List products
++ Detail product
++ List carts
++ Update or store cart item
++ Delete cart item
++ History transactions
+- Store transaction
++ Detail transaction
+- See profile
+- Update profile
+
+Admin Tasks:
+- Dashboard
++ All products
++ Detail products
+- Create product (with variants)
+- Update product (with variants)
+- Delete product (with variants)
++ All transactions
++ Detail transaction
+- New transaction
+- Update transaction
+- Delete transaction
+-+ All accounts
++ Detail account
+- Create account
+- Update account
+- Delete account
+- See profile
+- Update profile
+
+
 untuk menyelesaikan halaman admin dibutuhkan
     Dashboard
         [✅] Page
@@ -5,11 +39,11 @@ untuk menyelesaikan halaman admin dibutuhkan
         [] filter
         [] managing query to use in chart
     Product
-        [] Page
-        [] Detail Page
-        [] Add Data
-        [] Edit Data
-        [] Delete Data
+       + Page
+       - alert-message
+       - refactoring
+       - detail-product
+       - well done
     Transaction
         [] Page
         [] Detail Page

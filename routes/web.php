@@ -14,7 +14,7 @@ Route::get('/logout', [UserController::class, 'logout'])->name('logout');
 // isLogin & is Siswa
 Route::name('student.')->middleware([isLogin::class])->group(function () {
     Route::get('/', [UserController::class, 'dashboard'])->name('dashboard');
-    Route::get('/about', [UserController::class, 'dashboard'])->name('about');
+    Route::get('/about', [UserController::class, 'about'])->name('about');
     Route::get('/products', [UserController::class, 'products'])->name('products');
 
     Route::get('/products/{product}', [UserController::class, 'detailProduct'])->name('detail-product');
@@ -23,9 +23,9 @@ Route::name('student.')->middleware([isLogin::class])->group(function () {
     Route::put('/cart/{cart}', [UserController::class, 'updateCart'])->name('update-cart');
     Route::delete('/cart/{cart}', [UserController::class, 'deleteCart'])->name('delete-cart');
 
-    Route::get('/transctions', [UserController::class, 'transactions'])->name('transactions');
-    Route::post('/transctions', [UserController::class, 'storeTransaction'])->name('store-transaction');
-    Route::get('/transctions/{transaction}', [UserController::class, 'detailTransaction'])->name('detail-transaction');
+    Route::get('/transactions', [UserController::class, 'transactions'])->name('transactions');
+    Route::post('/transactions', [UserController::class, 'storeTransaction'])->name('store-transaction');
+    Route::get('/transactions/{transaction}', [UserController::class, 'detailTransaction'])->name('detail-transaction');
 
     Route::get('/profile', [UserController::class, 'profile'])->name('profile');
     Route::put('/profile/{profile}', [UserController::class, 'profile'])->name('profile');

@@ -21,4 +21,8 @@ class ProductVariant extends Model
         'price',
         'stock',
     ];
+
+    public function product(){
+        return $this->belongsTo(Product::class);
+    }
 }

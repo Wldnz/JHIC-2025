@@ -9,7 +9,7 @@ class Activity extends Model
 {
     /** @use HasFactory<\Database\Factories\ActivityFactory> */
     use HasFactory;
-    protected $table = 'activity';
+    protected $table = 'activities';
     protected $fillable = [
         'id',
         'user_nis',
