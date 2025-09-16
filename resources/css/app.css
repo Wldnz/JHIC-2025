@@ -272,6 +272,9 @@ body .wrapper-admin .right {
   width: 100%;
   overflow-x: hidden;
 }
+body .wrapper-admin .right h2 {
+  font-size: 1.5rem;
+}
 body .wrapper-admin .right .bar-top {
   padding: 10px 15px;
   display: flex;
@@ -361,7 +364,9 @@ body .wrapper-admin .right .content .form-data .wrapper-field .wrapper-input lab
   color: red;
   font-weight: bolder;
 }
-body .wrapper-admin .right .content .form-data .wrapper-field .wrapper-input input, body .wrapper-admin .right .content .form-data .wrapper-field .wrapper-input textarea, body .wrapper-admin .right .content .form-data .wrapper-field .wrapper-input select {
+body .wrapper-admin .right .content .form-data .wrapper-field .wrapper-input input,
+body .wrapper-admin .right .content .form-data .wrapper-field .wrapper-input textarea,
+body .wrapper-admin .right .content .form-data .wrapper-field .wrapper-input select {
   width: 280px;
   padding: 10px 5px;
   padding-left: 0;
@@ -380,8 +385,63 @@ body .wrapper-admin .right .content .form-data .wrapper-field .wrapper-input sel
 body .wrapper-admin .right .content .form-data .wrapper-image {
   width: 100%;
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
+  gap: 10px;
+}
+body .wrapper-admin .right .content .form-data .wrapper-image .image-product {
+  width: 250px;
+  height: 200px;
+  position: relative;
+  border: 3px dotted #273b98;
+}
+body .wrapper-admin .right .content .form-data .wrapper-image .image-product img {
+  width: inherit;
+  height: inherit;
+}
+body .wrapper-admin .right .content .form-data .wrapper-image .image-product:hover > .action-product {
+  display: flex;
+}
+body .wrapper-admin .right .content .form-data .wrapper-image .image-product .action-product {
+  width: inherit;
+  height: inherit;
+  padding: 10px;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+body .wrapper-admin .right .content .form-data .wrapper-image .image-product .action-product button {
+  width: 200px;
+  height: 40px;
+  padding: 8px;
+  border: none;
+  border-radius: 4px;
+  background-color: transparent;
+  cursor: pointer;
+  font-weight: bold;
+  color: white;
+  background-color: #273b98;
+}
+body .wrapper-admin .right .content .form-data .wrapper-image .image-product .action-product .btn-choose {
+  position: relative;
+}
+body .wrapper-admin .right .content .form-data .wrapper-image .image-product .action-product .btn-choose input {
+  width: inherit;
+  height: inherit;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+body .wrapper-admin .right .content .form-data .wrapper-image .image-product .action-product .btn-delete {
+  background-color: red;
 }
 body h2 {
   font-size: 2.25rem;
@@ -688,6 +748,22 @@ body .close-sidebar {
     width: 100px;
     min-width: 100px;
   }
+}
+body .button-submit-form {
+  width: 160px;
+  display: flex;
+  padding: 10px;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  border: 1px solid #273b98;
+  color: #273b98;
+  background-color: transparent;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
 }
 body .btn {
   height: 50px;
