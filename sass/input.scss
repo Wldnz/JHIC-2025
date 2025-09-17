@@ -498,6 +498,7 @@ body {
                             img{
                                 width: inherit;
                                 height: inherit;
+                                object-fit: contain;
                             }
 
                             &:hover > .action-product{
@@ -918,10 +919,9 @@ body {
     }
 
     .button-submit-form {
-        width: 160px;
-        display: flex;
+        display : flex;
         padding: 10px;
-        justify-content: space-between;
+        gap: 10px;
         align-items: center;
 
         position: fixed;

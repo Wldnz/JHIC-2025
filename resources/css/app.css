@@ -399,6 +399,7 @@ body .wrapper-admin .right .content .form-data .wrapper-image .image-product {
 body .wrapper-admin .right .content .form-data .wrapper-image .image-product img {
   width: inherit;
   height: inherit;
+  object-fit: contain;
 }
 body .wrapper-admin .right .content .form-data .wrapper-image .image-product:hover > .action-product {
   display: flex;
@@ -750,10 +751,9 @@ body .close-sidebar {
   }
 }
 body .button-submit-form {
-  width: 160px;
   display: flex;
   padding: 10px;
-  justify-content: space-between;
+  gap: 10px;
   align-items: center;
   position: fixed;
   bottom: 10px;
