@@ -14,7 +14,7 @@ Route::get('/logout', [UserController::class, 'logout'])->name('logout');
 // isLogin & is Siswa
 Route::name('student.')->middleware([isLogin::class])->group(function () {
     Route::get('/', [UserController::class, 'dashboard'])->name('dashboard');
-    Route::get('/about', [UserController::class, 'dashboard'])->name('about');
+    Route::get('/about', [UserController::class, 'about'])->name('about');
     Route::get('/products', [UserController::class, 'products'])->name('products');
 
     Route::get('/products/{product}', [UserController::class, 'detailProduct'])->name('detail-product');

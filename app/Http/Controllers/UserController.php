@@ -42,6 +42,14 @@ class UserController extends Controller
     public function dashboard(){
         return view("dashboard", ["title" => "Dashboard | Bina Tata Usaha"]);
     }
+
+    public function products(){
+        return view('products');    
+    }
+
+    public function about(){
+        return view('about');
+    }
     
     // Admin Controller
 

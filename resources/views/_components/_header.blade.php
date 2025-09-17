@@ -13,13 +13,13 @@
         <div class="left"><a href="#"><img src="https://smkbinainformatika.sch.id/wp-content/uploads/2022/11/logo.png"></a></div>
         <div class="center">
             <div class="links">
-                <a href="{{ route('student.dashboard') }}">Home</a>
-                <a href="{{ route('student.products') }}">Products</a>
-                <a href="{{ route('student.about') }}">About</a>
+                <a href="{{ route('student.dashboard') }}">HOME</a>
+                <a href="{{ route('student.products') }}">PRODUCTS</a>
+                <a href="{{ route('student.about') }}">ABOUT</a>
             </div>
         </div>
         
-        <div class="right"><a href="login.blade.php"><button class="button">Sign in</button></a></div>
+        <div class="right"><a href="login.blade.php"><button class="button">Sign In</button></a></div>
     </nav>
     <main class="wrapper-user">
 </div>

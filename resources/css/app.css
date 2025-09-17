@@ -12,6 +12,7 @@ body {
 body .button {
   cursor: pointer;
   padding: 10px 15px;
+  font-weight: 500;
   border-radius: 8px;
   outline: 1.5px solid #273B98;
   background: #273B98;
@@ -24,7 +25,7 @@ body .button:hover {
   outline: 1.5px solid #273B98;
   background: #fff;
   color: #273B98;
-  font-weight: 350;
+  font-weight: 600;
 }
 body nav {
   display: flex;
@@ -90,17 +91,29 @@ body .wrapper-user .hugeimg {
   border-radius: 8px;
   margin-bottom: 40px;
 }
-body .wrapper-user .categories .category-tab {
-  background-image: url("https://www.svgrepo.com/show/508699/landscape-placeholder.svg");
-  background-repeat: no-repeat;
-  background-size: cover;
-  width: 200px;
+body .wrapper-user .section1 {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+body .wrapper-user .section1 .category-tab {
   height: 200px;
+  width: 200px;
   padding: 10px;
   border-radius: 8px;
 }
-body .wrapper-user .categories .section1 {
-  width: 100%;
+body .wrapper-user .section1 .category-tab img {
+  position: absolute;
+  max-width: 200px;
+  max-height: 200px;
+  z-index: 1;
+}
+body .wrapper-user .section1 .category-tab p {
+  padding: 10px;
+  position: relative;
+  z-index: 2;
+  font-weight: 600;
 }
 body .login {
   min-width: 100vw;
