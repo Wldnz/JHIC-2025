@@ -376,8 +376,9 @@ body .wrapper-admin .right .content .form-data .wrapper-field .wrapper-input sel
   outline: none;
 }
 body .wrapper-admin .right .content .form-data .wrapper-field .wrapper-input textarea {
-  min-height: 250px;
-  resize: none;
+  height: 125px;
+  max-height: 250px;
+  resize: vertical;
 }
 body .wrapper-admin .right .content .form-data .wrapper-field .wrapper-input select {
   background-color: transparent;
@@ -388,17 +389,20 @@ body .wrapper-admin .right .content .form-data .wrapper-image {
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  gap: 10px;
+  gap: 20px;
 }
 body .wrapper-admin .right .content .form-data .wrapper-image .image-product {
   width: 250px;
-  height: 200px;
+  height: 250px;
   position: relative;
   border: 3px dotted #273b98;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 body .wrapper-admin .right .content .form-data .wrapper-image .image-product img {
   width: inherit;
-  height: inherit;
+  height: 240px;
   object-fit: contain;
 }
 body .wrapper-admin .right .content .form-data .wrapper-image .image-product:hover > .action-product {
@@ -444,6 +448,21 @@ body .wrapper-admin .right .content .form-data .wrapper-image .image-product .ac
 body .wrapper-admin .right .content .form-data .wrapper-image .image-product .action-product .btn-delete {
   background-color: red;
 }
+body .wrapper-admin .right .content .form-data .wrapper-image .image-product .identifier {
+  position: absolute;
+  top: -15px;
+  left: -15px;
+  width: 35px;
+  height: 35px;
+  padding: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background-color: #273b98;
+  color: white;
+  scale: 0.6;
+}
 body h2 {
   font-size: 2.25rem;
 }
@@ -474,22 +493,32 @@ body .management-table {
   display: flex;
   flex-direction: column;
   gap: 15px;
+  padding: 10px;
 }
 body .management-table .title {
   display: flex;
+  justify-content: space-between;
   align-items: center;
   gap: 15px;
 }
-body .management-table .title div {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  animation: blinking 400ms alternate infinite;
-}
+body .management-table .title .point-deactive,
 body .management-table .title .point-active {
-  background-color: rgb(116, 214, 116);
+  position: relative;
 }
-body .management-table .title .point-deactive {
+body .management-table .title .point-active::after,
+body .management-table .title .point-deactive::after {
+  content: "";
+  width: 15px;
+  height: 15px;
+  position: absolute;
+  top: 6px;
+  right: -20px;
+  background-color: rgb(116, 214, 116);
+  border-radius: 50%;
+  scale: 1;
+  animation: blinking 1s infinite backwards;
+}
+body .management-table .title .point-deactive::after {
   background-color: red;
 }
 @keyframes blinking {
@@ -499,6 +528,18 @@ body .management-table .title .point-deactive {
   100% {
     opacity: 1;
   }
+}
+body .management-table .title a {
+  width: 180px;
+  height: 40px;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.85rem;
+  border: 1px solid #273b98;
+  border-radius: 10px;
 }
 body .management-table .find-something {
   display: flex;

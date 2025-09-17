@@ -473,8 +473,9 @@ body {
                             }
 
                             textarea {
-                                min-height: 250px;
-                                resize: none;
+                                height: 125px;
+                                max-height: 250px;
+                                resize: vertical;
                             }
                             select {
                                 background-color: transparent;
@@ -487,17 +488,21 @@ body {
                         flex-wrap: wrap;
                         justify-content: center;
                         align-items: center;
-                        gap: 10px;
+                        gap: 20px;
 
                         .image-product {
                             width: 250px;
-                            height: 200px;
+                            height: 250px;
                             position: relative;
                             border: 3px dotted $color-accent;
 
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+
                             img{
                                 width: inherit;
-                                height: inherit;
+                                height: 240px;
                                 object-fit: contain;
                             }
 
@@ -550,6 +555,27 @@ body {
                                     background-color: red;
                                 }
                             }
+                            .identifier{
+                                position: absolute;
+                                top: -15px;
+                                left: -15px;
+
+                                width: 35px;
+                                height: 35px;
+
+                                padding: 5px;
+
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
+
+                                border-radius: 50%;
+
+                                background-color: $color-accent;
+                                color: white;
+
+                                scale: .6;
+                            }
                         }
                     }
                 }
@@ -594,22 +620,39 @@ body {
         display: flex;
         flex-direction: column;
         gap: 15px;
+
+        padding: 10px;
+
         .title {
             display: flex;
+            justify-content: space-between;
             align-items: center;
             gap: 15px;
 
-            div {
-                width: 20px;
-                height: 20px;
-                border-radius: 50%;
-                animation: blinking 400ms alternate infinite;
-            }
-            .point-active {
-                background-color: rgb(116, 214, 116);
+            
+            .point-deactive,
+            .point-active{
+                position: relative;
             }
 
-            .point-deactive {
+            .point-active::after,
+            .point-deactive::after {
+                content: "";
+                width: 15px;
+                height: 15px;
+
+                position: absolute;
+                top: 6px;
+                right: -20px;
+                
+                background-color: rgb(116, 214, 116);
+                border-radius: 50%;
+
+                scale: 1;
+                animation: blinking 1s infinite backwards;
+            }
+
+            .point-deactive::after {
                 background-color: red;
             }
 
@@ -621,6 +664,24 @@ body {
                     opacity: 1;
                 }
             }
+
+            a{
+                width: 180px;
+                height: 40px;
+
+                padding: 10px;
+
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                gap: 10px;
+
+                font-size: $font-size-s;
+                
+                border: 1px solid $color-accent;
+                border-radius: 10px;
+            }
+
         }
 
         .find-something {
