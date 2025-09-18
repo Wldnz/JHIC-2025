@@ -18,10 +18,11 @@ class ActivityFactory extends Factory
 
     public function definition(): array
     {
+        $user = User::query()->inRandomOrder()->first();
         return [
-            'user_nis' => User::inRandomOrder()->first(),
-            'fullname' => User::inRandomOrder()->first()->fullname,
-            'action' => "Creating",
+            'user_nis' => $user->nis,
+            'fullname' => $user->fullname,
+            'action' => fake()->sentence(),
         ];
     }
 }

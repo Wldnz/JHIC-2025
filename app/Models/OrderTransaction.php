@@ -9,7 +9,7 @@ class OrderTransaction extends Model
 {
     /** @use HasFactory<\Database\Factories\OrderTransactionFactory> */
     use HasFactory;
-    protected $table = 'order_transaction';
+    protected $table = 'order_transactions';
     protected $fillable = [
         'id',
         'transaction_id',
@@ -17,4 +17,16 @@ class OrderTransaction extends Model
         'quantity',
         'price'
     ];
+
+    public function transaction(){
+        return $this->belongsTo(Transaction::class, 'transaction_id', 'id');
+    }
+
+    public function product_variant(){
+        return $this->belongsTo(ProductVariant::class, 'product_variant_id', 'id');
+    }
+
+    public function totalPrice(){
+        return $this->quantity * $this->product_variant->price;
+    }
 }

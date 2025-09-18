@@ -6,7 +6,7 @@ use App\Models\Product;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\ProductVariant>
  */
 class ProductVariantFactory extends Factory
 {
@@ -26,11 +26,11 @@ class ProductVariantFactory extends Factory
     public function definition(): array
     {
         return [
-            'product_id' => Product::inRandomOrder()->first()->id,
-            'name' => fake()->name(),
-            'type' => $this->typesOrSizes[array_rand($this->typesOrSizes)],
-            'price' => str_pad(rand(0,9), rand(0,6),'2', STR_PAD_LEFT),
-            'stock' => random_int(1,100)    
+            'product_id' => Product::query()->inRandomOrder()->first()->id,
+            'name' => fake()->sentence(2, true),
+            'type' => fake()->randomElement($this->typesOrSizes),
+            'price' => fake()->numberBetween(1_000, 100_000),
+            'stock' => fake()->numberBetween(1, 100),
         ];
     }
 }

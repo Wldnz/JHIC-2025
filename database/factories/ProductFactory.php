@@ -19,10 +19,10 @@ class ProductFactory extends Factory
     public function definition(): array
     {
         return [
-            'id' => fake()->unique()->randomDigit(),
-            'name' => fake()->name(),
-            'category' => $this->categorys[array_rand($this->categorys)],
-            'visible' => true
+            'name' => fake()->sentence(3, true),
+            'category' => fake()->randomElement($this->categorys),
+            'description' => fake()->text(),
+            'visible' => true,
         ];
     }
 }
