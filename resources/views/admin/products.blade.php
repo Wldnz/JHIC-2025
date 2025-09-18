@@ -6,8 +6,11 @@
     ])
     <div class="management-table">
         <div class="title">
-            <h3>{{ $stats['total'] }} Total Products</h3>
-            <div class="point-active"></div>
+            <h3 class='point-active'>{{ $stats['total'] }} Total Products</h3>
+            <a href="{{ route('admin.store-product') }}" class="btn">
+                <span class="">Tambah Produk</span>
+                @include('_components._sprite-icons', ['name' => 'add', 'size' => 15])
+            </a>
         </div>
         <div class="find-something">
             <div class="wrapper-filter">
@@ -57,23 +60,7 @@
                     @endif
                     <td>
                         {{ $product->category }}
-                        <div class="profile">
-                             @include('_components._sprite-icons', ['name' => 'tree-dots', 'size' => 20])
-                            <ul class="main-menu">
-                                <li>
-                                    <a href="{{ route('admin.detail-product', ['product' =>  $product->id ])}}">
-                                        @include('_components._sprite-icons', ['name' => 'box-edit', 'size' => 20])
-                                        Edit Produk
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="{{ route("admin.products") }}">
-                                        @include('_components._sprite-icons', ['name' => 'trash', 'size' => 20])
-                                        Hapus Produk
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
+                        
                     </td>
                 </tr>
             @endforeach
