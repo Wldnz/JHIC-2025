@@ -33,57 +33,57 @@
             @include('_components._sprite-icons', ['name' => 'add', 'size' => 18])
         </button>
     </form>
-    <div class="management-table">
-        <div class="title">
-            <h3 class=''>Variant - Variant Product</h3>
-            <a href="{{ route('admin.store-product') }}" class="btn">
-                <span class="">Tambah Produk</span>
-                @include('_components._sprite-icons', ['name' => 'add', 'size' => 15])
-            </a>
-        </div>
-        <table>
-            <tr>
-                <th>ID</th>
-                <th>Nama</th>
-                <th>Tipe / Size</th>
-                <th>Harga</th>
-                <th>Stok</th>
-                <th>Dibuat Pada</th>
-            </tr>
-            @foreach($product->variants as $variant)
-                <tr>
-                    <td> {{ $variant->id }} </td>
-                    <td> {{ $variant->name }} </td>
-                    <td> {{ $variant->type }} </td>
-                    <td> {{ $variant->price }} </td>
-                    <td> {{ $variant->stock }} </td>
-                    <td>
-                        {{ $variant->created_at }}
-                        <div class="profile">
-                            @include('_components._sprite-icons', ['name' => 'tree-dots', 'size' => 20])
-                            <ul class="main-menu">
-                                <li>
-                                    <a href="{{ route('admin.detail-product', ['product' => $product->id])}}">
-                                        @include('_components._sprite-icons', ['name' => 'box-edit', 'size' => 20])
-                                        Edit Variant
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="{{ route("admin.products") }}">
-                                        @include('_components._sprite-icons', ['name' => 'trash', 'size' => 20])
-                                        Hapus Variant
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </td>
-                </tr>
-            @endforeach
-        </table>
-    </div>
 
+    @include('_components._management-table', [
+        'management' => [ 'title' => 'Tambahkan Variant' ],
+        'columns' => [
+            'id' => 'ID',
+            'name' => 'Nama',
+            'type' => 'Tipe',
+            'price' => 'Harga',
+            'stock' => 'Stok',
+            'created_at' => 'Dibuat Pada'
+        ],
+        'datas' => $product->variants,
+        'actions' => [
+            'Edit Variant' => [
+                'action-name' => 'edit',
+                'icon-name' => 'product',
+            ],
+            'Hapus Variant' => [
+                'action-name' => 'delete',
+                'icon-name' => 'trash',
+            ]
+        ],
+    ]) 
 </main>
 
+<div class="alert-message">
+    <form class="card-form" id="card-form-variant">
+        @csrf
+        <h4>Tambahkan Variant Produk</h4>
+        <div class="wrapper-input">
+            <label for="name">Nama Variant<span> *</span></label>
+            <input type="text" name="name" id="name" placeholder="Masukkan nama variant produk" minlength="3" maxlength="250" required>
+        </div>
+        <div class="wrapper-input">
+            <label for="type">Tipe / Size<span> *</span></label>
+            <input type="text" name="type" id="type" placeholder="Masukkan tipe / size variant produk" minlength="3" maxlength="250" required>
+        </div>
+        <div class="wrapper-input">
+            <label for="price">Harga Variant<span> *</span></label>
+            <input type="number" name="price" id="price" placeholder="Masukkan harga variant produk" min="0" required>
+        </div>
+        <div class="wrapper-input">
+            <label for="stock">Stok Variant<span> *</span></label>
+            <input type="number" name="stock" id="stock" placeholder="Masukkan stok variant produk" min="0" required>
+        </div>
+        <button type="submit" class="btn-yes-anouncement">Tambahkan Variant</button>
+        <button type="button" class="btn-close-anouncement">Tutup Pemberitahuan</button>
+    </form>
+</div>
+
+<!-- script untuk handle image -->
 <script defer>
     let image = Array.from(@json($product->images));
     
@@ -198,6 +198,103 @@
     }
 
     loadImage();
+
+</script>
+
+<!-- script untuk handle variant product  -->
+<script defer>
+
+    let variants = Array.from(@json($product->variants));
+
+    function addProduct( name, type, price, stock ){
+        variants.push({
+            id : new Date().getTime(),
+            name,
+            type,
+            price,
+            stock,
+            created_at : new Date();
+        });
+    }
+
+    function deleteProduct(id){
+        if(variants.length == 1) return;
+        if(!confirm('Apakah anda yakin ingin menghapus variant ini?')) return;
+        variants = variants.filter(value => value.id != id);
+        loadVariant();
+    }
+
+    function getColumn(){
+        let stringColumn = '<tr>';
+        Array.from(document.querySelector('tbody').children[0].children).forEach(element => {
+            stringColumn += `<td> ${element.textContent} </td>\n`;
+        });
+        stringColumn += '</tr>';
+        return stringColumn;
+    }
+
+    function loadVariant(){
+        let stringVariant = getColumn();
+        variants.forEach((value, index) => {
+            stringVariant += `<tr>
+                                <td> ${value.id} </td>
+                                <td> ${value.name} </td>
+                                <td> ${value.type} </td>
+                                <td> ${value.price} </td>
+                                <td> ${value.stock} </td>
+                                <td> 
+                                    ${value.created_at}
+                                    <div class="profile">
+                                        @include('_components._sprite-icons', ['name' => 'tree-dots', 'size' => 20])
+                                        <ul class="main-menu">
+                                            <li id="edit">
+                                                <a>
+                                                    @include('_components._sprite-icons', ['name'=> 'box-edit' , 'size' => 20])
+                                                    Edit Variant
+                                                </a>
+                                            </li>
+                                            <li id="delete">
+                                                <a>
+                                                    @include('_components._sprite-icons', ['name'=> 'trash' , 'size' => 20])
+                                                    Delete Variant
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>`;
+        });
+        document.querySelector('tbody').innerHTML = stringVariant;
+    }
+
+    function setActionVariant(){
+
+    }
+
+    document.getElementById('card-form-variant').addEventListener('submit', (e) => {
+        e.preventDefault();
+        addProduct(
+            e.target[0].value,
+            e.target[1].value,
+            e.target[2].value,
+            e.target[3].value
+        );
+        closeFormVariant();
+        loadVariant();
+    });
+
+    function openFormVariant(){
+        document.querySelector('.alert-message').style.display = "flex";
+    }
+
+    function closeFormVariant(){
+        document.querySelector('.alert-message').style.display = "none";
+    }
+
+    document.querySelector('.management-table').children[0].children[1].addEventListener('click', openFormVariant);
+
+    document.querySelector('.btn-close-anouncement').addEventListener('click', closeFormVariant);
+
 
 </script>
 

@@ -4,84 +4,42 @@
     "name" => "Product",
     "data" => $stats
     ])
-    <div class="management-table">
-        <div class="title">
-            <h3 class='point-active'>{{ $stats['total'] }} Total Products</h3>
-            <a href="{{ route('admin.store-product') }}" class="btn">
-                <span class="">Tambah Produk</span>
-                @include('_components._sprite-icons', ['name' => 'add', 'size' => 15])
-            </a>
-        </div>
-        <div class="find-something">
-            <div class="wrapper-filter">
-                <div class="wrapper-select">
-                    <select name="stock" id="select-stock">
-                        <option value="all">Semuanya</option>
-                        <option value="low">Stok Sedikit</option>
-                        <option value="available">Stok Tersedia</option>
-                        <option value="empty">Stok Habis</option>
-                    </select>
-                    <div class="wrapper-icon">
-                        @include("_components._sprite-icons", [ "name" => "drop-down", "size" => 20 ])
-                    </div>
-                </div>
-            </div>
-            <form class="wrapper-search">
-                <input type="text" name="search" placeholder="Cari Nama Produk" required>
-                <button type="submit" class="search-engine">
-                    @include("_components._sprite-icons", [ "name" => "search", "color" => "white", "size" => 20 ])
-                </button>
-            </form>
-        </div>
-        <table>
-            <tr>
-                <th>ID Product</th>
-                <th>Name</th>
-                <th>Variant</th>
-                <th>Type/Size</th>
-                <th>Stock</th>
-                <th>Category</th>
-            </tr>
-            @php
-                $count_product=0;
-            @endphp
-            @foreach ($products as $product)
-                <tr>
-                    <td>{{ $product->id }}</td>
-                    <td>{{ $product->name }}</td>
-                    @if (count($product->variants) > 0)
-                        <td>{{ $product->variants[0]->stock }}</td>
-                        <td>{{ $product->variants[0]->type }}</td>
-                        <td>{{ $product->variants[0]->stock }}</td>
-                    @else
-                        <td>Belum ada stock</td>
-                        <td>Belum ada stock</td>
-                        <td>Belum ada stock</td>
-                    @endif
-                    <td>
-                        {{ $product->category }}
-                        
-                    </td>
-                </tr>
-            @endforeach
-        </table>
-        <form class="wrapper-pagination">
-            <button type="{{ $currentPage - 1 <= 0 ? 'button' : 'submit' }}" class="btn-page btn-page-action {{ $currentPage - 1 <= 0? 'btn-not-allowed' : '' }}" name="page" value="{{ $currentPage - 1 }}"><</button>
-            <div class="page">
-                <button type="submit" class="btn-page {{ $currentPage == 1? 'btn-active' : '' }}" name="page" value="1">1</button>
-                @php $countButtonPage=0; @endphp
-                @for($i =$currentPage; $i <= $currentPage + 2; $i++)
-                    @if ($i> 1 && $i < $maxPage)
-                        <button type="submit" class="btn-page {{ $currentPage == $i? 'btn-active' : '' }}" name="page" value="{{ $i }}">{{ $i }}</button>
-                    @endif
-                    @if($count_product == 2) @break @endif
-                @endfor
-                <button type="submit" class="btn-page {{ $currentPage == $maxPage? 'btn-active' : '' }}" name="page" value="{{ $maxPage }}">{{ $maxPage }}</button>
-            </div>
-            <button type="{{ $currentPage + 1 > $maxPage ? 'button' : 'submit' }}" class="btn-page btn-page-action {{ $currentPage + 1 > $maxPage? 'btn-not-allowed' : '' }}" name="page" value="{{ $currentPage + 1 }}">></button>
-        </form>
-    </div>
+    @include('_components._management-table', [
+        'management' => ['title' => 'Tambahkan Produk', 'destination' => route('admin.store-product')],
+        'columns' => [
+            'id' => 'ID Produk',
+            'name' => 'Nama Produk',
+            'variants' => [
+                'variant' => 'Variant Produk',
+                'type' => 'Tipe / Size',
+                'stock' => 'Stok Produk',
+            ],
+            'created_at' => 'Dibuat Pada',
+        ],
+        'total' => $stats['total'],
+        'datas' => $products,
+        'actions' => [
+            'Edit Produk' => [
+                'action-name' => 'product',
+                'icon-name' => 'product',
+                'route-name' => 'admin.detail-product',
+            ],
+            'Hapus Produk' => [
+                'action-name' => 'product',
+                'icon-name' => 'trash',
+                'route-name' => 'admin.detail-product',
+            ]
+        ],
+        'pagination' => [
+            'current' => $currentPage,
+            'max' => $maxPage
+        ]
+    ])
 </main>
+
+@php
+ logger('as' , [$products])
+@endphp
 
 <div class="alert-message">
     <div class="card-message">
