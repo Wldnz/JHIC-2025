@@ -7,16 +7,22 @@ $font-size-xl: 1.25rem;
 $font-size-2xl: 1.5rem;
 $font-size-3xl: 1.75rem;
 $font-size-4xl: 2.25rem;
+$font-size-5xl: 4rem;
+$font-size-6xl: 7rem;
 $color-primary: #fff;
 $color-secondary: #eaf7f9;
 $color-accent: #273b98;
-$background-active: #eaf7f9;
 $border-radius: 8px;
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+img
+{
+    object-fit: fill;
+    object-position: center;
 }
 
 @mixin under-1000px {
@@ -27,11 +33,14 @@ $border-radius: 8px;
 
 body {
     font-family: "Montserrat", "sans-serif";
+    background-color: $color-primary;
     font-size: $font-size-l;
+    color: $color-accent;
 
     .button {
         cursor: pointer;
         padding: 10px 15px;
+        font-weight: 500;
         border-radius: $border-radius;
         outline: 1.5px solid $color-accent;
         background: $color-accent;
@@ -44,7 +53,7 @@ body {
             outline: 1.5px solid $color-accent;
             background: $color-primary;
             color: $color-accent;
-            font-weight: 350;
+            font-weight: 600;
         }
     }
 
@@ -112,33 +121,127 @@ body {
         }
     }
 
-    .wrapper-user {
+    .wrapper-user 
+    {
         padding: 20px;
 
-        .hugeimg {
+        .hugeimg 
+        {
             width: 100%;
             object-fit: cover;
-            aspect-ratio: 16/9;
+            aspect-ratio: 16/7;
             border-radius: $border-radius;
             margin-bottom: 40px;
+            background: radial-gradient(circle,rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, .6) 100%),url(/public/images/dashboard-img-1.png);
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size:auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            border-radius: $border-radius;
+            
+            &::before
+            {
+                border-radius: $border-radius;
+                position: absolute;
+                inset: 0;
+                content: "";
+                background: #00000062;
+                z-index: 2;
+            }
+            
+            h1
+            {
+                z-index: 3;
+                font-size: $font-size-6xl;
+                color: $color-primary;
+                margin: 0 0 20px 0;
+            }
+            img
+            {
+                z-index: 3;
+                width: 60%;
+                aspect-ratio: 16/3;
+            }
         }
-
-        .categories {
+        
+        .category-section {
+            margin-top: 20px;
+            flex-wrap: wrap;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            gap: 40px 25px;
+        
             .category-tab {
-                background-image: url("https://www.svgrepo.com/show/508699/landscape-placeholder.svg");
-                background-repeat: no-repeat;
-                background-size: cover;
-                width: 200px;
-                height: 200px;
+                height: 270px;
+                width: 250px;
                 padding: 10px;
                 border-radius: $border-radius;
+                position: relative;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+
+                img
+                {
+                    border-radius: inherit;
+                    position: absolute;
+                    inset: 0;
+                    z-index: 1;
+                    height: 100%;
+                    width: 100%;
+                    background-color: #000;
+                }
+                .vignette
+                {
+                    border-radius: inherit;
+                    position: absolute;
+                    inset: 0;
+                    opacity: .5;
+                    z-index: 2;
+                    background: linear-gradient(to bottom,rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 1) 100%);
+                }
+                p
+                {
+                    position:relative;
+                    font-size: $font-size-s;
+                    z-index: 3;
+                    color: $color-primary;
+                    font-weight: 500;
+                    width: 200px;
+                }
+                h3
+                {
+                    position:relative;
+                    z-index: 3;
+                    color: $color-primary;
+                    font-weight: 700;
+                }
+                &::before
+                {
+                    content: "";
+                    position: absolute;
+                    width: 30px;
+                    height: 30px;
+                    background: url(/public/icons/Arrow_Up_Right_MD.png), $color-accent;
+                    background-size: cover;
+                    outline: 10px solid #fff;
+                    bottom: 0;
+                    right: 0;
+                    z-index: 4;
+                    border-radius: 30px;
+                }
             }
 
-            .section1 {
-                width: 100%;
-            }
         }
+                
     }
+        
+        
 
     .login {
         min-width: 100vw;
@@ -201,7 +304,6 @@ body {
                         background-color: $color-secondary;
                         color: $color-accent;
                         font-size: $font-size-xl;
-                        // background-color: $color-accent;
                         color: $color-accent;
                         font-size: 18px;
                         border: none;
@@ -311,7 +413,7 @@ body {
                         .active {
                             font-weight: bold;
 
-                            background-color: $background-active;
+                            background-color: $color-secondary;
                             color: $color-accent;
 
                             position: relative;
@@ -855,7 +957,7 @@ body {
 
             padding: 5px 10px;
 
-            background-color: $background-active;
+            background-color: $color-secondary;
             border: 1px solid $color-accent;
             border-radius: 10px;
 
@@ -1095,4 +1197,77 @@ body {
         color: inherit;
         text-decoration: none;
     }
+
+    footer
+    {
+        border-top: 2px solid $color-accent;
+        width: 100%;
+        padding: 40px 15%;
+        height: auto;
+        display: flex;
+        justify-content: center;
+        position: relative;
+        margin: 20px 0 0 0;
+
+        span
+        {
+            position: absolute;
+            bottom: 30px;
+            right: 50%;
+            transform: translate(50%, 0);
+            background-color: $color-primary;
+            outline: 2px solid $color-accent;
+            border-radius: $border-radius;
+            padding: 10px;
+            visibility: hidden;
+            opacity: 0;
+            transition: visibility 0s, opacity .1s;
+
+            p
+            {
+                color: $color-accent;
+            }
+        }
+
+        .links
+        {
+
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            gap: 7px;
+            padding: 10px;
+
+            h4
+            {
+                color: $color-accent;
+                font-size: $font-size-xl;
+                margin-bottom: 20px;
+            }
+
+            p{
+                color: $color-accent;
+                position: relative;
+                display: inline;
+                cursor: pointer;
+
+                &::before
+                {
+                    position: absolute;
+                    content: "";
+                    background: $color-accent;
+                    width: 0;
+                    height: 1.5px;
+                    bottom: 0;
+                    left: 0;
+                    transition: .2s;
+                }
+                &:hover::before
+                {
+                    width: 100%;
+                }
+            }
+        }
+    }
+
 }

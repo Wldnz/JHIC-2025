@@ -4,13 +4,21 @@
   box-sizing: border-box;
 }
 
+img {
+  object-fit: fill;
+  object-position: center;
+}
+
 body {
   font-family: "Montserrat", "sans-serif";
+  background-color: #fff;
   font-size: 1.15rem;
+  color: #273b98;
 }
 body .button {
   cursor: pointer;
   padding: 10px 15px;
+  font-weight: 500;
   border-radius: 8px;
   outline: 1.5px solid #273b98;
   background: #273b98;
@@ -23,7 +31,7 @@ body .button:hover {
   outline: 1.5px solid #273b98;
   background: #fff;
   color: #273b98;
-  font-weight: 350;
+  font-weight: 600;
 }
 body .navigation-user {
   display: flex;
@@ -85,21 +93,100 @@ body .wrapper-user {
 body .wrapper-user .hugeimg {
   width: 100%;
   object-fit: cover;
-  aspect-ratio: 16/9;
+  aspect-ratio: 16/7;
   border-radius: 8px;
   margin-bottom: 40px;
-}
-body .wrapper-user .categories .category-tab {
-  background-image: url("https://www.svgrepo.com/show/508699/landscape-placeholder.svg");
+  background: radial-gradient(circle, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.6) 100%), url(/public/images/dashboard-img-1.png);
   background-repeat: no-repeat;
-  background-size: cover;
-  width: 200px;
-  height: 200px;
-  padding: 10px;
+  background-position: center;
+  background-size: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
   border-radius: 8px;
 }
-body .wrapper-user .categories .section1 {
+body .wrapper-user .hugeimg::before {
+  border-radius: 8px;
+  position: absolute;
+  inset: 0;
+  content: "";
+  background: rgba(0, 0, 0, 0.3843137255);
+  z-index: 2;
+}
+body .wrapper-user .hugeimg h1 {
+  z-index: 3;
+  font-size: 7rem;
+  color: #fff;
+  margin: 0 0 20px 0;
+}
+body .wrapper-user .hugeimg img {
+  z-index: 3;
+  width: 60%;
+  aspect-ratio: 16/3;
+}
+body .wrapper-user .category-section {
+  margin-top: 20px;
+  flex-wrap: wrap;
   width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: 40px 25px;
+}
+body .wrapper-user .category-section .category-tab {
+  height: 270px;
+  width: 250px;
+  padding: 10px;
+  border-radius: 8px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+body .wrapper-user .category-section .category-tab img {
+  border-radius: inherit;
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  height: 100%;
+  width: 100%;
+  background-color: #000;
+}
+body .wrapper-user .category-section .category-tab .vignette {
+  border-radius: inherit;
+  position: absolute;
+  inset: 0;
+  opacity: 0.5;
+  z-index: 2;
+  background: linear-gradient(to bottom, rgb(0, 0, 0) 0%, rgba(0, 0, 0, 0) 50%, rgb(0, 0, 0) 100%);
+}
+body .wrapper-user .category-section .category-tab p {
+  position: relative;
+  font-size: 0.85rem;
+  z-index: 3;
+  color: #fff;
+  font-weight: 500;
+  width: 200px;
+}
+body .wrapper-user .category-section .category-tab h3 {
+  position: relative;
+  z-index: 3;
+  color: #fff;
+  font-weight: 700;
+}
+body .wrapper-user .category-section .category-tab::before {
+  content: "";
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  background: url(/public/icons/Arrow_Up_Right_MD.png), #273b98;
+  background-size: cover;
+  outline: 10px solid #fff;
+  bottom: 0;
+  right: 0;
+  z-index: 4;
+  border-radius: 30px;
 }
 body .login {
   min-width: 100vw;
@@ -875,6 +962,63 @@ body ul {
 body a {
   color: inherit;
   text-decoration: none;
+}
+body footer {
+  border-top: 2px solid #273b98;
+  width: 100%;
+  padding: 40px 15%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  margin: 20px 0 0 0;
+}
+body footer span {
+  position: absolute;
+  bottom: 30px;
+  right: 50%;
+  transform: translate(50%, 0);
+  background-color: #fff;
+  outline: 2px solid #273b98;
+  border-radius: 8px;
+  padding: 10px;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s, opacity 0.1s;
+}
+body footer span p {
+  color: #273b98;
+}
+body footer .links {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 7px;
+  padding: 10px;
+}
+body footer .links h4 {
+  color: #273b98;
+  font-size: 1.25rem;
+  margin-bottom: 20px;
+}
+body footer .links p {
+  color: #273b98;
+  position: relative;
+  display: inline;
+  cursor: pointer;
+}
+body footer .links p::before {
+  position: absolute;
+  content: "";
+  background: #273b98;
+  width: 0;
+  height: 1.5px;
+  bottom: 0;
+  left: 0;
+  transition: 0.2s;
+}
+body footer .links p:hover::before {
+  width: 100%;
 }
 
 /*# sourceMappingURL=app.css.map */
