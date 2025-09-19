@@ -28,7 +28,7 @@ Route::name('student.')->middleware([isLogin::class])->group(function () {
     Route::get('/transactions/{transaction}', [UserController::class, 'detailTransaction'])->name('detail-transaction');
 
     Route::get('/profile', [UserController::class, 'profile'])->name('profile');
-    Route::put('/profile/{profile}', [UserController::class, 'profile'])->name('profile');
+    Route::put('/profile/{profile}', [UserController::class, 'updateProfile'])->name('updateProfile');
 });
 
 

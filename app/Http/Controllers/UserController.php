@@ -23,7 +23,7 @@ class UserController extends Controller
             'password' => ['required']
         ]);
 
-        if(Auth::attempt($credentials)){
+        if(Auth::attempt($credentials, true)){
             $request->session()->regenerate();
             return redirect()->route('admin.dashboard');
         }
@@ -74,9 +74,9 @@ class UserController extends Controller
     }
 
     public function cart(){
-        $carts = Cart::with('product_variant_id')->get();
+        $carts = Cart::with('variantProduct')->get();
         $totalCost = $carts->sum(function($cart){
-            return $cart->product_variant_id->price * $cart->quantity;
+            return $cart->variantProduct->price * $cart->quantity;
         });
 
         return view("cart", compact("carts", "totalCost"));
@@ -157,5 +157,10 @@ class UserController extends Controller
     public function detailTransaction(Transaction $transaction){
         $transaction->load("orders");
         return view("detailTransaction", compact("transaction"));
+    }
+
+    public function profile() {
+        $user = auth()->user();
+        return view("profile", compact("user"));
     }
 }

@@ -6,13 +6,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $title  ?? "Bina Tata Usaha" }}</title>
-    <!-- <link rel="shortcut icon" href="favicon.ico" type="image/x-icon"> -->
     @vite(["resources/css/app.css", "resources/js/app.js"])
 </head>
 <body>
 
     <nav class="navigation-user">
-        <div class="left"><a href="#"><img src="https://smkbinainformatika.sch.id/wp-content/uploads/2022/11/logo.png"></a></div>
+        <div class="left"><a href="{{ route('student.dashboard') }}"><img src="{{asset ('images/bitu.png')}}"></a></div>
         <div class="center">
             <div class="links">
                 <a href="{{ route('student.dashboard') }}">HOME</a>
@@ -21,7 +20,31 @@
             </div>
         </div>
         
-        <div class="right"><a href="login.blade.php"><button class="button">Sign In</button></a></div>
+        <div class="right">
+            <a href="cart.blade.php"><button class="button button-circle"><img src="{{asset('icons/shop.svg')}}"></button></a>
+            <button onclick="floating('.float','.backdrop')" class="button button-circle"><img src="{{asset('icons/user.svg')}}"></button>
+            <div class="backdrop" onclick="floating('.float','.backdrop')"></div>
+            <div class="float">
+                <a href="{{ route('student.profile') }}"><div class="img-container"><img src="{{ asset('icons/user.svg') }}" alt=""></div><p>{{ Auth::user()->fullname }}</p></a>
+                <a href="{{ route('logout') }}"><div class="img-container"><img src="{{ asset('icons/Log_Out.svg') }}" alt=""></div><p>Logout</p></a>
+            </div>
+        </div>
     </nav>
     <main class="wrapper-user">
 </div>
+
+<script>
+    function floating(el1, el2)
+    {
+        const element = document.querySelector(el1);
+        const backdrop = document.querySelector(el2);
+        
+        element.classList.toggle("show");
+        backdrop.classList.toggle("show");
+        
+        document.addEventListener("scroll", () => {
+            element.classList.remove("show");
+            backdrop.classList.remove("show");
+        })
+    }
+</script>
