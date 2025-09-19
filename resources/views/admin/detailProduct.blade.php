@@ -59,7 +59,38 @@
 </main>
 
 <div class="alert-message">
-    <form class="card-form" id="card-form-variant">
+    @include('_components._card-form', [
+        'name' => 'variant',
+        'columns' => [
+            'name_variant' => [
+                'label-text' => 'Nama Variant', 
+                'placeholder' => 'Masukkan nama variant product',
+                'min' => 3,
+                'required' => true,
+            ],
+            'type_variant' => [
+                'label-text' => 'Tipe / Size Variant',
+                'placeholder' => 'Masukkan tipe / size variant product',
+                'min' => 1,
+                'required' => true,
+            ],
+            'price_variant' => [
+                'label-text' => 'Harga Variant',
+                'placeholder' => 'Masukkan harga variant product',
+                'min' => 1000,
+                'type' => 'number',
+                'required' => true,
+            ],
+            'stock_variant' => [
+                'label-text' => 'Stok Variant',
+                'placeholder' => 'Masukkan stok variant product',
+                'min' => 1,
+                'type' => 'number',
+                'required' => true,
+            ],
+        ]   
+    ])
+    <!-- <form class="card-form" id="card-form-variant">
         @csrf
         <h4>Tambahkan Variant Produk</h4>
         <div class="wrapper-input">
@@ -68,7 +99,7 @@
         </div>
         <div class="wrapper-input">
             <label for="type">Tipe / Size<span> *</span></label>
-            <input type="text" name="type" id="type" placeholder="Masukkan tipe / size variant produk" minlength="3" maxlength="250" required>
+            <input type="text" name="type" id="type" placeholder="Masukkan tipe / size variant produk" minlength="1" maxlength="20" required>
         </div>
         <div class="wrapper-input">
             <label for="price">Harga Variant<span> *</span></label>
@@ -80,7 +111,7 @@
         </div>
         <button type="submit" class="btn-yes-anouncement">Tambahkan Variant</button>
         <button type="button" class="btn-close-anouncement">Tutup Pemberitahuan</button>
-    </form>
+    </form> -->
 </div>
 
 <!-- script untuk handle image -->
@@ -213,7 +244,7 @@
             type,
             price,
             stock,
-            created_at : new Date();
+            created_at : new Date()
         });
     }
 
@@ -273,11 +304,12 @@
 
     document.getElementById('card-form-variant').addEventListener('submit', (e) => {
         e.preventDefault();
+    console.log(e)
         addProduct(
-            e.target[0].value,
             e.target[1].value,
             e.target[2].value,
-            e.target[3].value
+            e.target[3].value,
+            e.target[4].value
         );
         closeFormVariant();
         loadVariant();
