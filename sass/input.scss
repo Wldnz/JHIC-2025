@@ -19,8 +19,7 @@ $border-radius: 8px;
     padding: 0;
     box-sizing: border-box;
 }
-img
-{
+img {
     object-fit: fill;
     object-position: center;
 }
@@ -121,30 +120,32 @@ body {
         }
     }
 
-    .wrapper-user 
-    {
+    .wrapper-user {
         padding: 20px;
 
-        .hugeimg 
-        {
+        .hugeimg {
             width: 100%;
             object-fit: cover;
             aspect-ratio: 16/7;
             border-radius: $border-radius;
             margin-bottom: 40px;
-            background: radial-gradient(circle,rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, .6) 100%),url(/public/images/dashboard-img-1.png);
+            background: radial-gradient(
+                    circle,
+                    rgba(0, 0, 0, 0) 50%,
+                    rgba(0, 0, 0, 0.6) 100%
+                ),
+                url(/public/images/dashboard-img-1.png);
             background-repeat: no-repeat;
             background-position: center;
-            background-size:auto;
+            background-size: auto;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             position: relative;
             border-radius: $border-radius;
-            
-            &::before
-            {
+
+            &::before {
                 border-radius: $border-radius;
                 position: absolute;
                 inset: 0;
@@ -152,22 +153,20 @@ body {
                 background: #00000062;
                 z-index: 2;
             }
-            
-            h1
-            {
+
+            h1 {
                 z-index: 3;
                 font-size: $font-size-6xl;
                 color: $color-primary;
                 margin: 0 0 20px 0;
             }
-            img
-            {
+            img {
                 z-index: 3;
                 width: 60%;
                 aspect-ratio: 16/3;
             }
         }
-        
+
         .category-section {
             margin-top: 20px;
             flex-wrap: wrap;
@@ -175,7 +174,7 @@ body {
             display: flex;
             flex-direction: row;
             gap: 40px 25px;
-        
+
             .category-tab {
                 height: 270px;
                 width: 250px;
@@ -186,8 +185,7 @@ body {
                 flex-direction: column;
                 justify-content: space-between;
 
-                img
-                {
+                img {
                     border-radius: inherit;
                     position: absolute;
                     inset: 0;
@@ -196,38 +194,40 @@ body {
                     width: 100%;
                     background-color: #000;
                 }
-                .vignette
-                {
+                .vignette {
                     border-radius: inherit;
                     position: absolute;
                     inset: 0;
-                    opacity: .5;
+                    opacity: 0.5;
                     z-index: 2;
-                    background: linear-gradient(to bottom,rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 1) 100%);
+                    background: linear-gradient(
+                        to bottom,
+                        rgba(0, 0, 0, 1) 0%,
+                        rgba(0, 0, 0, 0) 50%,
+                        rgba(0, 0, 0, 1) 100%
+                    );
                 }
-                p
-                {
-                    position:relative;
+                p {
+                    position: relative;
                     font-size: $font-size-s;
                     z-index: 3;
                     color: $color-primary;
                     font-weight: 500;
                     width: 200px;
                 }
-                h3
-                {
-                    position:relative;
+                h3 {
+                    position: relative;
                     z-index: 3;
                     color: $color-primary;
                     font-weight: 700;
                 }
-                &::before
-                {
+                &::before {
                     content: "";
                     position: absolute;
                     width: 30px;
                     height: 30px;
-                    background: url(/public/icons/Arrow_Up_Right_MD.png), $color-accent;
+                    background: url(/public/icons/Arrow_Up_Right_MD.png),
+                        $color-accent;
                     background-size: cover;
                     outline: 10px solid #fff;
                     bottom: 0;
@@ -236,12 +236,8 @@ body {
                     border-radius: 30px;
                 }
             }
-
         }
-                
     }
-        
-        
 
     .login {
         min-width: 100vw;
@@ -602,17 +598,17 @@ body {
                             justify-content: center;
                             align-items: center;
 
-                            img{
+                            img {
                                 width: inherit;
                                 height: 240px;
                                 object-fit: contain;
                             }
 
-                            &:hover > .action-product{
+                            &:hover > .action-product {
                                 display: flex;
                             }
 
-                            .action-product{
+                            .action-product {
                                 width: inherit;
                                 height: inherit;
                                 padding: 10px;
@@ -626,7 +622,7 @@ body {
                                 top: 0;
                                 left: 0;
 
-                                button{
+                                button {
                                     width: 200px;
                                     height: 40px;
                                     padding: 8px;
@@ -639,10 +635,9 @@ body {
                                     background-color: $color-accent;
                                 }
 
-
-                                .btn-choose{
+                                .btn-choose {
                                     position: relative;
-                                    input{
+                                    input {
                                         width: inherit;
                                         height: inherit;
                                         position: absolute;
@@ -653,11 +648,11 @@ body {
                                     }
                                 }
 
-                                .btn-delete{
+                                .btn-delete {
                                     background-color: red;
                                 }
                             }
-                            .identifier{
+                            .identifier {
                                 position: absolute;
                                 top: -15px;
                                 left: -15px;
@@ -676,7 +671,7 @@ body {
                                 background-color: $color-accent;
                                 color: white;
 
-                                scale: .6;
+                                scale: 0.6;
                             }
                         }
                     }
@@ -733,9 +728,8 @@ body {
             align-items: center;
             gap: 15px;
 
-            
             .point-deactive,
-            .point-active{
+            .point-active {
                 position: relative;
             }
 
@@ -748,7 +742,7 @@ body {
                 position: absolute;
                 top: 6px;
                 right: -20px;
-                
+
                 background-color: rgb(116, 214, 116);
                 border-radius: 50%;
 
@@ -769,8 +763,8 @@ body {
                 }
             }
 
-            a{
-                width: 180px;
+            a {
+                min-width: 180px;
                 height: 40px;
 
                 padding: 10px;
@@ -781,11 +775,10 @@ body {
                 gap: 10px;
 
                 font-size: $font-size-s;
-                
+
                 border: 1px solid $color-accent;
                 border-radius: 10px;
             }
-
         }
 
         .find-something {
@@ -869,8 +862,8 @@ body {
             font-size: $font-size-s;
             border-spacing: 0px;
             border-collapse: collapse;
-            
-            tr{
+
+            tr {
                 border-bottom: 1px solid $color-accent;
             }
 
@@ -1004,7 +997,7 @@ body {
     .alert-message {
         width: 100vw;
         height: 100%;
-        display: flex;
+        display: none;
         flex-direction: column;
         justify-content: center;
         align-items: center;
@@ -1013,19 +1006,20 @@ body {
         top: 0;
         left: 0;
 
-        background-color: rgba(0, 0, 0, .8);
+        background-color: rgba(0, 0, 0, 0.8);
         backdrop-filter: blur(4px);
         text-align: center;
 
         .card-message {
             min-width: 320px;
+            max-width: 350px;
             min-height: 250px;
 
             display: flex;
             flex-direction: column;
             justify-content: space-evenly;
             align-items: center;
-            gap: 10px;
+            gap: 15px;
 
             background-color: white;
             padding: 10px;
@@ -1034,24 +1028,56 @@ body {
             span {
                 font-size: $font-size-s;
             }
+
+            .wrapper-button {
+                width: 70%;
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+
+                button {
+                    padding: 10px;
+                }
+            }
         }
 
-         button {
-                padding: 15px 5px;
+        .delete-message{
+            color: red;
 
-                background-color: transparent;
-                color: $color-accent;
+            button{
+                border-color: red;
+                color: red;
+            }
 
-                border: 1px solid $color-accent;
-                border-radius: 5px;
-                
-                cursor: pointer;
+            .btn-delete-anouncement {
+                color: white;
+                background-color: red;
+                font-weight: bolder;
+            }
+
+            .cooldown{
+                background-color: #424242;
+                cursor: not-allowed;
+                border: none;
+            }
+
         }
 
-        .btn-yes-anouncement{
+        button {
+            padding: 15px 5px;
+            background-color: transparent;
+            color: $color-accent;
+            border: 1px solid $color-accent;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn-yes-anouncement {
             color: white;
             background-color: $color-accent;
         }
+
+        animation: animate-alert 300ms forwards;
 
         @keyframes animate-alert {
             0% {
@@ -1062,56 +1088,48 @@ body {
             }
         }
 
-        animation: animate-alert 300ms forwards;
-
-        .card-form{
+        .card-form {
             width: 480px;
             min-height: 300px;
             background-color: white;
             border-radius: 8px;
-            
+
             padding: 15px;
-            display: flex;
+            display: none;
             flex-direction: column;
             justify-content: start;
             gap: 15px;
 
             text-align: start;
 
-            h4{
+            h4 {
                 margin-top: 5px;
             }
-            
-            .wrapper-input{
+
+            .wrapper-input {
                 display: flex;
                 flex-direction: column;
                 gap: 5px;
 
-                label{
+                label {
                     font-size: $font-size-m;
-                    
-                    span{
+
+                    span {
                         color: red;
                     }
                 }
 
-                input{
+                input {
                     height: 45px;
                     padding: 5px;
                     padding-left: 0;
                     border: none;
-                    border-bottom: 1px solid $color-accent ;
+                    border-bottom: 1px solid $color-accent;
                     outline: none;
                 }
             }
-            button{
-                
-            }
         }
-
     }
-
-    
 
     // animation here
     .open-sidebar {
@@ -1147,7 +1165,7 @@ body {
     }
 
     .button-submit-form {
-        display : flex;
+        display: flex;
         padding: 10px;
         gap: 10px;
         align-items: center;
@@ -1198,8 +1216,7 @@ body {
         text-decoration: none;
     }
 
-    footer
-    {
+    footer {
         border-top: 2px solid $color-accent;
         width: 100%;
         padding: 40px 15%;
@@ -1209,8 +1226,7 @@ body {
         position: relative;
         margin: 20px 0 0 0;
 
-        span
-        {
+        span {
             position: absolute;
             bottom: 30px;
             right: 50%;
@@ -1221,38 +1237,33 @@ body {
             padding: 10px;
             visibility: hidden;
             opacity: 0;
-            transition: visibility 0s, opacity .1s;
+            transition: visibility 0s, opacity 0.1s;
 
-            p
-            {
+            p {
                 color: $color-accent;
             }
         }
 
-        .links
-        {
-
+        .links {
             display: flex;
             flex-direction: column;
             width: 100%;
             gap: 7px;
             padding: 10px;
 
-            h4
-            {
+            h4 {
                 color: $color-accent;
                 font-size: $font-size-xl;
                 margin-bottom: 20px;
             }
 
-            p{
+            p {
                 color: $color-accent;
                 position: relative;
                 display: inline;
                 cursor: pointer;
 
-                &::before
-                {
+                &::before {
                     position: absolute;
                     content: "";
                     background: $color-accent;
@@ -1260,14 +1271,12 @@ body {
                     height: 1.5px;
                     bottom: 0;
                     left: 0;
-                    transition: .2s;
+                    transition: 0.2s;
                 }
-                &:hover::before
-                {
+                &:hover::before {
                     width: 100%;
                 }
             }
         }
     }
-
 }

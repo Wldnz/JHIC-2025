@@ -60,58 +60,79 @@
 
 <div class="alert-message">
     @include('_components._card-form', [
+        'title' => 'Tambah Variant Produk',
         'name' => 'variant',
+        'action_button' => 'Tambahkan Variant',
         'columns' => [
             'name_variant' => [
                 'label-text' => 'Nama Variant', 
                 'placeholder' => 'Masukkan nama variant product',
                 'min' => 3,
-                'required' => true,
+                'required' => true
             ],
             'type_variant' => [
                 'label-text' => 'Tipe / Size Variant',
                 'placeholder' => 'Masukkan tipe / size variant product',
                 'min' => 1,
-                'required' => true,
+                'required' => true
             ],
             'price_variant' => [
                 'label-text' => 'Harga Variant',
                 'placeholder' => 'Masukkan harga variant product',
                 'min' => 1000,
                 'type' => 'number',
-                'required' => true,
+                'required' => true
             ],
             'stock_variant' => [
                 'label-text' => 'Stok Variant',
                 'placeholder' => 'Masukkan stok variant product',
                 'min' => 1,
                 'type' => 'number',
-                'required' => true,
+                'required' => true
             ],
         ]   
     ])
-    <!-- <form class="card-form" id="card-form-variant">
-        @csrf
-        <h4>Tambahkan Variant Produk</h4>
-        <div class="wrapper-input">
-            <label for="name">Nama Variant<span> *</span></label>
-            <input type="text" name="name" id="name" placeholder="Masukkan nama variant produk" minlength="3" maxlength="250" required>
-        </div>
-        <div class="wrapper-input">
-            <label for="type">Tipe / Size<span> *</span></label>
-            <input type="text" name="type" id="type" placeholder="Masukkan tipe / size variant produk" minlength="1" maxlength="20" required>
-        </div>
-        <div class="wrapper-input">
-            <label for="price">Harga Variant<span> *</span></label>
-            <input type="number" name="price" id="price" placeholder="Masukkan harga variant produk" min="0" required>
-        </div>
-        <div class="wrapper-input">
-            <label for="stock">Stok Variant<span> *</span></label>
-            <input type="number" name="stock" id="stock" placeholder="Masukkan stok variant produk" min="0" required>
-        </div>
-        <button type="submit" class="btn-yes-anouncement">Tambahkan Variant</button>
-        <button type="button" class="btn-close-anouncement">Tutup Pemberitahuan</button>
-    </form> -->
+    @include('_components._card-form', [
+        'title' => 'Edit Variant Produk',
+        'name' => 'edit-variant',
+        'action' => 'update',
+        'action_button' => 'Ubah Variant',
+        'columns' => [
+            'id_variant' => [
+                'label-text' => 'ID Variant', 
+                'placeholder' => 'ID Variant tidak boleh kosong',
+                'min' => 1,
+                'type' => 'hidden',
+                'required' => true
+            ],
+            'name_variant' => [
+                'label-text' => 'Nama Variant', 
+                'placeholder' => 'Masukkan nama variant product',
+                'min' => 3,
+                'required' => true
+            ],
+            'type_variant' => [
+                'label-text' => 'Tipe / Size Variant',
+                'placeholder' => 'Masukkan tipe / size variant product',
+                'min' => 1,
+                'required' => true
+            ],
+            'price_variant' => [
+                'label-text' => 'Harga Variant',
+                'placeholder' => 'Masukkan harga variant product',
+                'min' => 1000,
+                'type' => 'number',
+                'required' => true
+            ],
+            'stock_variant' => [
+                'label-text' => 'Stok Variant',
+                'placeholder' => 'Masukkan stok variant product',
+                'min' => 1,
+                'type' => 'number',
+                'required' => true
+            ],
+        ]   
+    ])
 </div>
 
 <!-- script untuk handle image -->
@@ -237,7 +258,7 @@
 
     let variants = Array.from(@json($product->variants));
 
-    function addProduct( name, type, price, stock ){
+    function addVariant({ name, type, price, stock }){
         variants.push({
             id : new Date().getTime(),
             name,
@@ -248,7 +269,19 @@
         });
     }
 
-    function deleteProduct(id){
+    function updateVariant({ id, name, type, price, stock }){
+        variants = variants.map(value => {
+            if(value.id == id){
+                value.name = name;
+                value.type = type;
+                value.price = price;
+                value.stock= stock;
+            }
+            return value;
+        })
+    }
+
+    function deleteVariant(id){
         if(variants.length == 1) return;
         if(!confirm('Apakah anda yakin ingin menghapus variant ini?')) return;
         variants = variants.filter(value => value.id != id);
@@ -277,14 +310,14 @@
                                     ${value.created_at}
                                     <div class="profile">
                                         @include('_components._sprite-icons', ['name' => 'tree-dots', 'size' => 20])
-                                        <ul class="main-menu">
-                                            <li id="edit">
+                                        <ul class="main-menu main-menu-table">
+                                            <li id="edit-${value.id}">
                                                 <a>
                                                     @include('_components._sprite-icons', ['name'=> 'box-edit' , 'size' => 20])
                                                     Edit Variant
                                                 </a>
                                             </li>
-                                            <li id="delete">
+                                            <li id="delete-${value.id}">
                                                 <a>
                                                     @include('_components._sprite-icons', ['name'=> 'trash' , 'size' => 20])
                                                     Delete Variant
@@ -296,38 +329,97 @@
                             </tr>`;
         });
         document.querySelector('tbody').innerHTML = stringVariant;
+        setActionVariant();
     }
 
     function setActionVariant(){
-
+        [ "variant", "edit-variant" ].forEach(value => {
+            document.getElementById(`card-form-${value}`).addEventListener('submit', (e) => {
+                e.preventDefault();
+                const action = e.target.querySelector('.btn-yes-anouncement').dataset.action; 
+                switch(action){
+                    case 'add':
+                        addVariant({
+                            name : e.target[1].value,
+                            type : e.target[2].value,
+                            price : e.target[3].value,
+                            stock : e.target[4].value
+                        });
+                        break;
+                    case 'update':
+                        updateVariant({
+                            id : e.target[1].value,
+                            name : e.target[2].value,
+                            type : e.target[3].value,
+                            price : e.target[4].value,
+                            stock : e.target[5].value
+                        });
+                        break;
+                }
+                closeFormVariant(action == 'update' ? 'edit-variant' : 'variant');
+                loadVariant();
+            });
+        });
+        // close button 
+        const varianForm = [ 'variant', 'edit-variant' ];
+        document.querySelectorAll('.btn-close-anouncement').forEach((value, index) => value.addEventListener('click', () => closeFormVariant(varianForm[index]) ));
+        // add button
+        document.querySelector('.management-table').children[0].children[1].addEventListener('click', () => openFormVariant());
+        
+        // edit & delete button
+        document.querySelectorAll('.main-menu-table').forEach(main_menu => {
+                Array.from(main_menu.children).forEach(button => {
+                const action = button.id.split('-')[0];
+                const id = button.id.split('-')[1];
+                switch(action){
+                    case "edit":
+                        const variant = variants.filter(variant => variant.id == id)[0];
+                        const column = [ 'id', 'name', 'type', 'price', 'stock' ];
+                        
+                        button.addEventListener('click', () => {
+                            Array.from(document.getElementById('card-form-edit-variant').children)
+                            .filter(element => element.classList.contains('wrapper-input'))
+                            .forEach((wrapper,index) => {
+                                wrapper.children[wrapper.children.length - 1].value = variant[column[index]]; 
+                            });
+                            openFormVariant('edit-variant')
+                        });
+                        break;
+                    case "delete":
+                        button.addEventListener('click', () => deleteVariant(id))
+                        break;
+                }
+            });
+        });
     }
 
-    document.getElementById('card-form-variant').addEventListener('submit', (e) => {
-        e.preventDefault();
-    console.log(e)
-        addProduct(
-            e.target[1].value,
-            e.target[2].value,
-            e.target[3].value,
-            e.target[4].value
-        );
-        closeFormVariant();
-        loadVariant();
-    });
-
-    function openFormVariant(){
+    function openFormVariant(card_name = 'variant'){
         document.querySelector('.alert-message').style.display = "flex";
+        document.getElementById(`card-form-${card_name}`).style.display = "flex";
     }
-
-    function closeFormVariant(){
+    
+    function closeFormVariant(card_name = 'variant'){
         document.querySelector('.alert-message').style.display = "none";
+        document.getElementById(`card-form-${card_name}`).style.display = "none";
     }
 
-    document.querySelector('.management-table').children[0].children[1].addEventListener('click', openFormVariant);
-
-    document.querySelector('.btn-close-anouncement').addEventListener('click', closeFormVariant);
+    setActionVariant();
 
 
 </script>
 
-@include('_components._footerAdmin'):
+
+<div class="alert-message" style='display:flex'>
+    <div class="card-message delete-message">
+        <h4>Apakah anda yakin ingin menghapus variant unique?</h4>
+        @include('_components._sprite-icons', ['name' => 'product', 'color' => 'red', 'size' => 50])
+        <span>Selamat!, Produk berhasil ditambahkan,<br>Nikmati keuntungannya</span>
+        <div class="wrapper-button">
+            <button class="btn-delete-anouncement cooldown">9 Detik</button>
+            <button class="btn-close-anouncement">Tutup Pemberitahuan</button>
+        </div>
+    </div>
+</div>
+
+
+@include('_components._footerAdmin')

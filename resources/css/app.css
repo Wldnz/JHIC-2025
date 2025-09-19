@@ -617,7 +617,7 @@ body .management-table .title .point-deactive::after {
   }
 }
 body .management-table .title a {
-  width: 180px;
+  min-width: 180px;
   height: 40px;
   padding: 10px;
   display: flex;
@@ -814,7 +814,7 @@ body .profile .main-menu li:hover::before {
 body .alert-message {
   width: 100vw;
   height: 100%;
-  display: flex;
+  display: none;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -828,18 +828,45 @@ body .alert-message {
 }
 body .alert-message .card-message {
   min-width: 320px;
+  max-width: 350px;
   min-height: 250px;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
-  gap: 10px;
+  gap: 15px;
   background-color: white;
   padding: 10px;
   border-radius: 16px;
 }
 body .alert-message .card-message span {
   font-size: 0.85rem;
+}
+body .alert-message .card-message .wrapper-button {
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+body .alert-message .card-message .wrapper-button button {
+  padding: 10px;
+}
+body .alert-message .delete-message {
+  color: red;
+}
+body .alert-message .delete-message button {
+  border-color: red;
+  color: red;
+}
+body .alert-message .delete-message .btn-delete-anouncement {
+  color: white;
+  background-color: red;
+  font-weight: bolder;
+}
+body .alert-message .delete-message .cooldown {
+  background-color: #424242;
+  cursor: not-allowed;
+  border: none;
 }
 body .alert-message button {
   padding: 15px 5px;
@@ -867,7 +894,7 @@ body .alert-message .card-form {
   background-color: white;
   border-radius: 8px;
   padding: 15px;
-  display: flex;
+  display: none;
   flex-direction: column;
   justify-content: start;
   gap: 15px;
