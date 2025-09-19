@@ -39,11 +39,11 @@ untuk menyelesaikan halaman admin dibutuhkan
         [] filter
         [] managing query to use in chart
     Product
-        [] Page
-        [] Detail Page
-        [] Add Data
-        [] Edit Data
-        [] Delete Data
+       + Page
+       - alert-message
+       - refactoring
+       - detail-product
+       - well done
     Transaction
         [] Page
         [] Detail Page

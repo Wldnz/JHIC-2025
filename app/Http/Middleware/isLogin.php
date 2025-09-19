@@ -17,9 +17,9 @@ class isLogin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        // if(!Auth::check()){
-        //     return redirect()->route('login');
-        // }
+        if(!Auth::check()){
+            return redirect()->route('login');
+        }
         return $next($request);
     }
 }

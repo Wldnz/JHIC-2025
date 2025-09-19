@@ -1,42 +1,40 @@
-<aside class="left open-sidebar">
+<aside class="left close-sidebar">
     <nav class="navigation-side">
         <div class="wrapper-navigation">
             <div class="wrapper-image">
                 <div class="brand"></div>
                 <div class="logo"></div>
-                <!-- <img src="{{ asset("icons/default-logo.png") }}" alt="logo-bitu" height="50"> -->
-                <!-- @include('_components._sprite-icons', ['name' => 'dashboard', "color" => "black", 'size' => 40]) -->
             </div>
             <ul class="main-menu">
                 <li id="menu-dashboard">
                     <a href="{{ route("admin.dashboard") }}">
-                        @include('_components._sprite-icons', ['name' => 'dashboard', "color" => $currentPath == 'dashboard' ? '#273B98' : 'black', 'size' => 40])
+                        @include('_components._sprite-icons', ['name' => 'dashboard', "color" => $currentPath == 'dashboard' ? '#273B98' : 'black', 'size' => 25])
                         <span>Dashboard</span>
                     </a>
                 </li>
                 <li id="menu-products">
                     <a href="{{ route("admin.products") }}">
-                        @include('_components._sprite-icons', ['name' => 'product', "color" => $currentPath == 'products' ? '#273B98' : 'black', 'size' => 40])
+                        @include('_components._sprite-icons', ['name' => 'product', "color" => $currentPath == 'products' ? '#273B98' : 'black', 'size' => 25])
                         <span>Products</span>
                     </a>
                 </li>
                 <li id="menu-transactions">
                     <a href="{{ route("admin.transactions") }}">
-                        @include('_components._sprite-icons', ['name' => 'transaction', "color" => $currentPath == 'transactions' ? '#273B98' : 'black', 'size' => 40])
+                        @include('_components._sprite-icons', ['name' => 'transaction', "color" => $currentPath == 'transactions' ? '#273B98' : 'black', 'size' => 25])
                         <span>Transactions</span>
                     </a>
                 </li>
                 <li id="menu-accounts">
                     <a href="{{ route("admin.accounts") }}">
-                        @include('_components._sprite-icons', ['name' => 'account', "color" => $currentPath == 'accounts' ? '#273B98' : 'black', 'size' => 40])
+                        @include('_components._sprite-icons', ['name' => 'account', "color" => $currentPath == 'accounts' ? '#273B98' : 'black', 'size' => 25])
                         <span>Accounts</span>
                     </a>
                 </li>
             </ul>
         </div>
         <div class="wrapper-action">
-            @include('_components._sprite-icons', ['name' => 'exception', 'color' => '#273B98', 'size' => 40])
-            @include('_components._sprite-icons', ['name' => 'hamburger-menu', 'color' => '#273B98', 'size' => 40])
+            @include('_components._sprite-icons', ['name' => 'exception', 'color' => '#273B98', 'size' => 25])
+            @include('_components._sprite-icons', ['name' => 'hamburger-menu', 'color' => '#273B98', 'size' => 25])
         </div>
     </nav>
 </aside>
