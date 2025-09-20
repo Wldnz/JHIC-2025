@@ -598,6 +598,7 @@ body {
                             justify-content: center;
                             align-items: center;
 
+                            
                             img {
                                 width: inherit;
                                 height: 240px;
@@ -605,15 +606,15 @@ body {
                             }
 
                             &:hover > .action-product {
-                                display: flex;
+                                opacity: 1;
                             }
-
+                            
                             .action-product {
                                 width: inherit;
                                 height: inherit;
                                 padding: 10px;
 
-                                display: none;
+                                display: flex;
                                 flex-direction: column;
                                 justify-content: center;
                                 align-items: center;
@@ -621,6 +622,8 @@ body {
                                 position: absolute;
                                 top: 0;
                                 left: 0;
+                                
+                                opacity: 0;
 
                                 button {
                                     width: 200px;

@@ -16,9 +16,9 @@ class AdminController extends Controller
     {
         $transaction = [
             'total' => count(Transaction::get()),
-            'success' => count(Transaction::where('status','=', 'success')->get()),
-            'ongoing' => count(Transaction::where('status','=', 'ongoing')->get()),
-            'fail' => count(Transaction::where('status','=', 'fail')->get()),
+            'success' => count(Transaction::where('status', '=', 'success')->get()),
+            'ongoing' => count(Transaction::where('status', '=', 'ongoing')->get()),
+            'fail' => count(Transaction::where('status', '=', 'fail')->get()),
         ];
         $product = [
             'total' => count(Product::get()),
@@ -26,10 +26,10 @@ class AdminController extends Controller
             'almost sold' => 0,
             'soldout' => 0,
         ];
-        $account=[
+        $account = [
             'total' => count(User::get()),
         ];
-        $activity =[
+        $activity = [
             'total' => count(Activity::get())
         ];
         return view("admin.dashboard", [
@@ -42,7 +42,8 @@ class AdminController extends Controller
 
 
 
-    public function products(Request $request){
+    public function products(Request $request)
+    {
         $searchQuery = $request->query("search", null);
         $currentPage = $request->query("page", 1);
         $products = Product::with("variants");
@@ -60,23 +61,36 @@ class AdminController extends Controller
             ->get();
 
         $stats = [
-            "total" =>  Product::get()->count(),
+            "total" => Product::get()->count(),
             "available" => $initialStockProducts->where("product_variant_stock", ">", 0)->count(),
             "low" => $initialStockProducts->where("product_variant_stock", "<", 5)->count(),
             "empty" => $initialStockProducts->where("product_variant_stock", "<=", 0)->count()
         ];
 
-        $maxPage = intval($stats['total'] / $this->limitPagination  + 1);
+        $maxPage = intval($stats['total'] / $this->limitPagination + 1);
 
         return view('admin.products', compact("products", "stats", "currentPage", "maxPage"));
     }
 
-    public function detailProduct(Product $product){
+    public function storeProductPage()
+    {
+        return view('admin.addProduct');
+    }
+
+    public function updateProduct(Request $request)
+    {
+        $files = $request->files;
+        return view('testing-data', ['data' => $request]);
+    }
+
+    public function detailProduct(Product $product)
+    {
         $product->load("variants", "images");
         return view("admin.detailProduct", compact("product"));
     }
 
-    public function transactions(Request $request){
+    public function transactions(Request $request)
+    {
         $searchQuery = $request->query("search", null);
         $statusQuery = $request->query("status", null);
         $transactions = Transaction::with("user");
@@ -96,20 +110,22 @@ class AdminController extends Controller
         $transactions = $transactions->get();
 
         $allTransactions = Transaction::all();
-        $successTransactions = $allTransactions->where('status','=', 'success')->count();
-        $ongoingTransactions = $allTransactions->where('status','=', 'ongoing')->count();
-        $pendingTransactions = $allTransactions->where('status','=', 'pending')->count();
-        $failTransactions = $allTransactions->where('status','=', 'fail')->count();
+        $successTransactions = $allTransactions->where('status', '=', 'success')->count();
+        $ongoingTransactions = $allTransactions->where('status', '=', 'ongoing')->count();
+        $pendingTransactions = $allTransactions->where('status', '=', 'pending')->count();
+        $failTransactions = $allTransactions->where('status', '=', 'fail')->count();
 
         return view("admin.transactions", compact("transactions", "successTransactions", "ongoingTransactions", "pendingTransactions", "failTransactions"));
     }
 
-    public function detailTransaction(Transaction $transaction){
+    public function detailTransaction(Transaction $transaction)
+    {
         $transaction->load("user", "orders", "orders.product_variant", "orders.product_variant.product");
         return view("admin.detailTransaction", compact("transaction"));
     }
 
-    public function accounts(){
+    public function accounts()
+    {
         $accounts = User::all();
 
         $totalAccount = $accounts->count();
@@ -119,11 +135,13 @@ class AdminController extends Controller
         return view("admin.accounts", compact("accounts", "totalAccount", "totalStudent", "totalAdmin"));
     }
 
-    public function detailAccount(User $account){
+    public function detailAccount(User $account)
+    {
         return view("admin.detailAccount", compact("account"));
     }
 
-    public function profile(){
+    public function profile()
+    {
         return view("admin.profile");
     }
 }

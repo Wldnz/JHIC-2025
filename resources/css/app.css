@@ -492,13 +492,13 @@ body .wrapper-admin .right .content .form-data .wrapper-image .image-product img
   object-fit: contain;
 }
 body .wrapper-admin .right .content .form-data .wrapper-image .image-product:hover > .action-product {
-  display: flex;
+  opacity: 1;
 }
 body .wrapper-admin .right .content .form-data .wrapper-image .image-product .action-product {
   width: inherit;
   height: inherit;
   padding: 10px;
-  display: none;
+  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -506,6 +506,7 @@ body .wrapper-admin .right .content .form-data .wrapper-image .image-product .ac
   position: absolute;
   top: 0;
   left: 0;
+  opacity: 0;
 }
 body .wrapper-admin .right .content .form-data .wrapper-image .image-product .action-product button {
   width: 200px;

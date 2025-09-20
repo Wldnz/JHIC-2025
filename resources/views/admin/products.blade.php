@@ -1,11 +1,11 @@
 @include('_components._headerAdmin', ['title' => 'Management Products'])
 <main class="content">
     @includeWhen(isset($stats), "_components._summary-section", [
-    "name" => "Product",
-    "data" => $stats
+        "name" => "Product",
+        "data" => $stats
     ])
     @include('_components._management-table', [
-        'management' => ['title' => 'Tambahkan Produk', 'destination' => route('admin.store-product')],
+        'management' => ['title' => 'Tambahkan Produk', 'destination' => route('admin.add-product')],
         'columns' => [
             'id' => 'ID Produk',
             'name' => 'Nama Produk',
@@ -38,7 +38,7 @@
 </main>
 
 @php
- logger('as' , [$products])
+    logger('as', [$products])
 @endphp
 
 <div class="alert-message">

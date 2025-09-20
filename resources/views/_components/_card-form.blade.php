@@ -3,13 +3,13 @@
     <h4>{{ $title }}</h4>
     @foreach ($columns as $key => $column)
         <div class="wrapper-input">
-           @if (empty($column['type']) || $column['type'] != 'hidden')
+            @if (empty($column['type']) || $column['type'] != 'hidden')
                 <label for="{{ $key }}">{{ $column['label-text'] }}
                     @if(isset($column['required']) && $column['required'])
                         <span> *</span>
                     @endif
-                </label>               
-           @endif
+                </label>
+            @endif
             <input type="{{ $column['type'] ?? 'text' }}" name="{{ $key }}" id="{{ $key }}"
                 placeholder="{{ $column['placeholder'] }}" {{ isset($column['min']) ? isset($column['type']) && $column['type'] == 'number' ? 'min=' . $column['min'] . '' : 'minlength=' . $column['min'] . '' : 'minlength=3' }} maxlength="250" {{ isset($column['required']) && $column['required'] ? 'required' : '' }}>
         </div>

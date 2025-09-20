@@ -34,28 +34,29 @@ Route::name('student.')->middleware([isLogin::class])->group(function () {
 
 // admin
 Route::name('admin.')->prefix('admin')->middleware([isLogin::class, isAdmin::class])->group(function () {
-    Route::get('/dashboard', [ AdminController::class, 'dashboard' ])->name('dashboard');
+    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
 
-    Route::get('/products', [ AdminController::class, 'products' ])->name('products');
-    Route::get('/products/{product}', [ AdminController::class, 'detailProduct' ])->name('detail-product');
-    Route::post('/products', [ AdminController::class, 'storeProduct' ])->name('store-product');
-    Route::put('/products/{product}', [ AdminController::class, 'updateProduct' ])->name('update-product');
-    Route::delete('/products/{product}', [ AdminController::class, 'deleteProduct' ])->name('delete-product');
+    Route::get('/products', [AdminController::class, 'products'])->name('products');
+    Route::get('/products/{product}', [AdminController::class, 'detailProduct'])->name('detail-product');
+    Route::get('/products-add', [AdminController::class, 'storeProductPage'])->name('add-product');
+    Route::post('/products', [AdminController::class, 'storeProduct'])->name('store-product');
+    Route::put('/products/{product}', [AdminController::class, 'updateProduct'])->name('update-product');
+    Route::delete('/products/{product}', [AdminController::class, 'deleteProduct'])->name('delete-product');
 
-    Route::get('/transactions', [ AdminController::class, 'transactions' ])->name('transactions');
-    Route::get('/transactions/{transaction}', [ AdminController::class, 'detailTransaction' ])->name('detail-transaction');
-    Route::post('/transactions', [ AdminController::class, 'storeTransaction' ])->name('store-transaction');
-    Route::put('/transactions/{transaction}', [ AdminController::class, 'updateTransaction' ])->name('update-transaction');
-    Route::delete('/transactions/{transaction}', [ AdminController::class, 'deleteTransaction' ])->name('delete-transaction');
+    Route::get('/transactions', [AdminController::class, 'transactions'])->name('transactions');
+    Route::get('/transactions/{transaction}', [AdminController::class, 'detailTransaction'])->name('detail-transaction');
+    Route::post('/transactions', [AdminController::class, 'storeTransaction'])->name('store-transaction');
+    Route::put('/transactions/{transaction}', [AdminController::class, 'updateTransaction'])->name('update-transaction');
+    Route::delete('/transactions/{transaction}', [AdminController::class, 'deleteTransaction'])->name('delete-transaction');
 
-    Route::get('/accounts', [ AdminController::class, 'accounts' ])->name('accounts');
-    Route::get('/accounts/{account}', [ AdminController::class, 'detailAccount' ])->name('detail-account');
-    Route::post('/accounts', [ AdminController::class, 'storeAccount' ])->name('store-account');
-    Route::put('/accounts/{account}', [ AdminController::class, 'updateAccount' ])->name('update-account');
-    Route::delete('/accounts/{account}', [ AdminController::class, 'deleteAccount' ])->name('delete-account');
+    Route::get('/accounts', [AdminController::class, 'accounts'])->name('accounts');
+    Route::get('/accounts/{account}', [AdminController::class, 'detailAccount'])->name('detail-account');
+    Route::post('/accounts', [AdminController::class, 'storeAccount'])->name('store-account');
+    Route::put('/accounts/{account}', [AdminController::class, 'updateAccount'])->name('update-account');
+    Route::delete('/accounts/{account}', [AdminController::class, 'deleteAccount'])->name('delete-account');
 
-    Route::get('/profile', [ AdminController::class, 'profile' ])->name('profile');
-    Route::put('/profile/{profile}', [ AdminController::class, 'updateProfile' ])->name('update-profile');
+    Route::get('/profile', [AdminController::class, 'profile'])->name('profile');
+    Route::put('/profile/{profile}', [AdminController::class, 'updateProfile'])->name('update-profile');
 });
 
 
