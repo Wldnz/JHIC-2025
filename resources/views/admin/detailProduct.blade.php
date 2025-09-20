@@ -409,7 +409,7 @@
 </script>
 
 
-<div class="alert-message" style='display:flex'>
+{{-- <div class="alert-message" style='display:flex'>
     <div class="card-message delete-message">
         <h4>Apakah anda yakin ingin menghapus variant unique?</h4>
         @include('_components._sprite-icons', ['name' => 'product', 'color' => 'red', 'size' => 50])
@@ -419,7 +419,8 @@
             <button class="btn-close-anouncement">Tutup Pemberitahuan</button>
         </div>
     </div>
-</div>
+</div> --}}
 
+@include('_components._delete-message', [ 'title' => 'sure want to delete this', 'description' => 'bla bla', 'cooldown' => true ])
 
 @include('_components._footerAdmin')
