@@ -37,6 +37,24 @@ abstract class AlertDataGenerator {
         ];
         return $array;
     }
+
+    /**
+     * Generates an alert data array from given type, title and message, and returns it as an array that can be splattared.
+     *
+     * @param  AlertType $type
+     * @param  string $title
+     * @param  string $message
+     * @return array
+     */
+    public static function generateAsSplattarableArray(AlertType $type, string $title, string $message) {
+        return [
+            'alert' => [
+                'type' => $type->name,
+                'title' => $title,
+                'message' => $message,
+            ]
+        ];;
+    }
 }
 
 ?>
