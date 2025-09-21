@@ -27,7 +27,7 @@ function setActionToImage() {
         if(file == null) return;
         if (image.length < 3) {
             image.push({
-                id: new Date().getTime(),
+                id: `added_image_${new Date().getTime()}`,
                 url: URL.createObjectURL(file),
                 file : file,
                 thumbnail: false

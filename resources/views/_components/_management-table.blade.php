@@ -1,5 +1,5 @@
 @php
-    $count_product = 0;
+    $count_max_show = 0;
     $length_column = count($columns) - 1;
     $count_column = 0;
 @endphp
@@ -7,7 +7,7 @@
 
 <div class="management-table">
     <div class="title">
-        <h3 class='{{ isset($total) ? "point-active" : "" }}'>{{ $total ?? ""}} Total Products</h3>
+        <h3 class='{{ isset($total) ? "point-active" : "" }}'>{{ $total ?? ""}} {{ $title ?? 'Total Products' }}</h3>
         @if(isset($management))
             <a {{ isset($management['destination']) ? 'href=' . $management['destination'] : '' }} class="btn">
                 <span class=""> {{ $management['title'] }} </span>
@@ -15,27 +15,35 @@
             </a>
         @endif
     </div>
-    @if(false)
+    @if(isset($findDataWith))
         <div class="find-something">
-            <div class="wrapper-filter">
-                <div class="wrapper-select">
-                    <select name="stock" id="select-stock">
-                        <option value="all">Semuanya</option>
-                        <option value="low">Stok Sedikit</option>
-                        <option value="available">Stok Tersedia</option>
-                        <option value="empty">Stok Habis</option>
-                    </select>
-                    <div class="wrapper-icon">
-                        @include("_components._sprite-icons", ["name" => "drop-down", "size" => 20])
+            <form class="wrapper-filter">
+                @foreach ($findDataWith['filters'] as $filter_name => $filter)
+                    <div class="wrapper-select">
+                        <select name="{{ $filter_name}}" id="select-{{ $filter_name}}">
+                            @foreach ($filter['options'] as $key => $label)
+                                @if(array_key_exists($filter_name, app('request')->all()) && app('request')->all()[$filter_name] == $key)
+                                    <option value="{{ $key }}" selected>{{ $label }}</option>
+                                @else
+                                    <option value="{{ $key }}">{{ $label }}</option>
+                                @endif
+                            @endforeach
+                        </select>
+                        <div class="wrapper-icon">
+                            @include("_components._sprite-icons", ["name" => "drop-down", "size" => 20])
+                        </div>
                     </div>
-                </div>
-            </div>
-            <form class="wrapper-search">
-                <input type="text" name="search" placeholder="Cari Nama Produk" required>
-                <button type="submit" class="search-engine">
-                    @include("_components._sprite-icons", ["name" => "search", "color" => "white", "size" => 20])
-                </button>
+                @endforeach
             </form>
+            @if (isset($findDataWith['search-engine']))
+                <form class="wrapper-search">
+                    <input type="text" name="{{ $findDataWith['search-engine']['name'] }}"
+                        placeholder="{{ $findDataWith['search-engine']['placeholder'] }}" required>
+                    <button type="submit" class="search-engine">
+                        @include("_components._sprite-icons", ["name" => "search", "color" => "white", "size" => 20])
+                    </button>
+                </form>
+            @endif
         </div>
     @endif
     <table>
@@ -95,6 +103,13 @@
                                 @endif
 
                             @endforeach
+                        @elseif(isset($column_relations) && array_key_exists($key, $column_relations))
+                            @foreach ($column_relations as $col_key => $col)
+                                @if ($col_key == $key)
+                                    <td>{{ $data[$key][$col] }}</td>
+                                    @break
+                                @endif
+                            @endforeach
                         @else
                             <td>{{ $data[$key] }}</td>
                         @endif
@@ -107,7 +122,8 @@
         <form class="wrapper-pagination">
             <button type="{{ $pagination['current'] - 1 <= 0 ? 'button' : 'submit' }}"
                 class="btn-page btn-page-action {{ $pagination['current'] - 1 <= 0 ? 'btn-not-allowed' : '' }}" name="page"
-                value="{{ $pagination['current'] - 1 }}"> <</button>
+                value="{{ $pagination['current'] - 1 }}">
+                < </button>
                     <div class="page">
                         <button type="submit" class="btn-page {{ $pagination['current'] == 1 ? 'btn-active' : '' }}"
                             name="page" value="1">1</button>
@@ -116,15 +132,39 @@
                                 <button type="submit" class="btn-page {{ $pagination['current'] == $i ? 'btn-active' : '' }}"
                                     name="page" value="{{ $i }}">{{ $i }}</button>
                             @endif
-                            @if($count_product == 2) @break @endif
+                            @if($count_max_show == 2) @break @endif
                         @endfor
-                        <button type="submit"
-                            class="btn-page {{ $pagination['current'] == $pagination['max'] ? 'btn-active' : '' }}"
-                            name="page" value="{{ $pagination['max']  }}">{{ $pagination['max']  }}</button>
+                        @if($pagination['max'] > 1)
+                            <button type="submit"
+                                class="btn-page {{ $pagination['current'] == $pagination['max'] ? 'btn-active' : '' }}"
+                                name="page" value="{{ $pagination['max']  }}">{{ $pagination['max']  }}</button>
+                        @endif
                     </div>
                     <button type="{{ $pagination['current'] + 1 > $pagination['max'] ? 'button' : 'submit' }}"
                         class="btn-page btn-page-action {{ $pagination['current'] + 1 > $pagination['max'] ? 'btn-not-allowed' : '' }}"
-                        name="page" value="{{ $pagination['current'] + 1 }}">></button>
+                        name="page" value="{{ $pagination['current'] + 1 }}"> > </button>
+                    @foreach (app('request')->all() as $key => $request)
+                        @if ($key != 'page')
+                            <input type="hidden" name="{{ $key }}" value="{{ $request }}">
+                        @endif
+                    @endforeach
         </form>
     @endif
 </div>
+
+<script defer>
+    const wrapper_filter = document.querySelector('.wrapper-filter');
+    if (wrapper_filter) {
+        wrapper_filter.addEventListener('change', (e) => {
+            wrapper_filter.submit();
+            return;
+            @if(isset($pagination))
+                const wrapper_pagination = document.querySelector('.wrapper-pagination');
+                wrapper_pagination.innerHTML += `<input type='hidden' name='page' value='{{ $pagination['current'] }}'>`;
+                wrapper_pagination.innerHTML += `<input type='hidden' name='${e.target.name}' value='${e.target.value}'>`;
+                wrapper_pagination.submit();
+            @else
+            @endif
+        });
+    }
+</script>

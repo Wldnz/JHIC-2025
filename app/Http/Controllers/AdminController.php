@@ -92,14 +92,15 @@ class AdminController extends Controller
     public function transactions(Request $request)
     {
         $searchQuery = $request->query("search", null);
-        $statusQuery = $request->query("status", null);
+        $statusQuery = $request->query("search_status", null);
+        $currentPage = $request->query("page", 1);
         $transactions = Transaction::with("user");
 
         if ($searchQuery) {
             $transactions = $transactions
                 ->join("users", "transactions.user_nis", "=", "users.nis")
                 ->where("users.fullname", "like", "%$searchQuery%")
-                ->where("transactions.id", "like", "%$searchQuery%");
+                ->orWhere("transactions.id", "=", "$searchQuery");
         }
 
         if ($statusQuery) {
@@ -107,15 +108,22 @@ class AdminController extends Controller
                 ->where("transactions.status", "=", $statusQuery);
         }
 
-        $transactions = $transactions->get();
+        $transactions = $transactions->limit($this->limitPagination)->offset(($currentPage - 1) * $this->limitPagination)->get();
 
         $allTransactions = Transaction::all();
-        $successTransactions = $allTransactions->where('status', '=', 'success')->count();
-        $ongoingTransactions = $allTransactions->where('status', '=', 'ongoing')->count();
-        $pendingTransactions = $allTransactions->where('status', '=', 'pending')->count();
-        $failTransactions = $allTransactions->where('status', '=', 'fail')->count();
 
-        return view("admin.transactions", compact("transactions", "successTransactions", "ongoingTransactions", "pendingTransactions", "failTransactions"));
+        $stats = [
+            'total' => $allTransactions->count(),
+            'success' => $allTransactions->where('status', '=', 'success')->count(),
+            'pending' => $allTransactions->where('status', '=', 'ongoing')->count(),
+            'on Going' => $allTransactions->where('status', '=', 'ongoing')->count(),
+            'fail' => $allTransactions->where('status', '=', 'fail')->count()
+        ];
+
+        $maxPage = $searchQuery || $statusQuery ? $transactions->count() : $stats['total'];
+        $maxPage = intval($maxPage / $this->limitPagination + 1);
+
+        return view("admin.transactions", compact("transactions", "stats", 'currentPage', 'maxPage'));
     }
 
     public function detailTransaction(Transaction $transaction)
