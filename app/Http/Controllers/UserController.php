@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\AlertType;
+use App\Http\Requests\StoreCartRequest;
 use App\Http\Requests\UpdateCartRequest;
 use App\Models\Cart;
 use App\Models\Product;
+use App\Models\ProductVariant;
 use App\Models\Transaction;
+use App\Utilities\AlertDataGenerator;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
@@ -39,7 +43,7 @@ class UserController extends Controller
             'password' => ['required']
         ]);
 
-        if(Auth::attempt($credentials, true)){
+        if (Auth::attempt($credentials, true)) {
             $request->session()->regenerate();
             return redirect()->route('admin.dashboard');
         }
@@ -142,12 +146,63 @@ class UserController extends Controller
      */
     public function cart()
     {
-        $carts = Cart::with('product_variant_id')->get();
+        $carts = Cart::with('variantProduct')->get();
         $totalCost = $carts->sum(function ($cart) {
-            return $cart->product_variant_id->price * $cart->quantity;
+            return $cart->variantProduct->price * $cart->quantity;
         });
 
         return view("cart", compact("carts", "totalCost"));
+    }
+
+    public function storeCart(StoreCartRequest $request)
+    {
+        $validated = $request->validated();
+
+        $cart = Cart::incrementOrCreate([
+            "user_nis" => auth()->user()->nis,
+            "product_variant_id" => $validated['product_variant_id']
+        ], 'quantity', $validated['quantity'], $validated['quantity']);
+
+        if (!$cart) {
+            AlertDataGenerator::generateAsFlashToSession(
+                AlertType::DANGER,
+                "Produk gagal ditambahkan kedalam keranjang",
+                "Produk dengan variant id {$request->product_variant_id} gagal ditambahkan kedalam keranjang",
+                $request->session(),
+            );
+            return back();
+        }
+
+        if ($cart->variantProduct->stock < $validated['quantity']) {
+            AlertDataGenerator::generateAsFlashToSession(
+                AlertType::DANGER,
+                "Produk gagal ditambahkan kedalam keranjang",
+                "Produk dengan variant id {$request->product_variant_id} gagal ditambahkan kedalam keranjang karena stok tidak mencukupi",
+                $request->session(),
+            );
+            return back();
+        }
+
+        $cart->variantProduct->stock -= $validated['quantity'];
+        $isSaved = $cart->variantProduct->save();
+
+        if ($isSaved) {
+            AlertDataGenerator::generateAsFlashToSession(
+                AlertType::SUCCESS,
+                "Produk berhasil ditambahkan kedalam keranjang",
+                "Produk dengan variant id {$request->product_variant_id} berhasil ditambahkan kedalam keranjang",
+                $request->session(),
+            );
+        } else {
+            AlertDataGenerator::generateAsFlashToSession(
+                AlertType::DANGER,
+                "Produk gagal ditambahkan kedalam keranjang",
+                "Produk dengan variant id {$request->product_variant_id} gagal ditambahkan kedalam keranjang",
+                $request->session(),
+            );
+        }
+
+        return back();
     }
 
     /**
@@ -162,14 +217,37 @@ class UserController extends Controller
      */
     public function updateCart(UpdateCartRequest $request, Cart $cart)
     {
-        if ($request->quantity <= 0) {
-            $cart->delete();
+        $validated = $request->validated();
+
+        $oldQuantity = $cart->quantity;
+
+        if ($validated['quantity'] <= 0) {
+            $cart->variantProduct->stock += $oldQuantity;
+
+            $isVariantProductSaved = $cart->variantProduct->save();
+            if (!$isVariantProductSaved) {
+                return response()->json([
+                    "success" => false,
+                    "message" => "Failed to variant product",
+                    "deleted" => false,
+                ], Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
+
+            $isCartDeleted = $cart->delete();
+            if (!$isCartDeleted) {
+                return response()->json([
+                    "success" => false,
+                    "message" => "Failed to delete cart item",
+                    "deleted" => false,
+                ], Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
+
             return response()->json([
                 "success" => true,
                 "message" => "Cart item deleted",
                 "deleted" => true,
             ]);
-        } else if ($request->quantity > $cart->product_variant_id->stock) {
+        } else if ($validated['quantity'] > $cart->variantProduct->stock) {
             return response()->json([
                 "success" => false,
                 "message" => "Unsufficient stock",
@@ -177,10 +255,13 @@ class UserController extends Controller
             ], Response::HTTP_BAD_REQUEST);
         }
 
-        $cart->quantity = $request->quantity;
-        $isSaved = $cart->save();
+        $cart->variantProduct->stock += $oldQuantity - $validated['quantity'];
+        $isVariantProductSaved = $cart->variantProduct->save();
 
-        if ($isSaved) {
+        $cart->quantity = $validated['quantity'];
+        $isCartSaved = $cart->save();
+
+        if ($isVariantProductSaved && $isCartSaved) {
             return response()->json([
                 "success" => true,
                 "message" => "Cart item updated",
@@ -189,7 +270,7 @@ class UserController extends Controller
         } else {
             return response()->json([
                 "success" => false,
-                "message" => "Failed to update cart item",
+                "message" => "Failed to update cart item or variant product",
                 "deleted" => false,
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
@@ -206,7 +287,18 @@ class UserController extends Controller
      */
     public function deleteCart(Cart $cart)
     {
+        $cart->variantProduct->stock += $cart->quantity;
+        $isVariantProductSaved = $cart->variantProduct->save();
+
+        if (!$isVariantProductSaved) {
+            return response()->json([
+                "success" => false,
+                "message" => "Failed to update variant product",
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
         $isDeleted = $cart->delete();
+
         if ($isDeleted) {
             return response()->json([
                 "success" => true,
@@ -262,7 +354,8 @@ class UserController extends Controller
         return view("detailTransaction", compact("transaction"));
     }
 
-    public function profile() {
+    public function profile()
+    {
         $user = auth()->user();
         return view("profile", compact("user"));
     }
