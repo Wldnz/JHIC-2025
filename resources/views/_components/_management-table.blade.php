@@ -64,19 +64,21 @@
                     @if($loop->last)
                         <td>
                             {{ $data[$key] }}
-                            <div class="profile">
-                                @include('_components._sprite-icons', ['name' => 'tree-dots', 'size' => 20])
-                                <ul class="main-menu main-menu-table">
-                                    @foreach ($actions as $keyAction => $action)
-                                        <li id="{{ $action['action-name'] }}-{{ $data->id }}">
-                                            <a {{ isset($action['route-name']) ? "href=" . route($action['route-name'], [$action['action-name'] => $data['id']]) : "" }}>
-                                                @include('_components._sprite-icons', ['name' => $action['icon-name'], 'size' => 20])
-                                                {{ $keyAction }}
-                                            </a>
-                                        </li>
-                                    @endforeach
-                                </ul>
-                            </div>
+                            @if (isset($actions))
+                                <div class="profile">
+                                    @include('_components._sprite-icons', ['name' => 'tree-dots', 'size' => 20])
+                                    <ul class="main-menu main-menu-table">
+                                        @foreach ($actions as $keyAction => $action)
+                                            <li id="{{ $action['action-name'] }}-{{ $data->id }}">
+                                                <a {{ isset($action['route-name']) ? "href=" . route($action['route-name'], [$action['action-name'] => $data['id']]) : "" }}>
+                                                    @include('_components._sprite-icons', ['name' => $action['icon-name'], 'size' => 20])
+                                                    {{ $keyAction }}
+                                                </a>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
                         </td>
                     @else
                         @if($key == 'variants')

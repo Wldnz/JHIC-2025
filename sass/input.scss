@@ -566,7 +566,7 @@ body {
                                 padding-left: 0;
                                 border: none;
                                 font-size: $font-size-m;
-                                border-bottom: 1px solid $color-accent;
+                                border-bottom: 3px solid $color-accent;
                                 outline: none;
                             }
 
@@ -580,6 +580,22 @@ body {
                             }
                         }
                     }
+
+                    .container {
+                        max-width: 625px;
+                        border: 3px solid $color-accent;
+                        padding: 20px;
+                        border-radius: 8px;
+
+                        flex-direction: row;
+                        flex-wrap: wrap;
+                    }
+
+                    // .container-1{
+                    //     width: max-content;
+                    //     max-width: none;
+                    // }
+
                     .wrapper-image {
                         width: 100%;
                         display: flex;
@@ -598,7 +614,6 @@ body {
                             justify-content: center;
                             align-items: center;
 
-                            
                             img {
                                 width: inherit;
                                 height: 240px;
@@ -608,7 +623,7 @@ body {
                             &:hover > .action-product {
                                 opacity: 1;
                             }
-                            
+
                             .action-product {
                                 width: inherit;
                                 height: inherit;
@@ -622,7 +637,7 @@ body {
                                 position: absolute;
                                 top: 0;
                                 left: 0;
-                                
+
                                 opacity: 0;
 
                                 button {
@@ -1044,10 +1059,10 @@ body {
             }
         }
 
-        .delete-message{
+        .delete-message {
             color: red;
 
-            button{
+            button {
                 border-color: red;
                 color: red;
             }
@@ -1058,12 +1073,11 @@ body {
                 font-weight: bolder;
             }
 
-            .cooldown{
+            .cooldown {
                 background-color: #424242;
                 cursor: not-allowed;
                 border: none;
             }
-
         }
 
         button {
