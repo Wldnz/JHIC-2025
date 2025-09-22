@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\AlertType;
 use App\Models\Activity;
 use App\Models\Product;
 use App\Models\Transaction;
 use App\Models\User;
+use App\Utilities\AlertDataGenerator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -111,12 +113,18 @@ class AdminController extends Controller
      * This function will render the update product page view.
      *
      * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\View\View
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function updateProduct(Request $request)
+    public function updateProduct(Product $product, Request $request)
     {
-        $files = $request->files;
-        return view('testing-data', ['data' => $request]);
+        AlertDataGenerator::generateAsFlashToSession(
+            AlertType::SUCCESS,
+            "Produk berhasil diupdate",
+            "Produk dengan id {$product->id} berhasil diupdate",
+            $request->session(),
+        );
+
+        return redirect()->route("admin.detail-product", ["product" => $product]);
     }
 
     /**

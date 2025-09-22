@@ -2,8 +2,12 @@
 namespace App\Utilities;
 
 use App\AlertType;
+use Illuminate\Contracts\Session\Session;
 
-abstract class AlertDataGenerator {
+abstract class AlertDataGenerator
+{
+    protected static $alertKey = 'alert';
+
     /**
      * Generates an alert data array from given type, title and message.
      *
@@ -12,9 +16,10 @@ abstract class AlertDataGenerator {
      * @param  string $message
      * @return array
      */
-    public static function generateAsArray(AlertType $type, string $title, string $message) {
+    public static function generateAsArray(AlertType $type, string $title, string $message)
+    {
         return [
-            'type' => $type->name,
+            'type' => $type->value,
             'title' => $title,
             'message' => $message,
         ];
@@ -29,7 +34,8 @@ abstract class AlertDataGenerator {
      * @param  array $array
      * @return array
      */
-    public static function generateToArray(AlertType $type, string $title, string $message, array $array = []) {
+    public static function generateToArray(AlertType $type, string $title, string $message, array $array = [])
+    {
         $array['alert'] = [
             'type' => $type,
             'title' => $title,
@@ -46,14 +52,45 @@ abstract class AlertDataGenerator {
      * @param  string $message
      * @return array
      */
-    public static function generateAsSplattarableArray(AlertType $type, string $title, string $message) {
+    public static function generateAsSplattarableArray(AlertType $type, string $title, string $message)
+    {
         return [
             'alert' => [
-                'type' => $type->name,
+                'type' => $type->value,
                 'title' => $title,
                 'message' => $message,
             ]
-        ];;
+        ];
+        ;
+    }
+
+    /**
+     * Generates an alert data array from given type, title and message, and stores it into the given session with the given key.
+     *
+     * @param  AlertType $type
+     * @param  string $title
+     * @param  string $message
+     * @param  Session $session
+     * @return Session
+     */
+    public static function generateAsFlashToSession(AlertType $type, string $title, string $message, Session $session)
+    {
+        $session->flash(self::$alertKey, [
+            'type' => $type->value,
+            'title' => $title,
+            'message' => $message
+        ]);
+        return $session;
+    }
+
+    /**
+     * Gets the key to be used when storing the alert data into the array/object/json data.
+     *
+     * @return string
+     */
+    public static function getAlertKey()
+    {
+        return self::$alertKey;
     }
 }
 

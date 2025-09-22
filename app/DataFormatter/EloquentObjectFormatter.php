@@ -28,7 +28,6 @@ class EloquentObjectFormatter extends DataFormatter
      */
     private function exportValue($value, $depth = 1, $deep = false)
     {
-        logger($value);
         if ($value instanceof \Illuminate\Database\Eloquent\Model) {
             return $value->toPrettyJson();
         }
