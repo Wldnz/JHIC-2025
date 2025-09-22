@@ -2,16 +2,28 @@
 
 namespace App\Http\Controllers;
 
+use App\AlertType;
 use App\Models\Activity;
 use App\Models\Product;
 use App\Models\Transaction;
 use App\Models\User;
+use App\Utilities\AlertDataGenerator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
     protected $limitPagination = 8;
+
+    /**
+     * Dashboard page for admin.
+     *
+     * This function will render the dashboard page view for admin.
+     * It will display the total transaction, success transaction, ongoing transaction, fail transaction,
+     * total product, available product, almost sold product, sold out product, total account, and total activity.
+     *
+     * @return \Illuminate\View\View
+     */
     public function dashboard()
     {
         $transaction = [
@@ -40,8 +52,16 @@ class AdminController extends Controller
         ]);
     }
 
-
-
+    /**
+     * List all products.
+     *
+     * This function will render the products page view.
+     * It will display all products with pagination.
+     * The search query will be used to filter the products.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\View\View
+     */
     public function products(Request $request)
     {
         $searchQuery = $request->query("search", null);
@@ -52,7 +72,10 @@ class AdminController extends Controller
             $products = $products->where("name", "like", "%$searchQuery%");
         }
 
-        $products = $products->limit($this->limitPagination)->offset(($currentPage - 1) * $this->limitPagination)->get();
+        $products = $products
+            ->limit($this->limitPagination)
+            ->offset(($currentPage - 1) * $this->limitPagination)
+            ->get();
 
         $initialStockProducts = Product::query()
             ->select("products.name AS product_name", "product_variants.name AS product_variant_name", "product_variants.stock AS product_variant_stock")
@@ -72,23 +95,61 @@ class AdminController extends Controller
         return view('admin.products', compact("products", "stats", "currentPage", "maxPage"));
     }
 
+    /**
+     * Show the add product page.
+     *
+     * This function will render the add product page view.
+     *
+     * @return \Illuminate\View\View
+     */
     public function storeProductPage()
     {
         return view('admin.addProduct');
     }
 
-    public function updateProduct(Request $request)
+    /**
+     * Update product page.
+     *
+     * This function will render the update product page view.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function updateProduct(Product $product, Request $request)
     {
-        $files = $request->files;
-        return view('testing-data', ['data' => $request]);
+        AlertDataGenerator::generateAsFlashToSession(
+            AlertType::SUCCESS,
+            "Produk berhasil diupdate",
+            "Produk dengan id {$product->id} berhasil diupdate",
+            $request->session(),
+        );
+
+        return redirect()->route("admin.detail-product", ["product" => $product]);
     }
 
+    /**
+     * Detail product page for admin.
+     *
+     * This function will render the detail product page view with the given product and recommended products.
+     *
+     * @param  \App\Models\Product $product
+     * @return \Illuminate\View\View
+     */
     public function detailProduct(Product $product)
     {
         $product->load("variants", "images");
         return view("admin.detailProduct", compact("product"));
     }
 
+    /**
+     * Transactions page for admin.
+     *
+     * This function will render the transactions page view with all the transactions.
+     * The transactions can be filtered by search query and status query.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\View\View
+     */
     public function transactions(Request $request)
     {
         $searchQuery = $request->query("search", null);
@@ -100,7 +161,7 @@ class AdminController extends Controller
             $transactions = $transactions
                 ->join("users", "transactions.user_nis", "=", "users.nis")
                 ->where("users.fullname", "like", "%$searchQuery%")
-                ->orWhere("transactions.id", "=", "$searchQuery");
+                ->orWhere("transactions.id", "=", $searchQuery);
         }
 
         if ($statusQuery) {
@@ -126,12 +187,27 @@ class AdminController extends Controller
         return view("admin.transactions", compact("transactions", "stats", 'currentPage', 'maxPage'));
     }
 
+    /**
+     * Detail transaction page for admin.
+     *
+     * This function will render the detail transaction page view with the given transaction.
+     *
+     * @param  \App\Models\Transaction $transaction
+     * @return \Illuminate\View\View
+     */
     public function detailTransaction(Transaction $transaction)
     {
         $transaction->load("user", "orders", "orders.product_variant", "orders.product_variant.product");
         return view("admin.detailTransaction", compact("transaction"));
     }
 
+    /**
+     * Show all the accounts.
+     *
+     * This function will render the accounts page view with all the accounts, total accounts, total student accounts, and total admin accounts.
+     *
+     * @return \Illuminate\View\View
+     */
     public function accounts()
     {
         $accounts = User::all();
@@ -143,13 +219,29 @@ class AdminController extends Controller
         return view("admin.accounts", compact("accounts", "totalAccount", "totalStudent", "totalAdmin"));
     }
 
+    /**
+     * Detail account page for admin.
+     *
+     * This function will render the detail account page view with the given account.
+     *
+     * @param  \App\Models\User $account
+     * @return \Illuminate\View\View
+     */
     public function detailAccount(User $account)
     {
         return view("admin.detailAccount", compact("account"));
     }
 
+    /**
+     * Profile page for admin.
+     *
+     * This function will render the profile page view with the currently authenticated user.
+     *
+     * @return \Illuminate\View\View
+     */
     public function profile()
     {
-        return view("admin.profile");
+        $user = Auth::user();
+        return view("admin.profile", compact("user"));
     }
 }
