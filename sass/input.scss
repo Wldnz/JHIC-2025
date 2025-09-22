@@ -13,7 +13,20 @@ $color-primary: #fff;
 $color-secondary: #eaf7f9;
 $color-accent: #273b98;
 $border-radius: 8px;
-
+::selection
+{
+    color: $color-accent;
+    background-color: $color-secondary;
+    filter: none;
+    &:hover
+    {
+        filter: none;
+    }
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
 * {
     margin: 0;
     padding: 0;
@@ -61,12 +74,14 @@ body {
 
         &:hover > img
         {
-            filter: invert(18%) sepia(35%) saturate(4223%) hue-rotate(221deg) brightness(98%) contrast(97%);
+            filter: brightness(0) saturate(100%) invert(17%) sepia(56%) saturate(3428%) hue-rotate(224deg) brightness(91%) contrast(90%);
+
+            
 
         }
     }
     .button-circle {
-        border-radius: 50%;
+        border-radius: 1000px;
     }
 
 
@@ -211,6 +226,7 @@ body {
 
     .wrapper-user 
     {
+        .dashboard{
         padding: 20px;
 
         .hugeimg 
@@ -324,32 +340,175 @@ body {
                     border-radius: 30px;
                 }
             }
+        }
 
         }
         .cart
         {
             width: 100%;
             height: 100%;
+            background-color: $color-secondary;
             display: flex;
+            padding: 40px 0;
 
             .products
             {
-                width: 70%;
+                width: 65%;
                 height: max-content;
                 background: $color-secondary;
+                padding: 0 20px;
+                display: flex;
+                flex-wrap: wrap;
+                gap: 20px;
+                
+                .product{
+                    background-color: $color-primary;
+                    display: flex;
+                    flex-direction: column;
+                    border-radius: $border-radius;
+                    width: 250px;
+                    height: max-content;
+                    transition: .1s;
+                    padding: 20px;
+                    
+                    span{
+                        border-radius: $border-radius;
+                        position: relative;
+
+                        img{
+                            border-radius: inherit;
+                            width: 100%;
+                            margin-bottom: 10px;
+                        }
+                    }
+
+                    h3
+                    {
+                        color: #000000d3;
+                        font-size: $font-size-l;
+                        white-space: nowrap;
+                        font-weight: 500;
+                        width: 200px;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                    }
+                    p
+                    {
+                        color: #00000089;
+                        font-size: $font-size-m;
+                        width: 200px;
+                        text-overflow: ellipsis;
+                    }
+                    &:hover p, &:hover h3
+                    {
+                        color: $color-accent;
+                        opacity: 1;
+                    }
+                }
+                .product.out
+                {
+                    pointer-events: none;
+                    cursor: default;
+
+                    p:nth-of-type(2)
+                    {
+                        color: red;
+                    }
+
+                    span{
+
+                        img
+                        {
+                            filter: brightness(1.2);
+                        }
+                        &::after
+                        {
+                            content: "STOK HABIS";
+                            position: absolute;
+                            text-align: center;
+                            font-weight: 700;
+                            font-size: $font-size-4xl;
+                            color: #000;
+                            top: 50%;
+                            left: 50%;
+                            transform: translate(-50%, -50%);
+                        }
+                    }
+                    &:hover
+                    {
+                        h3
+                        {
+                            color: #000000d3;
+                        }
+                        p
+                        {
+                            color: #00000089;
+                        }
+                        
+                    }
+                    
+                }
             }
             .filter
             {
-                width: 30%;
-                height: 1000px;
-                padding: 0 20px 10px 20px;
+                background-color: #fff;
+                width: 35%;
+                padding: 10px 20px;
+                display: flex;
+                flex-direction: column;
+                gap: 5px;
+                border-radius: $border-radius 0 0 $border-radius;
 
-                h2{
-                    font-size: $font-size-xl;
-                    font-weight: 600;
-                    cursor: pointer;
-                    margin-bottom: 10px;
+                form
+                {
                     display: flex;
+                    border-bottom: 2px solid $color-accent;
+                    align-items: center;
+
+                    input{
+                        width: 100%;
+                        height: max-content;
+                        border: none;
+                        outline: none;
+                        font-size: $font-size-l;
+                        padding: 10px;
+                        color: $color-accent;
+                        transition: .1s;
+                    
+                        &::placeholder
+                        {
+                            opacity: .8;
+                            color: $color-accent;
+                        }
+                    }
+
+                    button
+                    {
+                        width: max-content;
+                        height: max-content;
+                        padding: 5px;
+                        border: none;
+                        background-color: #fff;
+                        cursor: pointer;
+
+                        img
+                        {
+                            width: 20px;
+                            filter: invert(18%) sepia(35%) saturate(4223%) hue-rotate(221deg) brightness(98%) contrast(97%);
+
+                        }
+                    }
+                }
+
+                    
+                
+                h2{
+                    border-bottom: 1px solid $color-secondary;
+                    font-size: $font-size-xl;
+                    font-weight: 500;
+                    cursor: pointer;
+                    display: flex;
+                    padding: 10px 0;
                     align-items: center;
                     
                     img
@@ -373,6 +532,18 @@ body {
                     max-height: 0;
                     overflow: hidden;
                     transition: max-height .3s ease;
+
+                    p
+                    {
+                        border-bottom: 1px solid $color-secondary;
+                        padding: 5px 0;
+                        color: #000000c2;
+
+                        &:hover
+                        {
+                            color: $color-accent;
+                        }
+                    }
                 }
                 .content-filter.open
                 {
@@ -380,7 +551,121 @@ body {
                 }
 
             }
-        }        
+        }   
+        
+        .detailproduct
+        {
+            padding: 50px;
+            height: max-content;
+            
+            .container
+            {
+                display: flex;
+                width: 100%;
+
+                .left
+                {
+                    width: 40%;
+                    height: max-content;
+
+                    img{
+                        max-width: 100%;
+                        border-radius: $border-radius;
+                        object-fit: cover;
+                        aspect-ratio: 3/4;
+                    }
+                }
+                .right
+                {
+                    height: 100%;
+                    width: 60%;
+                    padding: 20px;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 10px;
+
+                    h3{
+                        font-weight: 500;
+                    }
+                    label{
+                        font-weight: 400;
+                    }
+                    h4
+                    {
+                        font-size: $font-size-s;
+                        font-weight: 500;
+                        text-decoration: underline;
+                        color: $color-accent;
+                    }
+                    .radio-selector
+                    {
+                        display: flex;
+                        gap: 10px;
+
+
+                        .radio-tab
+                        {
+                            width: 50px;
+                            height: 50px;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            border-radius: $border-radius;
+                            font-weight: 600;
+                            font-size: $font-size-l;
+                            padding: 10px;
+                            outline: 3px solid $color-accent;
+                            color: $color-accent;
+                            cursor: pointer;
+                            filter: brightness(0) saturate(100%) invert(17%) sepia(56%) saturate(3428%) hue-rotate(224deg) brightness(91%) contrast(90%);
+                        }
+                        .radio-tab.picked
+                        {
+                            font-weight: 600;
+                            background-color: $color-accent;
+                            filter: none;
+                            color: #fff;
+                        }
+                    }
+                    .bottom
+                    {
+                        display: flex;
+                        width: 100%;
+                        justify-content: space-between;
+
+                        .counter
+                        {
+                            display: flex;
+                            gap: 5px;
+                            outline: 2px solid $color-accent;
+                            border-radius: 50px;
+                            width: max-content;
+                            padding: 10px;
+                            
+                            input
+                            {
+                                width: 70px;
+                                text-align: center;
+                                outline: none;
+                                border: none;
+                                font-size: $font-size-m;
+                                color: $color-accent;
+                                
+                                &:active
+                                {
+                                    outline: nones;
+                                }
+                            }
+                            img
+                            {
+                                cursor: pointer;
+                                filter: brightness(0) saturate(100%) invert(17%) sepia(56%) saturate(3428%) hue-rotate(224deg) brightness(91%) contrast(90%);
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
         
         
@@ -1283,7 +1568,6 @@ body {
         display: flex;
         justify-content: center;
         position: relative;
-        margin: 20px 0 0 0;
 
         .metode-bi
         {

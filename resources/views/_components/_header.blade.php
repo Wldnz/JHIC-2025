@@ -1,5 +1,3 @@
-<?php $placeholder = "https://www.svgrepo.com/show/508699/landscape-placeholder.svg"?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
