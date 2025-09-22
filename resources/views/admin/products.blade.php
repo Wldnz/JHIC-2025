@@ -6,6 +6,22 @@
     ])
     @include('_components._management-table', [
         'management' => ['title' => 'Tambahkan Produk', 'destination' => route('admin.add-product')],
+        'findDataWith' => [
+            'filters' => [
+                'search_stock' => [
+                    'options' => [
+                        'all' => 'Semuanya',
+                        'available' => 'Tersedia',
+                        'low' => 'Hampir Habis',
+                        'empty' => 'Stok Habis'
+                    ]
+                ],
+            ],
+            'search-engine' => [
+                'name' => 'search',
+                'placeholder' => 'Cari ID Produk Atau Nama Produk'
+            ]
+        ],
         'columns' => [
             'id' => 'ID Produk',
             'name' => 'Nama Produk',

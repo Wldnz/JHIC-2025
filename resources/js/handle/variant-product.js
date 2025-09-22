@@ -1,6 +1,6 @@
 function addVariant({ name, type, price, stock }){
         variants.push({
-            id : new Date().getTime(),
+            id : `added_variant_${new Date().getTime()}`,
             name,
             type,
             price,
