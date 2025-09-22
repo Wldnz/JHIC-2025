@@ -13,11 +13,27 @@ use Illuminate\Support\Facades\Auth;
 class UserController extends Controller
 {
 
-    public function loginPage(Request $request){
+    /**
+     * Login page for users.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\View\View
+     */
+    public function loginPage(Request $request)
+    {
         return view('login');
     }
 
-    public function login(Request $request){
+    /**
+     * Handle an authentication attempt.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function login(Request $request)
+    {
         $credentials = $request->validate([
             'nis' => ['required'],
             'password' => ['required']
@@ -33,7 +49,17 @@ class UserController extends Controller
         ])->onlyInput("nis");
     }
 
-    public function logout(Request $request){
+    /**
+     * Logout the current user.
+     *
+     * This function will invalidate the current user session,
+     * regenerate a new session and redirect the user to the login page.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function logout(Request $request)
+    {
         Auth::logout();
 
         $request->session()->invalidate();
@@ -41,18 +67,40 @@ class UserController extends Controller
         return redirect()->route('login');
     }
 
-
-    // Siswa Controller
-
-    public function dashboard(){
+    /**
+     * Dashboard page for users.
+     *
+     * This function will render the dashboard page view.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function dashboard()
+    {
         return view("dashboard");
     }
 
-    public function about(){
+    /**
+     * About page for users.
+     *
+     * This function will render the about page view.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function about()
+    {
         return view("about");
     }
 
-    public function products(Request $request){
+    /**
+     * List all products.
+     *
+     * This function will render the products page view.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\View\View
+     */
+    public function products(Request $request)
+    {
         $searchQuery = $request->query("search", null);
         $products = Product::with("images");
 
@@ -66,23 +114,54 @@ class UserController extends Controller
         return view("products", compact("products"));
     }
 
-    public function detailProduct(Product $product){
+    /**
+     * Detail product page for users.
+     *
+     * This function will render the detail product page view with the given product and recommended products.
+     *
+     * @param  \App\Models\Product $product
+     * @return \Illuminate\View\View
+     */
+    public function detailProduct(Product $product)
+    {
         $product->load("variants", "images");
-        $recommendedProducts = Product::with("images")->whereRaw("SOUNDEX('$product->name') = SOUNDEX(products.name)", )->limit(4)->get();
+        $recommendedProducts = Product::with("images")
+            ->whereRaw("SOUNDEX('$product->name') = SOUNDEX(products.name)", )
+            ->limit(4)
+            ->get();
 
         return view("detailProduct", compact("product", "recommendedProducts"));
     }
 
-    public function cart(){
-        $carts = Cart::with('variantProduct')->get();
-        $totalCost = $carts->sum(function($cart){
-            return $cart->variantProduct->price * $cart->quantity;
+    /**
+     * Display the cart page.
+     *
+     * This function will render the cart page view with all the items in the cart and the total cost.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function cart()
+    {
+        $carts = Cart::with('product_variant_id')->get();
+        $totalCost = $carts->sum(function ($cart) {
+            return $cart->product_variant_id->price * $cart->quantity;
         });
 
         return view("cart", compact("carts", "totalCost"));
     }
 
-    public function updateCart(UpdateCartRequest $request, Cart $cart){
+    /**
+     * Update the quantity of a cart item.
+     *
+     * This function will update the quantity of a cart item. If the quantity is 0 or less, it will delete the cart item.
+     * If the quantity is greater than the stock of the product variant, it will return an error response.
+     *
+     * @param  \App\Http\Requests\UpdateCartRequest $request
+     * @param  \App\Models\Cart $cart
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function updateCart(UpdateCartRequest $request, Cart $cart)
+    {
         if ($request->quantity <= 0) {
             $cart->delete();
             return response()->json([
@@ -116,7 +195,17 @@ class UserController extends Controller
         }
     }
 
-    public function deleteCart(Cart $cart){
+    /**
+     * Delete a cart item.
+     *
+     * This function will delete a cart item. If the deletion is successful, it will return a JSON response with a success message.
+     * If the deletion fails, it will return a JSON response with an error message and a 500 status code.
+     *
+     * @param  \App\Models\Cart $cart
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function deleteCart(Cart $cart)
+    {
         $isDeleted = $cart->delete();
         if ($isDeleted) {
             return response()->json([
@@ -131,7 +220,14 @@ class UserController extends Controller
         }
     }
 
-    public function transactions(Request $request){
+    /**
+     * This function will render the transactions page view with all the transactions and the total cost.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\View\View
+     */
+    public function transactions(Request $request)
+    {
         $statusQuery = $request->query("status", null);
         $searchQuery = $request->query("search", null);
 
@@ -154,7 +250,14 @@ class UserController extends Controller
         return view("transactions", compact("transactions"));
     }
 
-    public function detailTransaction(Transaction $transaction){
+    /**
+     * This function will render the detail transaction page view with all the orders in the transaction.
+     *
+     * @param  \App\Models\Transaction $transaction
+     * @return \Illuminate\View\View
+     */
+    public function detailTransaction(Transaction $transaction)
+    {
         $transaction->load("orders");
         return view("detailTransaction", compact("transaction"));
     }

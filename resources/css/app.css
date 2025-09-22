@@ -789,7 +789,7 @@ body .wrapper-admin .right .content .form-data .wrapper-field .wrapper-input sel
   padding-left: 0;
   border: none;
   font-size: 1rem;
-  border-bottom: 1px solid #273b98;
+  border-bottom: 3px solid #273b98;
   outline: none;
 }
 body .wrapper-admin .right .content .form-data .wrapper-field .wrapper-input textarea {
@@ -799,6 +799,14 @@ body .wrapper-admin .right .content .form-data .wrapper-field .wrapper-input tex
 }
 body .wrapper-admin .right .content .form-data .wrapper-field .wrapper-input select {
   background-color: transparent;
+}
+body .wrapper-admin .right .content .form-data .container {
+  max-width: 625px;
+  border: 3px solid #273b98;
+  padding: 20px;
+  border-radius: 8px;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 body .wrapper-admin .right .content .form-data .wrapper-image {
   width: 100%;
@@ -823,13 +831,13 @@ body .wrapper-admin .right .content .form-data .wrapper-image .image-product img
   object-fit: contain;
 }
 body .wrapper-admin .right .content .form-data .wrapper-image .image-product:hover > .action-product {
-  display: flex;
+  opacity: 1;
 }
 body .wrapper-admin .right .content .form-data .wrapper-image .image-product .action-product {
   width: inherit;
   height: inherit;
   padding: 10px;
-  display: none;
+  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -837,6 +845,7 @@ body .wrapper-admin .right .content .form-data .wrapper-image .image-product .ac
   position: absolute;
   top: 0;
   left: 0;
+  opacity: 0;
 }
 body .wrapper-admin .right .content .form-data .wrapper-image .image-product .action-product button {
   width: 200px;
@@ -911,6 +920,7 @@ body .management-table {
   flex-direction: column;
   gap: 15px;
   padding: 10px;
+  margin-bottom: 100px;
 }
 body .management-table .title {
   display: flex;
@@ -947,7 +957,7 @@ body .management-table .title .point-deactive::after {
   }
 }
 body .management-table .title a {
-  width: 180px;
+  min-width: 180px;
   height: 40px;
   padding: 10px;
   display: flex;
@@ -1034,12 +1044,15 @@ body .management-table table {
   width: 100%;
   font-size: 1vw;
   border-spacing: 0px;
+  border-collapse: collapse;
+}
+body .management-table table tr {
+  border-bottom: 1px solid #273b98;
 }
 body .management-table table td,
 body .management-table table th {
   padding: 10px;
   text-align: start;
-  border-bottom: 1px solid #273b98;
 }
 body .management-table table td:last-child {
   display: flex;
@@ -1119,6 +1132,7 @@ body .profile .main-menu li a {
   align-items: center;
   gap: 15px;
   font-weight: 600;
+  cursor: pointer;
 }
 body .profile .main-menu li::before {
   content: "";
@@ -1139,26 +1153,28 @@ body .profile .main-menu li:hover::before {
 }
 body .alert-message {
   width: 100vw;
-  height: 100dvh;
+  height: 100%;
   display: none;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(4px);
   text-align: center;
   animation: animate-alert 300ms forwards;
 }
 body .alert-message .card-message {
   min-width: 320px;
+  max-width: 350px;
   min-height: 250px;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
-  gap: 10px;
+  gap: 15px;
   background-color: white;
   padding: 10px;
   border-radius: 16px;
@@ -1169,10 +1185,14 @@ body .alert-message .card-message span {
 body .alert-message .card-message .btn-close-annoucement {
   padding: 6px;
   background-color: transparent;
-  border: 1px solid #273b98;
   color: #273b98;
+  border: 1px solid #273b98;
   border-radius: 5px;
   cursor: pointer;
+}
+body .alert-message .btn-yes-anouncement {
+  color: white;
+  background-color: #273b98;
 }
 @keyframes animate-alert {
   0% {
@@ -1181,6 +1201,40 @@ body .alert-message .card-message .btn-close-annoucement {
   100% {
     justify-content: center;
   }
+}
+body .alert-message .card-form {
+  width: 480px;
+  min-height: 300px;
+  background-color: white;
+  border-radius: 8px;
+  padding: 15px;
+  display: none;
+  flex-direction: column;
+  justify-content: start;
+  gap: 15px;
+  text-align: start;
+}
+body .alert-message .card-form h4 {
+  margin-top: 5px;
+}
+body .alert-message .card-form .wrapper-input {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+body .alert-message .card-form .wrapper-input label {
+  font-size: 1rem;
+}
+body .alert-message .card-form .wrapper-input label span {
+  color: red;
+}
+body .alert-message .card-form .wrapper-input input {
+  height: 45px;
+  padding: 5px;
+  padding-left: 0;
+  border: none;
+  border-bottom: 1px solid #273b98;
+  outline: none;
 }
 body .open-sidebar {
   animation: openSidebar 200ms forwards;
