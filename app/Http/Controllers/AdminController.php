@@ -161,7 +161,7 @@ class AdminController extends Controller
             $transactions = $transactions
                 ->join("users", "transactions.user_nis", "=", "users.nis")
                 ->where("users.fullname", "like", "%$searchQuery%")
-                ->orWhere("transactions.id", "=", "$searchQuery");
+                ->orWhere("transactions.id", "=", $searchQuery);
         }
 
         if ($statusQuery) {
