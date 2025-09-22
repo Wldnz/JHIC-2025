@@ -39,7 +39,8 @@
                     <Input type="number" id="inp" inputmode="numeric">
                     <img src="{{ asset('icons/Add_Plus.svg') }}" alt="" id="add">
                 </div>
-                <form action="{{ route("update-cart") }}" method="post">
+                <form action="{{ route("student.store-cart") }}" method="post">
+                    @csrf
                     <input type="text" id="variant" name="product_variant_id" hidden>
                     <input type="text" id="qty" name="quantity" hidden>
                     <button type="submit" class="button button-circle"> Add to Cart</button>
@@ -74,7 +75,7 @@
         counter++;
         inputCounter.value = counter;
     })
-    
+
     subButton.addEventListener("click", function() {
         if (counter > 1) {
             counter--;
@@ -85,7 +86,7 @@
         let val = parseInt(inputCounter.value, 10);
         if (!isNaN(val) && val > 0)
             {
-                counter = val; 
+                counter = val;
                 inputCounter.value = counter;
             }
     })
@@ -101,5 +102,5 @@
 
     var variant = document.querySelector("");
 
-        
+
 </script>

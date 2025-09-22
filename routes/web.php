@@ -20,7 +20,8 @@ Route::name('student.')->middleware([isLogin::class])->group(function () {
     Route::get('/products/{product}', [UserController::class, 'detailProduct'])->name('detail-product');
 
     Route::get('/cart', [UserController::class, 'cart'])->name('cart');
-    Route::post('/cart/{cart}', [UserController::class, 'updateCart'])->name('update-cart');
+    Route::post('/cart', [UserController::class, 'storeCart'])->name('store-cart');
+    Route::put('/cart/{cart}', [UserController::class, 'updateCart'])->name('update-cart');
     Route::delete('/cart/{cart}', [UserController::class, 'deleteCart'])->name('delete-cart');
 
     Route::get('/transactions', [UserController::class, 'transactions'])->name('transactions');
