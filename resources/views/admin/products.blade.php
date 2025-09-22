@@ -41,9 +41,12 @@
                 'route-name' => 'admin.detail-product',
             ],
             'Hapus Produk' => [
-                'action-name' => 'product',
+                'action-name' => 'delete',
                 'icon-name' => 'trash',
-                'route-name' => 'admin.detail-product',
+                'destination' => [
+                    'name' => 'admin.detail-product',
+                    'parameter' => 'product'
+                ]
             ]
         ],
         'pagination' => [
@@ -57,16 +60,10 @@
     logger('as', [$products])
 @endphp
 
-<div class="alert-message">
-    <div class="card-message">
-        <h4>Produk Berrhasil Ditambahkan</h4>
-        @include('_components._sprite-icons', ['name' => 'product', 'size' => 50])
-        <span>Selamat!, Produk berhasil ditambahkan,<br>Nikmati keuntungannya</span>
-        <button class="btn-close-annoucement">Tutup Pemberitahuan</button>
-    </div>
-</div>
+@includeWhen(session()->has('alert'), '_components._alert-message', ['data' => session()->get('alert'), 'icon_name' => 'product'])
+
 
 <script defer>
-   document.querySelector('.card-message').children[3].addEventListener('click', (e) => e.target.parentElement.parentElement.style.display = "none" );
+   setActionDelete(true);
 </script>
 

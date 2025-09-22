@@ -74,6 +74,14 @@
                                                     @include('_components._sprite-icons', ['name' => $action['icon-name'], 'size' => 20])
                                                     {{ $keyAction }}
                                                 </a>
+                                                @if (isset($action['destination']) && $action['action-name'] == 'delete')
+                                                    <form
+                                                        action="{{ route($action['destination']['name'], [$action['destination']['parameter'] => $data->id]) }}"
+                                                        method="post" id="form-{{ $data->id }}">
+                                                        @csrf
+                                                        @method('delete')
+                                                    </form>
+                                                @endif
                                             </li>
                                         @endforeach
                                     </ul>
@@ -107,7 +115,10 @@
                             @endforeach
                         @elseif(isset($column_relations) && array_key_exists($key, $column_relations))
                             @foreach ($column_relations as $col_key => $col)
-                                @if ($col_key == $key)
+                                @if(gettype($col) == 'array')
+                                    <td>{{ $data[$col['parent']][$col['name']][$col['column']] }}</td>
+                                    @break
+                                @elseif ($col_key == $key)
                                     <td>{{ $data[$key][$col] }}</td>
                                     @break
                                 @endif
@@ -154,6 +165,8 @@
     @endif
 </div>
 
+@include('_components._delete-message', [])
+
 <script defer>
     const wrapper_filter = document.querySelector('.wrapper-filter');
     if (wrapper_filter) {
@@ -167,6 +180,22 @@
                 wrapper_pagination.submit();
             @else
             @endif
+        });
+    }
+    function setActionDelete(cooldown = false) {
+        const main_menu_tables = document.querySelectorAll('.main-menu-table');
+        main_menu_tables.forEach(element => {
+            Array.from(element.children).forEach(btn_action => {
+                if (btn_action.id.includes('delete')) {
+                    const id = btn_action.id.split('-')[1]
+                    btn_action.addEventListener('click', (e) => {
+                        openDeleteMessage({
+                            handle: () => btn_action.children[1].submit(),
+                            cooldown
+                        });
+                    });
+                }
+            });
         });
     }
 </script>

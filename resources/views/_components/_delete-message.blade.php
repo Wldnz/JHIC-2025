@@ -4,7 +4,7 @@
 
 <script defer>
     const delete_message = document.getElementById('delete-message');
-    let wrapper_button = ''
+    let wrapper_button = '';
 
     function setInterface() {
         delete_message.innerHTML = `

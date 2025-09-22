@@ -56,7 +56,7 @@
     ]) 
 </main>
 
-<div class="alert-message">
+<div class="alert-message" id="form-variant">
     @include('_components._card-form', [
         'title' => 'Tambah Variant Produk',
         'name' => 'variant',
@@ -133,8 +133,7 @@
     ])
 </div>
 
-@include('_components._delete-message', ['title' => 'Apakah anda yakin ingin menghapus Variant Produk Ini?'])
-<script>
+<script defer>
     let image = Array.from([]);
     let variants = Array.from([]);
 </script>
