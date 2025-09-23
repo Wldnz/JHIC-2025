@@ -13,6 +13,7 @@ class Student extends Model
     protected $primaryKey = 'nis';
     protected $keyType = 'string';
     public $incrementing = false;
+    public $timestamps = false;
 
     protected $fillable = [
         'nis',

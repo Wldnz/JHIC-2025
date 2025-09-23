@@ -10,9 +10,15 @@ return new class extends Migration {
      */
     public function up(): void
     {
+        Schema::create('majors', function (Blueprint $table) {
+            $table->id();
+            $table->string('name', 50);
+            $table->timestamps();
+        });
+
         Schema::create('students', function (Blueprint $table) {
             $table->string("nis", 16)->primary();
-            $table->string('no_telp', 12);
+            $table->string('no_telp', 12)->unique();
             $table->enum('gender', ['male', 'female']);
             $table->text('address');
             $table->timestamp('birthdate');
@@ -24,11 +30,6 @@ return new class extends Migration {
             $table->foreign('major_id')->references('id')->on('majors')->nullOnDelete()->nullOnUpdate();
         });
 
-        Schema::create('majors', function (Blueprint $table) {
-            $table->id();
-            $table->string('name', 50);
-            $table->timestamps();
-        });
     }
 
     /**

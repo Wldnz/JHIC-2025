@@ -8,8 +8,10 @@ Student Tasks:
 + History transactions
 - Store transaction
 + Detail transaction
-- See profile
-- Update profile
++ Route for new transaction page
++ Route for after transaction process page
++ See profile
++ Update profile
 
 Admin Tasks:
 - Dashboard
@@ -23,13 +25,13 @@ Admin Tasks:
 - New transaction
 - Update transaction
 - Delete transaction
--+ All accounts
++ All accounts
 + Detail account
-- Create account
++ Create account
 - Update account
 - Delete account
-- See profile
-- Update profile
++ See profile
++ Update profile
 
 
 untuk menyelesaikan halaman admin dibutuhkan
@@ -62,7 +64,7 @@ untuk menyelesaikan halaman admin dibutuhkan
         [] Edit Profile
         [] Delete Profile
     Other
-        [] Responsive 
+        [] Responsive
         [] Perform
         [] Send Email
         [] SEO?
