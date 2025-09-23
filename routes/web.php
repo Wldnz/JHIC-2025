@@ -23,10 +23,12 @@ Route::name('student.')->middleware([isLogin::class])->group(function () {
     Route::post('/cart', [UserController::class, 'storeCart'])->name('store-cart');
     Route::put('/cart/{cart}', [UserController::class, 'updateCart'])->name('update-cart');
     Route::delete('/cart/{cart}', [UserController::class, 'deleteCart'])->name('delete-cart');
+    Route::get('/checkout', [UserController::class, 'checkout'])->name('checkout');
+    Route::get('/checkout/success', [UserController::class, 'checkoutSuccess'])->name('checkout-success');
 
     Route::get('/transactions', [UserController::class, 'transactions'])->name('transactions');
-    Route::post('/transactions', [UserController::class, 'storeTransaction'])->name('store-transaction');
     Route::get('/transactions/{transaction}', [UserController::class, 'detailTransaction'])->name('detail-transaction');
+    Route::post('/transactions', [UserController::class, 'storeTransaction'])->name('store-transaction');
 
     Route::get('/profile', [UserController::class, 'profile'])->name('profile');
     Route::put('/profile/{profile}', [UserController::class, 'updateProfile'])->name('updateProfile');
@@ -52,6 +54,7 @@ Route::name('admin.')->prefix('admin')->middleware([isLogin::class, isAdmin::cla
     Route::delete('/transactions/{transaction}', [AdminController::class, 'deleteTransaction'])->name('delete-transaction');
 
     Route::get('/accounts', [AdminController::class, 'accounts'])->name('accounts');
+    Route::get('/accounts/create', [AdminController::class, 'createAccount'])->name('create-account');
     Route::get('/accounts/{account}', [AdminController::class, 'detailAccount'])->name('detail-account');
     Route::post('/accounts', [AdminController::class, 'storeAccount'])->name('store-account');
     Route::put('/accounts/{account}', [AdminController::class, 'updateAccount'])->name('update-account');

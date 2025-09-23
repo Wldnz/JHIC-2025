@@ -3,13 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\AlertType;
+use App\Http\Requests\StoreAccountRequest;
+use App\Http\Requests\UpdateAccountRequest;
+use App\Http\Requests\UpdateProfileRequest;
 use App\Models\Activity;
+use App\Models\Major;
 use App\Models\Product;
+use App\Models\Student;
 use App\Models\Transaction;
 use App\Models\User;
 use App\Utilities\AlertDataGenerator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
@@ -205,6 +211,16 @@ class AdminController extends Controller
         return view("admin.detailTransaction", compact("transaction"));
     }
 
+    public function storeTransactionPage()
+    {
+        $students = User::query()->whereRole("siswa")->get();
+        $products = Product::with('variants')->get();
+
+        $students->setVisible(['nis', 'fullname', 'email', 'created_at']);
+
+        return view("admin.Addtransaction", compact("students", "products"));
+    }
+
     /**
      * Show all the accounts.
      *
@@ -214,7 +230,7 @@ class AdminController extends Controller
      */
     public function accounts()
     {
-        $accounts = User::all();
+        $accounts = User::all(["id", "fullname", "email", "role"]);
 
         $totalAccount = $accounts->count();
         $totalStudent = $accounts->where("role", "=", "siswa")->count();
@@ -228,16 +244,134 @@ class AdminController extends Controller
      *
      * This function will render the detail account page view with the given account.
      *
-     * @param  \App\Models\User $account
+     * @param  string                $account
      * @return \Illuminate\View\View
      */
-    public function detailAccount(User $account)
+    public function detailAccount(string $nis)
     {
+        $account = User::find($nis, ['nis', 'fullname', 'email', 'role', 'email_verified_at', 'created_at', 'updated_at']);
+
+        $account->load("activities");
+        $account->activities->setVisible(["id", "action", "created_at", "updated_at"]);
+
+        if ($account->role == "siswa") {
+            $account->load("student");
+        }
+
         return view("admin.detailAccount", compact("account"));
     }
 
+    public function createAccount()
+    {
+        return view("admin.addAccount");
+    }
+
+    public function storeAccount(StoreAccountRequest $request)
+    {
+        $user = User::create(array_merge($request->safe()->only([
+            'nis',
+            'fullname',
+            'email',
+            'role',
+        ], [
+            'password' => Hash::make($request->safe()->input("password")),
+        ])));
+
+        if (!$user) {
+            AlertDataGenerator::generateAsFlashToSession(
+                AlertType::DANGER,
+                "Gagal membuat akun",
+                "Gagal membuat akun dengan NIS {$request->nis}",
+                $request->session(),
+            );
+            return redirect()->route("admin.accounts");
+        }
+
+        if ($user->role != "siswa") {
+            return redirect()->route("admin.accounts");
+        }
+
+        $major = Major::findOrFail($request->safe()->input("major_id"));
+        $student = Student::create(array_merge($request->safe()->only([
+            'nis',
+            'no_telp',
+            'gender',
+            'address',
+            'birthdate',
+            'class',
+            'major_id',
+        ]), [
+            'major_name' => $major->name
+        ]));
+
+        if ($student) {
+            AlertDataGenerator::generateAsFlashToSession(
+                AlertType::SUCCESS,
+                "Berhasil membuat akun",
+                "Berhasil membuat akun dengan NIS {$request->nis}",
+                $request->session(),
+            );
+        } else {
+            AlertDataGenerator::generateAsFlashToSession(
+                AlertType::DANGER,
+                "Gagal membuat akun",
+                "Gagal membuat akun dengan NIS {$request->nis}",
+                $request->session(),
+            );
+        }
+
+        return redirect()->route("admin.accounts");
+    }
+
+    public function updateAccount(UpdateAccountRequest $request, User $account)
+    {
+        $validated = $request->validated();
+        $isUpdated = $account->update($validated);
+
+        if ($isUpdated) {
+            AlertDataGenerator::generateAsFlashToSession(
+                AlertType::SUCCESS,
+                "Berhasil mengupdate akun",
+                "Berhasil mengupdate akun dengan NIS {$account->nis}",
+                $request->session(),
+            );
+        } else {
+            AlertDataGenerator::generateAsFlashToSession(
+                AlertType::DANGER,
+                "Gagal mengupdate akun",
+                "Gagal mengupdate akun dengan NIS {$account->nis}",
+                $request->session(),
+            );
+        }
+
+        return back();
+    }
+
+    public function deleteAccount(User $account, Request $request)
+    {
+        $isDeleted = $account->delete();
+
+        if ($isDeleted) {
+            AlertDataGenerator::generateAsFlashToSession(
+                AlertType::SUCCESS,
+                "Berhasil menghapus akun",
+                "Berhasil menghapus akun dengan NIS {$account->nis}",
+                $request->session(),
+            );
+        } else {
+            AlertDataGenerator::generateAsFlashToSession(
+                AlertType::DANGER,
+                "Gagal menghapus akun",
+                "Gagal menghapus akun dengan NIS {$account->nis}",
+                $request->session(),
+            );
+        }
+
+        return redirect()->route("admin.accounts");
+    }
+
     /**
-     * Profile page for admin.
+     * Render the profile page view with the currently authenticated user.
      *
      * This function will render the profile page view with the currently authenticated user.
      *
@@ -247,5 +381,46 @@ class AdminController extends Controller
     {
         $user = Auth::user();
         return view("admin.profile", compact("user"));
+    }
+
+    /**
+     * Update the currently authenticated user's profile information.
+     *
+     * This function will update the user's profile information based on the validated request data.
+     * If the request contains a password field, it will be hashed before being updated to the user model.
+     * If the update is successful, it will generate a success alert and redirect the user back to the previous page.
+     * If the update fails, it will generate a danger alert and redirect the user back to the previous page.
+     *
+     * @param  \App\Http\Requests\UpdateProfileRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function updateProfile(UpdateProfileRequest $request)
+    {
+        $validated = $request->validated();
+
+        if ($request->has("password")) {
+            $validated['password'] = Hash::make($validated['password']);
+        }
+
+        $user = auth()->user();
+        $isUpdated = $user->update($validated);
+
+        if ($isUpdated) {
+            AlertDataGenerator::generateAsFlashToSession(
+                AlertType::SUCCESS,
+                "Berhasil mengupdate profile",
+                "Berhasil mengupdate profile dengan NIS {$user->nis}",
+                $request->session(),
+            );
+        } else {
+            AlertDataGenerator::generateAsFlashToSession(
+                AlertType::DANGER,
+                "Gagal mengupdate profile",
+                "Gagal mengupdate profile dengan NIS {$user->nis}",
+                $request->session(),
+            );
+        }
+
+        return back();
     }
 }

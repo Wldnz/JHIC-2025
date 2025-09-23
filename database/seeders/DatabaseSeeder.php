@@ -4,10 +4,12 @@ namespace Database\Seeders;
 
 use App\Models\Activity;
 use App\Models\Cart;
+use App\Models\Major;
 use App\Models\OrderTransaction;
 use App\Models\Product;
 use App\Models\ProductImage;
 use App\Models\ProductVariant;
+use App\Models\Student;
 use App\Models\Transaction;
 use App\Models\User;
 use DB;
@@ -21,7 +23,9 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->truncateAllModels();
+        $this->call(MajorSeeder::class);
         $this->call(UserSeeder::class);
+        $this->call(StudentSeeder::class);
         $this->call(ProductSeeder::class);
         $this->call(ProductVariantSeeder::class);
         $this->call(ProductImageSeeder::class);
@@ -46,6 +50,8 @@ class DatabaseSeeder extends Seeder
         ProductImage::query()->truncate();
         Product::query()->truncate();
         User::query()->truncate();
+        Major::query()->truncate();
+        Student::query()->truncate();
 
         DB::statement('SET FOREIGN_KEY_CHECKS = 1');
     }

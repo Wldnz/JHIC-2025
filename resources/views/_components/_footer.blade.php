@@ -9,7 +9,7 @@
         <a href="{{ route('student.cart') }}"><p>Your Cart</p></a>
     </div>
     <div class="links">
-        <h4>SMK<span class="metode-bi">p</span>Bina<span class="metode-bi">p</span>Informatika </h4>
+        <h4>SMK Bina Informatika </h4>
         <a href="https://www.smkbinainformatika.sch.id"><p>Website</p></a>
         <a href="https://www.youtube.com/@officialsmkbi"><p>Youtube</p></a>
         <a href="https://www.instagram.com/officialsmkbi/"><p>Instagram</p></a>

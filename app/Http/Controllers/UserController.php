@@ -4,13 +4,16 @@ namespace App\Http\Controllers;
 
 use App\AlertType;
 use App\Http\Requests\StoreCartRequest;
+use App\Http\Requests\StoreTransactionUserRequest;
 use App\Http\Requests\UpdateCartRequest;
+use App\Http\Requests\UpdateProfileRequest;
 use App\Models\Cart;
 use App\Models\Product;
 use App\Models\ProductVariant;
 use App\Models\Transaction;
 use App\Utilities\AlertDataGenerator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
 
@@ -158,22 +161,8 @@ class UserController extends Controller
     {
         $validated = $request->validated();
 
-        $cart = Cart::incrementOrCreate([
-            "user_nis" => auth()->user()->nis,
-            "product_variant_id" => $validated['product_variant_id']
-        ], 'quantity', $validated['quantity'], $validated['quantity']);
-
-        if (!$cart) {
-            AlertDataGenerator::generateAsFlashToSession(
-                AlertType::DANGER,
-                "Produk gagal ditambahkan kedalam keranjang",
-                "Produk dengan variant id {$request->product_variant_id} gagal ditambahkan kedalam keranjang",
-                $request->session(),
-            );
-            return back();
-        }
-
-        if ($cart->variantProduct->stock < $validated['quantity']) {
+        $variantProduct = ProductVariant::find($validated['product_variant_id']);
+        if ($variantProduct->stock < $validated['quantity']) {
             AlertDataGenerator::generateAsFlashToSession(
                 AlertType::DANGER,
                 "Produk gagal ditambahkan kedalam keranjang",
@@ -183,10 +172,12 @@ class UserController extends Controller
             return back();
         }
 
-        $cart->variantProduct->stock -= $validated['quantity'];
-        $isSaved = $cart->variantProduct->save();
+        $cart = Cart::incrementOrCreate([
+            "user_nis" => auth()->user()->nis,
+            "product_variant_id" => $validated['product_variant_id']
+        ], 'quantity', $validated['quantity'], $validated['quantity']);
 
-        if ($isSaved) {
+        if ($cart) {
             AlertDataGenerator::generateAsFlashToSession(
                 AlertType::SUCCESS,
                 "Produk berhasil ditambahkan kedalam keranjang",
@@ -219,20 +210,7 @@ class UserController extends Controller
     {
         $validated = $request->validated();
 
-        $oldQuantity = $cart->quantity;
-
         if ($validated['quantity'] <= 0) {
-            $cart->variantProduct->stock += $oldQuantity;
-
-            $isVariantProductSaved = $cart->variantProduct->save();
-            if (!$isVariantProductSaved) {
-                return response()->json([
-                    "success" => false,
-                    "message" => "Failed to variant product",
-                    "deleted" => false,
-                ], Response::HTTP_INTERNAL_SERVER_ERROR);
-            }
-
             $isCartDeleted = $cart->delete();
             if (!$isCartDeleted) {
                 return response()->json([
@@ -255,13 +233,10 @@ class UserController extends Controller
             ], Response::HTTP_BAD_REQUEST);
         }
 
-        $cart->variantProduct->stock += $oldQuantity - $validated['quantity'];
-        $isVariantProductSaved = $cart->variantProduct->save();
-
         $cart->quantity = $validated['quantity'];
         $isCartSaved = $cart->save();
 
-        if ($isVariantProductSaved && $isCartSaved) {
+        if ($isCartSaved) {
             return response()->json([
                 "success" => true,
                 "message" => "Cart item updated",
@@ -287,18 +262,7 @@ class UserController extends Controller
      */
     public function deleteCart(Cart $cart)
     {
-        $cart->variantProduct->stock += $cart->quantity;
-        $isVariantProductSaved = $cart->variantProduct->save();
-
-        if (!$isVariantProductSaved) {
-            return response()->json([
-                "success" => false,
-                "message" => "Failed to update variant product",
-            ], Response::HTTP_INTERNAL_SERVER_ERROR);
-        }
-
         $isDeleted = $cart->delete();
-
         if ($isDeleted) {
             return response()->json([
                 "success" => true,
@@ -310,6 +274,48 @@ class UserController extends Controller
                 "message" => "Failed to delete cart item",
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
+    }
+
+    /**
+     * Display the checkout page.
+     *
+     * This function will render the checkout page view with all the selected cart items.
+     * If no cart items are selected, it will redirect back to the cart page with an error message.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\View\View|\Illuminate\Http\RedirectResponse
+     */
+    public function checkout(Request $request)
+    {
+        $querySelectedCarts = explode(",",$request->query("cart_ids", ""));
+        if (count($querySelectedCarts) < 1) {
+            AlertDataGenerator::generateAsFlashToSession(
+                AlertType::DANGER,
+                "Gagal membuat transaksi",
+                "Anda belum memilih produk",
+                $request->session(),
+            );
+            return back();
+        }
+
+        $selectedCarts = Cart::with('variantProduct')
+            ->whereIn('id', $querySelectedCarts)
+            ->get();
+
+        return view("checkout", compact("selectedCarts"));
+    }
+
+
+    /**
+     * This function will render the checkout success page view.
+     *
+     * It will display a message indicating that the transaction was successful.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function checkoutSuccess()
+    {
+        return view("checkoutSuccess");
     }
 
     /**
@@ -354,9 +360,63 @@ class UserController extends Controller
         return view("detailTransaction", compact("transaction"));
     }
 
+    // TODO: add transaction process integrated with midtrans
+    public function storeTransaction(StoreTransactionUserRequest $request)
+    {
+        return redirect()->route("afterTransaction");
+    }
+
+    /**
+     * Render the profile page view with the currently authenticated user.
+     *
+     * This function will render the profile page view with the currently authenticated user.
+     *
+     * @return \Illuminate\View\View
+     */
     public function profile()
     {
         $user = auth()->user();
         return view("profile", compact("user"));
+    }
+
+    /**
+     * Update the currently authenticated user's profile information.
+     *
+     * This function will update the user's profile information based on the validated request data.
+     * If the request contains a password field, it will be hashed before being updated to the user model.
+     * If the update is successful, it will generate a success alert and redirect the user back to the previous page.
+     * If the update fails, it will generate a danger alert and redirect the user back to the previous page.
+     *
+     * @param  \App\Http\Requests\UpdateProfileRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function updateProfile(UpdateProfileRequest $request)
+    {
+        $validated = $request->validated();
+
+        if ($request->has("password")) {
+            $validated['password'] = Hash::make($validated['password']);
+        }
+
+        $user = auth()->user();
+        $isUpdated = $user->update($validated);
+
+        if ($isUpdated) {
+            AlertDataGenerator::generateAsFlashToSession(
+                AlertType::SUCCESS,
+                "Berhasil mengupdate profile",
+                "Berhasil mengupdate profile dengan NIS {$user->nis}",
+                $request->session(),
+            );
+        } else {
+            AlertDataGenerator::generateAsFlashToSession(
+                AlertType::DANGER,
+                "Gagal mengupdate profile",
+                "Gagal mengupdate profile dengan NIS {$user->nis}",
+                $request->session(),
+            );
+        }
+
+        return back();
     }
 }

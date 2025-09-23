@@ -52,4 +52,12 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function student(){
+        return $this->hasOne(Student::class, "nis", "nis");
+    }
+
+    public function activities(){
+        return $this->hasMany(Activity::class, "user_nis", "nis");
+    }
 }
