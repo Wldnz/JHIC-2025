@@ -993,6 +993,7 @@ body {
                             textarea,
                             select {
                                 width: 280px;
+                                height: 40px;
                                 padding: 10px 5px;
                                 padding-left: 0;
                                 border: none;
@@ -1002,7 +1003,6 @@ body {
                             }
 
                             textarea {
-                                height: 125px;
                                 max-height: 250px;
                                 resize: vertical;
                             }
@@ -1561,7 +1561,7 @@ body {
                     }
                 }
 
-                input {
+                input,select {
                     height: 45px;
                     padding: 5px;
                     padding-left: 0;
@@ -1569,6 +1569,9 @@ body {
                     border-bottom: 1px solid $color-accent;
                     outline: none;
                 }
+
+
+
             }
         }
     }

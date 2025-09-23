@@ -107,6 +107,10 @@ class AdminController extends Controller
         return view('admin.addProduct');
     }
 
+    public function storeTransactionPage(){
+        return view('admin.addTransaction');
+    }
+
     /**
      * Update product page.
      *

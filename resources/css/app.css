@@ -786,6 +786,7 @@ body .detailproduct .container .right .bottom .counter img {
 .wrapper-admin .right .content .form-data .wrapper-field .wrapper-input textarea,
 .wrapper-admin .right .content .form-data .wrapper-field .wrapper-input select {
   width: 280px;
+  height: 40px;
   padding: 10px 5px;
   padding-left: 0;
   border: none;
@@ -794,7 +795,6 @@ body .detailproduct .container .right .bottom .counter img {
   outline: none;
 }
 .wrapper-admin .right .content .form-data .wrapper-field .wrapper-input textarea {
-  height: 125px;
   max-height: 250px;
   resize: vertical;
 }
@@ -1260,7 +1260,7 @@ h2 {
 .alert-message .card-form .wrapper-input label span {
   color: red;
 }
-.alert-message .card-form .wrapper-input input {
+.alert-message .card-form .wrapper-input input, .alert-message .card-form .wrapper-input select {
   height: 45px;
   padding: 5px;
   padding-left: 0;
