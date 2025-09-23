@@ -2,8 +2,8 @@
     $placeholder = 'https://www.svgrepo.com/show/508699/landscape-placeholder.svg'
 @endphp
 @include('_components._header', ['title' => 'product'])
-<div class="cart">
 <div class="products">
+<div class="products-group">
     <a href="{{ route('student.detail-product',['product' => 1]) }}" class="product">
         <span>
         <img src="{{ $placeholder }}" alt="">
