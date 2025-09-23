@@ -702,24 +702,51 @@ body .checkout .products-list .product .right h5 {
   font-weight: 600;
 }
 body .checkout .payment-method {
+  justify-content: center;
   width: 50%;
+  height: max-content;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
   background-color: #fff;
-  padding: 20px;
+  padding: 10px 20px;
   border-radius: 8px;
 }
-body .checkout .payment-method .method-tab {
+body .checkout .payment-method .payment-method-group {
+  justify-content: center;
+  height: max-content;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 25px;
+  background-color: #fff;
+  padding: 10px 20px;
+  border-radius: 8px;
+}
+body .checkout .payment-method .payment-method-group .method-tab.picked {
+  outline: 2px solid #273b98;
+}
+body .checkout .payment-method .payment-method-group .method-tab.picked:hover {
+  background-color: #fff;
+}
+body .checkout .payment-method .payment-method-group .method-tab {
   border-radius: inherit;
   display: flex;
   flex-direction: column;
   width: 100px;
   padding: 10px;
-  background-color: bisque;
+  height: 130px;
   text-align: center;
   justify-content: center;
+  cursor: pointer;
+  transition: 0.1s;
 }
-body .checkout .payment-method .method-tab img {
-  outline: 1px solid #aaaaaa;
+body .checkout .payment-method .payment-method-group .method-tab:hover {
+  background-color: #eaf7f9;
+}
+body .checkout .payment-method .payment-method-group .method-tab img {
   object-fit: contain;
+  background-color: #fff;
   border-radius: inherit;
   aspect-ratio: 1/1;
   width: 100%;

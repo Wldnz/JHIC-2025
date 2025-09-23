@@ -23,11 +23,11 @@
         <a href="{{ route('student.cart') }}" style="display: flex; justify-content: center;"><img src="{{asset ('icons/left-arrow.svg')}}">Back</a>
     </nav>
     <main class="wrapper-user">
+        
+        
 
-
-
-
-
+        
+        
 <div class="checkout">
     <div class="products-list">
         <div class="product">
@@ -47,9 +47,44 @@
         
     </div>
     <div class="payment-method">
+        <h3>E-Money</h3>
+        <div class="payment-method-group">
+            <div class="method-tab">
+                <img src="{{ asset("icons/payment/qris.png") }}" alt="">
+                <h5>QRIS</h5>
+            </div>
+            <div class="method-tab">
+                <img src="{{ asset("icons/payment/gopay.png") }}" alt="">
+                <h5>GoPay</h5>
+            </div>
+            <div class="method-tab">
+                <img src="{{ asset("icons/payment/ovo.png") }}" alt="">
+                <h5>OVO</h5>
+            </div>
+            <div class="method-tab">
+                <img src="{{ asset("icons/payment/dana.png") }}" alt="">
+                <h5>Dana</h5>
+            </div>
+            
+        </div>
+
+        <h3>Bank</h3>
+        <div class="payment-method-group">
+            <div class="method-tab picked">
+                <img src="{{ asset("icons/payment/bca.png") }}" alt="">
+                <h5>BCA</h5>
+            </div>
         <div class="method-tab">
-            <img src="{{ asset("icons/payment/bca.png") }}" alt="">
-            <h5>BCA</h5>
+            <img src="{{ asset("icons/payment/bni.png") }}" alt="">
+            <h5>BNI</h5>
+        </div>
+        <div class="method-tab">
+            <img src="{{ asset("icons/payment/bri.png") }}" alt="">
+            <h5>BRI</h5>
+        </div>
+        <div class="method-tab">
+            <img src="{{ asset("icons/payment/danamon.png") }}" alt="">
+            <h5>Danamon</h5>
         </div>
     </div>
     <div class="payment">
@@ -63,12 +98,17 @@
     </div>
 </div>
 
+<script>
 
-
-
-
-
-
-
+    document.querySelectorAll(".method-tab").forEach(tab => {
+        tab.addEventListener("click", function () {
+            document.querySelectorAll(".method-tab").forEach(opt => {
+                opt.classList.remove("picked");
+            });   
+        this.classList.add("picked");
+        });
+    });
+</script>
     </main>
 </body>
+</html>
