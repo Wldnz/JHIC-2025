@@ -58,13 +58,13 @@
             ],
             'Hapus Variant' => [
                 'action-name' => 'delete',
-                'icon-name' => 'trash',
+                'icon-name' => 'trash'
             ]
         ],
     ]) 
 </main>
 
-<div class="alert-message">
+<div class="alert-message" id="form-variant">
     @include('_components._card-form', [
         'title' => 'Tambah Variant Produk',
         'name' => 'variant',
@@ -140,8 +140,8 @@
         ]
     ])
 </div>
+@includeWhen(session()->has('alert'), '_components._alert-message', ['data' => session()->get('alert'), 'icon_name' => 'product'])
 
-@include('_components._delete-message', ['title' => 'Apakah anda yakin ingin menghapus Variant Produk Ini?'])
 <!-- script untuk handle image -->
 <script>
     let image = Array.from(@json($product->images) ?? []);

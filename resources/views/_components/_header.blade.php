@@ -19,7 +19,7 @@
         </div>
         
         <div class="right">
-            <a href="cart.blade.php"><button class="button button-circle"><img src="{{asset('icons/shop.svg')}}"></button></a>
+            <a href="{{ route("student.cart") }}"><button class="button button-circle"><img src="{{asset('icons/shop.svg')}}"></button></a>
             <button onclick="floating('.float','.backdrop')" class="button button-circle"><img src="{{asset('icons/user.svg')}}"></button>
             <div class="backdrop" onclick="floating('.float','.backdrop')"></div>
             <div class="float">

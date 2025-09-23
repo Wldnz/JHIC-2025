@@ -48,8 +48,12 @@
                 'icon-name' => 'eye'
             ],
             'Hapus Transaksi' => [
-                'action-name' => 'transaction',
-                'icon-name' => 'trash'
+                'action-name' => 'delete',
+                'icon-name' => 'trash',
+                'destination' => [
+                    'name' => 'admin.delete-transaction',
+                    'parameter' => 'transaction'
+                ]
             ]
         ],
         'pagination' => [
@@ -58,3 +62,9 @@
         ],
     ])
 </main>
+
+@includeWhen(session()->has('alert'), '_components._alert-message', ['data' => session()->get('alert'), 'icon_name' => 'product'])
+
+<script defer>
+    setActionDelete(false);
+</script>

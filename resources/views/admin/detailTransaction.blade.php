@@ -13,7 +13,6 @@
         ],
         'Data Transaksi' => [
             'data' => $transaction,
-            'container' => 'container-1',
             'column' => [
                 'received_email' => 'Alamat Email Penerima',
                 'received_phone' => 'Nomor Telepon Penerima',
@@ -25,14 +24,16 @@
                 'status' => 'Status Transaksi',
                 'expired' => 'Catatan',
             ],
+            'additional_class' => ['tree-row-grid']
         ]
     ];
 @endphp
 <main class="content">
-    @foreach ($columns as $title=>$column)
+    @foreach ($columns as $title => $column)
         <h2>{{ $title }}</h2>
         <div class="form-data">
-            <div class="wrapper-field container {{ $column['container'] ?? '' }}">
+            <div
+                class="wrapper-field container {{ isset($column['additional_class']) ? implode('', $column['additional_class']) : '' }} ">
                 @foreach ($column['column'] as $key => $label)
                     <div class="wrapper-input">
                         <label for="name">{{ $label }}</label>
@@ -47,11 +48,25 @@
         'title' => 'Produk Yang Dibeli',
         'datas' => $transaction['orders'],
         'columns' => [
-            'id' => 'ID Order',
+            'id' => 'ID ORDER',
+            'product' => 'Produk',
             'product_variant' => 'Variant Produk',
+            'category' => 'Kategori',
+            'quantity' => 'Jumlah',
+            'price' => 'Total Harga'
         ],
         'column_relations' => [
-            'product_variant' => 'name',    
+            'product_variant' => 'name',
+            'product' => [
+                'parent' => 'product_variant',
+                'name' => 'product',
+                'column' => 'name'
+            ],
+            'category' => [
+                'parent' => 'product_variant',
+                'name' => 'product',
+                'column' => 'category'
+            ]
         ]
     ])
 </main>

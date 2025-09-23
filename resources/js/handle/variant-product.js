@@ -166,7 +166,6 @@ function addVariant({ name, type, price, stock }){
                                 },
                                 cooldown : false
                             });
-                            console.log('you gad dime rigt');
                         });
                         break;
                 }
@@ -175,12 +174,12 @@ function addVariant({ name, type, price, stock }){
     }
 
     function openFormVariant(card_name = 'variant'){
-        document.querySelector('.alert-message').style.display = "flex";
+        document.getElementById('form-variant').style.display = "flex";
         document.getElementById(`card-form-${card_name}`).style.display = "flex";
     }
     
     function closeFormVariant(card_name = 'variant'){
-        document.querySelector('.alert-message').style.display = "none";
+        document.getElementById('form-variant').style.display = "none";
         document.getElementById(`card-form-${card_name}`).style.display = "none";
     }
 
