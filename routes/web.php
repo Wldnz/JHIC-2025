@@ -16,20 +16,19 @@ Route::name('student.')->middleware([isLogin::class])->group(function () {
     Route::get('/', [UserController::class, 'dashboard'])->name('dashboard');
     Route::get('/about', [UserController::class, 'about'])->name('about');
     Route::get('/products', [UserController::class, 'products'])->name('products');
-    
+
     Route::get('/products/{product}', [UserController::class, 'detailProduct'])->name('detail-product');
-    
+
     Route::get('/cart', [UserController::class, 'cart'])->name('cart');
     Route::post('/cart', [UserController::class, 'storeCart'])->name('store-cart');
     Route::put('/cart/{cart}', [UserController::class, 'updateCart'])->name('update-cart');
     Route::delete('/cart/{cart}', [UserController::class, 'deleteCart'])->name('delete-cart');
     Route::get('/checkout', [UserController::class, 'checkout'])->name('checkout');
-    
+    Route::get('/checkout/success', [UserController::class, 'checkoutSuccess'])->name('checkout-success');
+
     Route::get('/transactions', [UserController::class, 'transactions'])->name('transactions');
     Route::get('/transactions/{transaction}', [UserController::class, 'detailTransaction'])->name('detail-transaction');
-    Route::get('/transactions/new', [UserController::class, 'newTransaction'])->name('new-transaction');
     Route::post('/transactions', [UserController::class, 'storeTransaction'])->name('store-transaction');
-    Route::get('/transactions/after', [UserController::class, 'afterTransaction'])->name('after-transaction');
 
     Route::get('/profile', [UserController::class, 'profile'])->name('profile');
     Route::put('/profile/{profile}', [UserController::class, 'updateProfile'])->name('updateProfile');

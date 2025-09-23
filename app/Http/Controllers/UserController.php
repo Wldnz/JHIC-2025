@@ -277,6 +277,48 @@ class UserController extends Controller
     }
 
     /**
+     * Display the checkout page.
+     *
+     * This function will render the checkout page view with all the selected cart items.
+     * If no cart items are selected, it will redirect back to the cart page with an error message.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\View\View|\Illuminate\Http\RedirectResponse
+     */
+    public function checkout(Request $request)
+    {
+        $querySelectedCarts = explode(",",$request->query("cart_ids", ""));
+        if (count($querySelectedCarts) < 1) {
+            AlertDataGenerator::generateAsFlashToSession(
+                AlertType::DANGER,
+                "Gagal membuat transaksi",
+                "Anda belum memilih produk",
+                $request->session(),
+            );
+            return back();
+        }
+
+        $selectedCarts = Cart::with('variantProduct')
+            ->whereIn('id', $querySelectedCarts)
+            ->get();
+
+        return view("checkout", compact("selectedCarts"));
+    }
+
+
+    /**
+     * This function will render the checkout success page view.
+     *
+     * It will display a message indicating that the transaction was successful.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function checkoutSuccess()
+    {
+        return view("checkoutSuccess");
+    }
+
+    /**
      * This function will render the transactions page view with all the transactions and the total cost.
      *
      * @param  \Illuminate\Http\Request $request
@@ -318,53 +360,10 @@ class UserController extends Controller
         return view("detailTransaction", compact("transaction"));
     }
 
-    /**
-     * Render the new transaction page view with all the selected carts.
-     *
-     * This function will validate if the user has selected at least one cart item.
-     * If the user has not selected any cart items, it will generate an alert message and redirect the user back to the previous page.
-     * If the user has selected cart items, it will render the new transaction page view with all the selected carts.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\View\View
-     */
-    public function newTransaction(Request $request)
-    {
-        $querySelectedCarts = explode(",",$request->query("cart_ids", ""));
-        if (count($querySelectedCarts) < 1) {
-            AlertDataGenerator::generateAsFlashToSession(
-                AlertType::DANGER,
-                "Gagal membuat transaksi",
-                "Anda belum memilih produk",
-                $request->session(),
-            );
-            return back();
-        }
-
-        $selectedCarts = Cart::with('variantProduct')
-            ->whereIn('id', $querySelectedCarts)
-            ->get();
-
-        return view("newTransaction", compact("selectedCarts"));
-    }
-
     // TODO: add transaction process integrated with midtrans
     public function storeTransaction(StoreTransactionUserRequest $request)
     {
         return redirect()->route("afterTransaction");
-    }
-
-    /**
-     * Render the after transaction page view.
-     *
-     * This function will render the after transaction page view after a user has successfully made a transaction.
-     *
-     * @param  \App\Http\Requests\StoreTransactionUserRequest $request
-     * @return \Illuminate\View\View
-     */
-    public function afterTransaction()
-    {
-        return view("afterTransaction");
     }
 
     /**
