@@ -207,6 +207,16 @@ class AdminController extends Controller
         return view("admin.detailTransaction", compact("transaction"));
     }
 
+    public function storeTransactionPage()
+    {
+        $students = User::query()->whereRole("siswa")->get();
+        $products = Product::with('variants')->get();
+
+        $students->setVisible(['nis', 'fullname', 'email', 'created_at']);
+
+        return view("admin.Addtransaction", compact("students", "products"));
+    }
+
     /**
      * Show all the accounts.
      *

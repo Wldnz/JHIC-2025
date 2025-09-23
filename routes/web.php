@@ -48,6 +48,7 @@ Route::name('admin.')->prefix('admin')->middleware([isLogin::class, isAdmin::cla
 
     Route::get('/transactions', [AdminController::class, 'transactions'])->name('transactions');
     Route::get('/transactions/{transaction}', [AdminController::class, 'detailTransaction'])->name('detail-transaction');
+    Route::get('/transactions-add', [AdminController::class, 'storeTransactionPage'])->name('add-transaction');
     Route::post('/transactions', [AdminController::class, 'storeTransaction'])->name('store-transaction');
     Route::put('/transactions/{transaction}', [AdminController::class, 'updateTransaction'])->name('update-transaction');
     Route::delete('/transactions/{transaction}', [AdminController::class, 'deleteTransaction'])->name('delete-transaction');

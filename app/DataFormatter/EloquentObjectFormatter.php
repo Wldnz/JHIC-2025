@@ -36,16 +36,20 @@ class EloquentObjectFormatter extends DataFormatter
             return $value->toPrettyJson();
         }
 
+        if ($value instanceof \Illuminate\Support\Collection) {
+            return $value->toPrettyJson();
+        }
+
         if ($value instanceof \__PHP_Incomplete_Class) {
             return sprintf('__PHP_Incomplete_Class(%s)', $this->getClassNameFromIncomplete($value));
         }
 
         if (is_object($value)) {
             if ($value instanceof \DateTimeInterface) {
-                return sprintf('Object g (%s) - %s', get_class($value), $value->format(\DateTime::ATOM));
+                return sprintf('Object(%s) - %s', get_class($value), $value->format(\DateTime::ATOM));
             }
 
-            return sprintf('Object g (%s)', get_class($value));
+            return sprintf('Object(%s)', get_class($value));
         }
 
         if (is_array($value)) {
