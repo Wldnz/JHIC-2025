@@ -9,7 +9,7 @@
     function setInterface() {
         delete_message.innerHTML = `
             <div class="card-message delete-message">
-                <h4>{{ $title ?? 'data yang dihapus, tidak dapat dikembalikan lagi!' }}</h4>
+                <h4>{{ 'Data yang dihapus, tidak dapat dikembalikan lagi!' }}</h4>
                 @include('_components._sprite-icons', ['name' => $icon_name ?? 'trash', 'color' => 'red', 'size' => 50])
                 <span>{{ $description ?? "Data yang akan dihapus tidak dapat dikembalikan, berhati - hatilah" }}</span>
                 <div class="wrapper-button">
