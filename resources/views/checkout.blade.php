@@ -44,10 +44,108 @@
                 <h5>x {{ $product_qty }}</h5>
             </div>
         </div>
+        <div class="product">
+            <div class="left">
+                <img src="{{ $placeholder }}" alt="">
+            </div>
+            <div class="middle">
+                <h3>{{ $product_name }}</h3>
+                <p>{{ $product_gender }}, {{ $product_size }}</p>
+            </div>
+            <div class="right">
+                <h4>Rp. </h4>
+                <p>{{ number_format($product_price, 2, ",", ".") }} </p>
+                <h5>x {{ $product_qty }}</h5>
+            </div>
+        </div>
+        <div class="product">
+            <div class="left">
+                <img src="{{ $placeholder }}" alt="">
+            </div>
+            <div class="middle">
+                <h3>{{ $product_name }}</h3>
+                <p>{{ $product_gender }}, {{ $product_size }}</p>
+            </div>
+            <div class="right">
+                <h4>Rp. </h4>
+                <p>{{ number_format($product_price, 2, ",", ".") }} </p>
+                <h5>x {{ $product_qty }}</h5>
+            </div>
+        </div>
+        <div class="product">
+            <div class="left">
+                <img src="{{ $placeholder }}" alt="">
+            </div>
+            <div class="middle">
+                <h3>{{ $product_name }}</h3>
+                <p>{{ $product_gender }}, {{ $product_size }}</p>
+            </div>
+            <div class="right">
+                <h4>Rp. </h4>
+                <p>{{ number_format($product_price, 2, ",", ".") }} </p>
+                <h5>x {{ $product_qty }}</h5>
+            </div>
+        </div>
+        <div class="product">
+            <div class="left">
+                <img src="{{ $placeholder }}" alt="">
+            </div>
+            <div class="middle">
+                <h3>{{ $product_name }}</h3>
+                <p>{{ $product_gender }}, {{ $product_size }}</p>
+            </div>
+            <div class="right">
+                <h4>Rp. </h4>
+                <p>{{ number_format($product_price, 2, ",", ".") }} </p>
+                <h5>x {{ $product_qty }}</h5>
+            </div>
+        </div>
+        <div class="product">
+            <div class="left">
+                <img src="{{ $placeholder }}" alt="">
+            </div>
+            <div class="middle">
+                <h3>{{ $product_name }}</h3>
+                <p>{{ $product_gender }}, {{ $product_size }}</p>
+            </div>
+            <div class="right">
+                <h4>Rp. </h4>
+                <p>{{ number_format($product_price, 2, ",", ".") }} </p>
+                <h5>x {{ $product_qty }}</h5>
+            </div>
+        </div>
+        <div class="product">
+            <div class="left">
+                <img src="{{ $placeholder }}" alt="">
+            </div>
+            <div class="middle">
+                <h3>{{ $product_name }}</h3>
+                <p>{{ $product_gender }}, {{ $product_size }}</p>
+            </div>
+            <div class="right">
+                <h4>Rp. </h4>
+                <p>{{ number_format($product_price, 2, ",", ".") }} </p>
+                <h5>x {{ $product_qty }}</h5>
+            </div>
+        </div>
+        <div class="product">
+            <div class="left">
+                <img src="{{ $placeholder }}" alt="">
+            </div>
+            <div class="middle">
+                <h3>{{ $product_name }}</h3>
+                <p>{{ $product_gender }}, {{ $product_size }}</p>
+            </div>
+            <div class="right">
+                <h4>Rp. </h4>
+                <p>{{ number_format($product_price, 2, ",", ".") }} </p>
+                <h5>x {{ $product_qty }}</h5>
+            </div>
+        </div>
         
     </div>
     <div class="payment-method">
-        <h3>E-Money</h3>
+        <h3 class="group-button">E-Money <img src="{{ asset('icons/arrow-down.svg') }}" alt=""></h3>
         <div class="payment-method-group">
             <div class="method-tab">
                 <img src="{{ asset("icons/payment/qris.png") }}" alt="">
@@ -68,9 +166,9 @@
             
         </div>
 
-        <h3>Bank</h3>
+        <h3 class="group-button">Bank <img src="{{ asset('icons/arrow-down.svg') }}" alt=""></h3>
         <div class="payment-method-group">
-            <div class="method-tab picked">
+            <div class="method-tab">
                 <img src="{{ asset("icons/payment/bca.png") }}" alt="">
                 <h5>BCA</h5>
             </div>
@@ -108,6 +206,31 @@
         this.classList.add("picked");
         });
     });
+
+    document.querySelectorAll(".group-button").forEach(button => {
+        button.addEventListener("click", function () {
+            const panel = this.nextElementSibling;
+            const isOpen = panel.style.maxHeight && panel.style.maxHeight !== "0px";
+            
+            document.querySelectorAll(".payment-method-group").forEach(group => {
+                group.style.maxHeight = "0";
+                group.style.padding = "0 20px";
+                button.firstElementChild.style.rotate = "0deg";
+            });
+            
+            document.querySelectorAll(".group-button").forEach(btn => {
+                btn.firstElementChild.style.rotate = "0deg";
+            });
+            
+            if (!isOpen) {
+                panel.style.maxHeight = "2000px";
+                panel.style.padding = "15px 20px";
+                button.firstElementChild.style.rotate = "180deg";
+            }
+    });
+});
+
+
 </script>
     </main>
 </body>

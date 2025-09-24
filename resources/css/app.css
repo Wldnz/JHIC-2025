@@ -34,7 +34,6 @@ body {
   background-color: #fff;
   font-size: 1.15rem;
   color: #273b98;
-  min-height: 100vh;
 }
 body .button {
   cursor: pointer;
@@ -649,7 +648,6 @@ body .cart .checkout-tab {
 }
 body .checkout {
   width: 100%;
-  min-height: 100vh;
   background-color: #eaf7f9;
   padding: 20px;
   display: flex;
@@ -712,19 +710,32 @@ body .checkout .payment-method {
   padding: 10px 20px;
   border-radius: 8px;
 }
+body .checkout .payment-method h3 {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+body .checkout .payment-method h3 img {
+  transition: 0.1s;
+  filter: brightness(0) saturate(100%) invert(19%) sepia(51%) saturate(2655%) hue-rotate(217deg) brightness(92%) contrast(94%);
+}
 body .checkout .payment-method .payment-method-group {
+  transition: 0.1s;
   justify-content: center;
   height: max-content;
   display: flex;
   flex-direction: row;
+  max-height: 0;
+  overflow: hidden;
   flex-wrap: wrap;
   gap: 25px;
   background-color: #fff;
-  padding: 10px 20px;
+  padding: 0;
+  border-bottom: 1px solid #e2e2e2;
   border-radius: 8px;
 }
 body .checkout .payment-method .payment-method-group .method-tab.picked {
-  outline: 2px solid #273b98;
+  border: 2px solid #273b98;
 }
 body .checkout .payment-method .payment-method-group .method-tab.picked:hover {
   background-color: #fff;
@@ -774,6 +785,248 @@ body .checkout .payment .left h3 {
 }
 body .checkout .payment .left p {
   color: #fff;
+}
+body .about {
+  background-color: #eaf7f9;
+  padding: 30px;
+  height: 100vh;
+}
+body .profile {
+  background-color: #eaf7f9;
+  display: flex;
+  padding: 20px;
+  gap: 20px;
+}
+body .profile .editDisplay {
+  position: fixed;
+  display: none;
+  width: 100vw;
+  height: 100vh;
+  left: 0;
+  top: 0;
+  align-items: center;
+  justify-content: center;
+}
+body .profile .editDisplay .editBackdrop {
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.1333333333);
+  width: 100vw;
+  height: 100vh;
+  left: 0;
+  top: 0;
+  z-index: 7;
+}
+body .profile .editDisplay form {
+  display: flex;
+  background-color: #fff;
+  padding: 20px 50px;
+  flex-direction: column;
+  z-index: 8;
+  border-radius: 8px;
+}
+body .profile .editDisplay form h3 {
+  margin-bottom: 20px;
+}
+body .profile .editDisplay form label {
+  margin-bottom: 5px;
+}
+body .profile .editDisplay form input {
+  margin-bottom: 20px;
+  font-size: 1rem;
+  padding: 5px;
+  border: none;
+  border: 1px solid #273b98;
+  color: #273b98;
+  border-radius: 3px;
+}
+body .profile .editDisplay form input:focus {
+  outline: none;
+}
+body .profile .profile-tab {
+  width: 30%;
+  height: 70vh;
+  background-color: #fff;
+  padding: 40px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+body .profile .profile-tab img {
+  border-radius: 1000px;
+  width: 60%;
+  margin-bottom: 20px;
+  align-self: center;
+}
+body .profile .profile-tab button {
+  align-self: center;
+  margin-top: 10px;
+}
+body .profile .transaction-history {
+  width: 70%;
+  border-radius: 8px;
+  display: flex;
+  gap: 10px;
+  max-height: 70vh;
+  overflow: scroll;
+  background-color: #fff;
+  flex-direction: column;
+  padding: 10px;
+}
+body .profile .transaction-history input {
+  padding: 10px;
+  border: none;
+  color: #273b98;
+  border-bottom: 2px solid #d3d3d3;
+}
+body .profile .transaction-history input:focus {
+  outline: none;
+}
+body .profile .transaction-history .transaction {
+  border-bottom: 2px solid #d3d3d3;
+  width: 100%;
+  height: 100px;
+  padding: 10px;
+  display: flex;
+  gap: 10px;
+  transition: 0.1s;
+}
+body .profile .transaction-history .transaction:hover {
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+body .profile .transaction-history .transaction .img {
+  width: 10%;
+}
+body .profile .transaction-history .transaction .img img {
+  width: 100%;
+  border-radius: 8px;
+}
+body .profile .transaction-history .transaction .details {
+  width: 90%;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+body .profile .transaction-history .transaction .details .desc {
+  display: flex;
+  border-bottom: 1px solid #d3d3d3;
+}
+body .profile .transaction-history .transaction .details .desc .left {
+  display: flex;
+  width: 50%;
+  flex-direction: column;
+}
+body .profile .transaction-history .transaction .details .desc .left p {
+  font-size: 0.85rem;
+}
+body .profile .transaction-history .transaction .details .desc .right {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  text-align: end;
+}
+body .profile .transaction-history .transaction .details .desc .right p {
+  font-weight: 500;
+  font-size: 0.85rem;
+}
+body .detailTransaction {
+  width: 100%;
+  background-color: #eaf7f9;
+  padding: 20px;
+  gap: 20px;
+}
+body .detailTransaction h3 {
+  background-color: #fff;
+  padding: 20px;
+  width: max-content;
+  border-radius: 8px;
+}
+body .detailTransaction .content {
+  width: 100%;
+  background-color: #eaf7f9;
+  padding: 20px;
+  display: flex;
+  gap: 20px;
+}
+body .detailTransaction .content .products-list {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  background-color: #fff;
+  padding: 10px;
+  height: 70vh;
+  overflow: scroll;
+  border-radius: 8px;
+}
+body .detailTransaction .content .products-list .product {
+  background-color: #fff;
+  padding: 20px;
+  display: flex;
+  width: 100%;
+  gap: 20px;
+  border-bottom: 1px solid #e2e2e2;
+}
+body .detailTransaction .content .products-list .product .left {
+  width: 10%;
+}
+body .detailTransaction .content .products-list .product .left img {
+  width: 100%;
+}
+body .detailTransaction .content .products-list .product .middle {
+  width: 45%;
+  text-align: start;
+}
+body .detailTransaction .content .products-list .product .middle h3 {
+  background: none;
+  padding: 0;
+}
+body .detailTransaction .content .products-list .product .middle h5 {
+  font-weight: 300;
+}
+body .detailTransaction .content .products-list .product .right {
+  display: flex;
+  flex-direction: row;
+  width: 45%;
+  gap: 5px;
+  text-align: end;
+  align-items: center;
+  justify-content: end;
+}
+body .detailTransaction .content .products-list .product .right h4 {
+  font-weight: 500;
+}
+body .detailTransaction .content .products-list .product .right h5 {
+  font-weight: 600;
+}
+body .detailTransaction .content .products-list .product:hover {
+  background-color: #eaf7f9;
+  cursor: pointer;
+}
+body .detailTransaction .content .products-list .product.picked {
+  background-color: #f3f3f3;
+}
+body .detailTransaction .content .details {
+  width: 50%;
+  height: 70vh;
+  border-radius: 8px;
+  background-color: #fff;
+  padding: 20px;
+}
+body .detailTransaction .content .details h4 {
+  margin-bottom: 10px;
+}
+body .detailTransaction .content .details h5 {
+  display: flex;
+  padding: 0 0 2px 30px;
+  font-weight: 500;
+}
+body .detailTransaction .content .details h5 p {
+  margin-left: 20px;
+  font-weight: 600;
 }
 
 .login {
