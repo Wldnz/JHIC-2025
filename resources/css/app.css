@@ -306,6 +306,38 @@ body .wrapper-user .dashboard .category-section .category-tab::before {
   z-index: 4;
   border-radius: 30px;
 }
+body .wrapper-user .dashboard .faq-page {
+  display: flex;
+  box-sizing: border-box;
+  flex-direction: column;
+  margin-top: 40px;
+  padding: 20px;
+}
+body .wrapper-user .dashboard .faq-page h2 {
+  margin-bottom: 15px;
+}
+body .wrapper-user .dashboard .faq-page .faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+body .wrapper-user .dashboard .faq-page .faq-list details summary {
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+body .wrapper-user .dashboard .faq-page .faq-list details summary:hover {
+  background-color: #eaf7f9;
+  transition: 0.4s;
+}
+body .wrapper-user .dashboard .faq-page .faq-list details p {
+  padding-left: 10px;
+  margin-top: 10px;
+}
 body .products {
   width: 100%;
   height: 100%;
@@ -747,6 +779,45 @@ body .checkout .payment .left h3 {
 }
 body .checkout .payment .left p {
   color: #fff;
+}
+body .checkoutsuccess {
+  min-height: 100vh;
+}
+body .checkoutsuccess-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+body .checkoutsuccess-page a {
+  margin-top: 20px;
+  text-decoration: none;
+  border: 2px solid #273b98;
+}
+body .checkoutsuccess-page a:hover {
+  background-color: #273b98;
+  color: #fff;
+  transition: 0.2s linear;
+}
+body .checkoutsuccess-page img {
+  margin-top: 50px;
+  margin-bottom: 55px;
+  width: 150px;
+  height: auto;
+}
+body .ordersummary {
+  display: flex;
+  box-sizing: border-box;
+  margin-top: 20px;
+  padding: 20px;
+  border: 2px solid #273b98;
+  border-radius: 8px;
+  width: 80%;
+  background-color: #fff;
+}
+body .ordersummary h2 {
+  margin-bottom: 10px;
+  font-size: 1.5rem;
+  color: #273b98;
 }
 
 .login {
