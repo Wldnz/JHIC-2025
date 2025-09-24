@@ -1593,6 +1593,7 @@ body {
                         textarea,
                         select {
                             width: 280px;
+                                height: 40px;
                             padding: 10px 5px;
                             padding-left: 0;
                             border: none;
@@ -1601,16 +1602,15 @@ body {
                             outline: none;
                         }
 
-                        textarea {
-                            height: 125px;
-                            max-height: 250px;
-                            resize: vertical;
-                        }
-                        select {
-                            background-color: transparent;
+                            textarea {
+                                max-height: 250px;
+                                resize: vertical;
+                            }
+                            select {
+                                background-color: transparent;
+                            }
                         }
                     }
-                }
 
                 .container {
                     border: 3px solid $color-accent;
@@ -2159,17 +2159,20 @@ h2 {
                 }
             }
 
-            input {
-                height: 45px;
-                padding: 5px;
-                padding-left: 0;
-                border: none;
-                border-bottom: 1px solid $color-accent;
-                outline: none;
+                input,select {
+                    height: 45px;
+                    padding: 5px;
+                    padding-left: 0;
+                    border: none;
+                    border-bottom: 1px solid $color-accent;
+                    outline: none;
+                }
+
+
+
             }
         }
     }
-}
 
 // animation here
 .open-sidebar {
