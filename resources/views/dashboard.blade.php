@@ -90,5 +90,28 @@
         </a>
         </div>
     </div>
+
+    <div class="faq-page">
+        <h2>FAQ</h2>
+        @php
+            $faqs = [
+                'Bagaimana Cara Melakukan Pemesanan?' => 'Untuk melakukan pemesanan, pilih produk yang diinginkan, tambahkan ke keranjang, dan ikuti proses checkout.',
+                'Metode Pembayaran Apa Saja yang Tersedia?' => 'Kami menerima pembayaran melalui transfer bank, GOPAY, OVO, QRIS, Cash / Non-Tunai.',
+                'Jika Ukuran Size Baju Tidak Ada?' => 'Silahkan Hubungi Nomor Admin atau bisa langusung ke Tata Usaha.'
+
+                ]
+        @endphp
+        <div class="faq-list">
+            @foreach ($faqs as $question => $answer)
+            <details>
+                <summary>
+                    <h3>{{ $question }}</h3>
+                    <img src="{{ asset('icons/arrow-down.svg') }}" alt="Arrow Down" class="arrow-icon">
+                </summary>
+                <p>{{ $answer }}</p>
+            </details>
+            @endforeach
+        </div>
+    </div>
 </div>
 @include('_components._footer')

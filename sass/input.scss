@@ -29,6 +29,12 @@ input::-webkit-inner-spin-button {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
 }
 img {
     object-fit: fill;
@@ -40,7 +46,6 @@ body {
     background-color: $color-primary;
     font-size: $font-size-l;
     color: $color-accent;
-    min-height: 100vh;
 
     .button {
         cursor: pointer;
@@ -59,6 +64,38 @@ body {
             outline: 1.5px solid $color-accent;
             background: $color-primary;
             color: $color-accent;
+            font-weight: 600;
+        }
+
+        img {
+            margin: 2.5px 0;
+            width: 100%;
+            filter: brightness(0) saturate(100%) invert(94%) sepia(100%)
+                saturate(12%) hue-rotate(180deg) brightness(103%) contrast(104%);
+        }
+
+        &:hover > img {
+            filter: brightness(0) saturate(100%) invert(17%) sepia(56%)
+                saturate(3428%) hue-rotate(224deg) brightness(91%) contrast(90%);
+        }
+    }
+    .button2 {
+        cursor: pointer;
+        padding: 10px 15px;
+        width: max-content;
+        font-weight: 500;
+        border-radius: $border-radius;
+        outline: 1.5px solid $color-accent;
+        background: $color-primary;
+        color: $color-accent;
+        border: none;
+        outline: none;
+        transition: 0.1s;
+
+        &:hover {
+            outline: 1.5px solid $color-primary;
+            background: $color-accent;
+            color: $color-primary;
             font-weight: 600;
         }
 
@@ -186,7 +223,9 @@ body {
                         img {
                             width: 100%;
                             aspect-ratio: 1/1;
-                            filter: brightness(0) saturate(100%) invert(20%) sepia(47%) saturate(2699%) hue-rotate(214deg) brightness(93%) contrast(94%);
+                            filter: brightness(0) saturate(100%) invert(20%)
+                                sepia(47%) saturate(2699%) hue-rotate(214deg)
+                                brightness(93%) contrast(94%);
                         }
                     }
                     p {
@@ -320,6 +359,45 @@ body {
                         right: 0;
                         z-index: 4;
                         border-radius: 30px;
+                    }
+                }
+            }
+
+            .faq-page {
+                display: flex;
+                box-sizing: border-box;
+                flex-direction: column;
+                margin-top: 40px;
+                padding: 20px;
+
+                h2 {
+                    margin-bottom: 15px;
+                }
+
+                .faq-list {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 10px;
+
+                    details {
+                        summary {
+                            list-style: none;
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+                            padding: 10px;
+                            border-radius: $border-radius;
+                            cursor: pointer;
+
+                            &:hover {
+                                background-color: $color-secondary;
+                                transition: 0.4s;
+                            }
+                        }
+                        p {
+                            padding-left: 10px;
+                            margin-top: 10px;
+                        }
                     }
                 }
             }
@@ -611,8 +689,7 @@ body {
         }
     }
 
-    .cart
-    {
+    .cart {
         width: 100%;
         height: 100vh;
         padding: 40px;
@@ -620,8 +697,7 @@ body {
         gap: 10px;
         background-color: $color-secondary;
 
-        .products-list
-        {
+        .products-list {
             border-radius: $border-radius;
             width: 75%;
             height: 100%;
@@ -631,60 +707,50 @@ body {
             flex-direction: column;
             gap: 20px;
 
-            .product
-            {
+            .product {
                 width: 100%;
                 height: 200px;
                 gap: 10px;
                 display: flex;
 
-                .check
-                {
+                .check {
                     width: 5%;
                     height: 100%;
                     display: flex;
                     justify-content: center;
                     padding: 20px;
 
-                    span
-                    {
+                    span {
                         width: 25px;
                         height: 25px;
                         aspect-ratio: 1/1;
                         border-radius: 1000px;
                         outline: 2px solid $color-accent;
-                        transition: .1s ease-in;
+                        transition: 0.1s ease-in;
                         cursor: pointer;
                     }
-                    .checked
-                    {
+                    .checked {
                         background: url("/public/icons/checkmark.svg"), #273b98;
                         background-position: center;
                     }
                 }
-                .middle
-                {
+                .middle {
                     width: 20%;
 
-                    img
-                    {
+                    img {
                         border-radius: $border-radius;
                         width: 100%;
                     }
-
                 }
-                .right
-                {
+                .right {
                     padding: 10px 20px;
 
-                    h4
-                    {
+                    h4 {
                         font-size: $font-size-s;
                         font-weight: 500;
                     }
 
-                    p
-                    {
+                    p {
                         font-size: $font-size-m;
                     }
 
@@ -718,8 +784,7 @@ body {
                 }
             }
         }
-        .checkout
-        {
+        .checkout-tab {
             border-radius: $border-radius;
             width: 25%;
             height: max-content;
@@ -730,7 +795,489 @@ body {
             padding: 20px;
         }
     }
+
+    .checkout {
+        width: 100%;
+        background-color: $color-secondary;
+        padding: 20px;
+        display: flex;
+        gap: 20px;
+
+        .products-list {
+            display: flex;
+            flex-direction: column;
+            width: 50%;
+            background-color: #fff;
+            padding: 10px;
+            height: 70vh;
+            overflow: scroll;
+            border-radius: $border-radius;
+
+            .product {
+                background-color: $color-primary;
+                padding: 20px;
+                display: flex;
+                width: 100%;
+                gap: 20px;
+                border-bottom: 1px solid #e2e2e2;
+
+                .left {
+                    width: 10%;
+                    img {
+                        width: 100%;
+                    }
+                }
+                .middle {
+                    width: 45%;
+                    text-align: start;
+
+                    h5 {
+                        font-weight: 300;
+                    }
+                }
+                .right {
+                    display: flex;
+                    flex-direction: row;
+                    width: 45%;
+                    gap: 5px;
+                    text-align: end;
+                    align-items: center;
+                    justify-content: end;
+
+                    h4 {
+                        font-weight: 500;
+                    }
+
+                    h5 {
+                        font-weight: 600;
+                    }
+                }
+            }
+        }
+
+        .payment-method {
+            width: 50%;
+            height: max-content;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            background-color: $color-primary;
+            padding: 10px 20px;
+            border-radius: $border-radius;
+
+            .method-tab {
+                border-radius: inherit;
+                display: flex;
+                flex-direction: column;
+                width: 100px;
+                padding: 10px;
+                background-color: bisque;
+                text-align: center;
+                justify-content: center;
+
+                img {
+                    outline: 1px solid #aaaaaa;
+                    object-fit: contain;
+                    border-radius: inherit;
+                    aspect-ratio: 1/1;
+                    width: 100%;
+                    margin-bottom: 10px;
+                }
+            }
+        }
+    }
+
+        .payment {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100vw;
+            background-color: $color-accent;
+            display: flex;
+            align-items: center;
+            padding: 10px 20px;
+            justify-content: space-between;
+
+            .left {
+                display: flex;
+                align-items: center;
+
+                h3 {
+                    font-weight: 500;
+                    color: $color-primary;
+                    padding: 10px;
+                }
+                p {
+                    color: $color-primary;
+                }
+            }
+        }
+    }
+
+    .checkoutsuccess {
+        min-height: 100vh;
+    }
+
+    .checkoutsuccess-page {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        a {
+            margin-top: 20px;
+            text-decoration: none;
+            border: 2px solid $color-accent;
+            &:hover {
+                background-color: $color-accent;
+                color: $color-primary;
+                transition: 0.2s linear;
+            }
+        }
+
+        img {
+            margin-top: 50px;
+            margin-bottom: 55px;
+            width: 150px;
+            height: auto;
+        }
+    }
+
+    .ordersummary {
+        display: flex;
+        box-sizing: border-box;
+        margin-top: 20px;
+        padding: 20px;
+        border: 2px solid $color-accent;
+        border-radius: $border-radius;
+        width: 80%;
+        background-color: $color-primary;
+
+        h2 {
+            margin-bottom: 10px;
+            font-size: $font-size-2xl;
+            color: $color-accent;
+        }
+    }
+
+    .about
+    {
+        background-color: $color-secondary;
+        padding: 30px;
+        height: 100vh;
+    }
+
+    .profile
+    {
+        background-color: $color-secondary;
+        display: flex;
+        padding: 20px;
+        gap: 20px;
+
+        .editDisplay
+        {
+            position: fixed;
+            display: none;
+            width: 100vw;
+            height: 100vh;
+            left: 0;
+            top: 0;
+            align-items: center;
+            justify-content: center;
+
+            .editBackdrop
+            {
+                position: fixed;
+                background-color: #00000022;
+                width: 100vw;
+                height: 100vh;
+                left: 0;
+                top: 0;
+                z-index: 7;
+                }
+
+            form
+            {
+                display: flex;
+                background-color: #fff;
+                padding: 20px 50px;
+                flex-direction: column;
+                z-index: 8;
+                border-radius: $border-radius;
+
+                h3
+                {
+                    margin-bottom: 20px;
+                }
+                label
+                {
+                    margin-bottom: 5px;
+                }
+                input
+                {
+                    margin-bottom: 20px;
+                    font-size: $font-size-m;
+                    padding: 5px;
+                    border: none;
+                    border: 1px solid $color-accent;
+                    color: $color-accent;
+                    border-radius: 3px;
+
+                    &:focus
+                    {
+                        outline: none;
+                    }
+                }
+            }
+        }
+
+        .profile-tab
+        {
+            width: 30%;
+            height: 70vh;
+            background-color: $color-primary;
+            padding: 40px;
+            border-radius: $border-radius;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+
+            img
+            {
+                border-radius: 1000px;
+                width: 60%;
+                margin-bottom: 20px;
+                align-self: center;
+            }
+            button
+            {
+                align-self: center;
+                margin-top: 10px;
+            }
+        }
+        .transaction-history
+        {
+            width: 70%;
+            border-radius: $border-radius;
+            display: flex;
+            gap: 10px;
+            max-height: 70vh;
+            overflow: scroll;
+            background-color: $color-primary;
+            flex-direction: column;
+            padding: 10px;
+
+            input{
+                padding: 10px;
+                border: none;
+                color: $color-accent;
+                border-bottom: 2px solid #d3d3d3;
+
+                &:focus
+                {
+                    outline: none;
+                }
+            }
+            .transaction
+            {
+                border-bottom: 2px solid #d3d3d3;
+                width: 100%;
+                height: 100px;
+                padding: 10px;
+                display: flex;
+                gap: 10px;
+                transition: .1s;
+
+                &:hover
+                {
+                    border-radius: $border-radius;
+                    background-color: #f9f9f9;
+                }
+
+                .img
+                {
+                    width: 10%;
+
+                    img
+                    {
+                        width: 100%;
+                        border-radius: $border-radius;
+                    }
+                }
+                .details
+                {
+                    width: 90%;
+                    height: 100%;
+                    overflow: hidden;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 10px;
+
+                    .desc
+                    {
+                        display: flex;
+                        border-bottom: 1px solid #d3d3d3;
+
+                        .left
+                        {
+                            display: flex;
+                            width: 50%;
+                            flex-direction: column;
+
+                            p
+                            {
+                                font-size: $font-size-s;
+                            }
+                        }
+                        .right
+                        {
+                            width: 50%;
+                            display: flex;
+                            flex-direction: column;
+                            align-items: end;
+                            text-align: end;
+
+                            p
+                            {
+                                font-weight: 500;
+                                font-size: $font-size-s;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .detailTransaction
+    {
+        width: 100%;
+        background-color: $color-secondary;
+        padding: 20px;
+        gap: 20px;
+
+        h3
+        {
+            background-color: #fff;
+            padding: 20px;
+            width: max-content;
+            border-radius: $border-radius;
+        }
+
+        .content
+        {
+            width: 100%;
+            background-color: $color-secondary;
+            padding: 20px;
+            display: flex;
+            gap: 20px;
+
+
+            .products-list
+            {
+                display: flex;
+                flex-direction: column;
+                width: 50%;
+                background-color: #fff;
+                padding: 10px;
+                height: 70vh;
+                overflow: scroll;
+                border-radius: $border-radius;
+
+                .product
+                {
+                    background-color: $color-primary;
+                    padding: 20px;
+                    display: flex;
+                    width: 100%;
+                    gap: 20px;
+                    border-bottom: 1px solid #e2e2e2;
+
+                    .left
+                    {
+                        width: 10%;
+                        img
+                        {
+                            width: 100%;
+                        }
+                    }
+                    .middle
+                    {
+                        width: 45%;
+                        text-align: start;
+
+                        h3
+                        {
+                            background: none;
+                            padding: 0;
+                        }
+
+                        h5
+                        {
+                            font-weight: 300;
+                        }
+                    }
+                    .right
+                    {
+                        display: flex;
+                        flex-direction: row;
+                        width: 45%;
+                        gap: 5px;
+                        text-align: end;
+                        align-items: center;
+                        justify-content: end;
+
+                        h4
+                        {
+                            font-weight: 500;
+                        }
+
+                        h5
+                        {
+                            font-weight: 600;
+                        }
+                    }
+
+                    &:hover
+                    {
+                        background-color: $color-secondary;
+                        cursor: pointer;
+                    }
+                }
+                .product.picked
+                {
+                    background-color: #f3f3f3;
+                }
+            }
+
+            .details
+            {
+                width: 50%;
+                height: 70vh;
+                border-radius: $border-radius;
+                background-color: $color-primary;
+                padding: 20px;
+
+                h4
+                {
+                    margin-bottom: 10px;
+                }
+
+                h5
+                {
+                    display: flex;
+                    padding: 0 0 2px 30px;
+                    font-weight: 500;
+
+                    p{
+                        margin-left: 20px;
+                        font-weight: 600;
+                    }
+                }
+            }
+        }
+    }
 }
+
 
 .login {
     min-width: 100vw;
@@ -1055,6 +1602,7 @@ body {
                         textarea,
                         select {
                             width: 280px;
+                                height: 40px;
                             padding: 10px 5px;
                             padding-left: 0;
                             border: none;
@@ -1063,19 +1611,17 @@ body {
                             outline: none;
                         }
 
-                        textarea {
-                            height: 125px;
-                            max-height: 250px;
-                            resize: vertical;
-                        }
-                        select {
-                            background-color: transparent;
+                            textarea {
+                                max-height: 250px;
+                                resize: vertical;
+                            }
+                            select {
+                                background-color: transparent;
+                            }
                         }
                     }
-                }
 
                 .container {
-                    // max-width: 625px;
                     border: 3px solid $color-accent;
                     padding: 20px;
                     border-radius: 8px;
@@ -1622,17 +2168,20 @@ h2 {
                 }
             }
 
-            input {
-                height: 45px;
-                padding: 5px;
-                padding-left: 0;
-                border: none;
-                border-bottom: 1px solid $color-accent;
-                outline: none;
+                input,select {
+                    height: 45px;
+                    padding: 5px;
+                    padding-left: 0;
+                    border: none;
+                    border-bottom: 1px solid $color-accent;
+                    outline: none;
+                }
+
+
+
             }
         }
     }
-}
 
 // animation here
 .open-sidebar {
@@ -1735,40 +2284,40 @@ footer {
     margin: 20px 0 0 0;
 
     .links {
-            display: flex;
-            flex-direction: column;
-            width: 400px;
-            gap: 7px;
-            padding: 10px;
-            white-space: nowrap;
+        display: flex;
+        flex-direction: column;
+        width: 400px;
+        gap: 7px;
+        padding: 10px;
+        white-space: nowrap;
 
-            h4 {
-                color: $color-accent;
-                font-size: $font-size-xl;
-                margin-bottom: 20px;
+        h4 {
+            color: $color-accent;
+            font-size: $font-size-xl;
+            margin-bottom: 20px;
+        }
+
+        p {
+            color: $color-accent;
+            position: relative;
+            display: inline;
+            cursor: pointer;
+
+            &::before {
+                position: absolute;
+                content: "";
+                background: $color-accent;
+                width: 0;
+                height: 1.5px;
+                bottom: 0;
+                left: 0;
+                transition: 0.2s;
             }
-
-            p {
-                color: $color-accent;
-                position: relative;
-                display: inline;
-                cursor: pointer;
-
-                &::before {
-                    position: absolute;
-                    content: "";
-                    background: $color-accent;
-                    width: 0;
-                    height: 1.5px;
-                    bottom: 0;
-                    left: 0;
-                    transition: 0.2s;
-                }
-                &:hover::before {
-                    width: 100%;
-                }
+            &:hover::before {
+                width: 100%;
             }
         }
+    }
 
     span {
         position: absolute;
@@ -1783,8 +2332,7 @@ footer {
         opacity: 0;
         transition: visibility 0s, opacity 0.1s;
 
-        p
-        {
+        p {
             color: $color-accent;
         }
     }

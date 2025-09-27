@@ -165,22 +165,12 @@
     @endif
 </div>
 
-@include('_components._delete-message', [])
+@include('_components._delete-message')
 
 <script defer>
     const wrapper_filter = document.querySelector('.wrapper-filter');
     if (wrapper_filter) {
-        wrapper_filter.addEventListener('change', (e) => {
-            wrapper_filter.submit();
-            return;
-            @if(isset($pagination))
-                const wrapper_pagination = document.querySelector('.wrapper-pagination');
-                wrapper_pagination.innerHTML += `<input type='hidden' name='page' value='{{ $pagination['current'] }}'>`;
-                wrapper_pagination.innerHTML += `<input type='hidden' name='${e.target.name}' value='${e.target.value}'>`;
-                wrapper_pagination.submit();
-            @else
-            @endif
-        });
+        wrapper_filter.addEventListener('change', (e) => wrapper_filter.submit());
     }
     function setActionDelete(cooldown = false) {
         const main_menu_tables = document.querySelectorAll('.main-menu-table');

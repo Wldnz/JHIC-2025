@@ -47,14 +47,14 @@
 
         </div>
     </div>
-    <div class="checkout">
+    <div class="checkout-tab">
         <h3>Checkout</h3>
         <p>1x {{ $product_name }}</p>
         <p>4x {{ $product_name }}</p>
         <p>2x {{ $product_name }}</p>
         <br>
         <p>Rp. {{ $product_price }}</p>
-        <button class="button">buy buy buy</button>
+        <a href="{{ route('student.checkout') }}"><button class="button">buy buy buy</button></a>
     </div>
 </div>
 <input type="text" value="{{ $product_stok }}" id="max-counter" hidden>
