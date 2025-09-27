@@ -818,7 +818,6 @@ body .checkout .payment .left h3 {
 body .checkout .payment .left p {
   color: #fff;
 }
-<<<<<<< HEAD
 body .checkoutsuccess {
   min-height: 100vh;
 }
@@ -857,7 +856,7 @@ body .ordersummary h2 {
   margin-bottom: 10px;
   font-size: 1.5rem;
   color: #273b98;
-=======
+}
 body .about {
   background-color: #eaf7f9;
   padding: 30px;
@@ -1099,7 +1098,6 @@ body .detailTransaction .content .details h5 {
 body .detailTransaction .content .details h5 p {
   margin-left: 20px;
   font-weight: 600;
->>>>>>> 5eba9d09add60720057262225e3a9cc921eb2ba3
 }
 
 .login {

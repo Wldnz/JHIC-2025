@@ -406,6 +406,29 @@ class AdminController extends Controller
         return view("admin.Addtransaction", compact("students", "products"));
     }
 
+    public function deleteTransaction(Transaction $transaction, Request $request)
+    {
+        $isDeleted = $transaction->delete();
+
+        if ($isDeleted) {
+            AlertDataGenerator::generateAsFlashToSession(
+                AlertType::SUCCESS,
+                "Berhasil menghapus transaksi",
+                "Berhasil menghapus transaksi dengan id {$transaction->id}",
+                $request->session(),
+            );
+        } else {
+            AlertDataGenerator::generateAsFlashToSession(
+                AlertType::DANGER,
+                "Gagal menghapus transaksi",
+                "Gagal menghapus transaksi dengan id {$transaction->id}",
+                $request->session(),
+            );
+        }
+
+        return back();
+    }
+
     /**
      * Show all the accounts.
      *
