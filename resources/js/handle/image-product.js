@@ -1,7 +1,7 @@
 function setActionToImage() {
         document.querySelectorAll('.action-product').forEach(element => {
             const id = element.parentElement.children[0].getAttribute('alt').split('-')[1];
-            
+
             const btn_choose = Array.from(element.children).filter(element => element.classList.contains('btn-choose'))[0];
             const btn_delete = Array.from(element.children).filter(element => element.classList.contains('btn-delete'))[0];
             const btn_thumbnail = Array.from(element.children).filter(element => element.classList.contains('btn-pin'))[0];
@@ -110,7 +110,7 @@ function setActionToImage() {
                                     <button class="btn-choose" type="button">
                                         <span class="">Pilih Gambar</span>
                                         <input class='input_image_produk' id='input_image-${value.id}' type="file" accept="image/jpeg, image/png" multiple name="images[${value.id}][file]" required=${value.thumbnail}>
-                                        <input type="hidden" name="images[${value.id}][thumbnail]" value=${value.thumbnail}>
+                                        <input type="hidden" name="images[${value.id}][thumbnail]" value=${value.thumbnail ? '1' : '0'}>
                                     </button>
                                     <button class="btn-delete" type="button">Hapus Gambar</button>
                                 </div>
@@ -139,7 +139,7 @@ function setActionToImage() {
             }else{
                 element.removeAttribute('required');
             }
-        });                                         
+        });
     }
 
     loadImage();

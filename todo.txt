@@ -14,12 +14,12 @@ Student Tasks:
 + Update profile
 
 Admin Tasks:
-- Dashboard
++ Dashboard
 + All products
 + Detail products
-- Create product (with variants)
-- Update product (with variants)
-- Delete product (with variants)
++ Create product (with variants)
++ Update product (with variants)
++ Delete product (with variants)
 + All transactions
 + Detail transaction
 - New transaction

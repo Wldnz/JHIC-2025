@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+// @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 
 $font-size-s: 0.85rem;
 $font-size-m: 1rem;
@@ -630,7 +630,7 @@ body {
             display: flex;
             flex-direction: column;
             gap: 20px;
-            
+
             .product
             {
                 width: 100%;
@@ -676,7 +676,7 @@ body {
                 .right
                 {
                     padding: 10px 20px;
-                    
+
                     h4
                     {
                         font-size: $font-size-s;
@@ -695,7 +695,7 @@ body {
                         border-radius: 50px;
                         width: max-content;
                         padding: 5px;
-                        
+
                         input {
                             width: 40px;
                             text-align: center;
@@ -1783,7 +1783,7 @@ footer {
         opacity: 0;
         transition: visibility 0s, opacity 0.1s;
 
-        p 
+        p
         {
             color: $color-accent;
         }
