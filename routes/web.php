@@ -7,7 +7,7 @@ use App\Http\Middleware\isLogin;
 use App\Http\Middleware\isAdmin;
 
 Route::get('/login', [UserController::class, 'loginPage'])->name('login');
-Route::post('/login', [UserController::class, 'login'])->name('login');
+Route::post('/login', [UserController::class, 'login'])->name('login-action');
 
 Route::get('/logout', [UserController::class, 'logout'])->name('logout');
 

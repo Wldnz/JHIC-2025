@@ -17,10 +17,11 @@ class ProductImageFactory extends Factory
      */
     public function definition(): array
     {
+        $product = Product::query()->inRandomOrder()->first();
         return [
-            'product_id' => Product::query()->inRandomOrder()->first()->id,
+            'product_id' => $product->id,
             'url' => fake()->imageUrl(),
-            'thumbnail' => fake()->boolean(),
+            'thumbnail' => $product->images()->count() == 0,
             'visible' => true
         ];
     }

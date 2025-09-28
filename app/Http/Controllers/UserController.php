@@ -109,7 +109,9 @@ class UserController extends Controller
     public function products(Request $request)
     {
         $searchQuery = $request->query("search", null);
-        $products = Product::with("images");
+        $products = Product::with(["images" => function ($query) {
+            $query->where('product_images.thumbnail', '=', true);
+        }]);
 
         if ($searchQuery) {
             $products = $products

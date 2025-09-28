@@ -19,7 +19,7 @@
                 <h4>Selamat Datang</h4>
                 <p>Silahkan Login Terlebih Dahulu</p>
             </div>
-            <form action="{{ route('login') }}" method="post">
+            <form action="{{ route('login-action') }}" method="post">
                 @csrf
                 <div class="wrapper-input">
                     <label for="nis">Nomor Induk Siswa <span>*</span></label>

@@ -13,7 +13,6 @@ class Product extends Model
     protected $primaryKey = "id";
     protected $keyType = "string";
 
-
     protected $fillable = [
         "id",
         "name",
@@ -31,7 +30,7 @@ class Product extends Model
     }
 
     public function thumbnail(){
-        return $this->images->where("thumbnail", true)->first();
+        return $this->images()->where("thumbnail", true)->first();
     }
 
     public function variants(){
@@ -39,6 +38,6 @@ class Product extends Model
     }
 
     public function totalStock(){
-        return $this->variants->query()->sum("stock");
+        return $this->variants()->sum("stock");
     }
 }
