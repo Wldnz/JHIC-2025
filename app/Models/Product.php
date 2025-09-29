@@ -13,7 +13,6 @@ class Product extends Model
     protected $primaryKey = "id";
     protected $keyType = "string";
 
-
     protected $fillable = [
         "id",
         "name",
@@ -38,7 +37,11 @@ class Product extends Model
         return $this->hasMany(ProductVariant::class);
     }
 
+    public function firstVariant(){
+        return $this->variants->count() > 0 ? $this->variants[0] : null;
+    }
+
     public function totalStock(){
-        return $this->variants->query()->sum("stock");
+        return $this->variants->sum("stock");
     }
 }

@@ -112,7 +112,7 @@ function loadImage() {
                                     <button class="btn-choose" type="button">
                                         <span class="">Pilih Gambar</span>
                                         <input class='input_image_produk' id='input_image-${value.id}' type="file" accept="image/jpeg, image/png" multiple name="images[${value.id}][file]" required=${value.thumbnail}>
-                                        <input type="hidden" name="images[${value.id}][thumbnail]" value=${value.thumbnail}>
+                                        <input type="hidden" name="images[${value.id}][thumbnail]" value=${value.thumbnail ? '1' : '0'}>
                                     </button>
                                     <button class="btn-delete" type="button">Hapus Gambar</button>
                                 </div>

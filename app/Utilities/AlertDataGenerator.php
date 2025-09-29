@@ -71,10 +71,13 @@ abstract class AlertDataGenerator
      * @param  string $title
      * @param  string $message
      * @param  Session $session
+     * @param  bool $overwrite
      * @return Session
      */
-    public static function generateAsFlashToSession(AlertType $type, string $title, string $message, Session $session)
+    public static function generateAsFlashToSession(AlertType $type, string $title, string $message, Session $session, bool $overwrite = true)
     {
+        if (!$overwrite && $session->has(self::$alertKey)) return $session;
+
         $session->flash(self::$alertKey, [
             'type' => $type->value,
             'title' => $title,

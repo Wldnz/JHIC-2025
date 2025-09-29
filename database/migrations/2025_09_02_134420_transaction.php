@@ -33,6 +33,7 @@ return new class extends Migration {
             $table->enum("status", ["pending", "success", "ongoing", "fail"])->default("pending");
             $table->text("note")->nullable(true);
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign("user_nis")->references("nis")->on("users")->cascadeOnDelete()->cascadeOnUpdate();
         });
@@ -44,6 +45,7 @@ return new class extends Migration {
             $table->double("price")->nullable(false);
             $table->integer("quantity")->nullable(false);
             $table->timestamps();
+            $table->softDeletes();
         });
 
     }

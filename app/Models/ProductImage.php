@@ -16,7 +16,8 @@ class ProductImage extends Model
         'id',
         'product_id',
         'url',
-        'visible'
+        'thumbnail',
+        'visible',
     ];
 
     protected $hidden = [];

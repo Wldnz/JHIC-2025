@@ -4,15 +4,22 @@ namespace App\Http\Controllers;
 
 use App\AlertType;
 use App\Http\Requests\StoreAccountRequest;
+use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateAccountRequest;
+use App\Http\Requests\UpdateProductRequest;
 use App\Http\Requests\UpdateProfileRequest;
 use App\Models\Activity;
 use App\Models\Major;
 use App\Models\Product;
+use App\Models\ProductImage;
+use App\Models\ProductVariant;
 use App\Models\Student;
 use App\Models\Transaction;
 use App\Models\User;
 use App\Utilities\AlertDataGenerator;
+use App\Utilities\CloudinaryUtils;
+use DB;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -20,6 +27,8 @@ use Illuminate\Support\Facades\Hash;
 class AdminController extends Controller
 {
     protected $limitPagination = 8;
+    protected $newImagePrefixKey = 'added_image_';
+    protected $newVariantPrefixKey = 'added_variant_';
 
     /**
      * Dashboard page for admin.
@@ -32,24 +41,34 @@ class AdminController extends Controller
      */
     public function dashboard()
     {
+        $initialTransactions = Transaction::get('status');
         $transaction = [
-            'total' => count(Transaction::get()),
-            'success' => count(Transaction::where('status', '=', 'success')->get()),
-            'ongoing' => count(Transaction::where('status', '=', 'ongoing')->get()),
-            'fail' => count(Transaction::where('status', '=', 'fail')->get()),
+            'total' => $initialTransactions->count(),
+            'success' => $initialTransactions->where('status', '=', 'success')->count(),
+            'ongoing' => $initialTransactions->where('status', '=', 'ongoing')->count(),
+            'fail' => $initialTransactions->where('status', '=', 'fail')->count(),
         ];
+
+        $initialStockProducts = Product::query()
+            ->select("product_variants.stock AS product_variants_stock")
+            ->join("product_variants", "products.id", "=", "product_variants.product_id")
+            ->groupBy("products.name", "product_variants.name")
+            ->get();
         $product = [
-            'total' => count(Product::get()),
-            'available' => 0,
-            'almost sold' => 0,
-            'soldout' => 0,
+            'total' => $initialStockProducts->count(),
+            'available' => $initialStockProducts->where("product_variants_stock", ">", 0)->count(),
+            'almost sold' => $initialStockProducts->where("product_variants_stock", "<", 5)->count(),
+            'soldout' => $initialStockProducts->where("product_variants_stock", "<=", 0)->count(),
         ];
+
         $account = [
-            'total' => count(User::get()),
+            'total' => User::query()->count(),
         ];
+
         $activity = [
-            'total' => count(Activity::get())
+            'total' => Activity::query()->count(),
         ];
+
         return view("admin.dashboard", [
             "transaction" => $transaction,
             "product" => $product,
@@ -71,16 +90,33 @@ class AdminController extends Controller
     public function products(Request $request)
     {
         $searchQuery = $request->query("search", null);
+        $searchStockQuery = $request->query("search_stock", null);
         $currentPage = $request->query("page", 1);
-        $products = Product::with("variants");
+        $products = Product::with("variants")
+            ->join("product_variants", "products.id", "=", "product_variants.product_id")
+            ->groupBy("products.id");;
 
         if ($searchQuery) {
-            $products = $products->where("name", "like", "%$searchQuery%");
+            $searchQuery = "%$searchQuery%";
+            $products = $products
+                ->where("products.name", "like", $searchQuery)
+                ->orWhere("product_variants.name", "like", $searchQuery);
+        }
+
+        if ($searchStockQuery) {
+            $products = match ($searchStockQuery) {
+                'available' => $products->havingRaw("SUM(product_variants.stock) > 0"),
+                'low'       => $products->havingRaw("SUM(product_variants.stock) < 5"),
+                'empty'     => $products->havingRaw("SUM(product_variants.stock) <= 0"),
+                default     => $products,
+            };
         }
 
         $products = $products
+            ->orderBy("products.id", "asc")
             ->limit($this->limitPagination)
             ->offset(($currentPage - 1) * $this->limitPagination)
+            ->select("products.*")
             ->get();
 
         $initialStockProducts = Product::query()
@@ -90,7 +126,7 @@ class AdminController extends Controller
             ->get();
 
         $stats = [
-            "total" => Product::get()->count(),
+            "total" => Product::query()->count(),
             "available" => $initialStockProducts->where("product_variant_stock", ">", 0)->count(),
             "low" => $initialStockProducts->where("product_variant_stock", "<", 5)->count(),
             "empty" => $initialStockProducts->where("product_variant_stock", "<=", 0)->count()
@@ -99,38 +135,6 @@ class AdminController extends Controller
         $maxPage = intval($stats['total'] / $this->limitPagination + 1);
 
         return view('admin.products', compact("products", "stats", "currentPage", "maxPage"));
-    }
-
-    /**
-     * Show the add product page.
-     *
-     * This function will render the add product page view.
-     *
-     * @return \Illuminate\View\View
-     */
-    public function storeProductPage()
-    {
-        return view('admin.addProduct');
-    }
-
-    /**
-     * Update product page.
-     *
-     * This function will render the update product page view.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function updateProduct(Product $product, Request $request)
-    {
-        AlertDataGenerator::generateAsFlashToSession(
-            AlertType::SUCCESS,
-            "Produk berhasil diupdate",
-            "Produk dengan id {$product->id} berhasil diupdate",
-            $request->session(),
-        );
-
-        return redirect()->route("admin.detail-product", ["product" => $product]);
     }
 
     /**
@@ -145,6 +149,191 @@ class AdminController extends Controller
     {
         $product->load("variants", "images");
         return view("admin.detailProduct", compact("product"));
+    }
+
+    /**
+     * Show the add product page.
+     *
+     * This function will render the add product page view.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function storeProductPage()
+    {
+        return view('admin.addProduct');
+    }
+
+    public function storeProduct(StoreProductRequest $request)
+    {
+        $validated = $request->validated();
+
+        DB::beginTransaction();
+
+        try {
+            $product = Product::create([
+                "name" => $validated["name"],
+                "category" => $validated["category"],
+                "description" => $validated["description"],
+                "visible" => true,
+            ]);
+
+            if (!$product) {
+                throw new Exception("Terjadi kesalahan saat menambahkan produk");
+            }
+
+            foreach ($validated["variants"] as $variant) {
+                $variantProduct = ProductVariant::create([
+                    "product_id" => $product->id,
+                    "name" => $variant["name"],
+                    "type" => $variant["type"],
+                    "price" => $variant["price"],
+                    "stock" => $variant["stock"],
+                ]);
+
+                if (!$variantProduct) {
+                    throw new Exception("Terjadi kesalahan saat menambahkan variant produk dengan nama {$variant['name']}");
+                }
+            }
+
+            foreach ($validated["images"] as $image) {
+                $uploadedUrl = cloudinary()->uploadApi()->upload($image["file"]->getRealPath())['secure_url'];
+                $productImage = ProductImage::create([
+                    "product_id" => $product->id,
+                    "url" => $uploadedUrl,
+                    "visible" => true,
+                    "thumbnail" => $image["thumbnail"],
+                ]);
+
+                if (!$productImage) {
+                    throw new Exception("Terjadi kesalahan saat menambahkan foto produk");
+                }
+            }
+
+            DB::commit();
+
+            AlertDataGenerator::generateAsFlashToSession(
+                AlertType::SUCCESS,
+                "Produk berhasil ditambahkan",
+                "Produk dengan nama {$product->name} berhasil ditambahkan",
+                $request->session(),
+            );
+
+            return redirect()->route("admin.products");
+        } catch (\Throwable $th) {
+
+            DB::rollback();
+            report($th);
+            logger()->error($th);
+
+            AlertDataGenerator::generateAsFlashToSession(
+                AlertType::DANGER,
+                "Gagal menambahkan produk",
+                $th->getMessage(),
+                $request->session(),
+                false,
+            );
+
+            return back();
+        }
+    }
+
+    public function updateProduct(UpdateProductRequest $request, Product $product)
+    {
+        $validated = $request->validated();
+
+        DB::beginTransaction();
+
+        try {
+            $isUpdated = $product->update([
+                "name" => $validated["name"],
+                "category" => $validated["category"],
+                "description" => $validated["description"],
+            ]);
+
+            if (!$isUpdated) {
+                throw new Exception("Terjadi kesalahan saat mengupdate data produk");
+            }
+
+            $this->_handleProductVariantsInModifyProduct($request, $product, $validated["variants"]);
+            $this->_handleProductImagesInModifyProduct($request, $product, $validated["images"]);
+
+            DB::commit();
+
+            AlertDataGenerator::generateAsFlashToSession(
+                AlertType::SUCCESS,
+                "Produk berhasil diupdate",
+                "Produk dengan nama {$product->name} berhasil diupdate",
+                $request->session(),
+            );
+
+            return redirect()->route("admin.products");
+        } catch (\Throwable $th) {
+
+            DB::rollback();
+            report($th);
+            logger()->error($th);
+
+            AlertDataGenerator::generateAsFlashToSession(
+                AlertType::DANGER,
+                "Gagal mengupdate produk",
+                $th->getMessage(),
+                $request->session(),
+                false,
+            );
+
+            return back();
+        }
+    }
+
+    public function deleteProduct(Product $product, Request $request)
+    {
+        DB::beginTransaction();
+
+        try {
+            foreach ($product->images as $productImage) {
+                logger($productImage);
+                $publicId = CloudinaryUtils::getPublicIdByCloudinaryUrl($productImage->url);
+                if (!$publicId) {
+                    throw new Exception("Terjadi kesalahan saat menghapus foto produk (public id tidak ditemukan)");
+                }
+
+                $response = cloudinary()->uploadApi()->destroy($publicId);
+                if ($response['result'] !== 'ok') {
+                    throw new Exception("Terjadi kesalahan saat menghapus foto produk (gagal menghapus dari cloud)");
+                }
+            }
+
+            $isDeleted = $product->delete();
+            if (!$isDeleted) {
+                throw new Exception("Produk dengan id {$product->id} gagal dihapus");
+            }
+
+            DB::commit();
+
+            AlertDataGenerator::generateAsFlashToSession(
+                AlertType::SUCCESS,
+                "Produk berhasil dihapus",
+                "Produk dengan id {$product->id} berhasil dihapus",
+                $request->session(),
+            );
+
+        } catch (\Throwable $th) {
+            DB::rollback();
+            report($th);
+            logger()->error($th);
+
+            AlertDataGenerator::generateAsFlashToSession(
+                AlertType::DANGER,
+                "Produk gagal dihapus",
+                $th->getMessage(),
+                $request->session(),
+                false,
+            );
+
+        } finally {
+            return back();
+
+        }
     }
 
     /**
@@ -215,6 +404,29 @@ class AdminController extends Controller
         $students->setVisible(['nis', 'fullname', 'email', 'created_at']);
 
         return view("admin.Addtransaction", compact("students", "products"));
+    }
+
+    public function deleteTransaction(Transaction $transaction, Request $request)
+    {
+        $isDeleted = $transaction->delete();
+
+        if ($isDeleted) {
+            AlertDataGenerator::generateAsFlashToSession(
+                AlertType::SUCCESS,
+                "Berhasil menghapus transaksi",
+                "Berhasil menghapus transaksi dengan id {$transaction->id}",
+                $request->session(),
+            );
+        } else {
+            AlertDataGenerator::generateAsFlashToSession(
+                AlertType::DANGER,
+                "Gagal menghapus transaksi",
+                "Gagal menghapus transaksi dengan id {$transaction->id}",
+                $request->session(),
+            );
+        }
+
+        return back();
     }
 
     /**
@@ -418,5 +630,139 @@ class AdminController extends Controller
         }
 
         return back();
+    }
+
+    protected function _handleProductVariantsInModifyProduct(Request $request, Product $product, array $variants)
+    {
+        $currentIdsSet = new \Ds\Set();
+
+        foreach ($variants as $key => $variant) {
+            if (str_starts_with($key, $this->newVariantPrefixKey)) {
+                $productVariant = ProductVariant::create([
+                    "product_id" => $product->id,
+                    "name" => $variant["name"],
+                    "type" => $variant["type"],
+                    "price" => $variant["price"],
+                    "stock" => $variant["stock"],
+                ]);
+
+                if (!$productVariant) {
+                    throw new Exception("Terjadi kesalahan saat menambahkan variant produk dengan nama {$variant['name']}");
+                }
+
+                $currentIdsSet->add($productVariant->id);
+                continue;
+            }
+
+            $productVariant = ProductVariant::find($key);
+            if (!$productVariant) {
+                throw new Exception("Terjadi kesalahan saat mengupdate varian produk (data tidak ditemukan)");
+            }
+
+            $isUpdated = $productVariant->update([
+                "name" => $variant["name"],
+                "type" => $variant["type"],
+                "price" => $variant["price"],
+                "stock" => $variant["stock"],
+            ]);
+            if (!$isUpdated) {
+                throw new Exception("Terjadi kesalahan saat mengupdate varian produk (gagal mengupdate data foto produk)");
+            }
+
+            $currentIdsSet->add($productVariant->id);
+
+        }
+
+        ProductVariant::query()
+            ->where("product_id", $product->id)
+            ->whereNotIn("id", $currentIdsSet->toArray())
+            ->delete();
+    }
+
+    protected function _handleProductImagesInModifyProduct(Request $request, Product $product, array $images)
+    {
+        $currentIdsSet = new \Ds\Set();
+
+        foreach ($images as $key => $image) {
+            if (str_starts_with($key, $this->newImagePrefixKey)) {
+                $uploadedUrl = cloudinary()->uploadApi()->upload($image["file"]->getRealPath())['secure_url'];
+                $productImage = ProductImage::create([
+                    "product_id" => $product->id,
+                    "url" => $uploadedUrl,
+                    "visible" => true,
+                    "thumbnail" => $image["thumbnail"],
+                ]);
+
+                if (!$productImage) {
+                    throw new Exception("Terjadi kesalahan saat menambahkan foto produk");
+                }
+
+                $currentIdsSet->add($productImage->id);
+                continue;
+            }
+
+            $productImage = ProductImage::find($key);
+            if (!$productImage) {
+                throw new Exception("Terjadi kesalahan saat mengupdate foto produk (data tidak ditemukan)");
+            }
+
+            if (!array_key_exists("file", $image)) {
+                $isUpdated = $productImage->update([
+                    "thumbnail" => $image["thumbnail"],
+                ]);
+                if (!$isUpdated) {
+                    throw new Exception("Terjadi kesalahan saat mengupdate foto produk (gagal mengupdate data foto produk)");
+                }
+
+                $currentIdsSet->add($productImage->id);
+                continue;
+            }
+
+            $publicId = CloudinaryUtils::getPublicIdByCloudinaryUrl($productImage->url);
+            if (!$publicId) {
+                throw new Exception("Terjadi kesalahan saat mengupdate foto produk (public id tidak ditemukan)");
+            }
+
+            $response = cloudinary()->uploadApi()->destroy($publicId);
+            if ($response['result'] !== 'ok') {
+                throw new Exception("Terjadi kesalahan saat mengupdate foto produk (gagal menghapus dari cloud)");
+            }
+
+            $uploadedUrl = cloudinary()->uploadApi()->upload($image["file"]->getRealPath())['secure_url'];
+            if (!$uploadedUrl) {
+                throw new Exception("Terjadi kesalahan saat mengupdate foto produk (gagal mengupload ke cloud)");
+            }
+
+            $isUpdated = $productImage->update([
+                "url" => $uploadedUrl,
+                "thumbnail" => $image["thumbnail"],
+            ]);
+            if (!$isUpdated) {
+                throw new Exception("Terjadi kesalahan saat mengupdate foto produk (gagal mengupdate data foto produk)");
+            }
+
+            $currentIdsSet->add($productImage->id);
+
+        }
+
+        $deletableProductImages = ProductImage::query()
+            ->where("product_id", $product->id)
+            ->whereNotIn("id", $currentIdsSet->toArray());
+
+        foreach ($deletableProductImages->get() as $productImage) {
+
+            $publicId = CloudinaryUtils::getPublicIdByCloudinaryUrl($productImage->url);
+            if (!$publicId) {
+                throw new Exception("Terjadi kesalahan saat menghapus foto produk (public id tidak ditemukan)");
+            }
+
+            $response = cloudinary()->uploadApi()->destroy($publicId);
+            if ($response['result'] !== 'ok') {
+                throw new Exception("Terjadi kesalahan saat menghapus foto produk (gagal menghapus dari cloud)");
+            }
+
+        }
+
+        $deletableProductImages->delete();
     }
 }
