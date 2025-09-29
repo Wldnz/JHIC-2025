@@ -24,7 +24,6 @@
         <div class="radio-selector">
             @foreach ($product->variants->unique("type") as $variant)
                 <p name="{{ $variant->type }}" onclick="pick(this)" class="radio-tab">{{ $variant->type }}</p>
-                {{-- picked --}}
             @endforeach
         </div>
         <a href="https://youtube.com"><h4>My Size Doesn't Exist</h4></a>

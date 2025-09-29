@@ -14,7 +14,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $title  ?? "Bina Tata Usaha" }}</title>
+    <title>{{ $title  ?? "Bina Tata Usaha" }}</title>
     @vite(["resources/css/app.css", "resources/js/app.js"])
 </head>
 <body>
@@ -23,11 +23,11 @@
         <a href="{{ route('student.cart') }}" style="display: flex; justify-content: center;"><img src="{{asset ('icons/left-arrow.svg')}}">Back</a>
     </nav>
     <main class="wrapper-user">
-        
-        
 
-        
-        
+
+
+
+
 <div class="checkout">
     <div class="products-list">
         <div class="product">
@@ -142,7 +142,7 @@
                 <h5>x {{ $product_qty }}</h5>
             </div>
         </div>
-        
+
     </div>
     <div class="payment-method">
         <h3 class="group-button">E-Money <img src="{{ asset('icons/arrow-down.svg') }}" alt=""></h3>
@@ -163,7 +163,7 @@
                 <img src="{{ asset("icons/payment/dana.png") }}" alt="">
                 <h5>Dana</h5>
             </div>
-            
+
         </div>
 
         <h3 class="group-button">Bank <img src="{{ asset('icons/arrow-down.svg') }}" alt=""></h3>
@@ -202,7 +202,7 @@
         tab.addEventListener("click", function () {
             document.querySelectorAll(".method-tab").forEach(opt => {
                 opt.classList.remove("picked");
-            });   
+            });
         this.classList.add("picked");
         });
     });
@@ -211,19 +211,19 @@
         button.addEventListener("click", function () {
             const panel = this.nextElementSibling;
             const isOpen = panel.style.maxHeight && panel.style.maxHeight !== "0px";
-            
+
             document.querySelectorAll(".payment-method-group").forEach(group => {
                 group.style.maxHeight = "0";
                 group.style.padding = "0 20px";
                 button.firstElementChild.style.rotate = "0deg";
             });
-            
+
             document.querySelectorAll(".group-button").forEach(btn => {
                 btn.firstElementChild.style.rotate = "0deg";
             });
-            
+
             if (!isOpen) {
-                panel.style.maxHeight = "2000px";
+                panel.style.maxHeight = "1000px";
                 panel.style.padding = "15px 20px";
                 button.firstElementChild.style.rotate = "180deg";
             }

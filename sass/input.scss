@@ -1,4 +1,4 @@
-// @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 
 $font-size-s: 0.85rem;
 $font-size-m: 1rem;
@@ -60,6 +60,11 @@ body {
         outline: none;
         transition: 0.1s;
 
+        &:active
+        {
+            scale: .95;
+        }
+
         &:hover {
             outline: 1.5px solid $color-accent;
             background: $color-primary;
@@ -91,6 +96,11 @@ body {
         border: none;
         outline: none;
         transition: 0.1s;
+
+        &:active
+        {
+            scale: .95;
+        }
 
         &:hover {
             outline: 1.5px solid $color-primary;
@@ -598,7 +608,7 @@ body {
                 height: max-content;
 
                 img {
-                    max-width: 100%;
+                    width: 100%;
                     border-radius: $border-radius;
                     object-fit: cover;
                     aspect-ratio: 3/4;
@@ -853,34 +863,80 @@ body {
                 }
             }
         }
-
         .payment-method {
             width: 50%;
-            height: max-content;
+            height: 70vh;
             display: flex;
             flex-direction: column;
             gap: 25px;
             background-color: $color-primary;
-            padding: 10px 20px;
+            padding: 20px 20px 10px 20px;
             border-radius: $border-radius;
-
-            .method-tab {
-                border-radius: inherit;
+            
+            .group-button
+            {
                 display: flex;
-                flex-direction: column;
-                width: 100px;
-                padding: 10px;
-                background-color: bisque;
-                text-align: center;
-                justify-content: center;
+                align-items: center;
+                cursor: pointer;
+                padding: 10px 0;
 
-                img {
-                    outline: 1px solid #aaaaaa;
-                    object-fit: contain;
-                    border-radius: inherit;
-                    aspect-ratio: 1/1;
-                    width: 100%;
-                    margin-bottom: 10px;
+                img
+                {
+                    transition: .1s;
+                    filter: brightness(0) saturate(100%) invert(20%)
+                                sepia(47%) saturate(2699%) hue-rotate(214deg)
+                                brightness(93%) contrast(94%);
+                }
+            }
+            
+            .payment-method-group
+            {
+                border-top: 1px solid #e2e2e2;
+                border-bottom: 1px solid #e2e2e2;
+                transition: .2s;
+                display: flex;
+                flex-wrap: wrap;
+                max-height: 0;
+                gap: 10px;
+                overflow: hidden;
+                
+                .method-tab {
+                    cursor: pointer;
+                    border-radius: $border-radius;
+                    display: flex;
+                    flex-direction: column;
+                    width: 100px;
+                    padding: 10px;
+                    text-align: center;
+                    justify-content: center;
+                    transition: .1s;
+
+                    img {
+                        object-fit: contain;
+                        border-radius: inherit;
+                        aspect-ratio: 1/1;
+                        width: 100%;
+                        margin-bottom: 10px;
+                        background-color: $color-primary;
+                    }
+
+                    &:hover
+                    {
+                        background-color: $color-secondary;
+                    }
+                    &:active
+                    {
+                        scale: .95;
+                    }
+                }
+                .method-tab.picked
+                {
+                    border: 1.5px solid $color-accent;
+
+                    &:hover
+                    {
+                        background-color: $color-primary;
+                    }
                 }
             }
         }

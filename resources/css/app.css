@@ -48,6 +48,9 @@ body .button {
   outline: none;
   transition: 0.1s;
 }
+body .button:active {
+  scale: 0.95;
+}
 body .button:hover {
   outline: 1.5px solid #273b98;
   background: #fff;
@@ -74,6 +77,9 @@ body .button2 {
   border: none;
   outline: none;
   transition: 0.1s;
+}
+body .button2:active {
+  scale: 0.95;
 }
 body .button2:hover {
   outline: 1.5px solid #fff;
@@ -506,7 +512,7 @@ body .detailproduct .container .left {
   height: max-content;
 }
 body .detailproduct .container .left img {
-  max-width: 100%;
+  width: 100%;
   border-radius: 8px;
   object-fit: cover;
   aspect-ratio: 3/4;
@@ -732,31 +738,64 @@ body .checkout .products-list .product .right h5 {
 }
 body .checkout .payment-method {
   width: 50%;
-  height: max-content;
+  height: 70vh;
   display: flex;
   flex-direction: column;
   gap: 25px;
   background-color: #fff;
-  padding: 10px 20px;
+  padding: 20px 20px 10px 20px;
   border-radius: 8px;
 }
-body .checkout .payment-method .method-tab {
-  border-radius: inherit;
+body .checkout .payment-method .group-button {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 10px 0;
+}
+body .checkout .payment-method .group-button img {
+  transition: 0.1s;
+  filter: brightness(0) saturate(100%) invert(20%) sepia(47%) saturate(2699%) hue-rotate(214deg) brightness(93%) contrast(94%);
+}
+body .checkout .payment-method .payment-method-group {
+  border-top: 1px solid #e2e2e2;
+  border-bottom: 1px solid #e2e2e2;
+  transition: 0.2s;
+  display: flex;
+  flex-wrap: wrap;
+  max-height: 0;
+  gap: 10px;
+  overflow: hidden;
+}
+body .checkout .payment-method .payment-method-group .method-tab {
+  cursor: pointer;
+  border-radius: 8px;
   display: flex;
   flex-direction: column;
   width: 100px;
   padding: 10px;
-  background-color: bisque;
   text-align: center;
   justify-content: center;
+  transition: 0.1s;
 }
-body .checkout .payment-method .method-tab img {
-  outline: 1px solid #aaaaaa;
+body .checkout .payment-method .payment-method-group .method-tab img {
   object-fit: contain;
   border-radius: inherit;
   aspect-ratio: 1/1;
   width: 100%;
   margin-bottom: 10px;
+  background-color: #fff;
+}
+body .checkout .payment-method .payment-method-group .method-tab:hover {
+  background-color: #eaf7f9;
+}
+body .checkout .payment-method .payment-method-group .method-tab:active {
+  scale: 0.95;
+}
+body .checkout .payment-method .payment-method-group .method-tab.picked {
+  border: 1.5px solid #273b98;
+}
+body .checkout .payment-method .payment-method-group .method-tab.picked:hover {
+  background-color: #fff;
 }
 body .payment {
   position: fixed;
@@ -827,7 +866,7 @@ body .payment .left p {
 .about {
   background-color: #eaf7f9;
   padding: 30px;
-  min-height: 100vh;
+  height: 100vh;
 }
 
 .profile-student {

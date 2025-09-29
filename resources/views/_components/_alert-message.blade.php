@@ -7,7 +7,7 @@
         <h4>{{ $data['title'] }}</h4>
         @include('_components._sprite-icons', ['name' => $icon_name, 'size' => 50])
         <span>{{ $data['message'] }}</span>
-        <button class="btn-close-annoucement" id="btn-close-announcement-{{ $random_number }}">Tutup
+        <button class="button2" id="btn-close-announcement-{{ $random_number }}">Tutup
             Pemberitahuan</button>
     </div>
 </div>
