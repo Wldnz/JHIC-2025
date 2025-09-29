@@ -554,7 +554,6 @@ body .detailproduct .container .right .bottom .counter img {
 }
 body .cart {
   width: 100%;
-  height: 100vh;
   padding: 40px;
   display: flex;
   gap: 10px;
@@ -789,7 +788,7 @@ body .checkout .payment .left p {
 body .about {
   background-color: #eaf7f9;
   padding: 30px;
-  height: 100vh;
+  min-height: 100vh;
 }
 body .profile {
   background-color: #eaf7f9;
