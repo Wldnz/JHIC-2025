@@ -9,7 +9,8 @@
     <div class="title">
         <h3 class='{{ isset($total) ? "point-active" : "" }}'>{{ $total ?? ""}} {{ $title ?? 'Total Products' }}</h3>
         @if(isset($management))
-            <a {{ isset($management['destination']) ? 'href=' . $management['destination'] : '' }} class="btn" id="btn-add-management">
+            <a {{ isset($management['destination']) ? 'href=' . $management['destination'] : '' }} class="btn"
+                id="btn-add-management">
                 <span class=""> {{ $management['title'] }} </span>
                 @include('_components._sprite-icons', ['name' => 'add', 'size' => 15])
             </a>
@@ -172,16 +173,21 @@
     if (wrapper_filter) {
         wrapper_filter.addEventListener('change', (e) => wrapper_filter.submit());
     }
-    function setActionDelete(cooldown = false) {
+    function setActionDelete(cooldown = false, {
+        splitSeperator = '-',
+        handleAction = null,
+        title = 'Data Dengan ID ',
+    }) {
         const main_menu_tables = document.querySelectorAll('.main-menu-table');
         main_menu_tables.forEach(element => {
             Array.from(element.children).forEach(btn_action => {
                 if (btn_action.id.includes('delete')) {
-                    const id = btn_action.id.split('-')[1]
+                    const id = btn_action.id.split(splitSeperator)[1]
                     btn_action.addEventListener('click', (e) => {
                         openDeleteMessage({
-                            handle: () => btn_action.children[1].submit(),
-                            cooldown
+                            handle: handleAction != null ? () => handleAction(id) : () => btn_action.children[1].submit(),
+                            cooldown,
+                            title: `${title} ${id} <br>Akan Segera Dihapus`
                         });
                     });
                 }

@@ -1,27 +1,5 @@
 @include('_components._headerAdmin', ['title' => 'Menambahkan Transaksi'])
 @php
-    $sections = [
-        'Data Pembeli' => [
-            'data' => [],
-            'input' => [
-                'nis' => 'NIS',
-                'fullname' => 'Nama',
-                'email' => 'Alamat Email',
-                'created_at' => 'Akun Dibuat Pada'
-            ],
-        ],
-        'Data Transaksi' => [
-            'column' => [
-                'received_email' => 'Alamat Email Penerima',
-                'received_phone' => 'Nomor Telepon Penerima',
-                'total_product' => 'Total Produk',
-                'total_price' => 'Total Harga',
-                'payment_method' => 'Metode Pembayaran',
-                'expired' => 'Catatan',
-            ],
-            'additional_class' => ['tree-row-grid']
-        ]
-    ];
     $table_management = [
         'title' => 'Produk Yang Dibeli',
         'management' => ['title' => 'Tambahkan Produk'],
@@ -48,29 +26,28 @@
             ]
         ]
     ];
-    logger('data', [$products,])
+    logger('data', [$products, $students])
 @endphp
-<form class="content">
+<form class="content" method="post" enctype="application/x-www-form-urlencoded">
+    @csrf
     <h2>Data Pembeli</h2>
-    <div class="form-data">
+    <div class="form-data" id="student-siswa-form">
         <div class="wrapper-field container">
             <div class="wrapper-input">
                 <label for="nis">NIS</label>
-                <input type="text" name="nis" id="nis" placeholder="Masukkan nama" readonly required>
+                <input type="text" name="nis" id="nis" placeholder="Nis Siswa" readonly required>
             </div>
             <div class="wrapper-input">
-                <label for="name">Nama Pembeli</label>
-                <select name="name" id="name">
-                    <option value="12345678">Wildan Izhar Al Haqq</option>
-                    <option value="12345679">Starfours</option>
-                    <option value="123456710">Rizky SS</option>
-                    <option value="123456711">Rizky Andri</option>
-                    <option value="123456712">Diageng Hidayat</option>
-                    <option value="123456714">Raditya Ferdiyanto</option>
+                <label for="user_nis">Nama Pembeli<span> *</span></label>
+                <select name="user_nis" id="user_nis" required>
+                    <option value="">Pilih Nama Siswa</option>
+                    @foreach ($students as $student)
+                        <option value="{{ $student->nis }}">{{ $student->fullname }}</option>
+                    @endforeach
                 </select>
             </div>
             <div class="wrapper-input">
-                <label for="email">Emal Pembeli</label>
+                <label for="email">Email Pembeli</label>
                 <input type="text" name="email" id="email" placeholder="Masukkan email Pembeli" readonly required>
             </div>
             <div class="wrapper-input">
@@ -81,7 +58,7 @@
     </div>
 
     <h2>Data Transaksi</h2>
-    <div class="form-data">
+    <div class="form-data" id="transaction-transaksi-form">
         <div class="wrapper-field container tree-row-grid">
             <div class="wrapper-input">
                 <label for="received_email">Email Penerima <span>*</span></label>
@@ -119,11 +96,14 @@
                 </select>
             </div>
         </div>
-        <button class="button-submit-form">
-            <span>Tambahkan Transaksi</span>
-            @include('_components._sprite-icons', ['name' => 'add', 'size' => 18])
-        </button>
     </div>
+    <div class="wrapper_order" id="wrapper_orders" style="display:none">
+
+    </div>
+    <button class="button-submit-form">
+        <span>Tambahkan Transaksi</span>
+        @include('_components._sprite-icons', ['name' => 'add', 'size' => 18])
+    </button>
 </form>
 
 @include('_components._management-table', $table_management)
@@ -134,7 +114,7 @@
         <h4>Tambahkan Orderan</h4>
         <div class="wrapper-input">
             <label for="product_name">Nama Product</label>
-            <select name="product_name" id="product_name">
+            <select name="product_name" id="product_name" required>
                 <option value=""></option>
                 @foreach ($products as $product)
                     <option value="{{ $product->id }}">{{ $product->name }}</option>
@@ -143,24 +123,24 @@
         </div>
         <div class="wrapper-input">
             <label for="variant_name">Product Variant</label>
-            <select name="variant_name" id="variant_name">
+            <select name="variant_name" id="variant_name" required>
             </select>
         </div>
         <div class="wrapper-input">
             <label for="variant_type">Tipe / Size</label>
-            <select name="variant_type" id="variant_type">
+            <select name="variant_type" id="variant_type" required>
             </select>
         </div>
         <div class="wrapper-input">
             <label for="total_product">Jumlah Produk</label>
-            <input type="numeric" name="total_product" id="total_product" min=1 value="1">
+            <input type="numeric" name="total_product" id="total_product" min=1 value="1" required>
         </div>
         <div class="wrapper-input">
             <label for="total_price">Total Harga</label>
             <input type="text" inputmode="numeric" name="total_price" id="total_price" required readonly>
         </div>
         <input type="hidden" name='id_order' id="id-order" readonly>
-        <button type="submit" class="btn-yes-anouncement btn-yes-anouncement" data-action="orderan">Tambahkan
+        <button type="submit" class="btn-yes-anouncement btn-yes-anouncement-add" data-action="orderan">Tambahkan
             Orderan</button>
         <button type="button" class="btn-close-anouncement btn-close-anouncement-add">Tutup Pemberitahuan</button>
     </form>
@@ -180,6 +160,7 @@
     const total_price = form_order.querySelector('#total_price');
 
     const btn_add_order = document.getElementById('btn-add-management');
+    const btn_submit = form_order.querySelector('.btn-yes-anouncement-add');
 
     function addOrder({
         product_id,
@@ -193,6 +174,7 @@
             alert('cannot find product, fail adding transaction')
             return false;
         }
+        if (handleSameOrder(product, variant, quantity)) return;
         orders.push({
             id: `added_order_${orders.length + 1}`,
             product_id: product.id,
@@ -203,6 +185,18 @@
             category: product.category,
             quantity,
             total_price: variant.price * quantity,
+        });
+        return true;
+    }
+
+    function handleSameOrder(product, variant, qty) {
+        const order = orders.find(o => o.product_id == product.id && o.variant_id == variant.id && o.variant_type == variant.type);
+        if (!order) return false;
+        updateOrder(order.id, {
+            ...order,
+            ...{
+                quantity: (Number(order.quantity) + Number(qty)) > variant.stock ? variant.stock : Number(order.quantity) + Number(qty)
+            }
         });
         return true;
     }
@@ -220,12 +214,16 @@
         }
         orders = orders.map(order => {
             if (order.id == id) {
-                order.product_name =  product.name;
-                order.variant_name =  variant.name;
-                order.variant_type =  variant.type;
-                order.category =  product.category;
-                order.quantity = quantity;
-                order.total_price =  variant.price * quantity;
+                order = {
+                    ...order, ...{
+                        product_name: product.name,
+                        variant_name: variant.name,
+                        variant_type: variant.type,
+                        category: product.category,
+                        quantity: quantity,
+                        total_price: variant.price * quantity
+                    }
+                }
             }
             return order;
         });
@@ -233,8 +231,18 @@
     }
 
     function deleteOrder(id) {
-        if (orders.length <= 1) return;
+        const before_length = orders.length;
+        let data = {
+            message: 'Tidak Bisa Menghapus Data Tunggal',
+            success: false
+        };
+        if (before_length <= 1) {
+            return data;
+        }
         orders = orders.filter(order => order.id != id);
+        data.success = before_length != orders.length;
+        data.message = `${data.success ? 'Berhasil' : 'Gagal'} Dalam menghapus Orderan - ${id}`
+        return data;
     }
 
     function openTheAddForm() {
@@ -260,34 +268,34 @@
         if (form_order.dataset.action != 'update') return;
         const order = orders.find(o => o.id == order_id);
         const currentProduct = products.find(product => product.id == order.product_id);
-        const variants = currentProduct.variants.find(v => v.id == order.variant_id && v.type == order.variant_type);        
+        const variants = currentProduct.variants.find(v => v.id == order.variant_id && v.type == order.variant_type);
         const multipleTagOption = setMultipleOptionForSelection({
-            name : currentProduct.variants,
-            type : currentProduct.variants.filter(v => v.name == order.variant_name)
+            name: currentProduct.variants,
+            type: currentProduct.variants.filter(v => v.name == order.variant_name)
         });
 
         setSelectedSelection(product_name.children, (element) => {
-            element.removeAttribute('selected');
-            if (element.value == currentProduct.id) element.setAttribute('selected',true);
+            element.selected = false;
+            if (element.value == currentProduct.id) element.selected = true;
         });
 
         setProductVariantSelection(multipleTagOption['name']);
         setProductVariantTypeSelection(multipleTagOption['type']);
 
         setSelectedSelection(variant_name.children, (element) => {
-            element.removeAttribute('selected');
-            if (element.value == variants.name) element.setAttribute('selected',true);
+            element.selected = false;
+            if (element.value == variants.name) element.selected = true;
         });
-        
+
         setSelectedSelection(variant_type.children, (element) => {
-            element.removeAttribute('selected');
-            if (element.value == variants.type) element.setAttribute('selected', true);
+            element.selected = false;
+            if (element.value == variants.type) element.selected = true;
         });
 
         total_product.value = order.quantity;
         total_price.value = changeNumberToIDR(order.total_price);
 
-       form_order.querySelector('#id-order').value = order_id;   
+        form_order.querySelector('#id-order').value = order_id;
     }
 
     function setSelectedSelection(targetChildren, handle) {
@@ -297,39 +305,43 @@
     function setMultipleOptionForSelection({
         name,
         type
-    }){
+    }) {
         let stringOption = {
-            'name' : '',
-            'type' : ''
+            'name': '<option value=""></option>',
+            'type': '<option value=""></option>'
         };
         name.forEach(variant => {
-            stringOption['name']+= `<option value='${variant.name}'>${variant.name}</option>`;
+            stringOption['name'] += `<option value='${variant.name}'>${variant.name}</option>`;
         });
         type.forEach(variant => {
-            stringOption['type']+= `<option value='${variant.type}'>${variant.type}</option>`;
+            stringOption['type'] += `<option value='${variant.type}'>${variant.type}</option>`;
         });
         return stringOption;
     }
 
     function handleSelectedProduct(e) {
         currentProduct = products.filter(product => product.id == e.target.value);
-        const currentVariants = currentProduct[0].variants;
+        const currentVariants = currentProduct[0]?.variants;
         let stringOption = {
-            name: '',
+            name: '<option value=""></option>',
         };
-        currentVariants.forEach(variant => {
-            stringOption['name'] += `<option value='${variant.name}'>${variant.name}</option>`;
-        });
+        if (currentVariants) {
+            currentVariants.forEach(variant => {
+                stringOption['name'] += `<option value='${variant.name}'>${variant.name}</option>`;
+            });
+        }
         setProductVariantSelection(stringOption['name']);
         clearAmountAndPrice();
     }
 
     function handleSelectedProductVariant(e) {
         const selectedVariant = currentProduct[0].variants.filter(variant => variant.name == e.target.value);
-        let stringTag = '';
-        selectedVariant.forEach(variant => {
-            stringTag += `<option value='${variant.type}'>${variant.type}</option>`;
-        });
+        let stringTag = '<option value=""></option>';
+        if (selectedVariant) {
+            selectedVariant.forEach(variant => {
+                stringTag += `<option value='${variant.type}'>${variant.type}</option>`;
+            });
+        }
         setProductVariantTypeSelection(stringTag);
         clearAmountAndPrice();
     }
@@ -378,7 +390,8 @@
         total_price.value = '';
     }
 
-    function clearFormField(){
+    function clearFormField() {
+        Array.from(select_product.children).forEach((p, i) => i == 0 ? p.selected = true : p.selected = false);
         variant_name.innerHTML = '';
         variant_type.innerHTML = '';
         clearAmountAndPrice();
@@ -393,7 +406,8 @@
 
     function loadOrder() {
         let stringTag = getColumnTable();
-        orders.forEach(order => {
+        let stringTagInput = '';
+        orders.forEach((order, index) => {
             stringTag += `<tr>
                                 <td> ${order.id} </td>
                                 <td> ${order.product_name} </td>
@@ -430,12 +444,41 @@
                                     </div>
                                 </td>
                             </tr>`;
+            stringTagInput += `
+                <input type='hidden' name='orders[${index}][product_variant_id]' value='${order.variant_id}' readonly>
+                <input type='hidden' name='orders[${index}][price]' value='${order.total_price}' readonly>
+                <input type='hidden' name='orders[${index}][quantity]' value='${order.quantity}' readonly>
+            `; wrapper_orders
         });
         document.querySelector('tbody').innerHTML = stringTag;
+        document.getElementById('wrapper_orders').innerHTML = stringTagInput;
         loadActionTable();
+        handleFormTransaction();
     }
 
-    function loadActionTable(){
+    function handleFormTransaction() {
+        const from_transaction = document.getElementById('transaction-transaksi-form');
+        const transaction = {
+            total_price: orders.reduce((price, order) => {
+                return price + Number(order.total_price)
+            }, 0),
+            total_product: orders.reduce((product, order) => {
+                return product + Number(order.quantity)
+            }, 0)
+        }
+        console.log(transaction);
+        from_transaction.querySelectorAll('input').forEach(element => {
+            if (transaction.hasOwnProperty(element.id)) {
+                if (element.id.includes('price')) {
+                    element.value = changeNumberToIDR(transaction[element.id]);
+                } else if (element.id.includes('product')) {
+                    element.value = transaction[element.id] + ' Produk'
+                }
+            }
+        });
+    }
+
+    function loadActionTable() {
         document.querySelectorAll('.main-menu-table').forEach(element => {
             const id = element.children[0].id.split('-')[1];
             const btn_update = element.children[0];
@@ -445,15 +488,18 @@
                 form_order.dataset.action = 'update';
                 setEditData(id);
                 openTheAddForm();
+                btn_submit.textContent = 'Ubah Orderan';
             });
-
-            btn_delete.addEventListener('click', (e) => {
-                form_order.dataset.action = 'delete';
-                deleteOrder(id);
-                loadOrder();
-            });
-
         });
+        setActionDelete(false, {
+            handleAction: handleDeleteOrder
+        });
+    }
+
+    function handleDeleteOrder(id) {
+        const { message, success } = deleteOrder(id);
+        actionWhenSuccess(message);
+        loadOrder();
     }
 
     form_order.addEventListener('submit', (e) => {
@@ -462,24 +508,23 @@
         if (!data.success) return;
         data.product_id = data.product_name;
         data.quantity = total_product.value;
-       
-       handleSubmitForm(data);
-       closeTheAddForm();
-       loadOrder();
-       clearFormField();
+
+        handleSubmitForm(data);
+        closeTheAddForm();
+        loadOrder();
+        clearFormField();
     });
 
-    function handleSubmitForm(data){
+    function handleSubmitForm(data) {
         const action = form_order.dataset.action ?? 'add';
-        if(action == 'add'){
+        if (action == 'add') {
             addOrder(data);
-        }else if(action == 'update'){
+        } else if (action == 'update') {
             const id_order = form_order.querySelector('#id-order');
             updateOrder(id_order.value, data);
             id_order.value = '';
         }
     }
-
 
     select_product.addEventListener('change', handleSelectedProduct);
 
@@ -492,7 +537,22 @@
     btn_add_order.addEventListener('click', (e) => {
         openTheAddForm();
         form_order.dataset.action = 'add';
+        btn_submit.textContent = 'Tambahkan Orderan';
     });
 
+    document.getElementById('user_nis').addEventListener('change', (e) => {
+        const students = @json($students);
+        const form_student = document.getElementById('student-siswa-form');
+        form_student.querySelectorAll('input').forEach(element => {
+            if (!e.target.value) {
+                element.value = '';
+            } else {
+                const student = students.find(s => s.nis == e.target.value);
+                if (student) {
+                    element.value = element.id == 'created_at' ? student[element.id].split('T')[0] : student[element.id];
+                }
+            }
+        });
+    });
 
 </script>

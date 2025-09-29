@@ -41,20 +41,20 @@ untuk menyelesaikan halaman admin dibutuhkan
         [] filter
         [] managing query to use in chart
     Product
-       + Page
-       - alert-message
+       [✅] Page
+       [✅] alert-message
        - refactoring
-       - detail-product
-       - well done
+       [✅] fixing bug when adding variant 
+       [✅] detail-product
     Transaction
-        [] Page
-        [] Detail Page
-        [] Add Data
+        [✅] Page
+        [✅] Detail Page
+        [✅] Add Data
         - refactoring
-        - fix not multiple order
-        - adding selecting student
-        [] Edit Data
-        [] Delete Data
+        [✅] fix not multiple order
+        [✅] adding selecting student
+        [✅] Edit Data
+        [✅] Delete Data
     Account
         [] Page
         [] Add Account
@@ -71,3 +71,4 @@ untuk menyelesaikan halaman admin dibutuhkan
         [] Perform
         [] Send Email
         [] SEO?
+    [✅] Fixing Bug Cooldown Timer in Delete message
