@@ -20,7 +20,7 @@ class ProductImageFactory extends Factory
         $product = Product::query()->inRandomOrder()->first();
         return [
             'product_id' => $product->id,
-            'url' => fake()->imageUrl(),
+            'url' => 'https://placehold.co/120x120',
             'thumbnail' => $product->images()->count() == 0,
             'visible' => true
         ];

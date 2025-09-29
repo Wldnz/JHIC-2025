@@ -4,51 +4,19 @@
 @include('_components._header', ['title' => 'product'])
 <div class="products">
 <div class="products-group">
-    <a href="{{ route('student.detail-product',['product' => 1]) }}" class="product">
-        <span>
-        <img src="{{ $placeholder }}" alt="">
-        </span>
-        <h3>$produk</h3>
-        <br>
-        <p>$jenis</p>
-        <p>$stok</p>
-        <br>
-        <h3>$price</h3>
-    </a>
-    <a href="" class="product out">
-        <!-- nanti kalo stok == 0 {this.classList.add("out")} -->
-        <span>
-            <img src="{{ $placeholder }}" alt="">
-        </span>
-        <h3>$produk</h3>
-        <br>
-        <p>$jenis</p>
-        <p>$stok</p>
-        <br>
-        <h3>$price</h3>
-    </a>
-    <a href="" class="product">
-        <span>
-            <img src="{{ $placeholder }}" alt="">
-        </span>
-        <h3>Seragam Batik aaaaaaaaaaaaaaaaaaaaaaa</h3>
-        <br>
-        <p>$jenis</p>
-        <p>$stok</p>
-        <br>
-        <h3>$price</h3>
-    </a>
-    <a href="" class="product">
-        <span>
-            <img src="{{ $placeholder }}" alt="">
-        </span>
-        <h3>$produk</h3>
-        <br>
-        <p>$jenis</p>
-        <p>$stok</p>
-        <br>
-        <h3>$price</h3>
-    </a>
+    @foreach ($products as $product)
+        <a href="{{ route('student.detail-product',['product' => $product]) }}" class="product {{ $product->totalStock() == 0 ? 'out' : '' }}">
+            <span>
+            <img src="{{ count($product->images) > 0 ? $product->images[0]->url : 'https://www.svgrepo.com/show/508699/landscape-placeholder.svg' }}" alt="">
+            </span>
+            <h3>{{ $product->name }}</h3>
+            <br>
+            <p>{{ $product->category }}</p>
+            <p>{{ $product->totalStock() }}</p>
+            <br>
+            <h3>{{ 'Rp. ' . number_format(count($product->variants) > 0 ? $product->variants[0]->price : 0, 0, ',', '.') }}</h3>
+        </a>
+    @endforeach
 </div>
 <div class="filter">
     <form method="GET">
@@ -57,7 +25,7 @@
             <img src="{{ asset("icons/search.svg") }}" alt="">
         </button>
     </form>
-        
+
     <h2 class="toggle-filter">Seragam <img src="{{ asset("icons/arrow-down.svg") }}" alt=""></h2>
     <div class="content-filter">
         <!-- silahkan masukan link + idnya kakak :) -->
@@ -87,7 +55,7 @@
             toggle.nextElementSibling.classList.toggle("open")
         });
     });
-    
-    
+
+
 </script>
 @include('_components._footer')

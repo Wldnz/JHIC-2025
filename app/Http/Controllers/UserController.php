@@ -111,7 +111,7 @@ class UserController extends Controller
         $searchQuery = $request->query("search", null);
         $products = Product::with(["images" => function ($query) {
             $query->where('product_images.thumbnail', '=', true);
-        }]);
+        }, "variants"]);
 
         if ($searchQuery) {
             $products = $products
@@ -151,7 +151,7 @@ class UserController extends Controller
      */
     public function cart()
     {
-        $carts = Cart::with('variantProduct')->get();
+        $carts = Cart::with('variantProduct', 'variantProduct.product')->get();
         $totalCost = $carts->sum(function ($cart) {
             return $cart->variantProduct->price * $cart->quantity;
         });
@@ -289,7 +289,7 @@ class UserController extends Controller
      */
     public function checkout(Request $request)
     {
-        $querySelectedCarts = explode(",",$request->query("cart_ids", ""));
+        $querySelectedCarts = explode(",", $request->query("cart_ids", ""));
         if (count($querySelectedCarts) < 1) {
             AlertDataGenerator::generateAsFlashToSession(
                 AlertType::DANGER,

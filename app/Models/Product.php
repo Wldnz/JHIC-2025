@@ -30,14 +30,18 @@ class Product extends Model
     }
 
     public function thumbnail(){
-        return $this->images()->where("thumbnail", true)->first();
+        return $this->images->where("thumbnail", true)->first();
     }
 
     public function variants(){
         return $this->hasMany(ProductVariant::class);
     }
 
+    public function firstVariant(){
+        return $this->variants->count() > 0 ? $this->variants[0] : null;
+    }
+
     public function totalStock(){
-        return $this->variants()->sum("stock");
+        return $this->variants->sum("stock");
     }
 }
