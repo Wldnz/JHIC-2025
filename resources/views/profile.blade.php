@@ -10,7 +10,7 @@
         $placeholder = "https://www.svgrepo.com/show/508699/landscape-placeholder.svg";
 @endphp
 @include('_components._header')
-<div class="profile">
+<div class="profile-student">
     <div class="profile-tab">
         <img src="{{ $placeholder }}" alt="">
         <p>Pe: {{ auth::user()->nis }}</p>
