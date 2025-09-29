@@ -9,7 +9,7 @@
     <div class="title">
         <h3 class='{{ isset($total) ? "point-active" : "" }}'>{{ $total ?? ""}} {{ $title ?? 'Total Products' }}</h3>
         @if(isset($management))
-            <a {{ isset($management['destination']) ? 'href=' . $management['destination'] : '' }} class="btn">
+            <a {{ isset($management['destination']) ? 'href=' . $management['destination'] : '' }} class="btn" id="btn-add-management">
                 <span class=""> {{ $management['title'] }} </span>
                 @include('_components._sprite-icons', ['name' => 'add', 'size' => 15])
             </a>

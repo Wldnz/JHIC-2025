@@ -50,6 +50,9 @@ untuk menyelesaikan halaman admin dibutuhkan
         [] Page
         [] Detail Page
         [] Add Data
+        - refactoring
+        - fix not multiple order
+        - adding selecting student
         [] Edit Data
         [] Delete Data
     Account
