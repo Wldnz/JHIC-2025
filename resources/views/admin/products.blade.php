@@ -64,6 +64,6 @@
 
 
 <script defer>
-   setActionDelete(true);
+   setActionDelete(true, {});
 </script>
 

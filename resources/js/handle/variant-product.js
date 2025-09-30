@@ -1,61 +1,84 @@
-function addVariant({ name, type, price, stock }){
-        variants.push({
-            id : `added_variant_${new Date().getTime()}`,
-            name,
-            type,
-            price,
-            stock,
-            created_at : new Date()
-        });
-    }
+let variants = [];
 
-    function updateVariant({ id, name, type, price, stock }){
-        variants = variants.map(value => {
-            if(value.id == id){
-                value.name = name;
-                value.type = type;
-                value.price = price;
-                value.stock= stock;
+function addVariant({ name, type, price, stock }) {
+    console.log('add variant got trigger');
+    if (!name || !type || !price || !stock) {
+        return;
+    }
+    const isExist = checkIsAdded(name, type);
+    if (isExist) {
+        updateVariant({
+            id: isExist.id,
+            name, type, price, stock: Number(isExist.stock) + Number(stock)
+        });
+        return;
+    }
+    variants.push({
+        id: `added_variant_${variants.length + 1}`,
+        name,
+        type,
+        price,
+        stock,
+        created_at: new Date()
+    });
+}
+
+function checkIsAdded(name, type) {
+    return variants.find(v => v.name == name && v.type == type);
+}
+
+function updateVariant({ id, name, type, price, stock }) {
+    variants = variants.map(value => {
+        if (value.id == id) {
+            value = {
+                ...value,
+                ...{
+                    name,
+                    type,
+                    price,
+                    stock
+                }
             }
-            return value;
-        })
-    }
-
-    function deleteVariant(id){
-        const variant_length = variants.length;
-        const response = {
-            message : "Gagal dalam menghapus variant produk",
-            status : false
-        };
-        if(variant_length <= 1){
-            response.message = 'Variant tersisa tunggal, tidak dapat dihapus'
-            return response;
-        };
-        
-        variants = variants.filter(value => value.id != id);
-        if(variant_length != variants.length){
-            response.message = 'Berhasil dalam menghapus variant produk';
-            response.status = true;
         }
-        loadVariant();
+        return value;
+    })
+}
+
+function deleteVariant(id) {
+    const variant_length = variants.length;
+    const response = {
+        message: "Gagal dalam menghapus variant produk",
+        status: false
+    };
+    if (variant_length <= 1) {
+        response.message = 'Variant tersisa tunggal, tidak dapat dihapus'
         return response;
-    }
+    };
 
-    function getColumn(){
-        let stringColumn = '<tr>';
-        Array.from(document.querySelector('tbody').children[0].children).forEach(element => {
-            stringColumn += `<td> ${element.textContent} </td>\n`;
-        });
-        stringColumn += '</tr>';
-        return stringColumn;
+    variants = variants.filter(value => value.id != id);
+    if (variant_length != variants.length) {
+        response.message = 'Berhasil dalam menghapus variant produk';
+        response.status = true;
     }
+    loadVariant();
+    return response;
+}
 
-    function loadVariant(){
-        let stringVariant = getColumn();
-        let stringInputVariant = '';
-        const columns = [ 'id', 'name', 'type' , 'price', 'stock'  ];
-        variants.forEach((value, index) => {
-            stringVariant += `<tr>
+function getColumn() {
+    let stringColumn = '<tr>';
+    Array.from(document.querySelector('tbody').children[0].children).forEach(element => {
+        stringColumn += `<td> ${element.textContent} </td>\n`;
+    });
+    stringColumn += '</tr>';
+    return stringColumn;
+}
+
+function loadVariant() {
+    let stringVariant = getColumn();
+    let stringInputVariant = '';
+    const columns = ['id', 'name', 'type', 'price', 'stock'];
+    variants.forEach((value, index) => {
+        stringVariant += `<tr>
                                 <td> ${value.id} </td>
                                 <td> ${value.name} </td>
                                 <td> ${value.type} </td>
@@ -91,97 +114,104 @@ function addVariant({ name, type, price, stock }){
                                     </div>
                                 </td>
                             </tr>`;
-            columns.forEach(column => {
-                stringInputVariant += `<input type='hidden' name='variants[${value.id}][${column}]' placeholder='masukkan ${column}' value='${value[column]}' readonly>`;
-            });
-            
+        columns.forEach(column => {
+            stringInputVariant += `<input type='hidden' name='variants[${value.id}][${column}]' placeholder='masukkan ${column}' value='${value[column]}' readonly>`;
         });
-        document.getElementById('wrapper_variant_product').innerHTML = stringInputVariant;
-        document.querySelector('tbody').innerHTML = stringVariant;
-        setActionVariant();
-    }
 
-    function setActionVariant(){
-        const varianForm = [ 'variant', 'edit-variant' ];
-        varianForm.forEach(value => {
-            const card_form = document.getElementById(`card-form-${value}`);
+    });
+    document.getElementById('wrapper_variant_product').innerHTML = stringInputVariant;
+    document.querySelector('tbody').innerHTML = stringVariant;
+    setActionVariant();
+}
+
+function setActionVariant() {
+    const varianForm = ['variant', 'edit-variant'];
+    varianForm.forEach(value => {
+        const card_form = document.getElementById(`card-form-${value}`);
+        const action = card_form.querySelector('.btn-yes-anouncement').dataset.action;
+        if (action == 'add') {
             card_form.addEventListener('submit', (e) => {
                 e.preventDefault();
-                const action = e.target.querySelector('.btn-yes-anouncement').dataset.action; 
-                switch(action){
-                    case 'add':
-                        addVariant({
-                            name : e.target[1].value,
-                            type : e.target[2].value,
-                            price : e.target[3].value,
-                            stock : e.target[4].value
-                        });
-                        break;
-                    case 'update':
-                        updateVariant({
-                            id : e.target[1].value,
-                            name : e.target[2].value,
-                            type : e.target[3].value,
-                            price : e.target[4].value,
-                            stock : e.target[5].value
-                        });
-                        break;
-                }
+                addVariant({
+                    name: e.target[1].value,
+                    type: e.target[2].value,
+                    price: e.target[3].value,
+                    stock: e.target[4].value
+                });
                 closeFormVariant(action == 'update' ? 'edit-variant' : 'variant');
                 loadVariant();
             });
-            card_form.querySelector('.btn-close-anouncement').addEventListener('click', (e) => closeFormVariant(value));
-        });
-        // close button 
-        // add button
-        document.querySelector('.management-table').children[0].children[1].addEventListener('click', () => openFormVariant());
-        
-        // edit & delete button
-        document.querySelectorAll('.main-menu-table').forEach(main_menu => {
-                Array.from(main_menu.children).forEach(button => {
-                const action = button.id.split('-')[0];
-                const id = button.id.split('-')[1];
-                switch(action){
-                    case "edit":
-                        const variant = variants.filter(variant => variant.id == id)[0];
-                        const column = [ 'id', 'name', 'type', 'price', 'stock' ];
-                        
-                        button.addEventListener('click', () => {
-                            Array.from(document.getElementById('card-form-edit-variant').children)
-                            .filter(element => element.classList.contains('wrapper-input'))
-                            .forEach((wrapper,index) => {
-                                wrapper.children[wrapper.children.length - 1].value = variant[column[index]]; 
-                            });
-                            openFormVariant('edit-variant')
-                        });
-                        break;
-                    case "delete":
-                        button.addEventListener('click', () => {
-                            if(variants.length <= 1) return;
-                            openDeleteMessage({
-                                handle : (e) => {
-                                    if(e.target.classList.contains('cooldown')) return;
-                                    const response = deleteVariant(id);
-                                    actionWhenSuccess(response.title);
-                                },
-                                cooldown : false
-                            });
-                        });
-                        break;
-                }
+        } else if (action == 'update') {
+            card_form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                updateVariant({
+                    name: e.target[1].value,
+                    type: e.target[2].value,
+                    price: e.target[3].value,
+                    stock: e.target[4].value
+                });
+                closeFormVariant(action == 'update' ? 'edit-variant' : 'variant');
+                loadVariant();
             });
+        }
+        card_form.querySelector('.btn-close-anouncement').addEventListener('click', (e) => closeFormVariant(value));
+    });
+    // close button 
+    // add button
+    document.querySelector('.management-table').children[0].children[1].addEventListener('click', () => openFormVariant());
+
+    // edit & delete button
+    document.querySelectorAll('.main-menu-table').forEach(main_menu => {
+        Array.from(main_menu.children).forEach(button => {
+            const action = button.id.split('-')[0];
+            const id = button.id.split('-')[1];
+            switch (action) {
+                case "edit": {
+                    const variant = variants.filter(v => v.id == id)[0];
+                    const column = ['id', 'name', 'type', 'price', 'stock'];
+
+                    button.addEventListener('click', () => {
+                        Array.from(document.getElementById('card-form-edit-variant').children)
+                            .filter(element => element.classList.contains('wrapper-input'))
+                            .forEach((wrapper, index) => {
+                                wrapper.children[wrapper.children.length - 1].value = variant[column[index]];
+                            });
+                        openFormVariant('edit-variant')
+                    });
+                    break;
+                }
+                case "delete": {
+                    button.addEventListener('click', () => {
+                        openDeleteMessage({
+                            handle: (e) => {
+                                if (e.target.classList.contains('cooldown')) return;
+                                const response = deleteVariant(id);
+                                actionWhenSuccess(response.message);
+                            },
+                            cooldown: false,
+                            title: `Data Dengan ID - ${id} Akan Dihapus`
+                        });
+                    });
+                    break;
+                }
+            }
         });
-    }
+    });
+}
 
-    function openFormVariant(card_name = 'variant'){
-        document.getElementById('form-variant').style.display = "flex";
-        document.getElementById(`card-form-${card_name}`).style.display = "flex";
-    }
-    
-    function closeFormVariant(card_name = 'variant'){
-        document.getElementById('form-variant').style.display = "none";
-        document.getElementById(`card-form-${card_name}`).style.display = "none";
-    }
+function openFormVariant(card_name = 'variant') {
+    document.getElementById('form-variant').style.display = "flex";
+    document.getElementById(`card-form-${card_name}`).style.display = "flex";
+}
 
-    loadVariant();
+function closeFormVariant(card_name = 'variant') {
+    document.getElementById('form-variant').style.display = "none";
+    const card_form = document.getElementById(`card-form-${card_name}`);
+    card_form.style.display = "none";
+    card_form.querySelectorAll('input').forEach(element => {
+        element.value = '';
+    });
+}
+
+loadVariant();
 

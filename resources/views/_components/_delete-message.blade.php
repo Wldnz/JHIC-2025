@@ -6,10 +6,10 @@
     const delete_message = document.getElementById('delete-message');
     let wrapper_button = '';
 
-    function setInterface() {
+    function setInterface(title) {
         delete_message.innerHTML = `
             <div class="card-message delete-message">
-                <h4>{{ 'Data yang dihapus, tidak dapat dikembalikan lagi!' }}</h4>
+                <h4>${title ?? 'Data yang dihapus, tidak dapat dikembalikan lagi!'}</h4>
                 @include('_components._sprite-icons', ['name' => $icon_name ?? 'trash', 'color' => 'red', 'size' => 50])
                 <span>{{ $description ?? "Data yang akan dihapus tidak dapat dikembalikan, berhati - hatilah" }}</span>
                 <div class="wrapper-button">
@@ -20,7 +20,11 @@
         wrapper_button = delete_message.querySelector('.wrapper-button');
     }
 
-    function destroyInterface() {
+    function destroyInterface({ intervalId, timeoutId }) {
+        if (intervalId && timeoutId) {
+            clearInterval(intervalId);
+            clearTimeout(timeoutId);
+        }
         closeActionDeleteMessage();
         delete_message.innerHTML = '';
     }
@@ -31,23 +35,28 @@
             wrapper_button.children[0].textContent = cooldown + " Detik";
             cooldown--;
         }, 1000);
-        setTimeout(() => {
+        const timeoutId = setTimeout(() => {
             clearInterval(intervalId);
             wrapper_button.children[0].textContent = "Hapus Data";
             wrapper_button.children[0].classList.remove('cooldown');
             wrapper_button.children[0].addEventListener('click', handle)
         }, cooldown * 1000);
+        return {
+            intervalId,
+            timeoutId
+        };
     }
 
-    function openDeleteMessage({ handle, cooldown = false }) {
-        setInterface();
+    function openDeleteMessage({ handle, cooldown = false, title = '' }) {
+        let timeoutAndIntervalID = {};
+        setInterface(title);
         if (cooldown) {
-            setCooldown(handle);
+            timeoutAndIntervalID = setCooldown(handle);
         } else {
             wrapper_button.children[0].addEventListener('click', handle);
         }
         delete_message.style.display = 'flex';
-        wrapper_button.children[1].addEventListener('click', destroyInterface);
+        wrapper_button.children[1].addEventListener('click', () => destroyInterface(timeoutAndIntervalID));
     }
 
     function closeActionDeleteMessage() {
