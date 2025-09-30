@@ -12,15 +12,18 @@ $font-size-6xl: 9vw;
 $color-primary: #fff;
 $color-secondary: #eaf7f9;
 $color-accent: #273b98;
+$color-accent-gradient: linear-gradient(35deg,rgba(39, 59, 152, 1) 0%, rgba(76, 98, 199, 1) 100%);
 $border-radius: 8px;
+
 ::selection {
-    color: $color-accent;
-    background-color: $color-secondary;
+    color: $color-primary;
+    background-color: $color-accent;
     filter: none;
     &:hover {
         filter: none;
     }
 }
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     -webkit-appearance: none;
@@ -398,15 +401,33 @@ body {
                             padding: 10px;
                             border-radius: $border-radius;
                             cursor: pointer;
+                            
+                            img{
+                                filter: invert(18%) sepia(35%) saturate(4223%) hue-rotate(221deg) brightness(98%) contrast(97%);
+                                transition: .1s;
+                            }
+
+                            h3{
+                                font-weight: 600;
+                            }
 
                             &:hover {
                                 background-color: $color-secondary;
-                                transition: 0.4s;
+                                transition: 0.1s;
                             }
                         }
                         p {
                             padding-left: 10px;
                             margin-top: 10px;
+                        }
+
+                        &:open
+                        {
+                            summary{
+                                img{
+                                    rotate: 180deg;
+                                }
+                            }
                         }
                     }
                 }
@@ -650,10 +671,16 @@ body {
                         padding: 10px;
                         outline: 3px solid $color-accent;
                         color: $color-accent;
+                        transition: .1s scale;
                         cursor: pointer;
                         filter: brightness(0) saturate(100%) invert(17%)
                             sepia(56%) saturate(3428%) hue-rotate(224deg)
                             brightness(91%) contrast(90%);
+
+                        &:active
+                        {
+                            scale: .9;
+                        }
                     }
                     .radio-tab.picked {
                         font-weight: 600;
@@ -661,6 +688,16 @@ body {
                         filter: none;
                         color: #fff;
                     }
+                }
+                .input-tab
+                {
+                    padding: 10px;
+                    font-size: $font-size-m;
+                    color: $color-accent;
+                    border-radius: $border-radius;
+                    width: 50px;
+                    border: none;
+                    outline: 2px solid $color-accent;
                 }
                 .bottom {
                     display: flex;
@@ -689,9 +726,20 @@ body {
                         }
                         img {
                             cursor: pointer;
+                            transition: .1s;
                             filter: brightness(0) saturate(100%) invert(17%)
                                 sepia(56%) saturate(3428%) hue-rotate(224deg)
                                 brightness(91%) contrast(90%);
+
+                                &:hover
+                                {
+                                    scale: 1.1;
+                                }
+
+                                &:active
+                                {
+                                    scale: 1;
+                                }
                         }
                     }
                 }
@@ -769,6 +817,7 @@ body {
                         outline: 2px solid $color-accent;
                         border-radius: 50px;
                         width: max-content;
+                        margin-top: 30px;
                         padding: 5px;
 
                         input {
@@ -788,6 +837,16 @@ body {
                             filter: brightness(0) saturate(100%) invert(17%)
                                 sepia(56%) saturate(3428%) hue-rotate(224deg)
                                 brightness(91%) contrast(90%);
+
+                            &:hover
+                            {
+                                scale: 1.1;
+                            }
+
+                            &:active
+                            {
+                                scale: 1;
+                            }
                         }
                     }
                 }
@@ -802,6 +861,11 @@ body {
             flex-direction: column;
             gap: 10px;
             padding: 20px;
+
+            a{
+                display: flex;
+                justify-content: flex-end;
+            }
         }
     }
 
@@ -818,9 +882,29 @@ body {
             width: 50%;
             background-color: #fff;
             padding: 10px;
-            height: 70vh;
-            overflow: scroll;
+            height: 72vh;
+            overflow-y: scroll;
             border-radius: $border-radius;
+            scrollbar-width:auto;
+
+            &::-webkit-scrollbar {            
+                display: block;
+                width: 10px;
+                background: none;
+                border-radius: $border-radius;
+            }
+            &::-webkit-scrollbar-track-piece:start {
+                margin-top: 50px;
+            }
+            &::-webkit-scrollbar-track-piece:end {
+                margin-bottom: 50px; 
+            }
+            
+
+            &::-webkit-scrollbar-thumb {
+                background-color: $color-accent;
+                border-radius: $border-radius;
+            }       
 
             .product {
                 background-color: $color-primary;
@@ -865,10 +949,10 @@ body {
         }
         .payment-method {
             width: 50%;
-            height: 70vh;
+            height: 72vh;
             display: flex;
             flex-direction: column;
-            gap: 25px;
+            gap: 10px;
             background-color: $color-primary;
             padding: 20px 20px 10px 20px;
             border-radius: $border-radius;

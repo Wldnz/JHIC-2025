@@ -21,12 +21,12 @@
         </div>
         <br>
             <h3>Size: <label id="size-label">-</label></h3>
-        <div class="radio-selector">
-            @foreach ($product->variants->unique("type") as $variant)
+            <div class="radio-selector">
+                @foreach ($product->variants->unique("type") as $variant)
                 <p name="{{ $variant->type }}" onclick="pick(this)" class="radio-tab">{{ $variant->type }}</p>
-            @endforeach
-        </div>
-        <a href="https://youtube.com"><h4>My Size Doesn't Exist</h4></a>
+                @endforeach
+            </div>
+            <a href="http://wa.me/6281280063529?text=Halo%2C%20untuk%20{{ $product->name }}%20dengan%20ukuran%20lain%20apakah%20tersedia%3F"><h4>My Size Doesn't Exist</h4></a>
         <br>
         <div class="bottom">
             <div class="counter">

@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 ::selection {
-  color: #273b98;
-  background-color: #eaf7f9;
+  color: #fff;
+  background-color: #273b98;
   filter: none;
 }
 ::selection:hover {
@@ -335,13 +335,23 @@ body .wrapper-user .dashboard .faq-page .faq-list details summary {
   border-radius: 8px;
   cursor: pointer;
 }
+body .wrapper-user .dashboard .faq-page .faq-list details summary img {
+  filter: invert(18%) sepia(35%) saturate(4223%) hue-rotate(221deg) brightness(98%) contrast(97%);
+  transition: 0.1s;
+}
+body .wrapper-user .dashboard .faq-page .faq-list details summary h3 {
+  font-weight: 600;
+}
 body .wrapper-user .dashboard .faq-page .faq-list details summary:hover {
   background-color: #eaf7f9;
-  transition: 0.4s;
+  transition: 0.1s;
 }
 body .wrapper-user .dashboard .faq-page .faq-list details p {
   padding-left: 10px;
   margin-top: 10px;
+}
+body .wrapper-user .dashboard .faq-page .faq-list details:open summary img {
+  rotate: 180deg;
 }
 body .products {
   width: 100%;
@@ -553,14 +563,27 @@ body .detailproduct .container .right .radio-selector .radio-tab {
   padding: 10px;
   outline: 3px solid #273b98;
   color: #273b98;
+  transition: 0.1s scale;
   cursor: pointer;
   filter: brightness(0) saturate(100%) invert(17%) sepia(56%) saturate(3428%) hue-rotate(224deg) brightness(91%) contrast(90%);
+}
+body .detailproduct .container .right .radio-selector .radio-tab:active {
+  scale: 0.9;
 }
 body .detailproduct .container .right .radio-selector .radio-tab.picked {
   font-weight: 600;
   background-color: #273b98;
   filter: none;
   color: #fff;
+}
+body .detailproduct .container .right .input-tab {
+  padding: 10px;
+  font-size: 1rem;
+  color: #273b98;
+  border-radius: 8px;
+  width: 50px;
+  border: none;
+  outline: 2px solid #273b98;
 }
 body .detailproduct .container .right .bottom {
   display: flex;
@@ -588,7 +611,14 @@ body .detailproduct .container .right .bottom .counter input:active {
 }
 body .detailproduct .container .right .bottom .counter img {
   cursor: pointer;
+  transition: 0.1s;
   filter: brightness(0) saturate(100%) invert(17%) sepia(56%) saturate(3428%) hue-rotate(224deg) brightness(91%) contrast(90%);
+}
+body .detailproduct .container .right .bottom .counter img:hover {
+  scale: 1.1;
+}
+body .detailproduct .container .right .bottom .counter img:active {
+  scale: 1;
 }
 body .cart {
   width: 100%;
@@ -656,6 +686,7 @@ body .cart .products-list .product .right .counter {
   outline: 2px solid #273b98;
   border-radius: 50px;
   width: max-content;
+  margin-top: 30px;
   padding: 5px;
 }
 body .cart .products-list .product .right .counter input {
@@ -673,6 +704,12 @@ body .cart .products-list .product .right .counter img {
   cursor: pointer;
   filter: brightness(0) saturate(100%) invert(17%) sepia(56%) saturate(3428%) hue-rotate(224deg) brightness(91%) contrast(90%);
 }
+body .cart .products-list .product .right .counter img:hover {
+  scale: 1.1;
+}
+body .cart .products-list .product .right .counter img:active {
+  scale: 1;
+}
 body .cart .checkout-tab {
   border-radius: 8px;
   width: 25%;
@@ -682,6 +719,10 @@ body .cart .checkout-tab {
   flex-direction: column;
   gap: 10px;
   padding: 20px;
+}
+body .cart .checkout-tab a {
+  display: flex;
+  justify-content: flex-end;
 }
 body .checkout {
   width: 100%;
@@ -696,8 +737,25 @@ body .checkout .products-list {
   width: 50%;
   background-color: #fff;
   padding: 10px;
-  height: 70vh;
-  overflow: scroll;
+  height: 72vh;
+  overflow-y: scroll;
+  border-radius: 8px;
+  scrollbar-width: auto;
+}
+body .checkout .products-list::-webkit-scrollbar {
+  display: block;
+  width: 10px;
+  background: none;
+  border-radius: 8px;
+}
+body .checkout .products-list::-webkit-scrollbar-track-piece:start {
+  margin-top: 50px;
+}
+body .checkout .products-list::-webkit-scrollbar-track-piece:end {
+  margin-bottom: 50px;
+}
+body .checkout .products-list::-webkit-scrollbar-thumb {
+  background-color: #273b98;
   border-radius: 8px;
 }
 body .checkout .products-list .product {
@@ -738,10 +796,10 @@ body .checkout .products-list .product .right h5 {
 }
 body .checkout .payment-method {
   width: 50%;
-  height: 70vh;
+  height: 72vh;
   display: flex;
   flex-direction: column;
-  gap: 25px;
+  gap: 10px;
   background-color: #fff;
   padding: 20px 20px 10px 20px;
   border-radius: 8px;
