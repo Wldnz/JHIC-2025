@@ -28,6 +28,7 @@ class UserFactory extends Factory
         return [
             "nis" => fake()->unique()->numerify('################'),
             'fullname' => fake()->name(),
+            'phone' => fake()->phoneNumber(),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => Hash::make('admin1234#'),

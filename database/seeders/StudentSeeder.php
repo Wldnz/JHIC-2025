@@ -21,7 +21,6 @@ class StudentSeeder extends Seeder
             $major = Major::query()->inRandomOrder()->firstOrFail();
             Student::create([
                 'nis' => $user->nis,
-                'no_telp' => fake()->phoneNumber(),
                 'gender' => fake()->randomElement(['male', 'female']),
                 'address' => fake()->address(),
                 'birthdate' => fake()->date(),

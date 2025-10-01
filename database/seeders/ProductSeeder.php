@@ -84,7 +84,7 @@ class ProductSeeder extends Seeder
                 "category" => "attribute",
                 "description" => "Atribut wajib seragam formal berupa dasi sekolah.",
                 "variants" => [
-                    [ "name" => "universal", "type" => "all-size", "price" => 25000 ],
+                    [ "name" => "universal", "type" => "ALL", "price" => 25000 ],
                 ]
             ],
             [
@@ -92,7 +92,7 @@ class ProductSeeder extends Seeder
                 "category" => "attribute",
                 "description" => "Topi sekolah resmi untuk kelengkapan seragam.",
                 "variants" => [
-                    [ "name" => "universal", "type" => "all-size", "price" => 30000 ],
+                    [ "name" => "universal", "type" => "ALL", "price" => 30000 ],
                 ]
             ],
             [
@@ -100,7 +100,7 @@ class ProductSeeder extends Seeder
                 "category" => "attribute",
                 "description" => "Sabuk (ikat pinggang) khusus seragam sekolah.",
                 "variants" => [
-                    [ "name" => "universal", "type" => "all-size", "price" => 35000 ],
+                    [ "name" => "universal", "type" => "ALL", "price" => 35000 ],
                 ]
             ],
             [
@@ -108,7 +108,7 @@ class ProductSeeder extends Seeder
                 "category" => "attribute",
                 "description" => "Lencana identitas sekolah yang ditempel pada seragam.",
                 "variants" => [
-                    [ "name" => "universal", "type" => "all-size", "price" => 15000 ],
+                    [ "name" => "universal", "type" => "ALL", "price" => 15000 ],
                 ]
             ],
             [
@@ -142,6 +142,7 @@ class ProductSeeder extends Seeder
             ]);
 
             $isThumbnail = true;
+            $remainsImageCount = 3;
 
             foreach ($productData['variants'] as $variantData) {
                 $variant = ProductVariant::create([
@@ -152,15 +153,19 @@ class ProductSeeder extends Seeder
                     "stock" => fake()->numberBetween(0, 100),
                 ]);
 
+                if ($remainsImageCount <= 0) continue;
+
                 $image = ProductImage::create([
                     "product_id" => $product->id,
                     "url" => "https://placehold.co/120x120",
                     "thumbnail" => $isThumbnail,
                     "visible" => true,
                 ]);
+
+                $remainsImageCount--;
+                $isThumbnail = false;
             }
 
-            $isThumbnail = false;
         }
     }
 }

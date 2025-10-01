@@ -6,6 +6,7 @@ use App\Models\Activity;
 use App\Models\Cart;
 use App\Models\Major;
 use App\Models\OrderTransaction;
+use App\Models\PaymentType;
 use App\Models\Product;
 use App\Models\ProductImage;
 use App\Models\ProductVariant;
@@ -29,6 +30,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ProductSeeder::class);
         $this->call(CartSeeder::class);
         $this->call(ActivitySeeder::class);
+        $this->call(PaymentTypeSeeder::class);
         $this->call(TransactionSeeder::class);
         $this->call(OrderTransactionSeeder::class);
     }
@@ -44,6 +46,7 @@ class DatabaseSeeder extends Seeder
         Cart::query()->truncate();
         OrderTransaction::query()->truncate();
         Transaction::query()->truncate();
+        PaymentType::query()->truncate();
         ProductVariant::query()->truncate();
         ProductImage::query()->truncate();
         Product::query()->truncate();

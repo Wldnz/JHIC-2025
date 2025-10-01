@@ -18,7 +18,9 @@ class OrderTransaction extends Model
         'transaction_id',
         'product_variant_id',
         'quantity',
-        'price'
+        'price',
+        'received_quantity',
+        'status',
     ];
 
     public function transaction(){

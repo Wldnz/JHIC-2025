@@ -10,9 +10,11 @@
         "cloudinary-labs/cloudinary-laravel": "^3.0",
         "fakerphp/faker": "^1.24",
         "laravel/framework": "^12.0",
+        "laravel/reverb": "*",
         "laravel/tinker": "^2.10.1",
         "midtrans/midtrans-php": "^2.6",
-        "php-ds/php-ds": "^1.7"
+        "php-ds/php-ds": "^1.7",
+        "spatie/async": "^1.8"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.16",

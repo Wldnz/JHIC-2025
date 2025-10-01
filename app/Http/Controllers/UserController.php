@@ -3,17 +3,25 @@
 namespace App\Http\Controllers;
 
 use App\AlertType;
+use App\Events\SelfCartQuantityUpdated;
 use App\Http\Requests\StoreCartRequest;
 use App\Http\Requests\StoreTransactionUserRequest;
 use App\Http\Requests\UpdateCartRequest;
 use App\Http\Requests\UpdateProfileRequest;
 use App\Models\Cart;
+use App\Models\OrderTransaction;
 use App\Models\Product;
 use App\Models\ProductVariant;
 use App\Models\Transaction;
 use App\Utilities\AlertDataGenerator;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Broadcast;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Hash;
+use Laravel\Reverb\Events\MessageReceived;
+use Midtrans\CoreApi;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
 
@@ -48,7 +56,10 @@ class UserController extends Controller
 
         if (Auth::attempt($credentials, true)) {
             $request->session()->regenerate();
-            return redirect()->route('admin.dashboard');
+            $redirectUri = $request->query('redirect_uri');
+            logger($redirectUri);
+
+            return $redirectUri ? redirect($redirectUri) : redirect()->route('admin.dashboard');
         }
 
         return redirect()->back()->withErrors([
@@ -151,9 +162,35 @@ class UserController extends Controller
      */
     public function cart()
     {
-        $carts = Cart::with('variantProduct', 'variantProduct.product')->get();
+        $carts = Auth::user()->carts;
+        $carts->load([
+            'variantProduct',
+            'variantProduct.product',
+            'variantProduct.product.images' => function ($query) {
+                $query->where('product_images.thumbnail', '=', true);
+            }]
+        );
+
         $totalCost = $carts->sum(function ($cart) {
             return $cart->variantProduct->price * $cart->quantity;
+        });
+
+        // broadcast(new SelfCartQuantityUpdated(auth()->user(), $carts[0]));
+
+        Event::listen(MessageReceived::class, function (MessageReceived $event) use($carts) {
+            // $message = json_decode($event->message);
+            // $channel = $message->channel;
+            // $data = $message->data;
+            // $event = $message->event;
+            // broadcast('test-server')->send();
+
+            // SelfCartQuantityUpdated::dispatch(Auth::user(), $carts->first());
+
+            // broadcast(new SelfCartQuantityUpdated(auth()->user(), $carts->first()))->via('pusher');
+            Broadcast::on('private-self-cart.' . Auth::user()->nis)->send();
+            throw new Exception("Error test");
+            // if ($channel == "self-cart." . auth()->user()->id) {
+            // }
         });
 
         return view("cart", compact("carts", "totalCost"));
@@ -289,22 +326,33 @@ class UserController extends Controller
      */
     public function checkout(Request $request)
     {
-        $querySelectedCarts = explode(",", $request->query("cart_ids", ""));
-        if (count($querySelectedCarts) < 1) {
+        $cartIds = $request->query("cart_ids", "");
+        $querySelectedCarts = explode(",", $cartIds);
+        $selectedCarts = Auth::user()->carts()->findMany($querySelectedCarts);
+
+        if ($selectedCarts->isEmpty()) {
             AlertDataGenerator::generateAsFlashToSession(
                 AlertType::DANGER,
                 "Gagal membuat transaksi",
                 "Anda belum memilih produk",
                 $request->session(),
             );
-            return back();
+            return redirect()->route('student.cart');
         }
 
-        $selectedCarts = Cart::with('variantProduct')
-            ->whereIn('id', $querySelectedCarts)
-            ->get();
+        $selectedCarts->load([
+            'variantProduct',
+            'variantProduct.product',
+            'variantProduct.product.images' => function ($query) {
+                $query->where('product_images.thumbnail', '=', true);
+            }
+        ]);
 
-        return view("checkout", compact("selectedCarts"));
+        $totalPrice = $selectedCarts->sum(function($cart){
+            return $cart->variantProduct->price * $cart->quantity;
+        });
+
+        return view("checkout", compact("selectedCarts", "totalPrice"));
     }
 
 
@@ -313,11 +361,20 @@ class UserController extends Controller
      *
      * It will display a message indicating that the transaction was successful.
      *
-     * @return \Illuminate\View\View
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\View\View|\Illuminate\Http\RedirectResponse
      */
-    public function checkoutSuccess()
+    public function checkoutSuccess(Request $request)
     {
-        return view("checkoutSuccess");
+        $transactionId = $request->query('transaction_id');
+        $transaction = Auth::user()->transactions()->find($transactionId);
+
+        if (!$transaction) {
+            return redirect()->route('student.cart');
+        }
+
+        $transaction->load("orders", "orders.product_variant", "orders.product_variant.product");
+        return view("checkoutSuccess", compact("transaction"));
     }
 
     /**
@@ -365,7 +422,115 @@ class UserController extends Controller
     // TODO: add transaction process integrated with midtrans
     public function storeTransaction(StoreTransactionUserRequest $request)
     {
-        return redirect()->route("afterTransaction");
+        DB::beginTransaction();
+
+        try {
+            $user = Auth::user();
+            $paymentMethod = $request->safe()->input("payment_method", "gopay");
+            $note = $request->safe()->input("note");
+            $cart_ids = $request->safe()->input("carts", []);
+            $carts = $user->carts()->findMany($cart_ids);
+
+            if (count($carts) < 1) {
+                throw new Exception("Anda belum memilih produk");
+            }
+
+            $totalQuantity = $carts->sum("quantity");
+            $totalPrice = $carts->sum(function($cart){
+                return $cart->variantProduct->price * $cart->quantity;
+            });
+
+            $transaction = Transaction::create([
+                'user_nis' => $user->nis,
+                'received_email' => $user->email,
+                'received_phone' => $user->phone,
+                'total_product' => $totalQuantity,
+                'total_price' => $totalPrice,
+                'payment_method' => $paymentMethod,
+                'expired_at' => now()->addDays(1),
+                'status' => "pending",
+                'note' => $note,
+            ]);
+
+            if (!$transaction) {
+                throw new Exception("Terjadi kesalahan saat membuat transaksi");
+            }
+
+            $carts->load("variantProduct", "variantProduct.product");
+
+            foreach ($carts as $cart) {
+                $orderTransaction = OrderTransaction::create([
+                    'transaction_id' => $transaction->id,
+                    'product_variant_id' => $cart->variantProduct->id,
+                    'price' => $cart->variantProduct->price,
+                    'quantity' => $cart->quantity,
+                    'status' => 'pending',
+                    'received_quantity' => 0
+                ]);
+
+                if (!$orderTransaction) {
+                    throw new Exception("Terjadi kesalahan saat membuat pesanan transaksi dengan produk {$cart->variantProduct->product->name} ( {$cart->variantProduct->name} {$cart->variantProduct->type} )");
+                }
+
+            }
+
+            $user->carts()
+                ->whereIn("id", $cart_ids)
+                ->delete();
+
+            $explodedUserName = explode(" ", $user->name, 2);
+            $mdtResponse = \Midtrans\Snap::createTransaction([
+                'payment_method' => $paymentMethod,
+                'transaction_details' => [
+                    'order_id' => "BITU-TRX $transaction->id",
+                    'gross_amount' => $totalPrice,
+                    // 'gross_amount' => 10,
+                ],
+                'customer_details' => [
+                    'first_name' => $explodedUserName[0],
+                    'last_name' => $explodedUserName[1] ?? '',
+                    'email' => $user->email,
+                    'phone' => $user->phone,
+                ],
+                'item_details' => $carts->map(function($cart){
+                    return [
+                        'id' => $cart->variantProduct->id,
+                        'name' => "{$cart->variantProduct->product->name} ( {$cart->variantProduct->name} {$cart->variantProduct->type} )",
+                        'price' => $cart->variantProduct->price,
+                        'quantity' => $cart->quantity,
+                    ];
+                })->toArray(),
+                'callbacks' => [
+                    'finish' => route("student.checkout-success", ["transaction_id" => $transaction->id]),
+                    'error' => back()->getTargetUrl(),
+                ],
+            ]);
+
+            $mdtRedirectUrl = $mdtResponse->redirect_url;
+            if (!$mdtRedirectUrl) {
+                throw new Exception("Redirect url dari midtrans tidak ditemukan");
+            }
+
+            DB::commit();
+
+            return redirect($mdtRedirectUrl);
+
+        } catch (\Throwable $th) {
+            DB::rollback();
+            report($th);
+            logger()->error($th);
+
+            AlertDataGenerator::generateAsFlashToSession(
+                AlertType::DANGER,
+                "Gagal menambahkan transaksi",
+                $th->getMessage(),
+                $request->session(),
+                false,
+            );
+
+            return back();
+
+        }
     }
 
     /**

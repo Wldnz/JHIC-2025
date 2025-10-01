@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\MidtransController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\isLogin;
@@ -10,6 +11,8 @@ Route::get('/login', [UserController::class, 'loginPage'])->name('login');
 Route::post('/login', [UserController::class, 'login'])->name('login-action');
 
 Route::get('/logout', [UserController::class, 'logout'])->name('logout');
+
+
 
 // isLogin & is Siswa
 Route::name('student.')->middleware([isLogin::class])->group(function () {
@@ -64,4 +67,9 @@ Route::name('admin.')->prefix('admin')->middleware([isLogin::class, isAdmin::cla
     Route::put('/profile/{profile}', [AdminController::class, 'updateProfile'])->name('update-profile');
 });
 
+
+Route::name('midtrans.')->prefix('midtrans')->middleware([isLogin::class])->group(function () {
+    // URL ==> http://127.0.0.1:8000/midtrans/payment-notification
+    Route::post('/payment-notification', [MidtransController::class, 'paymentNotification'])->name('payment-notification');
+});
 

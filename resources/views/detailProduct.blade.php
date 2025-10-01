@@ -1,5 +1,6 @@
 @php
         $placeholder = "https://www.svgrepo.com/show/508699/landscape-placeholder.svg";
+        $firstVariant = $product->firstVariant();
 @endphp
 @include('_components._header')
 <div class="detailproduct">
@@ -7,26 +8,26 @@
     <div class="left"><img src="{{ count($product->images) > 0 ? $product->thumbnail()->url : $placeholder }}"></div>
     <div class="right">
         <h2>{{ $product->name }}</h2>
-        <h3>Rp. <span id="price-label">-</span></h3>
-        <p>Stok {{ $product->category == 'uniform' ? 'Seragam' : "Atribut" }} : <span id="stock-label">-</span></p>
+        <h3>Rp. <span id="price-label">{{ number_format($firstVariant->price, 0, ',', '.') }}</span></h3>
+        <p>Stok {{ $product->category == 'uniform' ? 'Seragam' : "Atribut" }} : <span id="stock-label">{{ $firstVariant->stock }}</span></p>
+        @if ($product->category == "uniform")
+            <br>
+            <h3>Jenis Kelamin: <label id="gender-label">{{ $firstVariant->name == "male" ? 'Male' : 'Female' }}</label></h3>
+            <div class="radio-selector">
+                <img onclick="pick(this)" name="Male" src="{{ asset("icons/user.svg") }}" class="radio-tab {{ $firstVariant->name == "male" ? 'picked' : '' }}">
+                <img onclick="pick(this)" name="Female" src="{{ asset("icons/User_Female.png") }}" class="radio-tab {{ $firstVariant->name == "female" ? 'picked' : '' }}">
+            </div>
+        @else
+            <label id="gender-label" style="display: none;">Universal</label>
+        @endif
         <br>
-        <h3>Jenis Kelamin: <label id="gender-label">-</label></h3>
-        <div class="radio-selector">
-            @if ($product->category == "uniform")
-                <img onclick="pick(this)" name="Male" src="{{ asset("icons/user.svg") }}" class="radio-tab">
-                <img onclick="pick(this)" name="Female" src="{{ asset("icons/User_Female.png") }}" class="radio-tab">
-            @else
-                <img onclick="pick(this)" name="Universal" src="{{ asset("icons/user.svg") }}" class="radio-tab">
-            @endif
-        </div>
-        <br>
-            <h3>Size: <label id="size-label">-</label></h3>
+            <h3>Size: <label id="size-label">{{ $firstVariant->type }}</label></h3>
         <div class="radio-selector">
             @foreach ($product->variants->unique("type") as $variant)
-                <p name="{{ $variant->type }}" onclick="pick(this)" class="radio-tab">{{ $variant->type }}</p>
+                <p name="{{ $variant->type }}" onclick="pick(this)" class="radio-tab {{ $firstVariant->type == $variant->type ? 'picked' : '' }}">{{ $variant->type }}</p>
             @endforeach
         </div>
-        <a href="https://youtube.com"><h4>My Size Doesn't Exist</h4></a>
+        <a href="http://wa.me/6281280063529?text=Halo%2C%20untuk%20{{ $product->name }}%20dengan%20ukuran%20lain%20apakah%20tersedia%3F"><h4>My Size Doesn't Exist</h4></a>
         <br>
         <div class="bottom">
             <div class="counter">
@@ -53,15 +54,22 @@
     const maxStock = @js($product->totalStock());
     const variants = @json($product->variants);
     const images = @json($product->images);
+    const firstVariant = @json($product->firstVariant());
 
     const priceLabel = document.getElementById("price-label");
     const stockLabel = document.getElementById("stock-label");
     const genderLabel = document.getElementById("gender-label");
     const sizeLabel = document.getElementById("size-label");
-    var maxcounter = 0;
+    const inputCounter = document.querySelector("#inp");
+
+    var maxcounter = firstVariant.stock;
+    var counter = 1;
 
     const selectedVariantIdValue = document.getElementById("selected-variant-id-value");
     const selectedQtyValue = document.getElementById("selected-qty-value");
+
+    selectedVariantIdValue.value = firstVariant.id;
+    selectedQtyValue.value = 1;
 
     function pick(el)
     {
@@ -74,26 +82,28 @@
         el.parentElement.previousElementSibling.lastElementChild.innerText = picked;
 
         const selectedVariantFromInput = variants.find(variant => variant.name == genderLabel.innerText.toLowerCase() && variant.type == sizeLabel.innerText);
-        console.log(selectedVariantFromInput);
-        if (selectedVariantFromInput)
-        {
+        if (selectedVariantFromInput) {
             selectedVariantIdValue.value = selectedVariantFromInput.id;
             maxcounter = selectedVariantFromInput.stock;
             priceLabel.innerText = numFormat.format(selectedVariantFromInput.price);
             stockLabel.innerText = selectedVariantFromInput.stock;
+
+            if (parseInt(inputCounter.value) > selectedVariantFromInput.stock) {
+                counter = selectedVariantFromInput.stock;
+                inputCounter.value = counter;
+                selectedQtyValue.value = counter;
+            }
         }
     }
 
-    var counter = 1;
-    const inputCounter = document.querySelector("#inp");
     const addButton = document.querySelector("#add");
     const subButton = document.querySelector("#sub");
+
     inputCounter.value = counter;
     selectedQtyValue.value = counter;
 
     addButton.addEventListener("click", function() {
-        if (counter < maxcounter)
-        {
+        if (counter < maxcounter) {
             counter++;
         }
         inputCounter.value = counter;
@@ -109,25 +119,32 @@
     })
     inputCounter.addEventListener("input", function() {
         let val = parseInt(inputCounter.value, 10);
-        if (!isNaN(val) && val > 0)
-            {
-                counter = val;
-                inputCounter.value = counter;
-                selectedQtyValue.value = counter;
-            }
+        if (!isNaN(val) && val > 0) {
+            counter = val;
+            inputCounter.value = counter;
+            selectedQtyValue.value = counter;
+        }
     })
 
-    inputCounter.addEventListener("blur", function() {
+    function onQuantityInput() {
         let val = parseInt(inputCounter.value, 10);
-        if (isNaN(val) || val < 1 || val > maxcounter)
-            {
-                counter = 1;
-                inputCounter.value = counter;
-                selectedQtyValue.value = counter;
-            }
-    })
 
-    document.querySelector("#variant");
+        if (val > maxcounter) {
+            counter = maxcounter;
+        } else if (isNaN(val) || val < 1) {
+            counter = 1;
+        }
+
+        inputCounter.value = counter;
+        selectedQtyValue.value = counter;
+    };
+
+    inputCounter.addEventListener("blur", onQuantityInput);
+    inputCounter.addEventListener("keydown", (e) => {
+        if (e.key != "Enter") return;
+        onQuantityInput();
+        inputCounter.blur();
+    });
 
 
 </script>
