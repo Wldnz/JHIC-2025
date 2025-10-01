@@ -39,13 +39,15 @@ class AdminController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function dashboard()
+    public function dashboard(Request $request)
     {
-        $initialTransactions = Transaction::get('status');
+        $currentPage = $request->get('page',1);
+        $initialTransactions = Transaction::all();
+        $ongoing_transactions = $initialTransactions->where('status','=','ongoing');
         $transaction = [
             'total' => $initialTransactions->count(),
             'success' => $initialTransactions->where('status', '=', 'success')->count(),
-            'ongoing' => $initialTransactions->where('status', '=', 'ongoing')->count(),
+            'ongoing' => $ongoing_transactions->count(),
             'fail' => $initialTransactions->where('status', '=', 'fail')->count(),
         ];
 
@@ -54,6 +56,7 @@ class AdminController extends Controller
             ->join("product_variants", "products.id", "=", "product_variants.product_id")
             ->groupBy("products.name", "product_variants.name")
             ->get();
+        
         $product = [
             'total' => $initialStockProducts->count(),
             'available' => $initialStockProducts->where("product_variants_stock", ">", 0)->count(),
@@ -69,11 +72,16 @@ class AdminController extends Controller
             'total' => Activity::query()->count(),
         ];
 
+        $maxPage = intval($transaction['ongoing'] / $this->limitPagination + 1);
+
         return view("admin.dashboard", [
+            "transactions" => $ongoing_transactions,
             "transaction" => $transaction,
             "product" => $product,
             "account" => $account,
-            "activity" => $activity
+            "activity" => $activity,
+            "currentPage" => $currentPage,
+            "maxPage" => $maxPage
         ]);
     }
 
@@ -486,7 +494,7 @@ class AdminController extends Controller
     public function detailAccount(Request $request ,string $nis)
     {
         $currentPage = $request->query('page', 1);
-        $account = User::find($nis, ['nis', 'fullname', 'email', 'role', 'email_verified_at', 'created_at', 'updated_at']);
+        $account = User::find($nis, ['nis', 'fullname', 'email', 'phone', 'role', 'email_verified_at', 'created_at', 'updated_at']);
 
         $majors = Major::all();
 
@@ -611,6 +619,12 @@ class AdminController extends Controller
 
         return redirect()->route("admin.accounts");
     }
+
+
+    public function settings(){
+        return view("admin.settings");
+    }
+
 
     /**
      * Render the profile page view with the currently authenticated user.

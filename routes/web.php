@@ -65,6 +65,8 @@ Route::name('admin.')->prefix('admin')->middleware([isLogin::class, isAdmin::cla
 
     Route::get('/profile', [AdminController::class, 'profile'])->name('profile');
     Route::put('/profile/{profile}', [AdminController::class, 'updateProfile'])->name('update-profile');
+
+    Route::get('/settings', [AdminController::class,'settings'])->name('settings');
 });
 
 

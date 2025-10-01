@@ -6,7 +6,7 @@
     </div>
     @includeWhen(isset($transaction), "_components._summary-section", [
         "name" => "Transaction",
-        "destination" => route("admin.products"),
+        "destination" => route("admin.transactions"),
         "data" => $transaction
     ])
     @includeWhen(isset($product), "_components._summary-section", [
@@ -20,6 +20,33 @@
             "Account" => $account,
             "Activity" => $activity
         ]
+    ])
+    @include('_components._management-table', [
+        'title' => 'Total Transaksi Sedang Berlangsung',
+        'total' => $transaction['ongoing'],
+        'datas' => $transactions,
+        'columns' => [
+            'id' => 'ID Transaksi',
+            'user' => 'Nama Pembeli',
+            'total_product' => 'Total Produk',
+            'total_price' => 'Total Harga',
+            'created_at' => 'Tanggal',
+            'status' => 'Status',
+        ],
+        'column_relations' => [
+            'user' => 'fullname'
+        ],
+        'actions' => [
+            'Lihat Transaksi' => [
+                'action-name' => 'transaction',
+                'route-name' => 'admin.detail-transaction',
+                'icon-name' => 'eye'
+            ],
+        ],
+        'pagination' => [
+            'current' => $currentPage,
+            'max' => $maxPage
+        ],
     ])
 </main>
 

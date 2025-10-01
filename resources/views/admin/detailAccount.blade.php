@@ -37,76 +37,77 @@
                     maxlength="120" value="{{ old('email') ?? $account['email'] ?? '' }}" required>
             </div>
             <div class="wrapper-input">
-                <label for="no_telp">
+                <label for="phone">
                     Nomor Telepon
                     <span>*</span>
                 </label>
-                <input type="text" inputmode="numeric" name="no_telp" id="no_telp" placeholder="81234567890"
-                    minLength="11" maxlength="12" value="{{ old('no_telp') ?? $account['student']['no_telp'] ?? '' }}"
-                    required>
+                <input type="text" inputmode="numeric" name="phone" id="phone" placeholder="81234567890" minLength="11"
+                    maxlength="12" value="{{ old('phone') ?? $account['phone'] ?? '' }}" required>
             </div>
-            <div class="wrapper-input">
-                <label for="address">
-                    Alamat
-                    <span>*</span>
-                </label>
-                <textarea name="address" id="addresss" placeholder="Alamat Pengguna" minlength="8" maxlength="255"
-                    required>
-                    {{ old('address') ?? $account['student']['address'] ?? '' }}
-                </textarea>
-            </div>
-            <div class="wrapper-input">
-                <label for="gender">
-                    Jenis Kelamin
-                    <span>*</span>
-                </label>
-                <select name="gender" id="gender" required>
-                    <option value="male" {{ $account['student']['gender'] == 'male' ? 'selected' : '' }}>Laki - Laki
-                    </option>
-                    <option value="female" {{ $account['student']['gender'] == 'female' ? 'selected' : '' }}>Perempuan
-                    </option>
-                </select>
-            </div>
-            <div class="wrapper-input">
-                <label for="class">
-                    Kelas
-                    <span>*</span>
-                </label>
-                <select name="class" id="class" required>
-                    <option value="X" {{ old('class') == 'X' || $account['student']['class'] == 'X' ? 'selected' : '' }}>
-                        Kelas 10</option>
-                    <option value="XI" {{ old('class') == 'XI' || $account['student']['class'] == 'XI' ? 'selected' : '' }}>
-                        Kelas 11</option>
-                    <option value="XII" {{ old('class') == 'XII' || $account['student']['class'] == 'XII' ? 'selected' : '' }}>Kelas 12</option>
-                </select>
-            </div>
-            <div class="wrapper-input">
-                <label for="major">
-                    Jurusan
-                    <span>*</span>
-                </label>
-                <select name="major" id="major" required>
-                    @foreach ($majors as $major)
-                        <option value="{{ $major->name }}" {{ old('major') == $major->name || $account['student']['major_name'] == $major->name ? 'selected' : '' }}>{{ $major->name }}
+            @if ($account['role'] == 'siswa')
+                <div class="wrapper-input">
+                    <label for="address">
+                        Alamat
+                        <span>*</span>
+                    </label>
+                    <textarea name="address" id="addresss" placeholder="Alamat Pengguna" minlength="8" maxlength="255"
+                        required>
+                        {{ old('address') ?? $account['student']['address'] ?? '' }}
+                    </textarea>
+                </div>
+                <div class="wrapper-input">
+                    <label for="gender">
+                        Jenis Kelamin
+                        <span>*</span>
+                    </label>
+                    <select name="gender" id="gender" required>
+                        <option value="male" {{ $account['student']['gender'] == 'male' ? 'selected' : '' }}>Laki - Laki
                         </option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="wrapper-input">
-                <label for="birthdate">
-                    Tanggal Lahir
-                    <span>*</span>
-                </label>
-                <input type="date" inputmode="numeric" name="birthdate" id="birthdate" placeholder="81234567890"
-                    value="{{ old('birthdate') ?? explode(' ', $account['student']['birthdate'])[0] ?? '' }}" required>
-            </div>
+                        <option value="female" {{ $account['student']['gender'] == 'female' ? 'selected' : '' }}>Perempuan
+                        </option>
+                    </select>
+                </div>
+                <div class="wrapper-input">
+                    <label for="class">
+                        Kelas
+                        <span>*</span>
+                    </label>
+                    <select name="class" id="class" required>
+                        <option value="X" {{ old('class') == 'X' || $account['student']['class'] == 'X' ? 'selected' : '' }}>
+                            Kelas 10</option>
+                        <option value="XI" {{ old('class') == 'XI' || $account['student']['class'] == 'XI' ? 'selected' : '' }}>
+                            Kelas 11</option>
+                        <option value="XII" {{ old('class') == 'XII' || $account['student']['class'] == 'XII' ? 'selected' : '' }}>Kelas 12</option>
+                    </select>
+                </div>
+                <div class="wrapper-input">
+                    <label for="major">
+                        Jurusan
+                        <span>*</span>
+                    </label>
+                    <select name="major" id="major" required>
+                        @foreach ($majors as $major)
+                            <option value="{{ $major->name }}" {{ old('major') == $major->name || $account['student']['major_name'] == $major->name ? 'selected' : '' }}>{{ $major->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="wrapper-input">
+                    <label for="birthdate">
+                        Tanggal Lahir
+                        <span>*</span>
+                    </label>
+                    <input type="date" inputmode="numeric" name="birthdate" id="birthdate" placeholder="81234567890"
+                        value="{{ old('birthdate') ?? explode(' ', $account['student']['birthdate'])[0] ?? '' }}" required>
+                </div>
+            @endif
             <div class="wrapper-input">
                 <label for="role">
                     Role (Penting)
                     <span>*</span>
                 </label>
                 <select name="role" id="role" required>
-                    <option value="siswa" @selected(old('role') ?? '' == 'siswa')>Siswa</option>
+                    <option value="{{ $account['role'] }}" @selected(old('role') ?? '' == $account['role'])>{{ strtoupper($account['role'][0]) . substr($account['role'], 1) }}</option>
                     @if (Auth::user()->role == 'superAdmin')
                         <option value="siswa" @selected(old('role') ?? '' == 'admin')>Admin</option>
                     @endif
@@ -129,7 +130,7 @@
         'datas' => $account['activities'],
         'pagination' => [
             'current' => $currentPage,
-            'max' => $maxPage    
+            'max' => $maxPage
         ]
     ])
 </main>

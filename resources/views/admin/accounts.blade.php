@@ -46,7 +46,7 @@
             ],
             'Hapus Akun' => [
                 'action-name' => 'delete',
-                'icon-name' => 'account',
+                'icon-name' => 'trash',
                 'destination' => [
                     'name' => 'admin.delete-account',
                     'parameter' => 'account'
