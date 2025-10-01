@@ -11,7 +11,7 @@
             </span>
             <h3>{{ $product->name }}</h3>
             <br>
-            <p>{{ $product->category }}</p>
+            <p>{{ $product->category == 'uniform' ? 'Seragam' : 'Atribut' }}</p>
             <p>{{ $product->totalStock() }}</p>
             <br>
             <h3>{{ 'Rp. ' . number_format(count($product->variants) > 0 ? $product->variants[0]->price : 0, 0, ',', '.') }}</h3>

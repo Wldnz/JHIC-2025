@@ -219,8 +219,8 @@ class AdminController extends Controller
             );
 
             return redirect()->route("admin.products");
-        } catch (\Throwable $th) {
 
+        } catch (\Throwable $th) {
             DB::rollback();
             report($th);
             logger()->error($th);
@@ -234,6 +234,7 @@ class AdminController extends Controller
             );
 
             return back();
+
         }
     }
 

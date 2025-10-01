@@ -25,6 +25,7 @@ class User extends Authenticatable
         'nis',
         'fullname',
         'email',
+        'phone',
         'created_at',
         'updated_at',
         'role'
@@ -53,11 +54,19 @@ class User extends Authenticatable
         ];
     }
 
+    public function carts(){
+        return $this->hasMany(Cart::class, "user_nis", "nis");
+    }
+
     public function student(){
         return $this->hasOne(Student::class, "nis", "nis");
     }
 
     public function activities(){
         return $this->hasMany(Activity::class, "user_nis", "nis");
+    }
+
+    public function transactions(){
+        return $this->hasMany(Transaction::class, "user_nis", "nis");
     }
 }

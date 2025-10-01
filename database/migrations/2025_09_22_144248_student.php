@@ -18,7 +18,6 @@ return new class extends Migration {
 
         Schema::create('students', function (Blueprint $table) {
             $table->string("nis", 16)->primary();
-            $table->string('no_telp', 12)->unique();
             $table->enum('gender', ['male', 'female']);
             $table->text('address');
             $table->timestamp('birthdate');

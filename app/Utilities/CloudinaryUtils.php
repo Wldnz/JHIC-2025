@@ -19,6 +19,16 @@ class CloudinaryUtils {
 
         return null;
     }
+
+    /**
+     * Checks if a given URL is a Cloudinary URL.
+     *
+     * @param string $url The URL to check.
+     * @return bool True if the URL is a Cloudinary URL, false otherwise.
+     */
+    public static function isCloudinaryUrl($url) {
+        return strpos($url, "res.cloudinary.com") !== false;
+    }
 }
 
 ?>

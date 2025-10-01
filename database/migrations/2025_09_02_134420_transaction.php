@@ -29,8 +29,8 @@ return new class extends Migration {
             $table->double("total_price")->nullable(false);
             $table->string("payment_method", 70)->nullable(false);
             $table->timestamp("expired_at")->nullable(false);
-            $table->timestamp("received_at")->nullable(false);
-            $table->enum("status", ["pending", "success", "ongoing", "fail"])->default("pending");
+            $table->timestamp("received_at")->nullable(true);
+            $table->enum("status", ["pending", "success", "ongoing", "fail", "preorder"])->default("pending");
             $table->text("note")->nullable(true);
             $table->timestamps();
             $table->softDeletes();
@@ -44,6 +44,8 @@ return new class extends Migration {
             $table->foreignId("product_variant_id")->constrained("product_variants")->cascadeOnDelete()->cascadeOnUpdate();
             $table->double("price")->nullable(false);
             $table->integer("quantity")->nullable(false);
+            $table->integer("received_quantity")->default(0);
+            $table->enum("status", ["pending", "success", "ongoing", "fail", "preorder"])->default("pending");
             $table->timestamps();
             $table->softDeletes();
         });

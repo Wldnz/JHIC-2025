@@ -23,8 +23,9 @@ class StoreTransactionUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'payment_method' => ['required', 'string', 'in:cash,transfer'],
-            'carts.*' => ['required', 'array', 'exists:carts,id', 'min:1']
+            'payment_method' => ['nullable', 'string', 'exists:payment_methods,code_name'],
+            'note' => ['nullable', 'string'],
+            'carts.*' => ['required', 'integer', 'exists:carts,id', 'min:1']
         ];
     }
 }
