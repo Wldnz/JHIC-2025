@@ -1945,7 +1945,9 @@ h2 {
                     width: max-content;
                 }
                 .main-menu {
-                    top: 18px;
+                    top: -5px;
+                    right: 10px;
+                    z-index: 10;
                 }
             }
         }

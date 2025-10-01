@@ -94,7 +94,8 @@ class AdminController extends Controller
         $currentPage = $request->query("page", 1);
         $products = Product::with("variants")
             ->join("product_variants", "products.id", "=", "product_variants.product_id")
-            ->groupBy("products.id");;
+            ->groupBy("products.id");
+        ;
 
         if ($searchQuery) {
             $searchQuery = "%$searchQuery%";
@@ -106,9 +107,9 @@ class AdminController extends Controller
         if ($searchStockQuery) {
             $products = match ($searchStockQuery) {
                 'available' => $products->havingRaw("SUM(product_variants.stock) > 0"),
-                'low'       => $products->havingRaw("SUM(product_variants.stock) < 5"),
-                'empty'     => $products->havingRaw("SUM(product_variants.stock) <= 0"),
-                default     => $products,
+                'low' => $products->havingRaw("SUM(product_variants.stock) < 5"),
+                'empty' => $products->havingRaw("SUM(product_variants.stock) <= 0"),
+                default => $products,
             };
         }
 
@@ -436,15 +437,41 @@ class AdminController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function accounts()
+    public function accounts(Request $request)
     {
-        $accounts = User::all(["id", "fullname", "email", "role"]);
+        $currentPage = $request->get("page",1);
+        $search_name = $request->query('search', null);
+        $search_role = $request->query('search_role', 'siswa');
+        $accounts = User::where('role', '=', $search_role);
 
-        $totalAccount = $accounts->count();
-        $totalStudent = $accounts->where("role", "=", "siswa")->count();
-        $totalAdmin = $accounts->where("role", "=", "admin")->count();
+        if ($search_name) {
+            $accounts->where('fullname', 'like', '%' . $search_name . '%');
+        }
 
-        return view("admin.accounts", compact("accounts", "totalAccount", "totalStudent", "totalAdmin"));
+        $accounts = $accounts->get(['nis', 'fullname', 'email', 'role']);
+
+        $totalAccount = User::all()->count();
+        $totalStudent = User::where("role", "=", "siswa")->get()->count();
+        $totalAdmin = User::where("role", "=", "admin")->get()->count();
+
+        $stats = [
+            "account" => [
+                'total' => $totalAccount,
+            ],
+            'siswa' => [
+                'total' => $totalStudent,
+            ],
+            'admin' => [
+                'total' => $totalAdmin
+            ],
+            "activity" => [
+                'total' => Activity::get()->count()
+            ]
+        ];
+
+        $maxPage = intval($stats['account']['total'] / $this->limitPagination + 1);
+
+        return view("admin.accounts", compact("accounts", "stats", "maxPage", "currentPage", "search_role"));
     }
 
     /**
@@ -455,9 +482,12 @@ class AdminController extends Controller
      * @param  string                $account
      * @return \Illuminate\View\View
      */
-    public function detailAccount(string $nis)
+    public function detailAccount(Request $request ,string $nis)
     {
+        $currentPage = $request->query('page', 1);
         $account = User::find($nis, ['nis', 'fullname', 'email', 'role', 'email_verified_at', 'created_at', 'updated_at']);
+
+        $majors = Major::all();
 
         $account->load("activities");
         $account->activities->setVisible(["id", "action", "created_at", "updated_at"]);
@@ -466,12 +496,15 @@ class AdminController extends Controller
             $account->load("student");
         }
 
-        return view("admin.detailAccount", compact("account"));
+         $maxPage = intval(count($account['activities']) / $this->limitPagination + 1);
+
+        return view("admin.detailAccount", compact("account", 'majors', 'currentPage', 'maxPage'));
     }
 
     public function createAccount()
     {
-        return view("admin.addAccount");
+        $majors = Major::all();
+        return view("admin.addAccount", compact('majors'));
     }
 
     public function storeAccount(StoreAccountRequest $request)

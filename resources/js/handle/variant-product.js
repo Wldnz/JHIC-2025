@@ -1,5 +1,3 @@
-let variants = [];
-
 function addVariant({ name, type, price, stock }) {
     console.log('add variant got trigger');
     if (!name || !type || !price || !stock) {

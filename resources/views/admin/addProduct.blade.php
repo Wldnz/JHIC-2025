@@ -132,6 +132,12 @@
         ]
     ])
 </div>
-
 @vite(['resources/js/handle/image-product.js', 'resources/js/handle/variant-product.js'])
+
+<script defer>
+    let variants = [];
+    let image = [];
+</script>
+    
+
 @include('_components._footerAdmin')
