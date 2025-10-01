@@ -21,7 +21,7 @@
         <a href="https://maps.app.goo.gl/vfUXsErkEc6igeDe8"><p>Ciputat, Jl Cendrawasih Raya 9A</p></a><br>
         <p onclick="copy(this)">info@smkbinainformatika.sch.id</p></a><br>
         <a onclick="copy(this)"><p>(021) - 745 3048</p></a>
-        <a onclick="copy(this)"><p>62 812-8006-3529</p></a><br>
+        <a onclick="copy(this)"><p>+62 812-8006-3529</p></a><br>
     </div>
     <span id="pop-up-copy"><p>Copied!</p></span>
 </footer>

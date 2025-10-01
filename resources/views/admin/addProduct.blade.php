@@ -133,9 +133,5 @@
     ])
 </div>
 
-<script defer>
-    let image = Array.from([]);
-    let variants = Array.from([]);
-</script>
 @vite(['resources/js/handle/image-product.js', 'resources/js/handle/variant-product.js'])
 @include('_components._footerAdmin')

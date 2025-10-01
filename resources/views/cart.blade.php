@@ -17,11 +17,10 @@
                 <div class="check"><span id="checkbox"></span></div>
                 <div class="middle"><img src="{{ count($cart->variantProduct->product->images) > 0 ? $cart->variantProduct->product->thumbnail()->url : $placeholder }}" alt="" loading="lazy"></div>
                 <div class="right">
-                    <h3>{{ $cart->variantProduct->product->name }}</h3>
+                    <a href="{{ route('student.detail-product',['product' => $cart->variantProduct->product->id]) }}"><h3>{{ $cart->variantProduct->product->name }}</h3></a>
                     <p>{{ $cart->variantProduct->name }}, {{ $cart->variantProduct->type }}</p>
-                    <h4>Stok: {{ $cart->variantProduct->stock }}</h4>
-                    <br>
-                    <br>
+                    <h4>Stok: <label>{{ $cart->variantProduct->stock }}</label></h4>
+
                     <div class="counter">
                         <img src="{{ asset('icons/Remove_Minus.svg') }}" alt="">
                         <Input type="number" inputmode="numeric" value="{{ $cart->quantity }}">
@@ -37,7 +36,7 @@
         </div>
         <br>
         <p>Rp. <span id="total-price-label">0</span></p>
-        <a id="result-checkout-url" href="{{ route('student.checkout') }}"><button class="button">Bayar Sekarang!</button></a>
+        <a id="result-checkout-url" href="{{ route('student.checkout') }}"><button class="button">Checkout!</button></a>
     </d>
 </div>
 @include('_components._footer')

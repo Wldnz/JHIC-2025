@@ -8,7 +8,7 @@
     <div class="ordersummary">
         <h2>Order Summary</h2>
     </div>
-    <a href="{{ url('/') }}" class="btn btn-primary">Continue Shopping</a>
+    <a href="{{ url('/') }}" class="button">Continue Shopping</a>
     </div>
 </div>
 @include ('_components._footer')

@@ -27,7 +27,7 @@
                 <p name="{{ $variant->type }}" onclick="pick(this)" class="radio-tab {{ $firstVariant->type == $variant->type ? 'picked' : '' }}">{{ $variant->type }}</p>
             @endforeach
         </div>
-        <a href="https://youtube.com"><h4>My Size Doesn't Exist</h4></a>
+        <a href="http://wa.me/6281280063529?text=Halo%2C%20untuk%20{{ $product->name }}%20dengan%20ukuran%20lain%20apakah%20tersedia%3F"><h4>My Size Doesn't Exist</h4></a>
         <br>
         <div class="bottom">
             <div class="counter">

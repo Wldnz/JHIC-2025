@@ -11,7 +11,7 @@
     @include('_components._management-table', [
         'title' => 'Total Transaksi (' . $stats['on Going'] . ' Sedang Berlangsung)',
         'total' => $stats['total'],
-        'management' => ['title' => 'Tambahkan Transaksi' , 'destination' => route('admin.add-transaction')],
+        'management' => ['title' => 'Tambahkan Transaksi', 'destination' => route('admin.add-transaction')],
         'findDataWith' => [
             'filters' => [
                 'search_status' => [
@@ -66,5 +66,7 @@
 @includeWhen(session()->has('alert'), '_components._alert-message', ['data' => session()->get('alert'), 'icon_name' => 'product'])
 
 <script defer>
-    setActionDelete(false);
+    setActionDelete(true, {
+        title : 'Transaksi Dengan ID'
+    });
 </script>

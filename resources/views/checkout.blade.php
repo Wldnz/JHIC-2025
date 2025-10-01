@@ -15,6 +15,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $title  ?? "Bina Tata Usaha" }}</title>
+    <title>{{ $title  ?? "Bina Tata Usaha" }}</title>
     @vite(["resources/css/app.css", "resources/js/app.js"])
 </head>
 <body>
@@ -23,6 +24,10 @@
         <a href="{{ route('student.cart') }}" style="display: flex; justify-content: center;"><img src="{{asset ('icons/left-arrow.svg')}}">Back</a>
     </nav>
     <main class="wrapper-user">
+
+
+
+
 
 
 
@@ -66,6 +71,7 @@
                 <img src="{{ asset("icons/payment/dana.png") }}" alt="">
                 <h5>Dana</h5>
             </div>
+
 
         </div>
 
@@ -130,12 +136,14 @@
                 button.firstElementChild.style.rotate = "0deg";
             });
 
+
             document.querySelectorAll(".group-button").forEach(btn => {
                 btn.firstElementChild.style.rotate = "0deg";
             });
 
+
             if (!isOpen) {
-                panel.style.maxHeight = "2000px";
+                panel.style.maxHeight = "1000px";
                 panel.style.padding = "15px 20px";
                 button.firstElementChild.style.rotate = "180deg";
             }

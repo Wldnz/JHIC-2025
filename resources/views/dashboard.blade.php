@@ -103,7 +103,7 @@
         @endphp
         <div class="faq-list">
             @foreach ($faqs as $question => $answer)
-            <details>
+            <details name="shit">
                 <summary>
                     <h3>{{ $question }}</h3>
                     <img src="{{ asset('icons/arrow-down.svg') }}" alt="Arrow Down" class="arrow-icon">
