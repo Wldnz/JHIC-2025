@@ -74,12 +74,6 @@
                 quantity: selectedCart.quantity
             })
         });
-
-        console.log(response);
-        if (!response.ok) return;
-        const data = await response.json();
-
-        console.log(data);
     }
 
     document.querySelectorAll("#checkbox").forEach(element => {
@@ -185,20 +179,4 @@
         });
     })
 
-</script>
-
-<script type="module">
-    const userNis = @js(Auth::user()->nis);
-    const test = Echo.private(`self-cart.${userNis}`)
-        .listen('SelfCartQuantityUpdated', (ev) => {
-            console.log(ev);
-        })
-
-    test.whisper('update-qty', {
-        cart_id: 1,
-        quantity: 10,
-    })
-    window.test123 = test;
-
-    // test.send_event("test", {});
 </script>

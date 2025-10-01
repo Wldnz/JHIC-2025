@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\AlertType;
-use App\Events\SelfCartQuantityUpdated;
 use App\Http\Requests\StoreCartRequest;
 use App\Http\Requests\StoreTransactionUserRequest;
 use App\Http\Requests\UpdateCartRequest;
@@ -16,11 +15,8 @@ use App\Models\Transaction;
 use App\Utilities\AlertDataGenerator;
 use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Hash;
-use Laravel\Reverb\Events\MessageReceived;
 use Midtrans\CoreApi;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
@@ -126,7 +122,7 @@ class UserController extends Controller
 
         if ($searchQuery) {
             $products = $products
-                ->where("name", "like", "%$searchQuery%");
+            ->where("name", "like", "%$searchQuery%");
         }
 
         $products = $products->get();
@@ -146,8 +142,8 @@ class UserController extends Controller
     {
         $product->load("variants", "images");
         $recommendedProducts = Product::with("images")
-            ->whereRaw("SOUNDEX('$product->name') = SOUNDEX(products.name)", )
-            ->limit(4)
+        ->whereRaw("SOUNDEX('$product->name') = SOUNDEX(products.name)", )
+        ->limit(4)
             ->get();
 
         return view("detailProduct", compact("product", "recommendedProducts"));
@@ -173,24 +169,6 @@ class UserController extends Controller
 
         $totalCost = $carts->sum(function ($cart) {
             return $cart->variantProduct->price * $cart->quantity;
-        });
-
-        // broadcast(new SelfCartQuantityUpdated(auth()->user(), $carts[0]));
-
-        Event::listen(MessageReceived::class, function (MessageReceived $event) use($carts) {
-            // $message = json_decode($event->message);
-            // $channel = $message->channel;
-            // $data = $message->data;
-            // $event = $message->event;
-            // broadcast('test-server')->send();
-
-            // SelfCartQuantityUpdated::dispatch(Auth::user(), $carts->first());
-
-            // broadcast(new SelfCartQuantityUpdated(auth()->user(), $carts->first()))->via('pusher');
-            Broadcast::on('private-self-cart.' . Auth::user()->nis)->send();
-            throw new Exception("Error test");
-            // if ($channel == "self-cart." . auth()->user()->id) {
-            // }
         });
 
         return view("cart", compact("carts", "totalCost"));
@@ -246,7 +224,7 @@ class UserController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function updateCart(UpdateCartRequest $request, Cart $cart)
-    {
+    {   
         $validated = $request->validated();
 
         if ($validated['quantity'] <= 0) {
@@ -265,6 +243,7 @@ class UserController extends Controller
                 "deleted" => true,
             ]);
         } else if ($validated['quantity'] > $cart->variantProduct->stock) {
+            $cart->quantity = $validated['quantity'] > $cart->quantity ? $cart->quantity : $validated['quantity'];
             return response()->json([
                 "success" => false,
                 "message" => "Unsufficient stock",

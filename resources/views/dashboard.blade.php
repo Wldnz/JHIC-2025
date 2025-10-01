@@ -4,7 +4,7 @@
         <h1>
             THE UNIFORM OF
         </h1>
-        <img src="{{asset('/images/bi.png')}}">
+        <img src="{{asset('/images/bi.png')}}" loading="lazy">
     </div></a>
 
 
@@ -13,7 +13,7 @@
         <div class="category-section">
             <a href="{{ route('student.products') }}">
                 <div class="category-tab">
-                    <img src="{{asset('images/thumbnail/sergamlaki.png')}}" alt="">
+                    <img src="{{asset('images/thumbnail/sergamlaki.png')}}" alt="" loading="lazy">
                     <div class="vignette"></div>
                     <h3>Seragam <br>Laki-Laki</h3>
                     <p>Temukan seragam sekolah yang kamu butuhkan</p>
@@ -21,7 +21,7 @@
             </a>
             <a href="{{ route('student.products') }}">
                 <div class="category-tab">
-                    <img src="{{asset('images/thumbnail/sergamprmp.png')}}" alt="">
+                    <img src="{{asset('images/thumbnail/sergamprmp.png')}}" alt="" loading="lazy">
                     <div class="vignette"></div>
                     <h3>Seragam <br>Perempuan</h3>
                     <p>Temukan seragam sekolah yang kamu butuhkan</p>
@@ -34,7 +34,7 @@
         <div class="category-section">
         <a href="{{ route('student.products') }}">
             <div class="category-tab">
-                <img src="{{asset('images/thumbnail/dasi.png')}}" alt="">
+                <img src="{{asset('images/thumbnail/dasi.png')}}" alt="" loading="lazy">
                 <div class="vignette"></div>
                 <h3>Dasi</h3>
                 <p>Temukan seragam sekolah yang kamu butuhkan</p>
@@ -42,7 +42,7 @@
         </a>
         <a href="{{ route('student.products') }}">
             <div class="category-tab">
-                <img src="{{asset('images/thumbnail/rapot.png')}}" alt="">
+                <img src="{{asset('images/thumbnail/rapot.png')}}" alt="" loading="lazy">
                 <div class="vignette"></div>
                     <h3>MAP Rapot</h3>
                     <p>Temukan seragam sekolah yang kamu butuhkan</p>
@@ -50,7 +50,7 @@
         </a>
         <a href="{{ route('student.products') }}">
             <div class="category-tab">
-                <img src="{{asset('images/thumbnail/sabuk.png')}}" alt="">
+                <img src="{{asset('images/thumbnail/sabuk.png')}}" alt="" loading="lazy">
                 <div class="vignette"></div>
                     <h3>Sabuk</h3>
                     <p>Temukan seragam sekolah yang kamu butuhkan</p>
@@ -58,7 +58,7 @@
         </a>
         <a href="{{ route('student.products') }}">
             <div class="category-tab">
-                <img src="{{asset('images/thumbnail/kartu.png')}}" alt="">
+                <img src="{{asset('images/thumbnail/kartu.png')}}" alt="" loading="lazy">
                 <div class="vignette"></div>
                 <h3>Kartu <br> Pelajar</h3>
                 <p>Temukan seragam sekolah yang kamu butuhkan</p>
@@ -66,7 +66,7 @@
         </a>
         <a href="{{ route('student.products') }}">
             <div class="category-tab">
-                <img src="{{asset('images/thumbnail/badge.png')}}" alt="">
+                <img src="{{asset('images/thumbnail/badge.png')}}" alt="" loading="lazy">
                 <div class="vignette"></div>
                 <h3>Badge <br>Seragam</h3>
                 <p>Temukan seragam sekolah yang kamu butuhkan</p>
@@ -74,7 +74,7 @@
         </a>
         <a href="{{ route('student.products') }}">
             <div class="category-tab">
-                <img src="{{asset('images/thumbnail/top.png')}}" alt="">
+                <img src="{{asset('images/thumbnail/top.png')}}" alt="" loading="lazy">
                 <div class="vignette"></div>
                 <h3>Topi</h3>
                 <p>Temukan seragam sekolah yang kamu butuhkan</p>
@@ -82,7 +82,7 @@
         </a>
         <a href="{{ route('student.products') }}">
             <div class="category-tab">
-                <img src="{{asset('images/thumbnail/spatu.png')}}" alt="">
+                <img src="{{asset('images/thumbnail/spatu.png')}}" alt="" loading="lazy">
                 <div class="vignette"></div>
                 <h3>Sepatu <br> Pantofel</h3>
                 <p>Temukan seragam sekolah yang kamu butuhkan</p>
@@ -106,7 +106,7 @@
             <details name="shit">
                 <summary>
                     <h3>{{ $question }}</h3>
-                    <img src="{{ asset('icons/arrow-down.svg') }}" alt="Arrow Down" class="arrow-icon">
+                    <img src="{{ asset('icons/arrow-down.svg') }}" alt="Arrow Down" class="arrow-icon" loading="lazy">
                 </summary>
                 <p>{{ $answer }}</p>
             </details>
