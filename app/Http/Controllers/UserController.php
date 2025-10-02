@@ -115,17 +115,14 @@ class UserController extends Controller
      */
     public function products(Request $request)
     {
-        $searchQuery = $request->query("search", null);
+        // $searchQuery = $request->query("search", null);
         $products = Product::with(["images" => function ($query) {
             $query->where('product_images.thumbnail', '=', true);
-        }, "variants"]);
+        }, "variants"])->get();
 
-        if ($searchQuery) {
-            $products = $products
-            ->where("name", "like", "%$searchQuery%");
-        }
-
-        $products = $products->get();
+        // $searchedProducts = $searchQuery ?
+        //     $products->where("name", "like", "%$searchQuery%") :
+        //     $products;
 
         return view("products", compact("products"));
     }
@@ -224,7 +221,7 @@ class UserController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function updateCart(UpdateCartRequest $request, Cart $cart)
-    {   
+    {
         $validated = $request->validated();
 
         if ($validated['quantity'] <= 0) {

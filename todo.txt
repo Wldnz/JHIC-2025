@@ -1,4 +1,4 @@
-Student Tasks:
+Student Tasks (Controllers):
 + Dashboard
 + List products
 + Detail product
@@ -6,14 +6,14 @@ Student Tasks:
 + Update or store cart item
 + Delete cart item
 + History transactions
-- Store transaction
++ Store transaction
 + Detail transaction
 + Route for new transaction page
 + Route for after transaction process page
 + See profile
 + Update profile
 
-Admin Tasks:
+Admin Tasks (Controllers):
 + Dashboard
 + All products
 + Detail products
@@ -22,14 +22,14 @@ Admin Tasks:
 + Delete product (with variants)
 + All transactions
 + Detail transaction
-- New transaction
-- Update transaction
-- Delete transaction
+* New transaction
+* Update transaction
+o Delete transaction
 + All accounts
 + Detail account
 + Create account
-- Update account
-- Delete account
+* Update account
+* Delete account
 + See profile
 + Update profile
 
@@ -44,7 +44,7 @@ untuk menyelesaikan halaman admin dibutuhkan
        [✅] Page
        [✅] alert-message
        - refactoring
-       [✅] fixing bug when adding variant 
+       [✅] fixing bug when adding variant
        [✅] detail-product
     Transaction
         [✅] Page
