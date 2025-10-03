@@ -14,7 +14,6 @@ class OrderTransaction extends Model
 
     protected $table = 'order_transactions';
     protected $fillable = [
-        'id',
         'transaction_id',
         'product_variant_id',
         'quantity',

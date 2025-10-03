@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use App\AlertType;
 use App\Http\Requests\StoreAccountRequest;
 use App\Http\Requests\StoreProductRequest;
+use App\Http\Requests\StoreTransactionAdminRequest;
 use App\Http\Requests\UpdateAccountRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Http\Requests\UpdateProfileRequest;
 use App\Models\Activity;
 use App\Models\Major;
+use App\Models\OrderTransaction;
 use App\Models\Product;
 use App\Models\ProductImage;
 use App\Models\ProductVariant;
@@ -56,7 +58,7 @@ class AdminController extends Controller
             ->join("product_variants", "products.id", "=", "product_variants.product_id")
             ->groupBy("products.name", "product_variants.name")
             ->get();
-        
+
         $product = [
             'total' => $initialStockProducts->count(),
             'available' => $initialStockProducts->where("product_variants_stock", ">", 0)->count(),
@@ -390,6 +392,118 @@ class AdminController extends Controller
         $maxPage = intval($maxPage / $this->limitPagination + 1);
 
         return view("admin.transactions", compact("transactions", "stats", 'currentPage', 'maxPage'));
+    }
+
+    public function storeTransaction(StoreTransactionAdminRequest $request)
+    {
+        $validated = $request->validated();
+
+        DB::beginTransaction();
+
+        try {
+            $orders = $validated['orders'];
+
+            $totalProduct = 0;
+            $totalPrice = 0;
+            $status = $validated['has_paid'] ? 'ongoing' : 'pending';
+            $insertOrdersValues = [];
+            $productVariantIds = [];
+
+            foreach ($orders as $order) {
+                $totalProduct += $order['quantity'];
+                $totalPrice += $order['price'] * $order['quantity'];
+                $orderStatus = $validated['has_paid'] ? 'ongoing' : 'pending';
+
+                $productVariantIds[] = $order['product_variant_id'];
+                $insertOrdersValues[] = [
+                    'product_variant_id' => $order['product_variant_id'],
+                    'price' => $order['price'],
+                    'quantity' => $order['quantity'],
+                    'received_quantity' => $validated['has_paid'] ? $order['quantity'] : 0,
+                    'status' => $orderStatus,
+                ];
+            }
+
+            if ($validated['has_paid']) {
+                $productVariants = ProductVariant::query()->whereIn('id', $productVariantIds)->get();
+                $havePreOrder = false;
+
+                foreach ($orders as $orderIndex => $order) {
+                    $productVariant = $productVariants
+                        ->where('id', '=', $order['product_variant_id'])
+                        ->first();
+
+                    if ($productVariant->stock < $order['quantity']) {
+                        $insertOrdersValues[$orderIndex]['received_quantity'] = $productVariant->stock;
+                        $insertOrdersValues[$orderIndex]['status'] = 'preorder';
+                        $havePreOrder = true;
+                    } else {
+                        $insertOrdersValues[$orderIndex]['status'] = 'success';
+                    }
+
+                    $productVariant->stock -= $insertOrdersValues[$orderIndex]['received_quantity'];
+                    $productVariant->save();
+                }
+            }
+
+            if ($validated['has_paid'] && $havePreOrder) {
+                $status = 'preorder';
+            } else if ($validated['has_paid'] && !$havePreOrder) {
+                $status = 'success';
+            }
+
+            $transaction = Transaction::create([
+                'user_nis' => $validated['user_nis'],
+                'received_email' => $validated['received_email'],
+                'received_phone' => $validated['received_phone'],
+                'total_product' => $totalProduct,
+                'total_price' => $totalPrice,
+                'payment_method' => $validated['payment_method'],
+                'expired_at' => now()->addDays(1),
+                'received_at' => $status == 'success' ? now() : null,
+                'status' => $status,
+                'note' => $validated['note'],
+                'created_at' => $validated['created_at'],
+            ]);
+            if (!$transaction) {
+                throw new Exception("Transaksi gagal dibuat");
+            }
+
+            array_walk($insertOrdersValues, function (&$value) use ($transaction) {
+                $value['transaction_id'] = $transaction->id;
+            });
+
+            $isAllOrdersInserted = OrderTransaction::query()->insert($insertOrdersValues);
+            if (!$isAllOrdersInserted) {
+                throw new Exception("Pesanan dalam transaksi gagal dibuat");
+            }
+
+            AlertDataGenerator::generateAsFlashToSession(
+                AlertType::SUCCESS,
+                "Transaksi berhasil dibuat",
+                "Transaksi dengan id {$transaction->id} berhasil dibuat",
+                $request->session()
+            );
+
+            DB::commit();
+
+            return redirect()->route('admin.transactions');
+
+        } catch (\Throwable $th) {
+            DB::rollback();
+            report($th);
+            logger()->error($th);
+
+            AlertDataGenerator::generateAsFlashToSession(
+                AlertType::DANGER,
+                "Transaksi gagal dibuat",
+                $th->getMessage(),
+                $request->session(),
+                false,
+            );
+
+            return back();
+        }
     }
 
     /**

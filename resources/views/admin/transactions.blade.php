@@ -63,7 +63,7 @@
     ])
 </main>
 
-@includeWhen(session()->has('alert'), '_components._alert-message', ['data' => session()->get('alert'), 'icon_name' => 'product'])
+@includeWhen(session()->has('alert'), '_components._alert-message', ['data' => session()->get('alert'), 'icon_name' => 'transaction'])
 
 <script defer>
     setActionDelete(true, {

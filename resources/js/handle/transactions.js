@@ -116,9 +116,17 @@ function setEditData(order_id) {
     if (form_order.dataset.action != 'update') return;
     const order = orders.find(o => o.id == order_id);
     const currentProduct = products.find(product => product.id == order.product_id);
+    const uniqueVariantsName = new Set();
     const variants = currentProduct.variants.find(v => v.id == order.variant_id && v.type == order.variant_type);
     const multipleTagOption = setMultipleOptionForSelection({
-        name: currentProduct.variants,
+        name: currentProduct.variants.filter(v => {
+            if (uniqueVariantsName.has(v.name)) {
+                return false;
+            } else {
+                uniqueVariantsName.add(v.name);
+                return true;
+            }
+        }),
         type: currentProduct.variants.filter(v => v.name == order.variant_name)
     });
 
@@ -174,7 +182,10 @@ function handleSelectedProduct(e) {
         name: '<option value=""></option>',
     };
     if (currentVariants) {
+        const uniqueVariantsName = new Set();
         currentVariants.forEach(variant => {
+            if (uniqueVariantsName.has(variant.name)) return;
+            uniqueVariantsName.add(variant.name);
             stringOption['name'] += `<option value='${variant.name}'>${variant.name}</option>`;
         });
     }
@@ -261,7 +272,7 @@ function loadOrder() {
                                 <td> ${order.variant_name} </td>
                                 <td> ${order.variant_type} </td>
                                 <td> ${order.quantity} </td>
-                                <td> 
+                                <td>
                                     ${changeNumberToIDR(order.total_price)}
                                     <div class="profile">
                                         <svg id="tree-dots" width="20" height="20" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -377,7 +388,7 @@ select_product.addEventListener('change', handleSelectedProduct);
 
 select_variant.addEventListener('change', handleSelectedProductVariant);
 
-total_product.addEventListener('change', handleTotalProduct)
+total_product.addEventListener('input', handleTotalProduct)
 
 form_order.querySelector('.btn-close-anouncement-add').addEventListener('click', closeTheAddForm);
 

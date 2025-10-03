@@ -28,7 +28,7 @@
     ];
     logger('data', [$products, $students])
 @endphp
-<form class="content" method="post" enctype="application/x-www-form-urlencoded">
+<form class="content" method="post" action="{{ route('admin.store-transaction') }}" enctype="application/x-www-form-urlencoded">
     @csrf
     <h2>Data Pembeli</h2>
     <div class="form-data" id="student-siswa-form">
@@ -95,6 +95,13 @@
                     <option value="virtual_bni">Virtual BNI</option>
                 </select>
             </div>
+            <div class="wrapper-input">
+                <label for="has_paid">Sudah Dibayar?</label>
+                <select name="has_paid" id="has_paid">
+                    <option value="0">Belum Dibayar</option>
+                    <option value="1">Sudah Dibayar</option>
+                </select>
+            </div>
         </div>
     </div>
     <div class="wrapper_order" id="wrapper_orders" style="display:none">
@@ -146,6 +153,8 @@
     </form>
 </div>
 
+@includeWhen(session()->has('alert'), '_components._alert-message', ['data' => session()->get('alert'), 'icon_name' => 'transaction'])
+
 <script defer>
     let orders = [];
     const products = @json($products);
@@ -154,4 +163,4 @@
     let currentProduct = [];
 </script>
 
-@vite(['resources/js/handle/trasactions.js'])
+@vite(['resources/js/handle/transactions.js'])

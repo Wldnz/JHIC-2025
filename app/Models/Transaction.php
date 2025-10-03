@@ -17,13 +17,13 @@ class Transaction extends Model
 
     protected $table = 'transactions';
     protected $fillable = [
-        'id',
         'user_nis',
         'received_email',
         'received_phone',
         'total_product',
         'total_price',
         'payment_method',
+        'created_at',
         'expired_at',
         'received_at',
         'status',
