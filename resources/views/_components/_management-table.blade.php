@@ -39,7 +39,7 @@
             @if (isset($findDataWith['search-engine']))
                 <form class="wrapper-search">
                     <input type="text" name="{{ $findDataWith['search-engine']['name'] }}"
-                        placeholder="{{ $findDataWith['search-engine']['placeholder'] }}" required>
+                        placeholder="{{ $findDataWith['search-engine']['placeholder'] }}">
                     <button type="submit" class="search-engine">
                         @include("_components._sprite-icons", ["name" => "search", "color" => "white", "size" => 20])
                     </button>
@@ -70,14 +70,14 @@
                                     @include('_components._sprite-icons', ['name' => 'tree-dots', 'size' => 20])
                                     <ul class="main-menu main-menu-table">
                                         @foreach ($actions as $keyAction => $action)
-                                            <li id="{{ $action['action-name'] }}-{{ $data->id }}">
-                                                <a {{ isset($action['route-name']) ? "href=" . route($action['route-name'], [$action['action-name'] => $data['id']]) : "" }}>
+                                            <li id="{{ $action['action-name'] }}-{{ $data->id ?? $data->nis }}">
+                                                <a {{ isset($action['route-name']) ? "href=" . route($action['route-name'], [$action['action-name'] => $data['id'] ?? $data['nis']]) : "" }}>
                                                     @include('_components._sprite-icons', ['name' => $action['icon-name'], 'size' => 20])
                                                     {{ $keyAction }}
                                                 </a>
                                                 @if (isset($action['destination']) && $action['action-name'] == 'delete')
                                                     <form
-                                                        action="{{ route($action['destination']['name'], [$action['destination']['parameter'] => $data->id]) }}"
+                                                        action="{{ route($action['destination']['name'], [$action['destination']['parameter'] => $data->id ?? $data->nis]) }}"
                                                         method="post" id="form-{{ $data->id }}">
                                                         @csrf
                                                         @method('delete')

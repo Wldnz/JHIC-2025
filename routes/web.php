@@ -60,6 +60,8 @@ Route::name('admin.')->prefix('admin')->middleware([isLogin::class, isAdmin::cla
     Route::post('/accounts', [AdminController::class, 'storeAccount'])->name('store-account');
     Route::put('/accounts/{account}', [AdminController::class, 'updateAccount'])->name('update-account');
     Route::delete('/accounts/{account}', [AdminController::class, 'deleteAccount'])->name('delete-account');
+
+    Route::get('/settings', [AdminController::class, 'settings'])->name('settings');
 });
 
 

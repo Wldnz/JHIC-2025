@@ -30,6 +30,12 @@
                         <span>Accounts</span>
                     </a>
                 </li>
+                <li id="menu-settings">
+                    <a href="{{ route("admin.settings") }}">
+                        @include('_components._sprite-icons', ['name' => 'settings', "color" => $currentPath == 'settings' ? '#273B98' : 'black', 'size' => 25])
+                        <span>Accounts</span>
+                    </a>
+                </li>
             </ul>
         </div>
         <div class="wrapper-action">
@@ -61,8 +67,8 @@
         this.parentElement.children[1].style.display = 'none';
 
         // display the logo
-        this.parentElement.parentElement.children[0].children[0].children[0].style.display = 'block';
-        this.parentElement.parentElement.children[0].children[0].children[1].style.display = 'none';
+            this.parentElement.parentElement.children[0].children[0].children[0].style.display = 'block';
+            this.parentElement.parentElement.children[0].children[0].children[1].style.display = 'none';
     }
 
     function closeSideBar(e) {

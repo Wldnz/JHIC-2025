@@ -1,5 +1,3 @@
-let image = [];
-
 function setActionToImage() {
     document.querySelectorAll('.action-product').forEach(element => {
         const id = element.parentElement.children[0].getAttribute('alt').split('-')[1];

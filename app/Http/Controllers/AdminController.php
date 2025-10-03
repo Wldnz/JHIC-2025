@@ -39,13 +39,15 @@ class AdminController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function dashboard()
+    public function dashboard(Request $request)
     {
-        $initialTransactions = Transaction::get('status');
+        $currentPage = $request->get('page',1);
+        $initialTransactions = Transaction::all();
+        $ongoing_transactions = $initialTransactions->where('status','=','ongoing');
         $transaction = [
             'total' => $initialTransactions->count(),
             'success' => $initialTransactions->where('status', '=', 'success')->count(),
-            'ongoing' => $initialTransactions->where('status', '=', 'ongoing')->count(),
+            'ongoing' => $ongoing_transactions->count(),
             'fail' => $initialTransactions->where('status', '=', 'fail')->count(),
         ];
 
@@ -54,6 +56,7 @@ class AdminController extends Controller
             ->join("product_variants", "products.id", "=", "product_variants.product_id")
             ->groupBy("products.name", "product_variants.name")
             ->get();
+        
         $product = [
             'total' => $initialStockProducts->count(),
             'available' => $initialStockProducts->where("product_variants_stock", ">", 0)->count(),
@@ -69,11 +72,16 @@ class AdminController extends Controller
             'total' => Activity::query()->count(),
         ];
 
+        $maxPage = intval($transaction['ongoing'] / $this->limitPagination + 1);
+
         return view("admin.dashboard", [
+            "transactions" => $ongoing_transactions,
             "transaction" => $transaction,
             "product" => $product,
             "account" => $account,
-            "activity" => $activity
+            "activity" => $activity,
+            "currentPage" => $currentPage,
+            "maxPage" => $maxPage
         ]);
     }
 
@@ -94,7 +102,8 @@ class AdminController extends Controller
         $currentPage = $request->query("page", 1);
         $products = Product::with("variants")
             ->join("product_variants", "products.id", "=", "product_variants.product_id")
-            ->groupBy("products.id");;
+            ->groupBy("products.id");
+        ;
 
         if ($searchQuery) {
             $searchQuery = "%$searchQuery%";
@@ -106,9 +115,9 @@ class AdminController extends Controller
         if ($searchStockQuery) {
             $products = match ($searchStockQuery) {
                 'available' => $products->havingRaw("SUM(product_variants.stock) > 0"),
-                'low'       => $products->havingRaw("SUM(product_variants.stock) < 5"),
-                'empty'     => $products->havingRaw("SUM(product_variants.stock) <= 0"),
-                default     => $products,
+                'low' => $products->havingRaw("SUM(product_variants.stock) < 5"),
+                'empty' => $products->havingRaw("SUM(product_variants.stock) <= 0"),
+                default => $products,
             };
         }
 
@@ -437,15 +446,41 @@ class AdminController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function accounts()
+    public function accounts(Request $request)
     {
-        $accounts = User::all(["id", "fullname", "email", "role"]);
+        $currentPage = $request->get("page",1);
+        $search_name = $request->query('search', null);
+        $search_role = $request->query('search_role', 'siswa');
+        $accounts = User::where('role', '=', $search_role);
 
-        $totalAccount = $accounts->count();
-        $totalStudent = $accounts->where("role", "=", "siswa")->count();
-        $totalAdmin = $accounts->where("role", "=", "admin")->count();
+        if ($search_name) {
+            $accounts->where('fullname', 'like', '%' . $search_name . '%');
+        }
 
-        return view("admin.accounts", compact("accounts", "totalAccount", "totalStudent", "totalAdmin"));
+        $accounts = $accounts->get(['nis', 'fullname', 'email', 'role']);
+
+        $totalAccount = User::all()->count();
+        $totalStudent = User::where("role", "=", "siswa")->get()->count();
+        $totalAdmin = User::where("role", "=", "admin")->get()->count();
+
+        $stats = [
+            "account" => [
+                'total' => $totalAccount,
+            ],
+            'siswa' => [
+                'total' => $totalStudent,
+            ],
+            'admin' => [
+                'total' => $totalAdmin
+            ],
+            "activity" => [
+                'total' => Activity::get()->count()
+            ]
+        ];
+
+        $maxPage = intval($stats['account']['total'] / $this->limitPagination + 1);
+
+        return view("admin.accounts", compact("accounts", "stats", "maxPage", "currentPage", "search_role"));
     }
 
     /**
@@ -456,9 +491,12 @@ class AdminController extends Controller
      * @param  string                $account
      * @return \Illuminate\View\View
      */
-    public function detailAccount(string $nis)
+    public function detailAccount(Request $request ,string $nis)
     {
-        $account = User::find($nis, ['nis', 'fullname', 'email', 'role', 'email_verified_at', 'created_at', 'updated_at']);
+        $currentPage = $request->query('page', 1);
+        $account = User::find($nis, ['nis', 'fullname', 'email', 'phone', 'role', 'email_verified_at', 'created_at', 'updated_at']);
+
+        $majors = Major::all();
 
         $account->load("activities");
         $account->activities->setVisible(["id", "action", "created_at", "updated_at"]);
@@ -467,12 +505,15 @@ class AdminController extends Controller
             $account->load("student");
         }
 
-        return view("admin.detailAccount", compact("account"));
+         $maxPage = intval(count($account['activities']) / $this->limitPagination + 1);
+
+        return view("admin.detailAccount", compact("account", 'majors', 'currentPage', 'maxPage'));
     }
 
     public function createAccount()
     {
-        return view("admin.addAccount");
+        $majors = Major::all();
+        return view("admin.addAccount", compact('majors'));
     }
 
     public function storeAccount(StoreAccountRequest $request)
@@ -578,6 +619,12 @@ class AdminController extends Controller
 
         return redirect()->route("admin.accounts");
     }
+
+
+    public function settings(){
+        return view("admin.settings");
+    }
+
 
     /**
      * Render the profile page view with the currently authenticated user.

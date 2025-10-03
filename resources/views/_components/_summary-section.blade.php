@@ -2,7 +2,7 @@
     <div class="greeting">
         <h4>{{ $name }}s</h4>
         @if(isset($destination))
-            <a href="{{ route("admin.dashboard") }}">Manage ></a>
+            <a href="{{ $destination ?? route("admin.dashboard") }}">Manage ></a>
         @endif
     </div>
     <div class="wrapper-summary">

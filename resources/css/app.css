@@ -1716,7 +1716,9 @@ h2 {
   width: max-content;
 }
 .management-table table td:last-child .profile .main-menu {
-  top: 18px;
+  top: -5px;
+  right: 10px;
+  z-index: 10;
 }
 .management-table .wrapper-pagination {
   width: 100%;
