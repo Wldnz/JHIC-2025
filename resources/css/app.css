@@ -1540,28 +1540,39 @@ h2 {
   font-size: 2.25rem;
 }
 
-.statistic {
+.wrapper-charts {
   width: 100%;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
+  gap: 20px 100px;
 }
-.statistic .piechart {
+.wrapper-charts .wrapper-chart {
+  display: flex;
+  gap: 20px;
+}
+.wrapper-charts .wrapper-chart div:first-child {
   width: 400px;
-  height: 350px;
+  height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  border-radius: 40px;
+  border: 2px solid #273b98;
+}
+.wrapper-charts .wrapper-chart div:first-child canvas {
+  width: 100%;
+}
+.wrapper-charts .wrapper-chart div:first-child.linechart {
+  width: 800px;
+}
+.wrapper-charts .wrapper-chart .chart-action {
+  height: 100%;
   padding: 10px;
-  border-radius: 12px;
-}
-.statistic .piechart canvas {
-  width: 100%;
-}
-.statistic .barchat {
-  min-width: 750px;
-  width: 70%;
-  height: 350px;
-}
-.statistic .barchat canvas {
-  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .management-table {
@@ -1641,7 +1652,8 @@ h2 {
   outline: none;
   color: #273b98;
   font-size: calc(0.85rem - 2px);
-  appearance: none; /* Remove default arrow */
+  appearance: none;
+  /* Remove default arrow */
   -webkit-appearance: none;
   -moz-appearance: none;
   border: 1px solid #273b98;
@@ -1818,6 +1830,7 @@ h2 {
   background-color: rgba(0, 0, 0, 0.8);
   backdrop-filter: blur(4px);
   text-align: center;
+  z-index: 1000;
   animation: animate-alert 300ms forwards;
 }
 .alert-message .card-message {
@@ -1997,6 +2010,34 @@ a {
 
 .tree-row-grid {
   grid-template-columns: repeat(3, 1fr) !important;
+}
+
+.container-details summary {
+  width: max-content;
+  cursor: pointer;
+}
+
+.inside-container {
+  max-width: 600px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  padding: 10px;
+}
+
+.wrapper-payment-methode {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.wrapper-payment-methode .wrapper-image {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.wrapper-payment-methode .wrapper-image img {
+  width: 30px;
+  height: 30px;
 }
 
 footer {

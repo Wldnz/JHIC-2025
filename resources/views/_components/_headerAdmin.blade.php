@@ -18,3 +18,6 @@
         @include('_components._navigation-side', [ "title" => "Products" ])
         <aside class="right">
             @include('_components._bar-top-admin', ["title" => $title])
+
+
+@includeWhen(session()->has('alert'), '_components._alert-message', ['data' => session()->get('alert'), 'icon_name' => 'product'])

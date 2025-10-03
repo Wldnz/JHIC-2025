@@ -87,12 +87,9 @@
             <div class="wrapper-input">
                 <label for="payment_method">Nama Pembeli</label>
                 <select name="payment_method" id="payment_method">
-                    <option value="gopay">Gopay</option>
-                    <option value="dana">Dana</option>
-                    <option value="ovo">Ovo</option>
-                    <option value="virtual_bca">Virtual BCA</option>
-                    <option value="virtual_mandiri">Virtual Mandiri</option>
-                    <option value="virtual_bni">Virtual BNI</option>
+                    @foreach ($payment_methods as $payment_method)
+                        <option value="{{ $payment_method->code_name }}">{{ $payment_method->display_name }}</option>
+                    @endforeach
                 </select>
             </div>
             <div class="wrapper-input">

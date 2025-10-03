@@ -59,78 +59,84 @@
                 @endif
             @endforeach
         </tr>
-        @foreach ($datas as $data)
-            <tr id="row-data{{ $loop->index }}">
-                @foreach($columns as $key => $column)
-                    @if($loop->last)
-                        <td>
-                            {{ $data[$key] }}
-                            @if (isset($actions))
-                                <div class="profile">
-                                    @include('_components._sprite-icons', ['name' => 'tree-dots', 'size' => 20])
-                                    <ul class="main-menu main-menu-table">
-                                        @foreach ($actions as $keyAction => $action)
-                                            <li id="{{ $action['action-name'] }}-{{ $data->id ?? $data->nis }}">
-                                                <a {{ isset($action['route-name']) ? "href=" . route($action['route-name'], [$action['action-name'] => $data['id'] ?? $data['nis']]) : "" }}>
-                                                    @include('_components._sprite-icons', ['name' => $action['icon-name'], 'size' => 20])
-                                                    {{ $keyAction }}
-                                                </a>
-                                                @if (isset($action['destination']) && $action['action-name'] == 'delete')
-                                                    <form
-                                                        action="{{ route($action['destination']['name'], [$action['destination']['parameter'] => $data->id ?? $data->nis]) }}"
-                                                        method="post" id="form-{{ $data->id }}">
-                                                        @csrf
-                                                        @method('delete')
-                                                    </form>
-                                                @endif
-                                            </li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            @endif
-                        </td>
-                    @else
-                        @if($key == 'variants')
-                            @php
-                                $name_product = "";
-                                $type_product = "";
-                                $stock_product = 0;
-
-                            @endphp
-                            @foreach ($data[$key] as $k => $v)
-                                @php
-                                    $name_product .= $v['name'];
-                                    $type_product .= $v['type'];
-                                    $stock_product += $v['stock'];
-
-                                    $type_product .= !$loop->last ? ', ' : '';
-                                    $name_product .= !$loop->last ? ', ' : '';
-                                @endphp
-
-                                @if($loop->last)
-                                    <td>{{ substr($name_product, 0, 25) }}</td>
-                                    <td>{{ $type_product }}</td>
-                                    <td>{{ $stock_product }}</td>
-                                @endif
-
-                            @endforeach
-                        @elseif(isset($column_relations) && array_key_exists($key, $column_relations))
-                            @foreach ($column_relations as $col_key => $col)
-                                @if(gettype($col) == 'array')
-                                    <td>{{ $data[$col['parent']][$col['name']][$col['column']] }}</td>
-                                    @break
-                                @elseif ($col_key == $key)
-                                    <td>{{ $data[$key][$col] ?? '' }}</td>
-                                    @break
-                                @endif
-                            @endforeach
-                        @else
-                            <td>{{ $data[$key] }}</td>
-                        @endif
-                    @endif
-                @endforeach
+        @if (count($datas) == 0)
+            <tr>
+                <td colspan="{{ count($columns) }}">Tidak Ada Data...</td>
             </tr>
-        @endforeach
+        @else
+            @foreach ($datas as $data)
+                <tr id="row-data{{ $loop->index }}">
+                    @foreach($columns as $key => $column)
+                        @if($loop->last)
+                            <td>
+                                {{ $data[$key] }}
+                                @if (isset($actions))
+                                    <div class="profile">
+                                        @include('_components._sprite-icons', ['name' => 'tree-dots', 'size' => 20])
+                                        <ul class="main-menu main-menu-table">
+                                            @foreach ($actions as $keyAction => $action)
+                                                <li id="{{ $action['action-name'] }}-{{ $data->id ?? $data->nis }}">
+                                                    <a {{ isset($action['route-name']) ? "href=" . route($action['route-name'], [$action['action-name'] => $data['id'] ?? $data['nis']]) : "" }}>
+                                                        @include('_components._sprite-icons', ['name' => $action['icon-name'], 'size' => 20])
+                                                        {{ $keyAction }}
+                                                    </a>
+                                                    @if (isset($action['destination']) && $action['action-name'] == 'delete')
+                                                        <form
+                                                            action="{{ route($action['destination']['name'], [$action['destination']['parameter'] => $data->id ?? $data->nis]) }}"
+                                                            method="post" id="form-{{ $data->id }}">
+                                                            @csrf
+                                                            @method('delete')
+                                                        </form>
+                                                    @endif
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
+                            </td>
+                        @else
+                            @if($key == 'variants')
+                                @php
+                                    $name_product = "";
+                                    $type_product = "";
+                                    $stock_product = 0;
+
+                                @endphp
+                                @foreach ($data[$key] as $k => $v)
+                                    @php
+                                        $name_product .= $v['name'];
+                                        $type_product .= $v['type'];
+                                        $stock_product += $v['stock'];
+
+                                        $type_product .= !$loop->last ? ', ' : '';
+                                        $name_product .= !$loop->last ? ', ' : '';
+                                    @endphp
+
+                                    @if($loop->last)
+                                        <td>{{ substr($name_product, 0, 25) }}</td>
+                                        <td>{{ $type_product }}</td>
+                                        <td>{{ $stock_product }}</td>
+                                    @endif
+
+                                @endforeach
+                            @elseif(isset($column_relations) && array_key_exists($key, $column_relations))
+                                @foreach ($column_relations as $col_key => $col)
+                                    @if(gettype($col) == 'array')
+                                        <td>{{ $data[$col['parent']][$col['name']][$col['column']] }}</td>
+                                        @break
+                                    @elseif ($col_key == $key)
+                                        <td>{{ $data[$key][$col] ?? '' }}</td>
+                                        @break
+                                    @endif
+                                @endforeach
+                            @else
+                                <td>{{ $data[$key] }}</td>
+                            @endif
+                        @endif
+                    @endforeach
+                </tr>
+            @endforeach
+        @endif
     </table>
     @if(isset($pagination))
         <form class="wrapper-pagination">

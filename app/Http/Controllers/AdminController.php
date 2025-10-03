@@ -12,6 +12,7 @@ use App\Http\Requests\UpdateProfileRequest;
 use App\Models\Activity;
 use App\Models\Major;
 use App\Models\OrderTransaction;
+use App\Models\PaymentType;
 use App\Models\Product;
 use App\Models\ProductImage;
 use App\Models\ProductVariant;
@@ -20,6 +21,7 @@ use App\Models\Transaction;
 use App\Models\User;
 use App\Utilities\AlertDataGenerator;
 use App\Utilities\CloudinaryUtils;
+use Date;
 use DB;
 use Exception;
 use Illuminate\Http\Request;
@@ -46,6 +48,7 @@ class AdminController extends Controller
         $currentPage = $request->get('page',1);
         $initialTransactions = Transaction::all();
         $ongoing_transactions = $initialTransactions->where('status','=','ongoing');
+        $currentYear = $request->get('year', date('Y'));
         $transaction = [
             'total' => $initialTransactions->count(),
             'success' => $initialTransactions->where('status', '=', 'success')->count(),
@@ -74,6 +77,18 @@ class AdminController extends Controller
             'total' => Activity::query()->count(),
         ];
 
+        $statictis = [
+            'transaction' => Transaction::where('created_at', 'like', '%'. $currentYear .'%')
+            ->select('created_at', Transaction::raw('sum(total_product) as total_products'))
+            ->groupBy('created_at')
+            ->get(),
+            'uniform' => OrderTransaction::join('product_variants', 'product_variant_id', '=', 'product_variants.id')
+            ->join('products', 'product_variants.product_id', '=', 'products.id')
+            ->select(DB::raw('products.category as category, COUNT(category) as total'))
+            ->groupBy('products.category')
+            ->get()
+        ];
+
         $maxPage = intval($transaction['ongoing'] / $this->limitPagination + 1);
 
         return view("admin.dashboard", [
@@ -83,7 +98,8 @@ class AdminController extends Controller
             "account" => $account,
             "activity" => $activity,
             "currentPage" => $currentPage,
-            "maxPage" => $maxPage
+            "maxPage" => $maxPage,
+            "statictis" => $statictis
         ]);
     }
 
@@ -244,7 +260,7 @@ class AdminController extends Controller
                 false,
             );
 
-            return back();
+            return back()->withInput($request->all());
 
         }
     }
@@ -529,10 +545,11 @@ class AdminController extends Controller
     {
         $students = User::query()->whereRole("siswa")->get();
         $products = Product::with('variants')->get();
+        $payment_methods = PaymentType::where('is_enable', '=', '1')->get();
 
         $students->setVisible(['nis', 'fullname', 'email', 'created_at']);
 
-        return view("admin.Addtransaction", compact("students", "products"));
+        return view("admin.Addtransaction", compact("students", "products", "payment_methods"));
     }
 
     public function deleteTransaction(Transaction $transaction, Request $request)
@@ -745,7 +762,8 @@ class AdminController extends Controller
 
 
     public function settings(){
-        return view("admin.settings");
+        $payment_methods = PaymentType::all();
+        return view("admin.settings", compact("payment_methods"));
     }
 
 
