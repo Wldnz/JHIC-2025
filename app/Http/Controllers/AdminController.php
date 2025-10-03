@@ -9,6 +9,7 @@ use App\Http\Requests\StoreTransactionAdminRequest;
 use App\Http\Requests\UpdateAccountRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Http\Requests\UpdateProfileRequest;
+use App\Http\Requests\UpdateSettingsRequest;
 use App\Models\Activity;
 use App\Models\Major;
 use App\Models\OrderTransaction;
@@ -764,6 +765,35 @@ class AdminController extends Controller
     public function settings(){
         $payment_methods = PaymentType::all();
         return view("admin.settings", compact("payment_methods"));
+    }
+
+    public function updateSettings(UpdateSettingsRequest $request){
+        $validated = $request->validated();
+
+        if ($validated["payment_methods"] && count($validated["payment_methods"]) > 0) {
+            $enabledPaymentMethodsCodeName = array_keys($validated["payment_methods"]);
+
+            PaymentType::query()
+                ->whereNotIn('code_name', $enabledPaymentMethodsCodeName)
+                ->update([
+                    'is_enable' => false
+                ]);
+
+            PaymentType::query()
+                ->whereIn('code_name', $enabledPaymentMethodsCodeName)
+                ->update([
+                    'is_enable' => true
+                ]);
+        }
+
+        AlertDataGenerator::generateAsFlashToSession(
+            AlertType::SUCCESS,
+            "Berhasil mengupdate pengaturan",
+            "Berhasil mengupdate pengaturan payment method, dll.",
+            $request->session(),
+        );
+
+        return back();
     }
 
 

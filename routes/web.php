@@ -62,6 +62,7 @@ Route::name('admin.')->prefix('admin')->middleware([isLogin::class, isAdmin::cla
     Route::delete('/accounts/{account}', [AdminController::class, 'deleteAccount'])->name('delete-account');
 
     Route::get('/settings', [AdminController::class, 'settings'])->name('settings');
+    Route::put('/settings', [AdminController::class, 'updateSettings'])->name('update-settings');
 });
 
 

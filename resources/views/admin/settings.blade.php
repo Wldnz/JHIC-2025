@@ -2,7 +2,8 @@
 @php
     $currentPath = explode('/admin/', url()->current())[1];
 @endphp
-<form method="post" class="content">
+<form method="post" action="{{ route('admin.update-settings') }}" class="content">
+    @method('PUT')
     @csrf
     <div class="container">
         <details class="container-details">
@@ -12,7 +13,7 @@
             <div class="inside-container">
                 @foreach ($payment_methods as $method)
                     <div class="wrapper-input wrapper-payment-methode">
-                        <input type="checkbox" name="{{ $method->code_name }}" id="{{ $method->code_name }}" {{ $method->is_enable ? "checked" : '' }} required>
+                        <input type="checkbox" name="payment_methods[{{ $method->code_name }}]" id="{{ $method->code_name }}" {{ $method->is_enable ? "checked" : '' }}>
                         <div class="wrapper-image">
                             <img src="{{ $method->icon_url }}" alt="{{ $method->display_name }}">
                             <label for="{{ $method->code_name }}">{{ $method->display_name }}</label>
