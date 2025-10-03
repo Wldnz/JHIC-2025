@@ -12,7 +12,8 @@ Route::post('/login', [UserController::class, 'login'])->name('login-action');
 
 Route::get('/logout', [UserController::class, 'logout'])->name('logout');
 
-
+Route::get('/profile', [UserController::class, 'profile'])->name('profile');
+Route::put('/profile', [UserController::class, 'updateProfile'])->name('updateProfile');
 
 // isLogin & is Siswa
 Route::name('student.')->middleware([isLogin::class])->group(function () {
@@ -32,9 +33,6 @@ Route::name('student.')->middleware([isLogin::class])->group(function () {
     Route::get('/transactions', [UserController::class, 'transactions'])->name('transactions');
     Route::get('/transactions/{transaction}', [UserController::class, 'detailTransaction'])->name('detail-transaction');
     Route::post('/transactions', [UserController::class, 'storeTransaction'])->name('store-transaction');
-
-    Route::get('/profile', [UserController::class, 'profile'])->name('profile');
-    Route::put('/profile', [UserController::class, 'updateProfile'])->name('updateProfile');
 });
 
 
@@ -62,9 +60,6 @@ Route::name('admin.')->prefix('admin')->middleware([isLogin::class, isAdmin::cla
     Route::post('/accounts', [AdminController::class, 'storeAccount'])->name('store-account');
     Route::put('/accounts/{account}', [AdminController::class, 'updateAccount'])->name('update-account');
     Route::delete('/accounts/{account}', [AdminController::class, 'deleteAccount'])->name('delete-account');
-
-    Route::get('/profile', [AdminController::class, 'profile'])->name('profile');
-    Route::put('/profile/{profile}', [AdminController::class, 'updateProfile'])->name('update-profile');
 });
 
 

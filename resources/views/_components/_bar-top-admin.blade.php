@@ -4,7 +4,7 @@
         <span class="icon">🧒🏻</span>
         <ul class="main-menu">
             <li>
-                <a href="{{ route("admin.profile") }}">
+                <a href="{{ route("profile") }}">
                     @include('_components._sprite-icons', ['name' => 'account', 'color' => '#273B98', 'size' => 20])
                     Profile
                 </a>
