@@ -14,6 +14,7 @@ use App\Models\ProductVariant;
 use App\Models\Transaction;
 use App\Utilities\AlertDataGenerator;
 use Exception;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -518,8 +519,29 @@ class UserController extends Controller
      */
     public function profile()
     {
-        $user = auth()->user();
-        return view("profile", compact("user"));
+        $user = Auth::user();
+        $transactions = $user
+            ->transactions()
+            ->get(['id']);
+
+        $user->setVisible(['nis', 'fullname', 'email']);
+
+        $transactions->load([
+            'orders' => function ($query) {
+                $query->select(['id', 'transaction_id', 'product_variant_id', 'price', 'quantity']);
+            },
+            'orders.productVariant' => function ($query) {
+                $query->select(['id', 'product_id', 'name', 'type']);
+            },
+            'orders.productVariant.product' => function ($query) {
+                $query->select(['id', 'name']);
+            },
+            'orders.productVariant.product.images' => function ($query) {
+                $query->select(['id', 'product_id', 'url'])->where('thumbnail', '=', true);
+            },
+        ]);
+
+        return view("profile", compact("user", "transactions"));
     }
 
     /**
@@ -537,11 +559,11 @@ class UserController extends Controller
     {
         $validated = $request->validated();
 
-        if ($request->has("password")) {
+        if ($validated['password']) {
             $validated['password'] = Hash::make($validated['password']);
         }
 
-        $user = auth()->user();
+        $user = Auth::user();
         $isUpdated = $user->update($validated);
 
         if ($isUpdated) {

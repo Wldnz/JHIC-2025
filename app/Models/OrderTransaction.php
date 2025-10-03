@@ -31,6 +31,10 @@ class OrderTransaction extends Model
         return $this->belongsTo(ProductVariant::class, 'product_variant_id', 'id');
     }
 
+    public function productVariant(){
+        return $this->belongsTo(ProductVariant::class, 'product_variant_id', 'id');
+    }
+
     public function totalPrice(){
         return $this->quantity * $this->product_variant->price;
     }
