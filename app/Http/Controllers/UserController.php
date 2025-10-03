@@ -116,14 +116,9 @@ class UserController extends Controller
      */
     public function products(Request $request)
     {
-        // $searchQuery = $request->query("search", null);
         $products = Product::with(["images" => function ($query) {
-            $query->where('product_images.thumbnail', '=', true);
+            $query->where('product_images.thumbnail', '=', true)->limit(1);
         }, "variants"])->get();
-
-        // $searchedProducts = $searchQuery ?
-        //     $products->where("name", "like", "%$searchQuery%") :
-        //     $products;
 
         return view("products", compact("products"));
     }
@@ -161,7 +156,7 @@ class UserController extends Controller
             'variantProduct',
             'variantProduct.product',
             'variantProduct.product.images' => function ($query) {
-                $query->where('product_images.thumbnail', '=', true);
+                $query->where('product_images.thumbnail', '=', true)->limit(1);
             }]
         );
 
@@ -321,7 +316,7 @@ class UserController extends Controller
             'variantProduct',
             'variantProduct.product',
             'variantProduct.product.images' => function ($query) {
-                $query->where('product_images.thumbnail', '=', true);
+                $query->where('product_images.thumbnail', '=', true)->limit(1);
             }
         ]);
 
@@ -392,7 +387,26 @@ class UserController extends Controller
      */
     public function detailTransaction(Transaction $transaction)
     {
-        $transaction->load("orders");
+        $transaction->load([
+            "orders" => function ($query) {
+                $query->select(['id', 'transaction_id', 'product_variant_id', 'price', 'quantity', 'received_quantity', 'status']);
+            },
+            "orders.product_variant" => function ($query) {
+                $query->select(['id', 'product_id', 'name', 'type', 'price', 'stock']);
+            },
+            "orders.product_variant.product" => function ($query) {
+                $query->select(['id', 'name', 'category']);
+            },
+            "orders.product_variant.product.images" => function ($query) {
+                $query
+                    ->where('product_images.thumbnail', '=', true)
+                    ->where('product_images.visible', '=', true)
+                    ->select(['id', 'product_id', 'url'])
+                    ->limit(1);
+            },
+        ]);
+        $transaction->setVisible(['id', 'payment_method', 'orders']);
+
         return view("detailTransaction", compact("transaction"));
     }
 
@@ -528,7 +542,7 @@ class UserController extends Controller
 
         $transactions->load([
             'orders' => function ($query) {
-                $query->select(['id', 'transaction_id', 'product_variant_id', 'price', 'quantity']);
+                $query->select(['id', 'transaction_id', 'product_variant_id', 'price', 'quantity'])->limit(2);
             },
             'orders.productVariant' => function ($query) {
                 $query->select(['id', 'product_id', 'name', 'type']);
@@ -537,7 +551,7 @@ class UserController extends Controller
                 $query->select(['id', 'name']);
             },
             'orders.productVariant.product.images' => function ($query) {
-                $query->select(['id', 'product_id', 'url'])->where('thumbnail', '=', true);
+                $query->select(['id', 'product_id', 'url'])->where('thumbnail', '=', true)->limit(1);
             },
         ]);
 
