@@ -11,6 +11,8 @@
 <main class="content">
     <h2>Menambahkan Data Pengguna</h2>
     <form method='POST' class="form-data" id="student-siswa-form">
+        @method('put')
+        @csrf
         <div class="wrapper-field container tree-row-grid">
             <div class="wrapper-input">
                 <label for="nis">

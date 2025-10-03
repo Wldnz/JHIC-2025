@@ -32,14 +32,11 @@
         'datas' => $transactions,
         'columns' => [
             'id' => 'ID Transaksi',
-            'user' => 'Nama Pembeli',
+            'user_fullname' => 'Nama Pembeli',
             'total_product' => 'Total Produk',
             'total_price' => 'Total Harga',
             'created_at' => 'Tanggal',
             'status' => 'Status',
-        ],
-        'column_relations' => [
-            'user' => 'fullname'
         ],
         'actions' => [
             'Lihat Transaksi' => [

@@ -6,7 +6,7 @@
             'data' => $transaction['user'],
             'column' => [
                 'nis' => 'NIS Pembeli',
-                'fullname' => 'Nama Pembeli',
+                'fullname' => 'Nama Pembeli (Saat Ini)',
                 'email' => 'Alamat Email',
                 'created_at' => 'Akun Dibuat Pada'
             ],
@@ -14,6 +14,7 @@
         'Data Transaksi' => [
             'data' => $transaction,
             'column' => [
+                'user_fullname' => 'Nama Pembeli',
                 'received_email' => 'Alamat Email Penerima',
                 'received_phone' => 'Nomor Telepon Penerima',
                 'total_product' => 'Total Produk',
@@ -38,7 +39,7 @@
                     <div class="wrapper-input">
                         <label for="name">{{ $label }}</label>
                         <input type="text" name="name" id="name" placeholder="Masukkan {{ $label }}"
-                            value="{{ $column['data'][$key] }}" readonly>
+                            value="{{ $column['data'][$key] ?? '' }}" readonly>
                     </div>
                 @endforeach
             </div>

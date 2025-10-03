@@ -365,12 +365,11 @@ class AdminController extends Controller
         $searchQuery = $request->query("search", null);
         $statusQuery = $request->query("search_status", null);
         $currentPage = $request->query("page", 1);
-        $transactions = Transaction::with("user");
+        $transactions = Transaction::query();
 
         if ($searchQuery) {
             $transactions = $transactions
-                ->join("users", "transactions.user_nis", "=", "users.nis")
-                ->where("users.fullname", "like", "%$searchQuery%")
+                ->where("transactions.user_fullname", "like", "%$searchQuery%")
                 ->orWhere("transactions.id", "=", $searchQuery);
         }
 
@@ -455,8 +454,11 @@ class AdminController extends Controller
                 $status = 'success';
             }
 
+            $user = User::findOrFail($validated['user_nis']);
+
             $transaction = Transaction::create([
-                'user_nis' => $validated['user_nis'],
+                'user_nis' => $user->nis,
+                'user_fullname' => $user->fullname,
                 'received_email' => $validated['received_email'],
                 'received_phone' => $validated['received_phone'],
                 'total_product' => $totalProduct,
@@ -568,17 +570,21 @@ class AdminController extends Controller
         $currentPage = $request->get("page",1);
         $search_name = $request->query('search', null);
         $search_role = $request->query('search_role', 'siswa');
-        $accounts = User::where('role', '=', $search_role);
+        $accounts = User::query();
+
+        if ($search_role) {
+            $accounts->where('role', '=', $search_role);
+        }
 
         if ($search_name) {
-            $accounts->where('fullname', 'like', '%' . $search_name . '%');
+            $accounts->where('fullname', 'like', "%$search_name%");
         }
 
         $accounts = $accounts->get(['nis', 'fullname', 'email', 'role']);
 
-        $totalAccount = User::all()->count();
-        $totalStudent = User::where("role", "=", "siswa")->get()->count();
-        $totalAdmin = User::where("role", "=", "admin")->get()->count();
+        $totalAccount = User::query()->count();
+        $totalStudent = User::query()->where("role", "=", "siswa")->count();
+        $totalAdmin = User::query()->where("role", "=", "admin")->count();
 
         $stats = [
             "account" => [

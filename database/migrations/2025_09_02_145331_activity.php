@@ -12,11 +12,11 @@ return new class extends Migration {
     {
         Schema::create("activities", function (Blueprint $table) {
             $table->id();
-            $table->string("user_nis")->nullable(false);
+            $table->string("user_nis")->nullable(true);
             $table->string("fullname")->nullable(false);
             $table->string("action")->nullable(false);
             $table->timestamps();
-            $table->foreign("user_nis")->references("nis")->on("users")->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreign("user_nis")->references("nis")->on("users")->nullOnDelete()->cascadeOnUpdate();
         });
     }
 

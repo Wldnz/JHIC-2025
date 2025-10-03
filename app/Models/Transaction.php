@@ -18,6 +18,7 @@ class Transaction extends Model
     protected $table = 'transactions';
     protected $fillable = [
         'user_nis',
+        'user_fullname',
         'received_email',
         'received_phone',
         'total_product',

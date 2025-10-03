@@ -120,7 +120,7 @@
                                     <td>{{ $data[$col['parent']][$col['name']][$col['column']] }}</td>
                                     @break
                                 @elseif ($col_key == $key)
-                                    <td>{{ $data[$key][$col] }}</td>
+                                    <td>{{ $data[$key][$col] ?? '' }}</td>
                                     @break
                                 @endif
                             @endforeach

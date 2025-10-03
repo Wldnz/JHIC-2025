@@ -22,7 +22,8 @@ return new class extends Migration {
 
         Schema::create("transactions", function (Blueprint $table) {
             $table->id();
-            $table->string("user_nis", 16)->nullable(false);
+            $table->string("user_nis", 16)->nullable(true);
+            $table->string("user_fullname")->nullable(false);
             $table->string("received_email", 120)->nullable(false);
             $table->string("received_phone", 12)->nullable(false);
             $table->integer("total_product")->default(1);
@@ -35,7 +36,7 @@ return new class extends Migration {
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign("user_nis")->references("nis")->on("users")->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreign("user_nis")->references("nis")->on("users")->nullOnDelete()->cascadeOnUpdate();
         });
 
         Schema::create("order_transactions", function (Blueprint $table) {

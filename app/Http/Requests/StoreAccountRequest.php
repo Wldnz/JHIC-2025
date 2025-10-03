@@ -13,7 +13,7 @@ class StoreAccountRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return Auth::check() && Auth::user()->role == "superAdmin";
+        return Auth::check();
     }
 
     /**
@@ -28,7 +28,7 @@ class StoreAccountRequest extends FormRequest
             'email' => ['required', 'email'],
             'fullname' => ['required', 'string', 'min:1', 'max:255'],
             'password' => ['required', 'string', 'min:1'],
-            'no_telp' => ['required_if:role,siswa' , 'unique:users,no_telp', 'string', 'min:11', 'max:12'],
+            'phone' => ['required_if:role,siswa' , 'unique:users,phone', 'string', 'min:11', 'max:12'],
             'gender' => ['required_if:role,siswa', 'string', 'in:male,female'],
             'address' => ['required_if:role,siswa', 'string', 'min:1', 'max:65535'],
             'birthdate' => ['required_if:role,siswa', 'date', Rule::date()->beforeToday()],

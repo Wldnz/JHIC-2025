@@ -445,6 +445,7 @@ class UserController extends Controller
 
             $transaction = Transaction::create([
                 'user_nis' => $user->nis,
+                'user_fullname' => $user->fullname,
                 'received_email' => $user->email,
                 'received_phone' => $user->phone,
                 'total_product' => $totalQuantity,

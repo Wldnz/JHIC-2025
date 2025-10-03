@@ -19,8 +19,11 @@ class TransactionFactory extends Factory
     protected $status = ['pending', 'success', 'ongoing', 'fail'];
     public function definition(): array
     {
+        $user = User::query()->inRandomOrder()->first();
+
         return [
-            'user_nis' => User::query()->inRandomOrder()->first()->nis,
+            'user_nis' => $user->nis,
+            'user_fullname' => $user->fullname,
             'received_email' => fake()->email(),
             'received_phone' => fake()->phoneNumber(),
             'total_product' => fake()->numberBetween(1, 10),
