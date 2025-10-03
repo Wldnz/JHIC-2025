@@ -11,6 +11,7 @@ export default defineConfig({
                 'resources/js/handle/image-product.js',
                 'resources/js/handle/variant-product.js',
                 'resources/js/handle/transactions.js',
+                "resources/js/chart.js",
             ],
             refresh: true,
         }),

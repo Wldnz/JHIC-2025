@@ -13,7 +13,7 @@ class StoreAccountRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return Auth::check();
+        return Auth::check() && Auth::user()->role == 'superAdmin';
     }
 
     /**
