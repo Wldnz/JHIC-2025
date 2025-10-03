@@ -47,7 +47,6 @@
 </div>
 @include('_components._footer');
 
-@includeWhen(session()->has('alert'), '_components._alert-message', ['data' => session()->get('alert'), 'icon_name' => 'product'])
 
 <script>
     const numFormat = Intl.NumberFormat('id-ID');

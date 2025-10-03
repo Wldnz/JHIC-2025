@@ -140,7 +140,6 @@
         ]
     ])
 </div>
-@includeWhen(session()->has('alert'), '_components._alert-message', ['data' => session()->get('alert'), 'icon_name' => 'product'])
 
 <!-- script untuk handle image -->
 <script>

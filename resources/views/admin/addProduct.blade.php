@@ -7,19 +7,19 @@
         <div class="wrapper-field">
             <div class="wrapper-input">
                 <label for="name">Nama Produk <span>*</span></label>
-                <input type="text" name="name" id="name" placeholder="Masukkan nama produk" value="" required>
+                <input type="text" name="name" id="name" placeholder="Masukkan nama produk" value="{{ old('name') ?? '' }}" required>
             </div>
             <div class="wrapper-input">
                 <label for="description">Deskripsi Produk <span>*</span></label>
-                <textarea name="description" id="description" placeholder="Masukkan Deskripsi" minlength="10"
+                <textarea name="description" id="description" placeholder="Masukkan Deskripsi" value="{{ old('description') ?? '' }}"  minlength="10"
                     maxlength="1000" required></textarea>
             </div>
             <div class="wrapper-input">
                 <label for="category">Kategori Produk <span>*</span></label>
                 <select name="category" id="category">
-                    <option value="uniform">Seragam Sekolah
+                    <option value="uniform" @selected(old('category') ?? '' == 'uniform')>Seragam Sekolah
                     </option>
-                    <option value="attribute">Attribut Sekolah
+                    <option value="attribute" @selected(old('category') ?? '' == 'uniform')></option>>Attribut Sekolah
                     </option>
                 </select>
             </div>

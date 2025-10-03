@@ -2,29 +2,28 @@
 @php
     $currentPath = explode('/admin/', url()->current())[1];
 @endphp
-<main class="content">
+<form method="post" class="content">
+    @csrf
     <div class="container">
-        <details>
+        <details class="container-details">
             <summary>
-                Management Transaksi
+                Metode Pembayaran
             </summary>
             <div class="inside-container">
-                <div class="wrapper-transaction">
-                    <details>
-                        <summary>
-                            E Wallet
-                        </summary>
-                    </details>
-                </div>
+                @foreach ($payment_methods as $method)
+                    <div class="wrapper-input wrapper-payment-methode">
+                        <input type="checkbox" name="{{ $method->code_name }}" id="{{ $method->code_name }}" {{ $method->is_enable ? "checked" : '' }} required>
+                        <div class="wrapper-image">
+                            <img src="{{ $method->icon_url }}" alt="{{ $method->display_name }}">
+                            <label for="{{ $method->code_name }}">{{ $method->display_name }}</label>
+                        </div>
+                    </div>
+                @endforeach
             </div>
         </details>
     </div>
-</main>
-
-@includeWhen(session()->has('alert'), '_components._alert-message', ['data' => session()->get('alert'), 'icon_name' => 'product'])
-
-<script defer>
-    setActionDelete(true, {
-        title : 'Transaksi Dengan ID'
-    });
-</script>
+    <button class="button-submit-form">
+        <span>Simpan Perubahan</span>
+        @include('_components._sprite-icons', ['name' => 'add', 'size' => 18])
+    </button>
+</form>
