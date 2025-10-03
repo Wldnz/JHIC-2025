@@ -1,12 +1,4 @@
 @php
-        $product_id = 1;
-        $product_name = "Seragam Buriq";
-        $product_type = "Seragam";
-        $product_stok = 90;
-        $product_qty = 4;
-        $product_price = 1000000;
-        $product_gender = "Male";
-        $product_size = "XL";
         $placeholder = "https://www.svgrepo.com/show/508699/landscape-placeholder.svg";
 @endphp
 <!DOCTYPE html>
@@ -24,15 +16,6 @@
         <a href="{{ route('student.cart') }}" style="display: flex; justify-content: center;"><img src="{{asset ('icons/left-arrow.svg')}}">Back</a>
     </nav>
     <main class="wrapper-user">
-
-
-
-
-
-
-
-
-
 <div class="checkout">
     <div class="products-list">
         @foreach ($selectedCarts as $cart)
@@ -53,7 +36,7 @@
         @endforeach
     </div>
     <div class="payment-method">
-        <h3 class="group-button">E-Money <img src="{{ asset('icons/arrow-down.svg') }}" alt=""></h3>
+        {{-- <h3 class="group-button">E-Money <img src="{{ asset('icons/arrow-down.svg') }}" alt=""></h3>
         <div class="payment-method-group">
             <div class="method-tab">
                 <img src="{{ asset("icons/payment/qris.png") }}" alt="">
@@ -73,9 +56,9 @@
             </div>
 
 
-        </div>
+        </div> --}}
 
-        <h3 class="group-button">Bank <img src="{{ asset('icons/arrow-down.svg') }}" alt=""></h3>
+        {{-- <h3 class="group-button">Bank <img src="{{ asset('icons/arrow-down.svg') }}" alt=""></h3>
         <div class="payment-method-group">
             <div class="method-tab">
                 <img src="{{ asset("icons/payment/bca.png") }}" alt="">
@@ -92,6 +75,16 @@
         <div class="method-tab">
             <img src="{{ asset("icons/payment/danamon.png") }}" alt="">
             <h5>Danamon</h5>
+        </div> --}}
+
+        <h3 class="group-button">Pilih Metode Pembayaran <img src="{{ asset('icons/arrow-down.svg') }}" alt=""></h3>
+        <div class="payment-method-group">
+            @foreach ($paymentTypes as $paymentType)
+                <div class="method-tab" data-code-name="{{ $paymentType->code_name }}">
+                    <img src="{{ $paymentType->icon_url }}" alt="payment-icon" loading="lazy">
+                    <h5>{{ $paymentType->display_name }}</h5>
+                </div>
+            @endforeach
         </div>
     </div>
     <form class="payment" action="{{ route('student.store-transaction') }}" method="post">
@@ -100,13 +93,13 @@
             @foreach ($selectedCarts as $cart)
                 <input type="hidden" name="carts[]" value="{{ $cart->id }}">
             @endforeach
+            <input type="hidden" name="payment_method" id="payment_method">
         </div>
         <div class="left">
             <h3>Total Harga: </h3>
             <p>Rp. {{ number_format($totalPrice, 0, ",", ".") }}</p>
         </div>
         <div class="right">
-            {{-- <a href="{{ route('student.checkout-success') }}"><button class="button2">Bayar</button></a> --}}
             <button class="button2">Bayar</button>
         </div>
     </form>
@@ -115,13 +108,15 @@
 @includeWhen(session()->has('alert'), '_components._alert-message', ['data' => session()->get('alert'), 'icon_name' => 'transaction'])
 
 <script>
+    const paymentMethod = document.getElementById('payment_method');
 
     document.querySelectorAll(".method-tab").forEach(tab => {
         tab.addEventListener("click", function () {
             document.querySelectorAll(".method-tab").forEach(opt => {
                 opt.classList.remove("picked");
             });
-        this.classList.add("picked");
+            tab.classList.add("picked");
+            paymentMethod.value = tab.getAttribute("data-code-name");
         });
     });
 

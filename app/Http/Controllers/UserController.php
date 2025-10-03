@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateCartRequest;
 use App\Http\Requests\UpdateProfileRequest;
 use App\Models\Cart;
 use App\Models\OrderTransaction;
+use App\Models\PaymentType;
 use App\Models\Product;
 use App\Models\ProductVariant;
 use App\Models\Transaction;
@@ -300,7 +301,7 @@ class UserController extends Controller
     {
         $cartIds = $request->query("cart_ids", "");
         $querySelectedCarts = explode(",", $cartIds);
-        $selectedCarts = Auth::user()->carts()->findMany($querySelectedCarts);
+        $selectedCarts = Auth::user()->carts()->findMany($querySelectedCarts, ['id', 'product_variant_id', 'quantity']);
 
         if ($selectedCarts->isEmpty()) {
             AlertDataGenerator::generateAsFlashToSession(
@@ -313,18 +314,29 @@ class UserController extends Controller
         }
 
         $selectedCarts->load([
-            'variantProduct',
-            'variantProduct.product',
+            'variantProduct' => function ($query) {
+                $query->select(['id', 'product_id', 'name', 'price', 'type']);
+            },
+            'variantProduct.product' => function ($query) {
+                $query->select(['id', 'name']);
+            },
             'variantProduct.product.images' => function ($query) {
-                $query->where('product_images.thumbnail', '=', true)->limit(1);
-            }
+                $query
+                    ->where('product_images.thumbnail', '=', true)
+                    ->select(['id', 'product_id', 'url'])
+                    ->limit(1);
+            },
         ]);
 
         $totalPrice = $selectedCarts->sum(function($cart){
             return $cart->variantProduct->price * $cart->quantity;
         });
 
-        return view("checkout", compact("selectedCarts", "totalPrice"));
+        $paymentTypes = PaymentType::query()
+            ->where('is_enable', '=', true)
+            ->get(['code_name', 'display_name', 'icon_url']);
+
+        return view("checkout", compact("selectedCarts", "totalPrice", "paymentTypes"));
     }
 
 
@@ -439,7 +451,7 @@ class UserController extends Controller
                 'total_price' => $totalPrice,
                 'payment_method' => $paymentMethod,
                 'expired_at' => now()->addDays(1),
-                'status' => "pending",
+                'status' => 'pending',
                 'note' => $note,
             ]);
 
