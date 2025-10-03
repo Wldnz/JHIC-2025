@@ -303,7 +303,10 @@ class AdminController extends Controller
 
         try {
             foreach ($product->images as $productImage) {
-                logger($productImage);
+                if (!CloudinaryUtils::isCloudinaryUrl($productImage->url)) {
+                    continue;
+                }
+
                 $publicId = CloudinaryUtils::getPublicIdByCloudinaryUrl($productImage->url);
                 if (!$publicId) {
                     throw new Exception("Terjadi kesalahan saat menghapus foto produk (public id tidak ditemukan)");
@@ -880,14 +883,16 @@ class AdminController extends Controller
                 continue;
             }
 
-            $publicId = CloudinaryUtils::getPublicIdByCloudinaryUrl($productImage->url);
-            if (!$publicId) {
-                throw new Exception("Terjadi kesalahan saat mengupdate foto produk (public id tidak ditemukan)");
-            }
+            if (CloudinaryUtils::isCloudinaryUrl($productImage->url)) {
+                $publicId = CloudinaryUtils::getPublicIdByCloudinaryUrl($productImage->url);
+                if (!$publicId) {
+                    throw new Exception("Terjadi kesalahan saat mengupdate foto produk (public id tidak ditemukan)");
+                }
 
-            $response = cloudinary()->uploadApi()->destroy($publicId);
-            if ($response['result'] !== 'ok') {
-                throw new Exception("Terjadi kesalahan saat mengupdate foto produk (gagal menghapus dari cloud)");
+                $response = cloudinary()->uploadApi()->destroy($publicId);
+                if ($response['result'] !== 'ok') {
+                    throw new Exception("Terjadi kesalahan saat mengupdate foto produk (gagal menghapus dari cloud)");
+                }
             }
 
             $uploadedUrl = cloudinary()->uploadApi()->upload($image["file"]->getRealPath())['secure_url'];
@@ -912,6 +917,9 @@ class AdminController extends Controller
             ->whereNotIn("id", $currentIdsSet->toArray());
 
         foreach ($deletableProductImages->get() as $productImage) {
+            if (!CloudinaryUtils::isCloudinaryUrl($productImage->url)) {
+                continue;
+            }
 
             $publicId = CloudinaryUtils::getPublicIdByCloudinaryUrl($productImage->url);
             if (!$publicId) {
