@@ -1303,6 +1303,8 @@ body {
         display: flex;
         gap: 20px;
 
+        margin-bottom: 100px;
+
         .products-list {
             display: flex;
             flex-direction: column;
@@ -1374,7 +1376,7 @@ body {
 
         .details {
             width: 50%;
-            height: 70vh;
+            min-height: 70vh;
             border-radius: $border-radius;
             background-color: $color-primary;
             padding: 20px;
@@ -1892,7 +1894,8 @@ h2 {
             }
 
             &.linechart {
-                width: 800px;
+                width: 600px;
+                height: max-content;
             }
         }
         

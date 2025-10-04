@@ -20,7 +20,7 @@
                 'total_product' => 'Total Produk',
                 'total_price' => 'Total Harga',
                 'created_at' => 'Tanggal Transaksi Dibuat',
-                'updated_at' => 'Tanggal Transaksi Dibuat',
+                'updated_at' => 'Tanggal Transaksi Dirubah',
                 'payment_method' => 'Metode Pembayaran',
                 'status' => 'Status Transaksi',
                 'expired' => 'Catatan',

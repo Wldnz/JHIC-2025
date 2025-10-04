@@ -1087,6 +1087,7 @@ body .payment .left p {
   padding: 20px;
   display: flex;
   gap: 20px;
+  margin-bottom: 100px;
 }
 .detailTransaction .content .products-list {
   display: flex;
@@ -1147,7 +1148,7 @@ body .payment .left p {
 }
 .detailTransaction .content .details {
   width: 50%;
-  height: 70vh;
+  min-height: 70vh;
   border-radius: 8px;
   background-color: #fff;
   padding: 20px;
@@ -1565,7 +1566,8 @@ h2 {
   width: 100%;
 }
 .wrapper-charts .wrapper-chart div:first-child.linechart {
-  width: 800px;
+  width: 600px;
+  height: max-content;
 }
 .wrapper-charts .wrapper-chart .chart-action {
   height: 100%;
