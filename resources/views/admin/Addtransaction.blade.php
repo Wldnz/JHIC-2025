@@ -34,25 +34,25 @@
     <div class="form-data" id="student-siswa-form">
         <div class="wrapper-field container">
             <div class="wrapper-input">
-                <label for="nis">NIS</label>
-                <input type="text" name="nis" id="nis" placeholder="Nis Siswa" readonly required>
+                <label for="user_nis">NIS</label>
+                <input type="text" name="user_nis" id="user_nis" placeholder="Nis Siswa" value="{{ old('user_nis','') }}" readonly required>
             </div>
             <div class="wrapper-input">
-                <label for="user_nis">Nama Pembeli<span> *</span></label>
-                <select name="user_nis" id="user_nis" required>
+                <label for="user_fullname">Nama Pembeli<span> *</span></label>
+                <select name="user_fullname" id="user_fullname" required>
                     <option value="">Pilih Nama Siswa</option>
                     @foreach ($students as $student)
-                        <option value="{{ $student->nis }}">{{ $student->fullname }}</option>
+                        <option value="{{ $student->fullname }}" @selected(old('user_fullname', '')== $student->fullname)>{{ $student->fullname }}</option>
                     @endforeach
                 </select>
             </div>
             <div class="wrapper-input">
                 <label for="email">Email Pembeli</label>
-                <input type="text" name="email" id="email" placeholder="Masukkan email Pembeli" readonly required>
+                <input type="text" name="email" id="email" placeholder="Masukkan email Pembeli" value="{{ old('email','') }}"  readonly required>
             </div>
             <div class="wrapper-input">
                 <label for="created_at">Dibuat Pada</label>
-                <input type="text" name="created_at" id="created_at" placeholder="Masukkan angka" readonly required>
+                <input type="text" name="created_at" id="created_at" placeholder="Masukkan angka" value="{{ old('created_at','') }}"  readonly required>
             </div>
         </div>
     </div>
@@ -63,40 +63,40 @@
             <div class="wrapper-input">
                 <label for="received_email">Email Penerima <span>*</span></label>
                 <input type="email" name="received_email" id="received_email" placeholder="Masukkan email penerima"
-                    min="8" required>
+                    minLength="8" value="{{ old('received_email','') }}"  required>
             </div>
             <div class="wrapper-input">
                 <label for="received_phone">No Telepon Penerima <span>*</span></label>
                 <input type="text" inputmode="numeric" name="received_phone" id="received_phone"
-                    placeholder="Masukkan email penerima" min="11" max="12" required>
+                    placeholder="Masukkan email penerima" minLength="11" maxLength="12" value="{{ old('received_phone','') }}"  required>
             </div>
             <div class="wrapper-input">
                 <label for="total_product">Total Produk</label>
-                <input type="text" inputmode="numeric" name="total_product" id="total_product" placeholder="0" value="0"
-                    min=0 required readonly>
+                <input type="number" inputmode="numeric" name="total_product" id="total_product" placeholder="0" value="0"
+                    min=0 value="{{ old('total_product','') }}"  required readonly>
             </div>
             <div class="wrapper-input">
                 <label for="total_price">Total Harga</label>
                 <input type="text" inputmode="numeric" name="total_price" id="total_price"
-                    placeholder="Masukkan total harga" min="0" required readonly>
+                    placeholder="Masukkan total harga" value="{{ old('total_price','') }}"  min="0" required readonly>
             </div>
             <div class="wrapper-input">
                 <label for="note">Catatan</label>
-                <textarea name="note" id="note" placeholder="masukakn catatan"></textarea>
+                <textarea name="note" id="note" placeholder="masukakn catatan" value="{{ old('note','') }}" ></textarea>
             </div>
             <div class="wrapper-input">
                 <label for="payment_method">Nama Pembeli</label>
                 <select name="payment_method" id="payment_method">
                     @foreach ($payment_methods as $payment_method)
-                        <option value="{{ $payment_method->code_name }}">{{ $payment_method->display_name }}</option>
+                        <option value="{{ $payment_method->code_name }}" @selected(old('payment_method', '') == $payment_method->code_name)>{{ $payment_method->display_name }}</option>
                     @endforeach
                 </select>
             </div>
             <div class="wrapper-input">
                 <label for="has_paid">Sudah Dibayar?</label>
                 <select name="has_paid" id="has_paid">
-                    <option value="0">Belum Dibayar</option>
-                    <option value="1">Sudah Dibayar</option>
+                    <option value="0" @selected(old('has_paid', '') == 0)>Belum Dibayar</option>
+                    <option value="1" @selected(old('has_paid', '') == 1)>Sudah Dibayar</option>
                 </select>
             </div>
         </div>
@@ -140,8 +140,8 @@
             <input type="numeric" name="total_product" id="total_product" min=1 value="1" required>
         </div>
         <div class="wrapper-input">
-            <label for="total_price">Total Harga</label>
-            <input type="text" inputmode="numeric" name="total_price" id="total_price" required readonly>
+            <label for="price">Total Harga</label>
+            <input type="text" inputmode="numeric" name="price" id="total_price" required readonly>
         </div>
         <input type="hidden" name='id_order' id="id-order" readonly>
         <button type="submit" class="btn-yes-anouncement btn-yes-anouncement-add" data-action="orderan">Tambahkan
@@ -153,7 +153,7 @@
 @includeWhen(session()->has('alert'), '_components._alert-message', ['data' => session()->get('alert'), 'icon_name' => 'transaction'])
 
 <script defer>
-    let orders = [];
+    let orders = @json(old('orders', []));  
     const products = @json($products);
     const students = @json($students);
     const columns = @json($table_management['columns']);

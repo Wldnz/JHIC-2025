@@ -524,7 +524,7 @@ class AdminController extends Controller
                 false,
             );
 
-            return back();
+            return back()->withInput($request->all());
         }
     }
 

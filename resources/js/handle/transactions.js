@@ -27,12 +27,13 @@ function addOrder({
         id: `added_order_${orders.length + 1}`,
         product_id: product.id,
         product_name: product.name,
+        product_variant_id: variant.id,
         variant_id: variant.id,
         variant_name: variant.name,
         variant_type: variant.type,
         category: product.category,
         quantity,
-        total_price: variant.price * quantity,
+        price: variant.price * quantity,
     });
     return true;
 }
@@ -64,12 +65,14 @@ function updateOrder(id, {
         if (order.id == id) {
             order = {
                 ...order, ...{
+                    product_variant_id: variant.id,
+                    variant_id: variant.id,
                     product_name: product.name,
                     variant_name: variant.name,
                     variant_type: variant.type,
                     category: product.category,
                     quantity: quantity,
-                    total_price: variant.price * quantity
+                    price: variant.price * quantity
                 }
             }
         }
@@ -149,7 +152,7 @@ function setEditData(order_id) {
     });
 
     total_product.value = order.quantity;
-    total_price.value = changeNumberToIDR(order.total_price);
+    total_price.value = changeNumberToIDR(order.price);
 
     form_order.querySelector('#id-order').value = order_id;
 }
@@ -273,7 +276,7 @@ function loadOrder() {
                                 <td> ${order.variant_type} </td>
                                 <td> ${order.quantity} </td>
                                 <td>
-                                    ${changeNumberToIDR(order.total_price)}
+                                    ${changeNumberToIDR(order.price)}
                                     <div class="profile">
                                         <svg id="tree-dots" width="20" height="20" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M30 51C33.3137 51 36 48.3137 36 45C36 41.6863 33.3137 39 30 39C26.6863 39 24 41.6863 24 45C24 48.3137 26.6863 51 30 51Z" fill="#273b98"></path>
@@ -302,11 +305,11 @@ function loadOrder() {
                                     </div>
                                 </td>
                             </tr>`;
-        stringTagInput += `
-                <input type='hidden' name='orders[${index}][product_variant_id]' value='${order.variant_id}' readonly>
-                <input type='hidden' name='orders[${index}][price]' value='${order.total_price}' readonly>
-                <input type='hidden' name='orders[${index}][quantity]' value='${order.quantity}' readonly>
-            `; wrapper_orders
+        orders.map((order, index_order) => {
+            for (const key in order) {
+                stringTagInput += `<input type='hidden' name='orders[${index_order}][${key}]' value='${order[key]}' readonly></input>`;
+            }
+        });
     });
     document.querySelector('tbody').innerHTML = stringTag;
     document.getElementById('wrapper_orders').innerHTML = stringTagInput;
@@ -318,7 +321,7 @@ function handleFormTransaction() {
     const from_transaction = document.getElementById('transaction-transaksi-form');
     const transaction = {
         total_price: orders.reduce((price, order) => {
-            return price + Number(order.total_price)
+            return price + Number(order.price)
         }, 0),
         total_product: orders.reduce((product, order) => {
             return product + Number(order.quantity)
@@ -398,16 +401,19 @@ btn_add_order.addEventListener('click', (e) => {
     btn_submit.textContent = 'Tambahkan Orderan';
 });
 
-document.getElementById('user_nis').addEventListener('change', (e) => {
+document.getElementById('user_fullname').addEventListener('change', (e) => {
     const form_student = document.getElementById('student-siswa-form');
     form_student.querySelectorAll('input').forEach(element => {
+        console.log(element)
         if (!e.target.value) {
             element.value = '';
         } else {
-            const student = students.find(s => s.nis == e.target.value);
+            const student = students.find(s => s.fullname == e.target.value);
             if (student) {
-                element.value = element.id == 'created_at' ? student[element.id].split('T')[0] : student[element.id];
+                element.value = element.id == 'created_at' ? student[element.id].split('T')[0] : student[element.id == 'user_nis' ? 'nis' : element.id];
             }
         }
     });
 });
+
+loadOrder();
