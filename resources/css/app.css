@@ -383,6 +383,8 @@ body .products .products-group .product span {
   position: relative;
 }
 body .products .products-group .product span img {
+  aspect-ratio: 1/1;
+  object-fit: contain;
   border-radius: inherit;
   width: 100%;
   margin-bottom: 10px;
