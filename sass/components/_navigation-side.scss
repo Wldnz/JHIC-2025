@@ -1,0 +1,158 @@
+@mixin navigation-admin {
+    .navigation-side {
+        position: fixed;
+        top: 0;
+        left: 0;
+
+        width: inherit;
+        height: 100dvh;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        font-size: calc($font-size-xl + 0.15rem);
+
+        border-right: solid 1px #dfdfdf;
+
+        .wrapper-navigation {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+
+            .wrapper-image {
+                margin-top: 10px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100px;
+
+                padding: 10px;
+
+                div {
+                    height: 50px;
+                    background-image: url("/public/icons/logo-sprite.png");
+                    background-repeat: no-repeat;
+                    background-size: cover;
+                }
+
+                .brand {
+                    display: none;
+                    width: 160px;
+                    background-position-x: 0;
+                    scale: 1.5;
+                }
+
+                .logo {
+                    width: 50px;
+                }
+            }
+
+            .main-menu {
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+
+                height: 75vh;
+                overflow-y: scroll;
+
+                color: black;
+
+                .menu {
+                    .display-menu,
+                    .sub-menu {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        gap: 10px;
+
+                        font-size: $font-size-l;
+                        
+                        span{
+                            display: none;
+                        }
+
+                        &:hover{
+                            background-color: $color-secondary;
+                            color: $color-accent;
+                        }
+
+                        &.active {
+                            font-weight: bold;
+                            
+                            background-color: $color-secondary;
+                            color: $color-accent;
+                            
+                            position: relative;
+                            padding-left: 15px;
+                            
+                            &::before {
+                                content: "";
+                                width: 8px;
+                                height: 100%;
+                                
+                                position: absolute;
+                                top: 0;
+                                left: 0;
+                                
+                                background-color: $color-accent;
+                                
+                                border-top-right-radius: 10px;
+                                border-bottom-right-radius: 10px;
+                            }
+                        }
+                    }
+
+                    .display-menu {
+                        width: inherit;
+                        height: 40px;
+                        padding: 10px;
+                    }
+
+                    .sub-menu {
+                        margin-left: 30px;
+                        font-size: $font-size-s;
+                        padding: 8px;
+
+                        display: none;
+
+                        &:nth-child(2){
+                            margin-top: 10px;
+                        }
+
+                        &.active{
+                            font-weight: normal;
+                            padding-left: 5px;
+                            &::before{
+                                display: none;
+                            }
+                        }
+                    }
+                    // padding: 10px 15px;
+                    cursor: pointer;
+                }
+
+                .multiple {
+                    display: flex;
+                    flex-direction: column;
+                }
+            }
+        }
+
+        .wrapper-action {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+
+            button {
+                cursor: pointer;
+            }
+
+            button:first-child {
+                display: none;
+            }
+        }
+    }
+}

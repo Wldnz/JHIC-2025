@@ -1,108 +1,196 @@
 <aside class="left close-sidebar">
-    <nav class="navigation-side">
+    <nav class="navigation-side" data-open="false">
         <div class="wrapper-navigation">
             <div class="wrapper-image">
                 <div class="brand"></div>
                 <div class="logo"></div>
             </div>
             <ul class="main-menu">
-                <li id="menu-dashboard">
-                    <a href="{{ route("admin.dashboard") }}">
-                        @include('_components._sprite-icons', ['name' => 'dashboard', "color" => $currentPath == 'dashboard' ? '#273B98' : 'black', 'size' => 25])
+                <li class="menu" id="menu-dashboard">
+                    <a class="display-menu" href="{{ route("admin.dashboard") }}">
+                        @include('_components._sprite-icons', ['name' => 'dashboard', "color" => $currentPath == 'dashboard' ? '#273B98' : 'black', 'size' => 23])
                         <span>Dashboard</span>
                     </a>
                 </li>
-                <li id="menu-products">
-                    <a href="{{ route("admin.products") }}">
-                        @include('_components._sprite-icons', ['name' => 'product', "color" => $currentPath == 'products' ? '#273B98' : 'black', 'size' => 25])
+
+                <li class="menu multiple" id="menu-inventory" data-open=false>
+                    <a class="display-menu">
+                        @include('_components._sprite-icons', ['name' => 'product', "color" => $currentPath == 'products' ? '#273B98' : 'black', 'size' => 23])
+                        <span>Inventory</span>
+                    </a>
+                    <a class="sub-menu" 
+                        href="{{ route('admin.products') }}" id="products"
+                    >
                         <span>Products</span>
                     </a>
-                </li>
-                <li id="menu-transactions">
-                    <a href="{{ route("admin.transactions") }}">
-                        @include('_components._sprite-icons', ['name' => 'transaction', "color" => $currentPath == 'transactions' ? '#273B98' : 'black', 'size' => 25])
+                    <a class="sub-menu" 
+                        href="{{ route("admin.transactions") }}" id="transactions"
+                    >
                         <span>Transactions</span>
                     </a>
                 </li>
-                <li id="menu-accounts">
-                    <a href="{{ route("admin.accounts") }}">
-                        @include('_components._sprite-icons', ['name' => 'account', "color" => $currentPath == 'accounts' ? '#273B98' : 'black', 'size' => 25])
+
+                <li class="menu multiple" id="menu-public" data-open=false>
+                    <a class="display-menu">
+                        @include('_components._sprite-icons', ['name' => 'eye', "color" => $currentPath == 'public' ? '#273B98' : 'black', 'size' => 23])
+                        <span>Public</span>
+                    </a>
+                    <a class="sub-menu" href="{{ route("admin.news") }}">
+                        <span>News</span>
+                    </a>
+                    <a class="sub-menu" href="{{ route('admin.media') }}">
+                        <span>Gallery & Media</span>
+                    </a>
+                    <a class="sub-menu" href="{{ route('admin.facility') }}">
+                        <span>Facilities</span>
+                    </a>
+                    <a class="sub-menu" href="{{ route('admin.portfolio') }}">
+                        <span>Portfolio</span>
+                    </a>
+                    <a class="sub-menu" href="{{ route('admin.achievement') }}">
+                        <span>Achievement</span>
+                    </a>
+                </li>
+
+                <li  class="menu" id="menu-accounts">
+                    <a class="display-menu" href="{{ route("admin.accounts") }}">
+                        @include('_components._sprite-icons', ['name' => 'account', "color" => $currentPath == 'accounts' ? '#273B98' : 'black', 'size' => 23])
                         <span>Accounts</span>
                     </a>
                 </li>
-                <li id="menu-settings">
-                    <a href="{{ route("admin.settings") }}">
+
+                <li  class="menu" id="menu-settings">
+                    <a class="display-menu" href="{{ route("admin.settings") }}">
                         @include('_components._sprite-icons', ['name' => 'settings', "color" => $currentPath == 'settings' ? '#273B98' : 'black', 'size' => 25])
-                        <span>Accounts</span>
+                        <span>Settings</span>
                     </a>
                 </li>
+
             </ul>
         </div>
         <div class="wrapper-action">
-            @include('_components._sprite-icons', ['name' => 'exception', 'color' => '#273B98', 'size' => 25])
-            @include('_components._sprite-icons', ['name' => 'hamburger-menu', 'color' => '#273B98', 'size' => 25])
+            <button class="btn-svg">
+                @include('_components._sprite-icons', ['name' => 'exception', 'color' => '#273B98', 'size' => 25])
+            </button>
+            <button class="btn-svg">
+                @include('_components._sprite-icons', ['name' => 'hamburger-menu', 'color' => '#273B98', 'size' => 25])
+            </button>
         </div>
     </nav>
 </aside>
 
 <script defer>
-
-    // handle close and open the sideBar
     const asideleft = document.querySelector('.left');
-    const main_menu = document.querySelector('.wrapper-navigation').children[1];
+    const wp_image = asideleft.querySelector('.wrapper-image');
+    const menu_chidrens = Array.from(document.querySelector('.wrapper-navigation').children[1]?.children ?? []);
     const button_close = document.querySelector('.wrapper-action').children[0];
     const button_open = document.querySelector('.wrapper-action').children[1];
 
-    function openSideBar(e) {
-        Array.from(main_menu.children).forEach(element => {
+    function handleMultipleMenu() {
+        menu_chidrens.forEach(menu => {
+            if (menu.classList.contains('multiple')) {
+                menu.addEventListener('click', (e) => {
+                    if(asideleft.children[0].dataset.open.includes('false')){
+                        openSideBar({target: button_open})
+                    };
+                    handleSubMenu(menu);
+                });
+            }
+        });
+    }
+
+    function handleSubMenu(menuElement, isInitialize = false) {
+        if(isInitialize) return;
+        const open = menuElement.dataset.open.includes('true');
+        Array.from(menuElement.children)
+            .filter((s, index) => s.classList.contains('sub-menu'))
+            .forEach(sub => {
+                sub.style.display = open ? 'none' : 'flex';
+                sub.style.justifyContent = 'start';
+                sub.children[0].style.display = open ? 'none' : 'flex';
+            });
+        menuElement.dataset.open = !open;
+    }
+
+    function openSideBar({target}) {
+       menu_chidrens.forEach(element => {
             element.children[0].children[1].style.display = 'block';
             element.children[0].style.justifyContent = 'start';
         });
-        // asideleft.style.width = '350px';
 
         asideleft.classList.remove('close-sidebar');
         asideleft.classList.add('open-sidebar');
 
-        this.parentElement.children[0].style.display = 'block';
-        this.parentElement.children[1].style.display = 'none';
+        button_close.style.display = 'block';
+        button_open.style.display = 'none';
 
         // display the logo
-            this.parentElement.parentElement.children[0].children[0].children[0].style.display = 'block';
-            this.parentElement.parentElement.children[0].children[0].children[1].style.display = 'none';
+        wp_image.children[0].style.display = 'block';
+        wp_image.children[1].style.display = 'none';
+        asideleft.children[0].dataset.open = true;
     }
 
-    function closeSideBar(e) {
-        Array.from(main_menu.children).forEach(element => {
+    function closeSideBar() {
+       menu_chidrens.forEach(element => {
             element.children[0].children[1].style.display = 'none';
             element.children[0].style.justifyContent = 'center';
+            if(element.classList.contains('multiple')){
+                element.dataset.open = true;
+                handleSubMenu(element);
+            }
         });
-
-        // asideleft.style.width = '100px';
 
         asideleft.classList.remove('open-sidebar');
         asideleft.classList.add('close-sidebar');
 
-        this.parentElement.children[0].style.display = 'none';
-        this.parentElement.children[1].style.display = 'block';
+        button_close.style.display = 'none';
+        button_open.style.display = 'block';
+
         // display the logo
-        this.parentElement.parentElement.children[0].children[0].children[0].style.display = 'none';
-        this.parentElement.parentElement.children[0].children[0].children[1].style.display = 'block';
+        wp_image.children[0].style.display = 'none';
+        wp_image.children[1].style.display = 'block';
+        asideleft.children[0].dataset.open = false;
     }
 
     // handle active and non active main-menu
     function handleActiveAndNonActiveMainMenu() {
         const pathname = (location.pathname).split('/admin/')[1];
-        Array.from(main_menu.children).forEach(element => {
-            if ((element.id).split('menu-')[1] == pathname && !element.classList.contains('active')) {
-                element.classList.add('active');
-            } else {
-                element.classList.remove('active')
+        const locations = {
+            "inventory": [
+                "products",
+                "transactions",
+            ],
+            "public": [
+                "news",
+                "media",
+                "portfolio",
+                "achievement",
+                "facilities"
+            ]
+        };
+        menu_chidrens.forEach(menu => {
+            const name = menu.id.split('-')[1];
+            const isMultiple = menu.classList.contains('multiple');
+            const display_name = menu.children[0];
+            if(isMultiple){
+                const isCurrentLocation = locations[name].includes(pathname);
+                if(isCurrentLocation){
+                    display_name.classList.add('active');
+                    Array.from(menu.children)
+                        .find(sub => sub.id == pathname)
+                        .classList.add('active');
+                    handleSubMenu(menu, true);
+                }
+            }else if(name == pathname){
+                display_name.classList.add('active');
             }
         });
     }
+
 
     button_open.addEventListener('click', openSideBar);
 
     button_close.addEventListener('click', closeSideBar);
     handleActiveAndNonActiveMainMenu();
+    handleMultipleMenu();
 </script>

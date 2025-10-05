@@ -34,41 +34,7 @@ o Delete transaction
 + Update profile
 
 
-untuk menyelesaikan halaman admin dibutuhkan
-    Dashboard
-        [✅] Page
-        [] search-engine
-        [] filter
-        [] managing query to use in chart
-    Product
-       [✅] Page
-       [✅] alert-message
-       - refactoring
-       [✅] fixing bug when adding variant
-       [✅] detail-product
-    Transaction
-        [✅] Page
-        [✅] Detail Page
-        [✅] Add Data
-        - refactoring
-        [✅] fix not multiple order
-        [✅] adding selecting student
-        [✅] Edit Data
-        [✅] Delete Data
-    Account
-        [] Page
-        [] Add Account
-        [] Detail Account
-        [] Edit Account
-        [] Delete Account
-    Profile
-        [] Page
-        [] Detail Profile
-        [] Edit Profile
-        [] Delete Profile
-    Other
-        [] Responsive
-        [] Perform
-        [] Send Email
-        [] SEO?
-    [✅] Fixing Bug Cooldown Timer in Delete message
+Todo - Wildan
+    - Modifikasi Navigation - Side (perkecil & tambahkan beberapa option lagi)
+    - Buat Halaman Create Artikel, Gallery (Photo & Video), Prestation, Portfolio, Fasilitas
+    - udh
