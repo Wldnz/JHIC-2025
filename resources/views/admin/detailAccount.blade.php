@@ -20,7 +20,7 @@
                     <span>*</span>
                 </label>
                 <input type="text" inputmode="numeric" name="nis" id="nis" placeholder="Masukkan NIS/NISN" minLength="8"
-                    maxlength="8" value="{{ old('nis') ?? $account['nis'] ?? '' }}" required readonly>
+                    maxlength="8" value="{{ old('nis',$account['nis'])}}" required readonly>
             </div>
             <div class="wrapper-input">
                 <label for="fullname">
@@ -28,7 +28,7 @@
                     <span>*</span>
                 </label>
                 <input type="text" name="fullname" id="fullname" placeholder="Masukkan Nama Lengkap" minLength="3"
-                    maxlength="120" value="{{ old('fullname') ?? $account['fullname'] ?? '' }}" required>
+                    maxlength="120" value="{{ old('fullname',$account['fullname']) }}" required>
             </div>
             <div class="wrapper-input">
                 <label for="email">
@@ -36,7 +36,7 @@
                     <span>*</span>
                 </label>
                 <input type="text" inputmode="email" name="email" id="email" placeholder="Masukkan email" minLength="8"
-                    maxlength="120" value="{{ old('email') ?? $account['email'] ?? '' }}" required>
+                    maxlength="120" value="{{ old('email', $account['email'])}}" required>
             </div>
             <div class="wrapper-input">
                 <label for="phone">
@@ -44,7 +44,7 @@
                     <span>*</span>
                 </label>
                 <input type="text" inputmode="numeric" name="phone" id="phone" placeholder="81234567890" minLength="11"
-                    maxlength="12" value="{{ old('phone') ?? $account['phone'] ?? '' }}" required>
+                    maxlength="12" value="{{ old('phone',$account['phone']) }}" required>
             </div>
             @if ($account['role'] == 'siswa')
                 <div class="wrapper-input">
@@ -53,8 +53,7 @@
                         <span>*</span>
                     </label>
                     <textarea name="address" id="addresss" placeholder="Alamat Pengguna" minlength="8" maxlength="255"
-                        required>
-                        {{ old('address') ?? $account['student']['address'] ?? '' }}
+                        required>{{ old('address', $account['student']['address'] ) }}
                     </textarea>
                 </div>
                 <div class="wrapper-input">
@@ -63,10 +62,8 @@
                         <span>*</span>
                     </label>
                     <select name="gender" id="gender" required>
-                        <option value="male" {{ $account['student']['gender'] == 'male' ? 'selected' : '' }}>Laki - Laki
-                        </option>
-                        <option value="female" {{ $account['student']['gender'] == 'female' ? 'selected' : '' }}>Perempuan
-                        </option>
+                        <option value="male" @selected(old('gender', $account['student']['gender']) == 'male')>Laki - Laki</option>
+                        <option value="female" @selected(old('gender', $account['student']['gender']) == 'female')>Perempuan</option>
                     </select>
                 </div>
                 <div class="wrapper-input">
@@ -75,11 +72,11 @@
                         <span>*</span>
                     </label>
                     <select name="class" id="class" required>
-                        <option value="X" {{ old('class') == 'X' || $account['student']['class'] == 'X' ? 'selected' : '' }}>
+                        <option value="X" @selected(old('class', $account['student']['class']) == 'X')>
                             Kelas 10</option>
-                        <option value="XI" {{ old('class') == 'XI' || $account['student']['class'] == 'XI' ? 'selected' : '' }}>
+                        <option value="XI" @selected(old('class', $account['student']['class']) == 'XI')>
                             Kelas 11</option>
-                        <option value="XII" {{ old('class') == 'XII' || $account['student']['class'] == 'XII' ? 'selected' : '' }}>Kelas 12</option>
+                        <option value="XII" @selected(old('class', $account['student']['class']) == 'XII')>Kelas 12</option>
                     </select>
                 </div>
                 <div class="wrapper-input">
@@ -89,7 +86,7 @@
                     </label>
                     <select name="major" id="major" required>
                         @foreach ($majors as $major)
-                            <option value="{{ $major->name }}" {{ old('major') == $major->name || $account['student']['major_name'] == $major->name ? 'selected' : '' }}>{{ $major->name }}
+                            <option value="{{ $major->id }}" @selected(old('major', $account['student']['major_id']) == $major->id)>{{ $major->name }}
                             </option>
                         @endforeach
                     </select>

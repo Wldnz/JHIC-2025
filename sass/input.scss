@@ -1599,123 +1599,8 @@ body {
 
         display: flex;
 
-        .navigation-side {
-            position: fixed;
-            top: 0;
-            left: 0;
-
-            width: inherit;
-            height: 100dvh;
-
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-
-            font-size: calc($font-size-xl + 0.15rem);
-
-            border-right: solid 1px #dfdfdf;
-
-            .wrapper-navigation {
-                display: flex;
-                flex-direction: column;
-                gap: 15px;
-
-                .wrapper-image {
-                    margin-top: 10px;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    height: 100px;
-
-                    padding: 10px;
-
-                    div {
-                        height: 50px;
-                        background-image: url("/public/icons/logo-sprite.png");
-                        background-repeat: no-repeat;
-                        background-size: cover;
-                    }
-
-                    .brand {
-                        display: none;
-                        width: 160px;
-                        background-position-x: 0;
-                        scale: 1.5;
-                    }
-
-                    .logo {
-                        width: 50px;
-                    }
-                }
-
-                .main-menu {
-                    display: flex;
-                    flex-direction: column;
-                    gap: 15px;
-
-                    color: black;
-
-                    li {
-                        a {
-                            display: flex;
-                            justify-content: center;
-                            align-items: center;
-                            gap: 10px;
-
-                            span {
-                                display: none;
-                            }
-                        }
-
-                        padding: 10px 15px;
-
-                        img {
-                            height: $font-size-4xl;
-                        }
-                    }
-
-                    .active {
-                        font-weight: bold;
-
-                        background-color: $color-secondary;
-                        color: $color-accent;
-
-                        position: relative;
-                    }
-
-                    .active::before {
-                        content: "";
-                        width: 8px;
-                        height: 100%;
-
-                        position: absolute;
-                        top: 0;
-                        left: 0;
-
-                        background-color: $color-accent;
-
-                        border-top-right-radius: 10px;
-                        border-bottom-right-radius: 10px;
-                    }
-                }
-            }
-
-            .wrapper-action {
-                width: 100%;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                padding: 10px;
-
-                svg {
-                    cursor: pointer;
-                }
-
-                svg:first-child {
-                    display: none;
-                }
-            }
-        }
+        @import 'components/navigation-side';
+        @include navigation-admin;
     }
 
     .right {
@@ -2477,6 +2362,13 @@ h2 {
 .btn-submit {
     background-color: $color-accent;
     color: $color-primary;
+}
+
+.btn-svg{
+    width: 25px;
+    height: 25px;
+    background-color: transparent;
+    border: none;
 }
 
 .static {

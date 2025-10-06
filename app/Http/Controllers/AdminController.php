@@ -851,6 +851,28 @@ class AdminController extends Controller
         return back();
     }
 
+
+    function news(){
+        return view('admin.news');
+    }
+
+    function media(){
+        return view('admin.media');
+    }
+
+    function portfolio(){
+        return view('admin.portfolio');
+    }
+
+    function achievement(){
+        return view('admin.achievement');
+    }
+
+    function facility(){
+        return view('admin.facility');
+    }
+
+
     protected function _handleProductVariantsInModifyProduct(Request $request, Product $product, array $variants)
     {
         $currentIdsSet = new \Ds\Set();

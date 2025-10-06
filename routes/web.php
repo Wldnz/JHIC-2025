@@ -55,11 +55,46 @@ Route::name('admin.')->prefix('admin')->middleware([isLogin::class, isAdmin::cla
     Route::delete('/transactions/{transaction}', [AdminController::class, 'deleteTransaction'])->name('delete-transaction');
 
     Route::get('/accounts', [AdminController::class, 'accounts'])->name('accounts');
-    Route::get('/accounts/create', [AdminController::class, 'createAccount'])->name('create-account');
+    Route::get('/accounts-create', [AdminController::class, 'createAccount'])->name('create-account');
+    Route::post('/accounts-create', [AdminController::class, 'storeAccount'])->name('store-account');
     Route::get('/accounts/{account}', [AdminController::class, 'detailAccount'])->name('detail-account');
-    Route::post('/accounts', [AdminController::class, 'storeAccount'])->name('store-account');
     Route::put('/accounts/{account}', [AdminController::class, 'updateAccount'])->name('update-account');
     Route::delete('/accounts/{account}', [AdminController::class, 'deleteAccount'])->name('delete-account');
+
+    Route::get('/news', [AdminController::class, 'news'])->name('news');
+    Route::get('/news-create', [AdminController::class, 'createNews'])->name('create-news');
+    Route::post('/news-create', [AdminController::class, 'storeNews'])->name('store-news');
+    Route::get('/news/{news}', [AdminController::class, 'detailNews'])->name('detail-news');
+    Route::put('/news/{news}', [AdminController::class, 'updateNews'])->name('update-news');
+    Route::delete('/news/{news}', [AdminController::class, 'deleteNews'])->name('delete-news');
+
+    Route::get('/media', [AdminController::class, 'media'])->name('media');
+    Route::get('/media-create', [AdminController::class, 'createMedia'])->name('create-media');
+    Route::post('/media-create', [AdminController::class, 'storeMedia'])->name('store-media');
+    Route::get('/media/{media}', [AdminController::class, 'detailMedia'])->name('detail-media');
+    Route::put('/media/{media}', [AdminController::class, 'updateMedia'])->name('update-media');
+    Route::delete('/media/{media}', [AdminController::class, 'deleteMedia'])->name('delete-media');
+
+    Route::get('/achievement', [AdminController::class, 'achievement'])->name('achievement');
+    Route::get('/achievement-create', [AdminController::class, 'createAchievement'])->name('create-achievement');
+    Route::post('/achievement-create', [AdminController::class, 'storeAchievement'])->name('store-achievement');
+    Route::get('/achievement/{achievement}', [AdminController::class, 'detailAchievement'])->name('detail-achievement');
+    Route::put('/achievement/{achievement}', [AdminController::class, 'updateAchievement'])->name('update-achievement');
+    Route::delete('/achievement/{achievement}', [AdminController::class, 'deleteAchievement'])->name('delete-achievement');
+
+    Route::get('/portfolio', [AdminController::class, 'portfolio'])->name('portfolio');
+    Route::get('/portfolio-create', [AdminController::class, 'createPortfolio'])->name('create-portfolio');
+    Route::post('/portfolio-create', [AdminController::class, 'storePortfolio'])->name('store-portfolio');
+    Route::get('/portfolio/{portfolio}', [AdminController::class, 'detailPortfolio'])->name('detail-portfolio');
+    Route::put('/portfolio/{portfolio}', [AdminController::class, 'updatePortfolio'])->name('update-portfolio');
+    Route::delete('/portfolio/{portfolio}', [AdminController::class, 'deletePortfolio'])->name('delete-portfolio');
+
+    Route::get('/facility', [AdminController::class, 'facility'])->name('facility');
+    Route::get('/facility-create', [AdminController::class, 'createFacility'])->name('create-facility');
+    Route::post('/facility-create', [AdminController::class, 'storeFacility'])->name('store-facility');
+    Route::get('/facility/{facility}', [AdminController::class, 'detailFacility'])->name('detail-facility');
+    Route::put('/facility/{facility}', [AdminController::class, 'updateFacility'])->name('update-facility');
+    Route::delete('/facility/{facility}', [AdminController::class, 'deleteFacility'])->name('delete-facility');
 
     Route::get('/settings', [AdminController::class, 'settings'])->name('settings');
     Route::put('/settings', [AdminController::class, 'updateSettings'])->name('update-settings');
