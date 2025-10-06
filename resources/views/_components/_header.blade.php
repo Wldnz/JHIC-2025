@@ -9,40 +9,48 @@
 <body>
 
     <nav class="navigation-user">
-        <div class="left"><a href="{{ route('student.dashboard') }}"><img src="{{asset ('images/bitu.png')}}"></a></div>
+        <div class="left"><a href="{{ route('student.dashboard') }}"><img src="https://smkbinainformatika.sch.id/wp-content/uploads/2022/11/logo.png"></a></div>
         <div class="center">
             <div class="links">
                 <a href="{{ route('student.dashboard') }}">HOME</a>
-                <a href="{{ route('student.products') }}">PRODUCTS</a>
-                <a href="{{ route('student.about') }}">ABOUT</a>
+                <a href="{{ route('student.products') }}">PROFILE</a>
+                <a href="{{ route('student.about') }}">MAJOR</a>
+                <a href="{{ route('student.about') }}">PROGRAM</a>
+                <a href="{{ route('student.about') }}">NEWS</a>
             </div>
         </div>
-
+        
         <div class="right">
-            <a href="{{ route("student.cart") }}"><button class="button button-circle"><img src="{{asset('icons/shop.svg')}}"></button></a>
-            <button onclick="floating('.float','.backdrop')" class="button button-circle"><img src="{{asset('icons/user.svg')}}"></button>
-            <div class="backdrop" onclick="floating('.float','.backdrop')"></div>
-            <div class="float">
-                <a href="{{ route('profile') }}"><div class="img-container"><img src="{{ asset('icons/user.svg') }}" alt=""></div><p>{{ Auth::user()->fullname }}</p></a>
-                <a href="{{ route('logout') }}"><div class="img-container"><img src="{{ asset('icons/Log_Out.svg') }}" alt=""></div><p>Logout</p></a>
-            </div>
+            <img src="{{asset('icons/burgur.svg')}}" class="burger">
+            <a href="http://wa.me/6281280063529" target="_blank" rel="noopener noreferrer"><button class="button button-circle"><img src="{{asset('icons/telp.svg')}}"></button></a>
+            <a href="mailto:pefiye@gmail.com"><button class="button button-circle"><img src="{{asset('icons/email.svg')}}"></button></a>
         </div>
+
     </nav>
-    <main class="wrapper-user">
-</div>
+    <div class="mobile-nav no-fade">
+        <div class="up">
+            <img class="exit-burger" src="{{ asset("icons/Add_Plus.svg") }}" alt="">
+            <a href="{{ route('student.dashboard') }}">HOME</a>
+            <a href="{{ route('student.products') }}">PROFILE</a>
+            <a href="{{ route('student.about') }}">MAJOR</a>
+            <a href="{{ route('student.about') }}">PROGRAM</a>
+            <a href="{{ route('student.about') }}">NEWS</a>
+            
+        </div>
+        <div class="down">
+            <a href="http://wa.me/6281280063529" target="_blank" rel="noopener noreferrer"><button class="button"><img src="{{asset('icons/telp.svg')}}"></button></a>
+            <a href="mailto:pefiye@gmail.com"><button class="button"><img src="{{asset('icons/email.svg')}}"></button></a>
 
-<script>
-    function floating(el1, el2)
-    {
-        const element = document.querySelector(el1);
-        const backdrop = document.querySelector(el2);
+        </div>
+    </div>
 
-        element.classList.toggle("show");
-        backdrop.classList.toggle("show");
-
-        document.addEventListener("scroll", () => {
-            element.classList.remove("show");
-            backdrop.classList.remove("show");
+    <script>
+    document.querySelector(".burger").addEventListener("click", () => {
+            document.querySelector(".mobile-nav").classList.add("on")
         })
-    }
-</script>
+    document.querySelector(".exit-burger").addEventListener("click", () => {
+            document.querySelector(".mobile-nav").classList.remove("on")
+        })
+    </script>
+
+    <main class="wrapper-user">
