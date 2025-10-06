@@ -11,6 +11,7 @@ $font-size-6xl: 9vw;
 $color-primary: #fff;
 $color-secondary: #eaf7f9;
 $color-accent: #273b98;
+$color-secondary-background : rgba(95, 119, 247, .6);
 $color-accent-gradient: linear-gradient(35deg, rgba(39, 59, 152, 1) 0%, rgba(76, 98, 199, 1) 100%);
 $border-radius: 8px;
 
@@ -1978,6 +1979,70 @@ h2 {
                     top: -5px;
                     right: 10px;
                     z-index: 10;
+                }
+            }
+        }
+    }
+
+    .wrapper-content-media{
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 10px;
+
+        .wrapper-card-media{
+            width: 300px;
+            min-height: max-content;
+
+            background-color: $color-secondary-background;
+
+            padding: 5px;
+            border-radius: 10px;
+            .card-media{
+
+                background-color: $color-primary;
+
+                border-radius: 10px;
+                .wrapper-image{
+                    img{
+                        border-top-left-radius: 10px;
+                        border-top-right-radius: 10px;
+                        width: 100%;
+                    }
+                }
+
+                .detail-media{
+                    padding: 10px;
+
+                    display: flex;
+                    flex-direction: column;
+                    gap: 4px;
+
+                    .title{
+                        font-size: $font-size-m;
+                    }
+
+                    .description{
+                        font-size: calc($font-size-s - 2px);
+                        font-weight: normal;
+                        padding-left: 1px;
+                    }
+
+                    .profile{
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+
+                        gap: 10px;
+                        font-size: $font-size-s;
+
+                        .tag-name{
+                            display: flex;
+                            justify-content: end;
+                            gap: 10px;
+                            align-items: center;
+                        }
+                    }
                 }
             }
         }
