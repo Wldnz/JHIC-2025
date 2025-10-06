@@ -46,7 +46,13 @@
                                 <h5>Wildan Izhar Al Haqq</h5>
                                 <h5>XII - RPL</h5>
                             </div>
-                            @include('_components._sprite-icons', ['name' => 'eye', 'size' => 20])
+                            <div class="action">
+                                <form id="action">
+                                    <button type="button" name="visible" id="button-visible" value="public">
+                                        @include('_components._sprite-icons', ['name' => 'eye', 'size' => 20])
+                                    </button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
