@@ -1,0 +1,25 @@
+$font-size-s: clamp(0.2rem, 1vw, 0.85rem);
+$font-size-m: clamp(0.4rem, 1.25vw, 1rem);
+$font-size-l: clamp(0.6rem, 2vw, 1.5rem);
+$font-size-xl: clamp(0rem, 3vw, 2rem);
+$font-size-2xl: clamp(0rem, 2vw, 1.5rem);
+$font-size-3xl: clamp(0rem, 3vw, 2rem);
+$font-size-4xl: clamp(0rem, 4vw, 2.25rem);
+$font-size-5xl: clamp(0rem, 5vw, 5rem);
+$font-size-6xl: clamp(0rem, 6vw, 1.5rem);
+$font-size-7xl: clamp(0rem, 9vw, 2rem);
+$color-primary: #fff;
+$color-secondary: #eaf7f9;
+$color-accent: #273b98;
+$color-accent-gradient: linear-gradient(#8aa3ff 0%, #273b98 100%);
+$color-secondary-background: rgba(95, 119, 247, 0.6);
+$border-radius: 8px;
+
+body{
+    font-family: "Montserrat", "sans-serif";
+    background-color: $color-primary;
+    font-size: $font-size-l;
+    color: $color-accent;
+}
+@import 'others';
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");

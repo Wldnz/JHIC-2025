@@ -1,6 +1,5 @@
 @include('_components._headerAdmin', ['title' => 'Menambahkan Produk'])
 <main class="content">
-    <h2>Menambahkan Data Produk</h2>
     <form action="{{ route('admin.store-product') }}" class="form-data" method="POST" id=""
         enctype="multipart/form-data">
         @csrf

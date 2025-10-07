@@ -1,0 +1,47 @@
+.wrapper-charts {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px 100px;
+
+    .wrapper-chart {
+        display: flex;
+        gap: 20px;
+
+        div:first-child{
+            width: 350px;
+            height: 350px;
+            padding: 10px;
+
+            display: flex;  
+            justify-content: center;
+            align-items: center;
+            
+            border-radius: 40px;
+            border: 2px solid $color-accent;
+
+            &.linechart{
+                min-width: 650px;
+                min-height: 350px;
+                width: max-content;
+                height: max-content;
+                justify-content: start;
+                gap: 40px;
+
+            }
+            canvas{
+                width: 100%;
+            }
+        }
+        .chart-action{
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            button{
+                font-size: $font-size-l;
+                scale: .8;
+            }
+        }
+    }
+}

@@ -1,0 +1,137 @@
+@import '../utils/variables';
+.alert-message {
+    width: 100vw;
+    height: 100%;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(4px);
+    text-align: center;
+    z-index: 999;
+    .card-message {
+        min-width: 320px;
+        max-width: 350px;
+        min-height: 250px;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;
+        gap: 15px;
+
+        background-color: white;
+        padding: 10px;
+        border-radius: 16px;
+
+        span {
+            font-size: $font-size-s;
+        }
+
+        .wrapper-button {
+            width: 70%;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+
+            button {
+                padding: 10px;
+            }
+        }
+    }
+
+    .delete-message {
+        color: red;
+
+        button {
+            border-color: red;
+            color: red;
+        }
+
+        .btn-delete-anouncement {
+            color: white;
+            background-color: red;
+            font-weight: bolder;
+        }
+
+        .cooldown {
+            background-color: #424242;
+            cursor: not-allowed;
+            border: none;
+        }
+    }
+
+    button {
+        padding: 15px 5px;
+        background-color: transparent;
+        color: $color-accent;
+        border: 1px solid $color-accent;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .btn-yes-anouncement {
+        color: white;
+        background-color: $color-accent;
+    }
+
+    animation: animate-alert 300ms forwards;
+
+    @keyframes animate-alert {
+        0% {
+            justify-content: start;
+        }
+        100% {
+            justify-content: center;
+        }
+    }
+
+    .card-form {
+        width: 480px;
+        min-height: 300px;
+        background-color: white;
+        border-radius: 8px;
+
+        padding: 15px;
+        display: none;
+        flex-direction: column;
+        justify-content: start;
+        gap: 15px;
+
+        text-align: start;
+
+        h4 {
+            margin-top: 5px;
+        }
+
+        .wrapper-input {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+
+            label {
+                font-size: $font-size-m;
+
+                span {
+                    color: red;
+                }
+            }
+
+            input,
+            select {
+                height: 45px;
+                padding: 5px;
+                padding-left: 0;
+                border: none;
+                border-bottom: 1px solid $color-accent;
+                outline: none;
+            }
+        }
+    }
+}

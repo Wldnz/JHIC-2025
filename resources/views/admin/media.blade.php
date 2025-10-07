@@ -1,3 +1,9 @@
-<div>
-    <!-- The best way to take care of the future is to take care of the present moment. - Thich Nhat Hanh -->
-</div>
+@include('_components._headerAdmin', ['title' => 'Management News/Article/Blog'])
+@php
+    $currentPath = explode('/admin/', url()->current())[1];
+    logger('as', [$transactions])
+@endphp
+<main class="content">
+</main>
+
+@include('_components._footerAdmin')

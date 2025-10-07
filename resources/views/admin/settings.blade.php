@@ -14,7 +14,7 @@
                 @foreach ($payment_methods as $method)
                     <div class="wrapper-input wrapper-payment-methode">
                         <input type="checkbox" name="payment_methods[{{ $method->code_name }}]" id="{{ $method->code_name }}" {{ $method->is_enable ? "checked" : '' }}>
-                        <div class="wrapper-image">
+                        <div class="wrapper-detail-payment">
                             <img src="{{ $method->icon_url }}" alt="{{ $method->display_name }}">
                             <label for="{{ $method->code_name }}">{{ $method->display_name }}</label>
                         </div>

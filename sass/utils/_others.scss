@@ -1,0 +1,37 @@
+::selection {
+    color: $color-primary;
+    background-color: $color-accent;
+    filter: none;
+    &:hover {
+        filter: none;
+    }
+}
+
+.selector {
+    user-select: none;
+    -webkit-user-drag: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    transition: opacity 0.4s;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+img {
+    object-fit: fill;
+    object-position: center;
+}

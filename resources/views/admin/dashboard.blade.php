@@ -24,8 +24,8 @@
             "Activity" => $activity
         ]
     ])
- 
-                      <h2>Statistika Penjualan Seragam</h2>
+                    
+    <h2>Statistika Penjualan Seragam</h2>
     <div class="wrapper-charts">
         <div class="wrapper-chart">
             <div class="piechart">
@@ -34,43 +34,47 @@
         </div>
         <div class="wrapper-chart">
             <div class="linechart">
-                <canvas id= "linechart"></canvas>
-                </div>
-                <form class="chart-action">
-                    @for ($index_y = 0; $index_y < 3; $index_y++)
-                        <button class="btn {{ request()->get('year', date('Y')) == date('Y') - $index_y ? 'btn-submit' : '' }}" name="year" value="{{ date('Y') - $index_y }}">{{ date('Y') - $index_y }}</button>
-                    @endfor
-                </form>
+                <canvas id="linechart"></canvas>
+            </div>
+            <form class="chart-action">
+                @for ($index_y = 0; $index_y < 3; $index_y++)
+                    <button
+                        class="btn {{ request()->get('year', date('Y')) == date('Y') - $index_y ? 'btn-submit' : '' }}"
+                        name="year" value="{{ date('Y') - $index_y }}"
+                    >
+                        {{ date('Y') - $index_y }}
+                    </button>
+                @endfor
+            </form>
         </div>
-    </div>
 
-    @include('_components._management-table', [
-        'title' => 'Total Transaksi Sedang Berlangsung',
-        'total' => $transaction['ongoing'],
-        'datas' => $transactions,
-        'columns' => [
-            'id' => 'ID Transaksi',
-            'user' => 'Nama Pembeli',
-            'total_product' => 'Total Produk',
-            'total_price' => 'Total Harga',
-            'created_at' => 'Tanggal',
-            'status' => 'Status',
-        ],
-        'column_relations' => [
-            'user' => 'fullname'
-        ],
-        'actions' => [
-            'Lihat Transaksi' => [
-                'action-name' => 'transaction',
-                'route-name' => 'admin.detail-transaction',
-                'icon-name' => 'eye'
+        @include('_components._management-table', [
+            'title' => 'Total Transaksi Sedang Berlangsung',
+            'total' => $transaction['ongoing'],
+            'datas' => $transactions,
+            'columns' => [
+                'id' => 'ID Transaksi',
+                'user' => 'Nama Pembeli',
+                'total_product' => 'Total Produk',
+                'total_price' => 'Total Harga',
+                'created_at' => 'Tanggal',
+                'status' => 'Status',
             ],
-        ],
-        'pagination' => [
-            'current' => $currentPage,
-            'max' => $maxPage
-        ],
-    ])
+            'column_relations' => [
+                'user' => 'fullname'
+            ],
+            'actions' => [
+                'Lihat Transaksi' => [
+                    'action-name' => 'transaction',
+                    'route-name' => 'admin.detail-transaction',
+                    'icon-name' => 'eye'
+                ],
+            ],
+            'pagination' => [
+                'current' => $currentPage,
+                'max' => $maxPage
+            ],
+        ])
 </main>
 <script defer>
     const dataset_transactions = @json($statictis);

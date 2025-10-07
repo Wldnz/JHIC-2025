@@ -54,6 +54,8 @@ img {
     object-position: center;
 }
 
+@import 'utils/variables';
+@import 'utils/globals';
 body {
     font-family: "Montserrat", "sans-serif";
     background-color: $color-primary;
@@ -477,26 +479,6 @@ body {
                             height: 50%;
                             border: 1.5px solid;
                             border-radius: 1000px;
-
-                            display: flex;
-
-                            img
-                            {
-                                display: none;
-                            }
-
-                            &.selected
-                            {
-                                border: none;
-                                height: 100%;
-
-                                img
-                                {
-                                    display: flex;
-                                    aspect-ratio: 1/1;
-                                    filter: brightness(0) saturate(100%) invert(17%) sepia(56%) saturate(3428%) hue-rotate(224deg) brightness(91%) contrast(90%);
-                                }
-                            }
                         }
                     }
                 }
@@ -564,7 +546,7 @@ body {
                 h2
                 {
                     margin-top: 0;
-                    font-size: $font-size-7xl;
+                    font-size: $font-size-z7xl;
                     font-weight: 700;
                     text-align: center;
                     background: $color-accent-gradient;
@@ -586,108 +568,10 @@ body {
                         object-fit: cover;
                         display: none;
                         border-radius: $border-radius;
-                        background-color: #000;
-
                     }
-                    
-                    .show
-                    {
+
+                    .show {
                         display: flex;
-                    }
-                }
-                button
-                {
-                    align-self: center;
-                }
-            }
-            .news
-            {
-                width: 100vw;
-                display: flex;
-                flex-direction: column;
-                min-height: 100px;
-                margin-top: 40px;
-
-                h2
-                {
-                    margin-top: 0;
-                    font-size: $font-size-7xl;
-                    font-weight: 700;
-                    text-align: center;
-                    background: $color-accent-gradient;
-                    background-clip: text;
-                    -webkit-text-fill-color: transparent;
-                }
-
-                .news-group
-                {
-                    width: 100%;
-                    display: flex;
-                    flex-direction: column;
-                    padding: 40px;
-                    gap: 20px;
-                    
-                    a
-                    {
-                        flex: 1;
-                        flex-direction: column;
-                        display: flex;
-
-                        img
-                        {
-                            max-width: 100%;
-                            aspect-ratio: 4/2;
-                            border-radius: $border-radius;
-                            object-fit: cover;
-                        }
-
-                        .news-info
-                        {
-                            display: flex;
-                            align-items: center;
-                            height: 20px;
-                            
-                            .tags
-                            {
-                                position: relative;
-                                display: flex;
-                                width: 70%;
-                                gap: 5px;
-                                height: 100%;
-                                overflow-x: scroll;
-
-                                &::after
-                                {
-                                    position: absolute;
-                                    content: "";
-                                    height: 100%;
-                                    width: 50px;
-                                    top: 0;
-                                    right: 0;
-                                    pointer-events: none;
-                                    background: linear-gradient(90deg, #ffffff00 0%, #fff 100%);
-                                }
-                                
-                                p
-                                {
-                                    display: flex;
-                                    align-items: center;
-                                    white-space: nowrap;
-                                    height: 100%;
-                                    padding: 0 5%;
-                                    background-color: #273c9897;
-                                    border-radius: calc($border-radius / 2);
-                                    border: 1px solid $color-accent;
-                                    color: #000;
-                                }
-                            }
-
-                            .date
-                            {
-                                width: 30%;
-                                text-align: right;
-                            }
-                        }
                     }
                 }
             }
