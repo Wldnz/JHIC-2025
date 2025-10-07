@@ -9,7 +9,7 @@ use App\Http\Middleware\isLogin;
 use App\Http\Middleware\isAdmin;
 
 // User-side
-Route::name('user.')->middleware([isLogin::class, isAdmin::class])->group(function () {
+Route::name('user.')->group(function () {
     Route::get('/', [User\Controller::class, 'index'])->name('index');
     Route::get('/profile', [User\Controller::class, 'profile'])->name('profile');
     Route::get('/galleries', [User\Controller::class, 'galleries'])->name('galleries');
@@ -52,7 +52,7 @@ Route::name('user.')->middleware([isLogin::class, isAdmin::class])->group(functi
 });
 
 // Candidate-side
-Route::name('candidate.')->prefix('candidate')->middleware([isLogin::class, isAdmin::class])->group(function () {
+Route::name('candidate.')->prefix('candidate')->middleware([isLogin::class])->group(function () {
     Route::get('/', [Candidate\Controller::class, 'index'])->name('index');
     Route::get('/dashboard', [Candidate\Controller::class, 'dashboard'])->name('dashboard');
     Route::get('/schedule', [Candidate\Controller::class, 'schedule'])->name('schedule');
