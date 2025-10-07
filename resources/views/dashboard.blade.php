@@ -66,15 +66,15 @@
 
         $gallery =
         [
-            'Ruangan A1' => 'A1.png',
-            'Ruangan A2' => 'A2.png',
+            'Ruangan A1' => $placeholder,
+            'Ruangan A2' => $placeholder,
             'Ruangan A3' => 'A3.png',
             'Ruangan A4' => 'A4.png',
             'Ruangan A5' => 'A5.png',
         ]
 @endphp
 @include('_components._header', ['title' => 'product'])
-<div class="dashboard">
+<div class="dashboard no-fade">
     <div class="banner">
         <div class="change-banner left"><img class="no-fade" src="{{ asset("icons/arrow-down.svg") }}" alt=""></div>
         <div class="center">
@@ -138,6 +138,19 @@
                 </span>
             @endforeach
         </div>
+        <div class="img-full no-fade">
+            <div class="bar">
+
+            </div>
+            <img src="{{ $placeholder }}" alt="">
+            <div class="other-img">
+                <img src="{{ $placeholder }}" alt="" class="this">
+                <img src="{{ $placeholder }}" alt="">
+                <img src="{{ $placeholder }}" alt="">
+                <img src="{{ $placeholder }}" alt="">
+                <img src="{{ $placeholder }}" alt="">
+            </div>
+        </div>
         <button class="button">VIEW ALL</button>
     </div>
 
@@ -157,13 +170,24 @@
                         <p>03/12/2008</p>
                     </div>
                 </div>
-                <h2>Title</h2>
-                <h3>desc</h3>
+                <h3>Title</h3>
+                <h4>desc</h4>
             </a>
             @endfor
         </div>
     </div>
-
+    <div class="test">
+        <p>Lapangan</p>
+        <p>Lapangan</p>
+        <p>Lapangan</p>
+        <p>Lapangan</p>
+        <p>Lapangan</p>
+        <p>Lapangan</p>
+        <p>Lapangan</p>
+        <p>Lapangan</p>
+        <p>Lapangan</p>
+        <p>Lapangan</p>
+    </div>
 
 </div>
 
@@ -219,7 +243,10 @@ window.addEventListener("scroll", () => {
 });
 
 document.addEventListener("DOMContentLoaded", () => {
-  const elements = [...document.querySelectorAll("*:not(.no-fade)")];
+  const elements = [...document.querySelectorAll(
+  "*:not(.no-fade):not(body):not(html):not(main):not(header):not(footer):not(nav):not(.container):not(.wrapper)"
+)];
+
 
   elements.forEach(el => {
     const computed = window.getComputedStyle(el);
