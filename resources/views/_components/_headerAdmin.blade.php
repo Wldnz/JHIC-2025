@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $title ?? "Bina Tata Usaha" }}</title>
     <!-- <link rel="shortcut icon" href="favicon.ico" type="image/x-icon"> -->
-    @vite(["resources/css/app.css", "resources/js/app.js"])
+    @vite(["resources/css/admin.css" ,"resources/js/app.js"])
 </head>
 
 <body>

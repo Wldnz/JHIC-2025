@@ -1,0 +1,90 @@
+@import 'animation.scss';
+@import '../components/alert';
+@import '../components/profile';
+.open-sidebar {
+    animation: openSidebar 200ms forwards;
+}
+
+.close-sidebar {
+    animation: closeSidebar 200ms forwards;
+}
+
+.button-submit-form {
+    display: flex;
+    padding: 10px;
+    gap: 10px;
+    align-items: center;
+
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+
+    border: 1px solid $color-accent;
+    color: $color-accent;
+    background-color: transparent;
+    border-radius: 8px;
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+.btn {
+    height: 50px;
+    padding: 10px;
+    font-size: $font-size-xl;
+    font-weight: bold;
+    border: none;
+    color: $color-accent;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+.btn-submit {
+    background-color: $color-accent;
+    color: $color-primary;
+}
+
+.btn-svg {
+    width: 25px;
+    height: 25px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.static {
+    position: static;
+}
+
+.transparent {
+    background-color: transparent;
+}
+
+ul {
+    list-style: none;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.tree-row-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+}
+
+.pad-0{
+    padding: 0 !important;
+}
+
+.flex-row{
+    flex-direction: row !important;
+}
+
+.justify-start{
+    justify-content: start !important;
+}
+
+.justify-between{
+    justify-content: space-between !important;
+}

@@ -1,0 +1,63 @@
+@import '../utils/variables';
+@import '../utils/animation.scss';
+.profile:hover > ul {
+    display: flex;
+}
+
+.profile {
+    position: relative;
+
+    .icon {
+        font-size: $font-size-xl;
+    }
+
+    .main-menu {
+        min-width: calc($font-size-xl * 5.5);
+        width: max-content;
+
+        position: absolute;
+        top: 50px;
+        right: 0;
+
+        display: none;
+        flex-direction: column;
+        gap: 15px;
+
+        padding: 5px 10px;
+
+        background-color: $color-secondary;
+        border: 1px solid $color-accent;
+        border-radius: 10px;
+
+        li {
+            font-size: $font-size-s;
+
+            a {
+                display: flex;
+                align-items: center;
+                gap: 15px;
+                font-weight: 600;
+
+                cursor: pointer;
+            }
+
+            padding: 5px;
+            border-bottom: 1px solid white;
+            position: relative;
+        }
+
+        li::before {
+            content: "";
+            width: 0%;
+            height: 1px;
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            background-color: $color-accent;
+        }
+
+        li:hover::before {
+            animation: line-break 1500ms forwards;
+        }
+    }
+}

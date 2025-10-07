@@ -32,7 +32,9 @@
             </form>
         </div>
         <div class="wrapper-content-media">
-            <div class="wrapper-card-media">
+            <a class="wrapper-card-media"
+                href="{{ route('admin.detail-portfolio', ['portfolio' => 1]) }}"
+            >
                 <div class="card-media">
                     <div class="wrapper-image">
                         <img src="https://tse1.mm.bing.net/th/id/OIP.W81pUm4Cky36gAu4f7poQgHaFj?rs=1&pid=ImgDetMain&o=7&rm=3" alt="wrapper-iamge">
@@ -46,11 +48,17 @@
                                 <h5>Wildan Izhar Al Haqq</h5>
                                 <h5>XII - RPL</h5>
                             </div>
-                            @include('_components._sprite-icons', ['name' => 'eye', 'size' => 20])
+                            <div class="action">
+                                <form id="action">
+                                    <button type="button" name="visible" id="button-visible" value="public">
+                                        @include('_components._sprite-icons', ['name' => 'eye', 'size' => 20])
+                                    </button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </a>
         </div>
     </div>
 </main>

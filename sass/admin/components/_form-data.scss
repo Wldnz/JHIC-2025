@@ -1,0 +1,159 @@
+@import '../../utils/variables';
+@mixin form_data {
+    .form-data {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 40px;
+
+        .wrapper-field {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+
+            .wrapper-input {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+
+                label {
+                    font-size: calc($font-size-m + 0.15rem);
+
+                    position: relative;
+
+                    span {
+                        color: red;
+                        font-weight: bolder;
+                    }
+                }
+                input,
+                textarea,
+                select {
+                    width: 280px;
+                    height: 40px;
+                    padding: 10px 5px;
+                    padding-left: 0;
+                    border: none;
+                    font-size: $font-size-m;
+                    border-bottom: 3px solid $color-accent;
+                    outline: none;
+                }
+
+                textarea {
+                    max-height: 250px;
+                    resize: vertical;
+                }
+                select {
+                    background-color: transparent;
+                }
+            }
+        }
+
+        .container {
+            border: 3px solid $color-accent;
+            padding: 20px;
+            border-radius: 8px;
+
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .wrapper-image {
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+
+            .image-product {
+                width: 250px;
+                height: 250px;
+                position: relative;
+                border: 3px dotted $color-accent;
+
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                img {
+                    width: inherit;
+                    height: 240px;
+                    object-fit: contain;
+                }
+
+                &:hover > .action-product {
+                    opacity: 1;
+                }
+
+                .action-product {
+                    width: inherit;
+                    height: inherit;
+                    padding: 10px;
+
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    gap: 10px;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+
+                    opacity: 0;
+
+                    button {
+                        width: 200px;
+                        height: 40px;
+                        padding: 8px;
+                        border: none;
+                        border-radius: 4px;
+                        background-color: transparent;
+                        cursor: pointer;
+                        font-weight: bold;
+                        color: white;
+                        background-color: $color-accent;
+                    }
+
+                    .btn-choose {
+                        position: relative;
+                        input {
+                            width: inherit;
+                            height: inherit;
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            opacity: 0;
+                            cursor: pointer;
+                        }
+                    }
+
+                    .btn-delete {
+                        background-color: red;
+                    }
+                }
+                .identifier {
+                    position: absolute;
+                    top: -15px;
+                    left: -15px;
+
+                    width: 35px;
+                    height: 35px;
+
+                    padding: 5px;
+
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+
+                    border-radius: 50%;
+
+                    background-color: $color-accent;
+                    color: white;
+
+                    scale: 0.6;
+                }
+            }
+        }
+    }
+}

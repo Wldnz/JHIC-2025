@@ -1,0 +1,104 @@
+@use "admin/components/navigation-side" as navigation;
+@use "admin/components/management-table" as table;
+@use "admin/components/summary-card" as summary_card;
+@use "admin/components/form-data" as form_data;
+@import 'utils/variables';
+@import 'utils/globals';
+@import 'admin/index';
+
+.wrapper-admin {
+    width: 100vw;
+    height: 100dvh;
+
+    display: flex;
+    position: relative;
+
+    color: $color-accent;
+
+    .left {
+        min-width: 300px;
+        height: 100dvh;
+
+        position: relative;
+
+        display: flex;
+
+        @include navigation.navigation;
+    }
+
+    .right {
+        width: 100%;
+        overflow-x: hidden;
+
+        h2 {
+            font-size: calc($font-size-l - .3rem);
+        }
+
+        .bar-top {
+            padding: 10px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: solid 1px #dfdfdf;
+        }
+
+        @include summary_card.summary_card;
+
+        .content {
+            padding: 15px;
+
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+
+
+            .greeting {
+                display: flex;
+                flex-direction: column;
+                gap: 1px;
+
+                span {
+                    font-size: $font-size-m;
+                }
+            }
+
+            .wrapper-content-media{
+                display: flex;
+                flex-direction: column;
+                gap: 25px;
+
+                padding: 15px;
+
+                .wrapper-container-media{
+                    display: flex;
+                    flex-direction: column;
+                    gap: 15px;
+                }
+            }
+
+            @include table.table;
+
+            @include form_data.form_data;
+
+            .wrapper-save-media{
+                width: 300px;
+                height: 85dvh;
+                .card-save-media{
+                    width: inherit;
+                    height: inherit;
+
+                    padding: 5px;
+
+                    border-bottom: 1px solid $color-accent;
+                    border-left: 1px solid $color-accent;
+                    border-bottom-left-radius: 5px;
+                    box-shadow: -5px 0 2px $color-accent;
+
+                    .card-content{
+                        
+                    }
+                }
+            }
+        }
+    }
+}

@@ -856,20 +856,46 @@ class AdminController extends Controller
         return view('admin.news');
     }
 
+    function createNews(){
+        return view('admin.addNews');
+    }
+
     function media(){
         return view('admin.media');
+    }
+
+    function createMedia(){
+        return view('admin.addMedia');
     }
 
     function portfolio(){
         return view('admin.portfolio');
     }
 
+    function createPortfolio(){
+        $students = Student::all();
+        $students->load('user');
+        return view('admin.addPortfolio', compact('students'));
+    }
+
+    function detailPortfolio(){
+        return view('admin.addPortfolio');
+    }
+
     function achievement(){
         return view('admin.achievement');
     }
 
+    function createAchievement(){
+        return view('admin.addAchievement');
+    }
+
     function facility(){
         return view('admin.facility');
+    }
+
+    function createFacility(){
+        return view('admin.addFacility');
     }
 
 
