@@ -1,0 +1,25 @@
+{
+    "$schema": "https://json.schemastore.org/package.json",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "build": "vite build",
+        "dev": "vite",
+        "watch": "sass --watch sass/input.scss resources/css/app.css",
+        "watch-admin": "sass --watch sass/input_admin.scss resources/css/admin.css"
+    },
+    "devDependencies": {
+        "@tailwindcss/vite": "^4.0.0",
+        "axios": "^1.11.0",
+        "concurrently": "^9.0.1",
+        "laravel-echo": "^2.2.4",
+        "laravel-vite-plugin": "^2.0.0",
+        "pusher-js": "^8.4.0",
+        "sass": "^1.91.0",
+        "tailwindcss": "^4.0.0",
+        "vite": "^7.1.4"
+    },
+    "dependencies": {
+        "chart.js": "^4.5.0"
+    }
+}

@@ -1,0 +1,32 @@
+
+============ admin
+
+new page
+ - artikel (desain sudah)
+ - portfolio (portfolio untuk siswa) (image, title, 
+	description, student, also the to the application (optional), 
+	major) (desain sudah)
+ - fasilitas (image, name, type)
+ - prestasi (image, student / student name,
+	type of competion, grade, major) (desain sudah)
+ - galeri (image / video, title, type_of_activitie, 
+	description)
+ - sliding images (components (each component has different animation)
+ - candidates (Calon peserta didik) (kayak akun siswa/ admin lah pagenya)
+
+-  navigation
+   - Dashboard
+   - Inventaris
+   	- Products
+	- Transaction
+    - Public?
+	- portfolio
+	- prestation
+	- Galeri
+	- Fasilitas
+	- Article / Blog/ News
+	- Comments
+    - Management Account
+	- Accounts (student/staff(admin))
+	- Candidates (calon peserta didik)
+    - Settings

@@ -1,0 +1,40 @@
+Student Tasks (Controllers):
++ Dashboard
++ List products
++ Detail product
++ List carts
++ Update or store cart item
++ Delete cart item
++ History transactions
++ Store transaction
++ Detail transaction
++ Route for new transaction page
++ Route for after transaction process page
++ See profile
++ Update profile
+
+Admin Tasks (Controllers):
++ Dashboard
++ All products
++ Detail products
++ Create product (with variants)
++ Update product (with variants)
++ Delete product (with variants)
++ All transactions
++ Detail transaction
+* New transaction
+* Update transaction
+o Delete transaction
++ All accounts
++ Detail account
++ Create account
+* Update account
+* Delete account
++ See profile
++ Update profile
+
+
+Todo - Wildan
+    - Modifikasi Navigation - Side (perkecil & tambahkan beberapa option lagi)
+    - Buat Halaman Create Artikel, Gallery (Photo & Video), Prestation, Portfolio, Fasilitas
+    - udh
