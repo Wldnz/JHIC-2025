@@ -2,9 +2,9 @@
 @use "admin/components/management-table" as table;
 @use "admin/components/summary-card" as summary_card;
 @use "admin/components/form-data" as form_data;
-@import 'utils/variables';
-@import 'utils/globals';
-@import 'admin/index';
+@import "utils/variables";
+@import "utils/globals";
+@import "admin/index";
 
 .wrapper-admin {
     width: 100vw;
@@ -31,7 +31,7 @@
         overflow-x: hidden;
 
         h2 {
-            font-size: calc($font-size-l - .3rem);
+            font-size: calc($font-size-l - 0.3rem);
         }
 
         .bar-top {
@@ -40,6 +40,10 @@
             justify-content: space-between;
             align-items: center;
             border-bottom: solid 1px #dfdfdf;
+            
+            h4{
+                font-size: calc($font-size-l - .3rem);
+            }
         }
 
         @include summary_card.summary_card;
@@ -51,7 +55,6 @@
             flex-direction: column;
             gap: 25px;
 
-
             .greeting {
                 display: flex;
                 flex-direction: column;
@@ -62,14 +65,14 @@
                 }
             }
 
-            .wrapper-content-media{
+            .wrapper-content-media {
                 display: flex;
                 flex-direction: column;
                 gap: 25px;
 
                 padding: 15px;
 
-                .wrapper-container-media{
+                .wrapper-container-media {
                     display: flex;
                     flex-direction: column;
                     gap: 15px;
@@ -80,22 +83,90 @@
 
             @include form_data.form_data;
 
-            .wrapper-save-media{
+            .wrapper-save-media {
                 width: 300px;
                 height: 85dvh;
-                .card-save-media{
+                .card-save-media {
                     width: inherit;
                     height: inherit;
 
-                    padding: 5px;
+                    padding: 10px;
 
-                    border-bottom: 1px solid $color-accent;
-                    border-left: 1px solid $color-accent;
-                    border-bottom-left-radius: 5px;
-                    box-shadow: -5px 0 2px $color-accent;
+                    border-bottom: 2px solid $color-accent;
+                    border-left: 2px solid $color-accent;
+                    border-bottom-left-radius: $border-radius;
 
-                    .card-content{
-                        
+                    display: flex;
+                    flex-direction: column;
+                    gap: 20px;
+
+                    .wrapper-action{
+
+                        >:first-child{
+                            display: none;
+                        }
+                    }
+
+                    .wrapper-content {
+                        height: inherit;
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: space-between;
+                        padding-bottom: 20px;
+
+                        .card-content {
+                            display: flex;
+                            flex-direction: column;
+                            gap: 20px;
+
+                            .wrapper-input {
+                                font-size: $font-size-m;
+
+                                display: flex;
+                                flex-direction: column;
+                                gap: 8px;
+
+                                label {
+                                    font-weight: 600;
+                                    span {
+                                        color: $color-accent;
+                                    }
+                                }
+
+                                input {
+                                    min-height: 30px;
+                                    padding: 5px;
+                                    padding-left: 0;
+                                    outline: none;
+                                    border: none;
+                                    border-bottom: 1px solid $color-accent;
+                                }
+
+                                select {
+                                    min-height: 30px;
+                                    padding: 5px;
+                                    padding-left: 0;
+
+                                    // border-radius: $border-radius;
+
+                                    outline: none;
+                                    border: none;
+                                    border-bottom: 1px solid $color-accent;
+                                }
+
+                                textarea {
+                                    width: 100%;
+                                    min-height: 70px;
+                                    max-height: 120px;
+
+                                    outline: none;
+                                    border: none;
+                                    border-bottom: 1px solid $color-accent;
+
+                                    resize: vertical;
+                                }
+                            }
+                        }
                     }
                 }
             }

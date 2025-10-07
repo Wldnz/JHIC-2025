@@ -566,13 +566,13 @@ img {
 }
 
 .btn {
-  height: 50px;
+  min-height: 30px;
   padding: 10px;
-  font-size: clamp(0.6rem, 3.5vw, 2rem);
+  font-size: clamp(0.4rem, 1.25vw, 1rem);
   font-weight: bold;
-  border: none;
   color: #273b98;
-  border-radius: 12px;
+  border: none;
+  border-radius: 8px;
   cursor: pointer;
 }
 
@@ -587,6 +587,17 @@ img {
   background-color: transparent;
   border: none;
   cursor: pointer;
+}
+
+.btn-media {
+  min-width: max-content;
+  background-color: transparent;
+  color: rgba(95, 119, 247, 0.6);
+  border: 2px solid rgba(95, 119, 247, 0.6);
+}
+.btn-media:hover {
+  color: #273b98;
+  border-color: #273b98;
 }
 
 .static {
@@ -624,6 +635,14 @@ a {
 
 .justify-between {
   justify-content: space-between !important;
+}
+
+.items-start {
+  align-items: start !important;
+}
+
+.self-end {
+  align-self: flex-end !important;
 }
 
 .inside-container {
@@ -843,6 +862,9 @@ a {
   justify-content: space-between;
   align-items: center;
   border-bottom: solid 1px #dfdfdf;
+}
+.wrapper-admin .right .bar-top h4 {
+  font-size: calc(clamp(0.6rem, 2vw, 1.5rem) - 0.3rem);
 }
 .wrapper-admin .right .summary {
   display: flex;
@@ -1235,9 +1257,9 @@ a {
   align-items: center;
 }
 .wrapper-admin .right .content .form-data .wrapper-image .image-product img {
-  width: inherit;
+  width: 100%;
   height: 240px;
-  object-fit: contain;
+  object-fit: cover;
 }
 .wrapper-admin .right .content .form-data .wrapper-image .image-product:hover > .action-product {
   opacity: 1;
@@ -1305,11 +1327,65 @@ a {
 .wrapper-admin .right .content .wrapper-save-media .card-save-media {
   width: inherit;
   height: inherit;
+  padding: 10px;
+  border-bottom: 2px solid #273b98;
+  border-left: 2px solid #273b98;
+  border-bottom-left-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.wrapper-admin .right .content .wrapper-save-media .card-save-media .wrapper-action > :first-child {
+  display: none;
+}
+.wrapper-admin .right .content .wrapper-save-media .card-save-media .wrapper-content {
+  height: inherit;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-bottom: 20px;
+}
+.wrapper-admin .right .content .wrapper-save-media .card-save-media .wrapper-content .card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.wrapper-admin .right .content .wrapper-save-media .card-save-media .wrapper-content .card-content .wrapper-input {
+  font-size: clamp(0.4rem, 1.25vw, 1rem);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.wrapper-admin .right .content .wrapper-save-media .card-save-media .wrapper-content .card-content .wrapper-input label {
+  font-weight: 600;
+}
+.wrapper-admin .right .content .wrapper-save-media .card-save-media .wrapper-content .card-content .wrapper-input label span {
+  color: #273b98;
+}
+.wrapper-admin .right .content .wrapper-save-media .card-save-media .wrapper-content .card-content .wrapper-input input {
+  min-height: 30px;
   padding: 5px;
+  padding-left: 0;
+  outline: none;
+  border: none;
   border-bottom: 1px solid #273b98;
-  border-left: 1px solid #273b98;
-  border-bottom-left-radius: 5px;
-  box-shadow: -5px 0 2px #273b98;
+}
+.wrapper-admin .right .content .wrapper-save-media .card-save-media .wrapper-content .card-content .wrapper-input select {
+  min-height: 30px;
+  padding: 5px;
+  padding-left: 0;
+  outline: none;
+  border: none;
+  border-bottom: 1px solid #273b98;
+}
+.wrapper-admin .right .content .wrapper-save-media .card-save-media .wrapper-content .card-content .wrapper-input textarea {
+  width: 100%;
+  min-height: 70px;
+  max-height: 120px;
+  outline: none;
+  border: none;
+  border-bottom: 1px solid #273b98;
+  resize: vertical;
 }
 
 /*# sourceMappingURL=admin.css.map */

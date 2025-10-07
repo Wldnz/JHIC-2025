@@ -4,13 +4,13 @@
         <span class="icon" id="profile-admin" data-show_main_menu="true">🧒🏻</span>
         <ul class="main-menu">
             <li>
-                <a href="{{ route("profile") }}">
+                <a href="{{ route("admin.logout") }}">
                     @include('_components._sprite-icons', ['name' => 'account', 'color' => '#273B98', 'size' => 20])
                     Profile
                 </a>
             </li>
             <li>
-                <a href="{{ route("logout") }}">
+                <a href="{{ route("admin.logout") }}">
                     @include('_components._sprite-icons', ['name' => 'logout', 'color' => '#273B98', 'size' => 20])
                     Log Out
                 </a>
