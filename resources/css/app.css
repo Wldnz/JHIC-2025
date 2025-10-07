@@ -1398,16 +1398,19 @@ body .detailTransaction .content .details h5 p {
   justify-content: center;
   align-items: center;
   gap: 10px;
-  font-size: 1.15rem;
+  font-size: clamp(0.4rem, 1.25vw, 1rem);
 }
 .wrapper-admin .left .navigation-side .wrapper-navigation .main-menu .menu .display-menu span,
 .wrapper-admin .left .navigation-side .wrapper-navigation .main-menu .menu .sub-menu span {
   display: none;
 }
-.wrapper-admin .left .navigation-side .wrapper-navigation .main-menu li img {
-  height: clamp(0rem, 4vw, 2.25rem);
+.wrapper-admin .left .navigation-side .wrapper-navigation .main-menu .menu .display-menu:hover,
+.wrapper-admin .left .navigation-side .wrapper-navigation .main-menu .menu .sub-menu:hover {
+  background-color: #eaf7f9;
+  color: #273b98;
 }
-.wrapper-admin .left .navigation-side .wrapper-navigation .main-menu .active {
+.wrapper-admin .left .navigation-side .wrapper-navigation .main-menu .menu .display-menu.active,
+.wrapper-admin .left .navigation-side .wrapper-navigation .main-menu .menu .sub-menu.active {
   font-weight: bold;
   background-color: #eaf7f9;
   color: #273b98;
@@ -1433,7 +1436,7 @@ body .detailTransaction .content .details h5 p {
 }
 .wrapper-admin .left .navigation-side .wrapper-navigation .main-menu .menu .sub-menu {
   margin-left: 30px;
-  font-size: 0.85rem;
+  font-size: clamp(0.2rem, 1vw, 0.85rem);
   padding: 8px;
   display: none;
 }
@@ -1848,7 +1851,9 @@ h2 {
   width: max-content;
 }
 .management-table table td:last-child .profile .main-menu {
-  top: 18px;
+  top: -5px;
+  right: 10px;
+  z-index: 10;
 }
 .management-table .wrapper-content-media {
   display: flex;
@@ -1879,10 +1884,10 @@ h2 {
   gap: 4px;
 }
 .management-table .wrapper-content-media .wrapper-card-media .card-media .detail-media .title {
-  font-size: 1rem;
+  font-size: clamp(0.4rem, 1.25vw, 1rem);
 }
 .management-table .wrapper-content-media .wrapper-card-media .card-media .detail-media .description {
-  font-size: calc(0.85rem - 2px);
+  font-size: calc(clamp(0.2rem, 1vw, 0.85rem) - 2px);
   font-weight: normal;
   padding-left: 1px;
 }
@@ -1891,7 +1896,7 @@ h2 {
   justify-content: space-between;
   align-items: center;
   gap: 10px;
-  font-size: 0.85rem;
+  font-size: clamp(0.2rem, 1vw, 0.85rem);
 }
 .management-table .wrapper-content-media .wrapper-card-media .card-media .detail-media .profile .tag-name {
   display: flex;

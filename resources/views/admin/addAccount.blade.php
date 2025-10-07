@@ -18,7 +18,7 @@
                     <span>*</span>
                 </label>
                 <input type="text" inputmode="numeric" name="nis" id="nis" placeholder="Masukkan NIS/NISN" minLength="8"
-                    maxlength="8" value="{{ old('nis') ?? '' }}" required>
+                    maxlength="16" value="{{ old('nis', '') }}" required>
             </div>
             <div class="wrapper-input">
                 <label for="fullname">
@@ -26,7 +26,7 @@
                     <span>*</span>
                 </label>
                 <input type="text" name="fullname" id="fullname" placeholder="Masukkan Nama Lengkap" minLength="3"
-                    maxlength="120" value="{{ old('fullname') ?? '' }}" required>
+                    maxlength="120" value="{{ old('fullname', '')}}" required>
             </div>
             <div class="wrapper-input">
                 <label for="email">
@@ -34,7 +34,7 @@
                     <span>*</span>
                 </label>
                 <input type="text" inputmode="email" name="email" id="email" placeholder="Masukkan email" minLength="8"
-                    maxlength="120" value="{{ old('email') ?? '' }}" required>
+                    maxlength="120" value="{{ old('email', '') }}" required>
             </div>
             <div class="wrapper-input">
                 <label for="phone">
@@ -42,15 +42,15 @@
                     <span>*</span>
                 </label>
                 <input type="text" inputmode="numeric" name="phone" id="phone" placeholder="81234567890" minLength="11"
-                    maxlength="12" value="{{ old('phone') ?? '' }}" required>
+                    maxlength="12" value="{{ old('phone', '') }}" required>
             </div>
             <div class="wrapper-input">
                 <label for="address">
                     Alamat
                     <span>*</span>
                 </label>
-                <textarea name="address" id="addresss" placeholder="Alamat Pengguna" minlength="8" maxlength="255"
-                    required>{{ old('address') ?? '' }}</textarea>
+                <textarea name="address" id="address" placeholder="Alamat Pengguna" minlength="8" maxlength="255"
+                    required>{{ old('address', '') }}</textarea>
             </div>
             <div class="wrapper-input">
                 <label for="gender">
@@ -70,11 +70,11 @@
                     <span>*</span>
                 </label>
                 <select name="class" id="class" required>
-                    <option value="X" @selected( old('class', '') == 'X')>
+                    <option value="X" @selected(old('class', '') == 'X')>
                         Kelas 10</option>
-                    <option value="XI" @selected( old('class') == 'XI')>
+                    <option value="XI" @selected(old('class') == 'XI')>
                         Kelas 11</option>
-                    <option value="XII" @selected( old('class') == 'XII')>Kelas 12</option>
+                    <option value="XII" @selected(old('class') == 'XII')>Kelas 12</option>
                 </select>
             </div>
             <div class="wrapper-input">
@@ -82,9 +82,9 @@
                     Jurusan
                     <span>*</span>
                 </label>
-                <select name="major" id="major" required>
+                <select name="major_id" id="major" required>
                     @foreach ($majors as $major)
-                        <option value="{{ $major->id }}" @selected(old('major', '') == $major->id)>{{ $major->name }}</option>
+                        <option value="{{ $major->id }}" @selected(old('major_id', '') == $major->id)>{{ $major->name }}</option>
                     @endforeach
                 </select>
             </div>
@@ -94,7 +94,7 @@
                     <span>*</span>
                 </label>
                 <input type="date" inputmode="numeric" name="birthdate" id="birthdate" placeholder="81234567890"
-                    value="{{ old('birthdate',date('Y-m-d')) }}" required>
+                    value="{{ old('birthdate', date('Y-m-d')) }}" required>
             </div>
             <div class="wrapper-input">
                 <label for="role">
@@ -104,17 +104,19 @@
                 <select name="role" id="role" required>
                     <option value="siswa" @selected(old('role', '') == 'siswa')>Siswa</option>
                     @if (Auth::user()->role == 'superAdmin')
-                        <option value="siswa" @selected(old('role', '') == 'admin')>Admin</option>
+                        <option value="admin" @selected(old('role', '') == 'admin')>Admin</option>
                     @endif
                 </select>
             </div>
         </div>
         <button class="button-submit-form">
-            <span>Ubah Data Akun</span>
+            <span>Tambahkan Akun</span>
             @include('_components._sprite-icons', ['name' => 'add', 'size' => 18])
         </button>
     </form>
 </main>
-
-
+<script defer>
+    const currentRole = '{{ old('role', '') }}';
+</script>
+@vite('resources/js/handle/account.js')
 @include('_components._footerAdmin')

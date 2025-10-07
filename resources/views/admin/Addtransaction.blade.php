@@ -160,4 +160,4 @@
     let currentProduct = [];
 </script>
 
-@vite(['resources/js/handle/transactions.js'])
+@vite(['resources/js/handle/add-transactions.js'])

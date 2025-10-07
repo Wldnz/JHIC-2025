@@ -20,7 +20,7 @@
                     <span>*</span>
                 </label>
                 <input type="text" inputmode="numeric" name="nis" id="nis" placeholder="Masukkan NIS/NISN" minLength="8"
-                    maxlength="8" value="{{ old('nis',$account['nis'])}}" required readonly>
+                    maxlength="8" value="{{ old('nis', $account['nis'])}}" required readonly>
             </div>
             <div class="wrapper-input">
                 <label for="fullname">
@@ -28,7 +28,7 @@
                     <span>*</span>
                 </label>
                 <input type="text" name="fullname" id="fullname" placeholder="Masukkan Nama Lengkap" minLength="3"
-                    maxlength="120" value="{{ old('fullname',$account['fullname']) }}" required>
+                    maxlength="120" value="{{ old('fullname', $account['fullname']) }}" required>
             </div>
             <div class="wrapper-input">
                 <label for="email">
@@ -44,7 +44,7 @@
                     <span>*</span>
                 </label>
                 <input type="text" inputmode="numeric" name="phone" id="phone" placeholder="81234567890" minLength="11"
-                    maxlength="12" value="{{ old('phone',$account['phone']) }}" required>
+                    maxlength="12" value="{{ old('phone', $account['phone']) }}" required>
             </div>
             @if ($account['role'] == 'siswa')
                 <div class="wrapper-input">
@@ -52,8 +52,8 @@
                         Alamat
                         <span>*</span>
                     </label>
-                    <textarea name="address" id="addresss" placeholder="Alamat Pengguna" minlength="8" maxlength="255"
-                        required>{{ old('address', $account['student']['address'] ) }}
+                    <textarea name="address" id="address" placeholder="Alamat Pengguna" minlength="8" maxlength="255"
+                        required>{{ old('address', $account['student']['address']) }}
                     </textarea>
                 </div>
                 <div class="wrapper-input">
@@ -62,8 +62,10 @@
                         <span>*</span>
                     </label>
                     <select name="gender" id="gender" required>
-                        <option value="male" @selected(old('gender', $account['student']['gender']) == 'male')>Laki - Laki</option>
-                        <option value="female" @selected(old('gender', $account['student']['gender']) == 'female')>Perempuan</option>
+                        <option value="male" @selected(old('gender', $account['student']['gender']) == 'male')>Laki - Laki
+                        </option>
+                        <option value="female" @selected(old('gender', $account['student']['gender']) == 'female')>Perempuan
+                        </option>
                     </select>
                 </div>
                 <div class="wrapper-input">
@@ -106,9 +108,11 @@
                     <span>*</span>
                 </label>
                 <select name="role" id="role" required>
-                    <option value="{{ $account['role'] }}" @selected(old('role') ?? '' == $account['role'])>{{ strtoupper($account['role'][0]) . substr($account['role'], 1) }}</option>
-                    @if (Auth::user()->role == 'superAdmin')
-                        <option value="siswa" @selected(old('role') ?? '' == 'admin')>Admin</option>
+                    <option value="{{ $account['role'] }}" @selected(old('role', '') == $account['role'])>
+                        {{ strtoupper($account['role'][0]) . substr($account['role'], 1) }}
+                    </option>
+                    @if (Auth::user()->role == 'superAdmin' && $account['role'] != 'admin')
+                        <option value="admin" @selected(old('role', '') == 'admin')>Admin</option>
                     @endif
                 </select>
             </div>
@@ -134,5 +138,8 @@
     ])
 </main>
 
-
+<script defer>
+    const currentRole = '{{ old('role', '') }}';
+</script>
+@vite('resources/js/handle/account.js')
 @include('_components._footerAdmin')
