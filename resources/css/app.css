@@ -50,7 +50,7 @@ body .button {
   width: max-content;
   font-weight: 500;
   border-radius: 8px;
-  background: #273b98;
+  background: linear-gradient(#4357b7 0%, #273b98 100%);
   color: #fff;
   border: 1.5px solid #273b98;
   transition: 0.1s;
@@ -358,7 +358,7 @@ body .wrapper-user .dashboard h2 {
 body .wrapper-user .dashboard h1 {
   text-align: center;
   font-size: clamp(0rem, 9vw, 2rem);
-  background: linear-gradient(#8aa3ff 0%, #273b98 100%);
+  background: linear-gradient(#4357b7 0%, #273b98 100%);
   background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -383,16 +383,31 @@ body .wrapper-user .dashboard .majors .change-major {
   width: 100%;
 }
 body .wrapper-user .dashboard .majors .change-major .major-counter {
-  height: 30%;
+  height: 50%;
   display: flex;
   padding: 2px;
   gap: 4px;
+  align-items: center;
 }
 body .wrapper-user .dashboard .majors .change-major .major-counter .major-count {
   aspect-ratio: 1/1;
-  height: 100%;
+  transition: 0.1s;
+  height: 50%;
   border: 1.5px solid;
   border-radius: 1000px;
+  display: flex;
+}
+body .wrapper-user .dashboard .majors .change-major .major-counter .major-count img {
+  display: none;
+}
+body .wrapper-user .dashboard .majors .change-major .major-counter .major-count.selected {
+  border: none;
+  height: 100%;
+}
+body .wrapper-user .dashboard .majors .change-major .major-counter .major-count.selected img {
+  display: flex;
+  aspect-ratio: 1/1;
+  filter: brightness(0) saturate(100%) invert(17%) sepia(56%) saturate(3428%) hue-rotate(224deg) brightness(91%) contrast(90%);
 }
 body .wrapper-user .dashboard .majors .major-slider {
   display: flex;
@@ -423,7 +438,9 @@ body .wrapper-user .dashboard .majors .major-slider .major-content h2 {
   margin-top: 0;
   font-size: clamp(0rem, 6vw, 1.5rem);
   font-weight: 700;
-  color: #273b98;
+  background: linear-gradient(#4357b7 0%, #273b98 100%);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 body .wrapper-user .dashboard .majors .major-slider .major-content h3 {
   margin-top: 0;
@@ -435,6 +452,8 @@ body .wrapper-user .dashboard .majors .major-slider .major-content h3 {
 }
 body .wrapper-user .dashboard .gallery {
   width: 100vw;
+  display: flex;
+  flex-direction: column;
   min-height: 100px;
   margin-top: 40px;
 }
@@ -442,8 +461,10 @@ body .wrapper-user .dashboard .gallery h2 {
   margin-top: 0;
   font-size: clamp(0rem, 9vw, 2rem);
   font-weight: 700;
-  color: #273b98;
   text-align: center;
+  background: linear-gradient(#4357b7 0%, #273b98 100%);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 body .wrapper-user .dashboard .gallery .img-group {
   display: flex;
@@ -452,14 +473,90 @@ body .wrapper-user .dashboard .gallery .img-group {
   gap: 15px;
   align-items: stretch;
 }
-body .wrapper-user .dashboard .gallery .img-group img {
+body .wrapper-user .dashboard .gallery .img-group span {
   aspect-ratio: 4/2;
   object-fit: cover;
   display: none;
   border-radius: 8px;
+  background-color: #000;
 }
 body .wrapper-user .dashboard .gallery .img-group .show {
   display: flex;
+}
+body .wrapper-user .dashboard .gallery button {
+  align-self: center;
+}
+body .wrapper-user .dashboard .news {
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  min-height: 100px;
+  margin-top: 40px;
+}
+body .wrapper-user .dashboard .news h2 {
+  margin-top: 0;
+  font-size: clamp(0rem, 9vw, 2rem);
+  font-weight: 700;
+  text-align: center;
+  background: linear-gradient(#4357b7 0%, #273b98 100%);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+body .wrapper-user .dashboard .news .news-group {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 40px;
+  gap: 20px;
+}
+body .wrapper-user .dashboard .news .news-group a {
+  flex: 1;
+  flex-direction: column;
+  display: flex;
+}
+body .wrapper-user .dashboard .news .news-group a img {
+  max-width: 100%;
+  aspect-ratio: 4/2;
+  border-radius: 8px;
+  object-fit: cover;
+}
+body .wrapper-user .dashboard .news .news-group a .news-info {
+  display: flex;
+  align-items: center;
+  height: 20px;
+}
+body .wrapper-user .dashboard .news .news-group a .news-info .tags {
+  position: relative;
+  display: flex;
+  width: 70%;
+  gap: 5px;
+  height: 100%;
+  overflow-x: scroll;
+}
+body .wrapper-user .dashboard .news .news-group a .news-info .tags::after {
+  position: absolute;
+  content: "";
+  height: 100%;
+  width: 50px;
+  top: 0;
+  right: 0;
+  pointer-events: none;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, #fff 100%);
+}
+body .wrapper-user .dashboard .news .news-group a .news-info .tags p {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  height: 100%;
+  padding: 0 5%;
+  background-color: rgba(39, 60, 152, 0.5921568627);
+  border-radius: 4px;
+  border: 1px solid #273b98;
+  color: #000;
+}
+body .wrapper-user .dashboard .news .news-group a .news-info .date {
+  width: 30%;
+  text-align: right;
 }
 body .products {
   width: 100%;
@@ -1398,16 +1495,19 @@ body .detailTransaction .content .details h5 p {
   justify-content: center;
   align-items: center;
   gap: 10px;
-  font-size: 1.15rem;
+  font-size: clamp(0.6rem, 2vw, 1.5rem);
 }
 .wrapper-admin .left .navigation-side .wrapper-navigation .main-menu .menu .display-menu span,
 .wrapper-admin .left .navigation-side .wrapper-navigation .main-menu .menu .sub-menu span {
   display: none;
 }
-.wrapper-admin .left .navigation-side .wrapper-navigation .main-menu li img {
-  height: clamp(0rem, 4vw, 2.25rem);
+.wrapper-admin .left .navigation-side .wrapper-navigation .main-menu .menu .display-menu:hover,
+.wrapper-admin .left .navigation-side .wrapper-navigation .main-menu .menu .sub-menu:hover {
+  background-color: #eaf7f9;
+  color: #273b98;
 }
-.wrapper-admin .left .navigation-side .wrapper-navigation .main-menu .active {
+.wrapper-admin .left .navigation-side .wrapper-navigation .main-menu .menu .display-menu.active,
+.wrapper-admin .left .navigation-side .wrapper-navigation .main-menu .menu .sub-menu.active {
   font-weight: bold;
   background-color: #eaf7f9;
   color: #273b98;
@@ -1433,7 +1533,7 @@ body .detailTransaction .content .details h5 p {
 }
 .wrapper-admin .left .navigation-side .wrapper-navigation .main-menu .menu .sub-menu {
   margin-left: 30px;
-  font-size: 0.85rem;
+  font-size: clamp(0.2rem, 1vw, 0.85rem);
   padding: 8px;
   display: none;
 }

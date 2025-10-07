@@ -20,33 +20,6 @@
                 asset("images/banner2/asset4.png"),
                 asset("images/banner2/asset5.png"),
                 asset("images/banner2/asset6.png")
-            ],
-            [
-                asset("images/banner3/bg.png"),
-                asset("images/banner3/asset1.png"),
-                asset("images/banner3/asset2.png"),
-                asset("images/banner3/asset3.png"),
-                asset("images/banner3/asset4.png"),
-                asset("images/banner3/asset5.png"),
-                asset("images/banner3/asset6.png")
-            ],
-            [
-                asset("images/banner4/bg.png"),
-                asset("images/banner4/asset1.png"),
-                asset("images/banner4/asset2.png"),
-                asset("images/banner4/asset3.png"),
-                asset("images/banner4/asset4.png"),
-                asset("images/banner4/asset5.png"),
-                asset("images/banner4/asset6.png")
-            ],
-            [
-                asset("images/banner5/bg.png"),
-                asset("images/banner5/asset1.png"),
-                asset("images/banner5/asset2.png"),
-                asset("images/banner5/asset3.png"),
-                asset("images/banner5/asset4.png"),
-                asset("images/banner5/asset5.png"),
-                asset("images/banner5/asset6.png")
             ]
         ];
 
@@ -54,35 +27,50 @@
         [
             [
                 asset("images/majors images/bc.png"),
-                asset("icons/majors icons/bc.svg"),
-                "BROADCASTING FILM & TV",
-                "broadcast suara atau teks seperti broadcast dan super broadcast di game growtopia"
+                asset("icons/majors icons/anim.svg"),
+                "ANIMATION",
+                "Menciptakan kreator animasi yang berkarakter, kreatif, aktif, dan inovatif yang mampu bekerja dan berkarya di industri animasi."
             ],
             [
                 asset("images/majors images/bc.png"),
                 asset("icons/majors icons/bc.svg"),
                 "BROADCASTING FILM & TV",
-                "broadcast suara atau teks seperti broadcast dan super broadcast di game growtopia"
+                "Membentuk Sineas berkarakter yang kreatif, aktif, inovatif, berjiwa enterpreneur yang unggul di dunia pertelevisian dan film."
             ],
             [
                 asset("images/majors images/bc.png"),
-                asset("icons/majors icons/bc.svg"),
-                "BROADCASTING FILM & TV",
-                "broadcast suara atau teks seperti broadcast dan super broadcast di game growtopia"
+                asset("icons/majors icons/gmdv.svg"),
+                "GAME DEVELOPMENT",
+                "Mencetak game developer yang handal dalam pemodelan serta merancang game sesuai kebutuhan industri"
             ],
             [
                 asset("images/majors images/bc.png"),
-                asset("icons/majors icons/bc.svg"),
-                "BROADCASTING FILM & TV",
-                "broadcast suara atau teks seperti broadcast dan super broadcast di game growtopia"
+                asset("icons/majors icons/tkj.svg"),
+                "IT Network",
+                "Mencetak administrator server dan jaringan yang handal, cermat, inovatif dan profesional di bidang teknologi informasi dan komunikasi."
             ],
             [
                 asset("images/majors images/bc.png"),
-                asset("icons/majors icons/bc.svg"),
-                "BROADCASTING FILM & TV",
-                "broadcast suara atau teks seperti broadcast dan super broadcast di game growtopia"
+                asset("icons/majors icons/dkv.svg"),
+                "DESIGN KOMUNIKASI VISUAL",
+                "Mencetak Seniman Digital yang kreatif, aktif, dan inovatif yang mampu bekerja dan bersaing di industri kreatif."
+            ],
+            [
+                asset("images/majors images/bc.png"),
+                asset("icons/majors icons/rpl.svg"),
+                "IT Software",
+                "Menghasilkan lulusan yang cerdas, disiplin, kreatif, inovatif dan sikap profesional dibidang Rekayasa Perangkat Lunak."
             ],
             
+        ];
+
+        $gallery =
+        [
+            'Ruangan A1' => 'A1.png',
+            'Ruangan A2' => 'A2.png',
+            'Ruangan A3' => 'A3.png',
+            'Ruangan A4' => 'A4.png',
+            'Ruangan A5' => 'A5.png',
         ]
 @endphp
 @include('_components._header', ['title' => 'product'])
@@ -133,7 +121,7 @@
             <img src="{{ asset("icons/left-arrow.svg") }}" alt="">
             <div class="major-counter">
                 @foreach ($majors as $major)
-                <span class="major-count"></span>
+                <span class="major-count"><img src="{{ $major[1] }}" alt=""></span>
                 @endforeach
             </div>
             <img src="{{ asset("icons/left-arrow.svg") }}" alt="" style="rotate: 180deg;">
@@ -141,21 +129,70 @@
     </div>
 
     <div class="gallery">
-      <h2>Gallery</h2>
-      <div class="img-group">
-        <img src="{{ $placeholder }}" alt="" class="show">
-        <img src="{{ $placeholder }}" alt="" class="show">
-        <img src="{{ $placeholder }}" alt="">
-        <img src="{{ $placeholder }}" alt="">
-        <img src="{{ $placeholder }}" alt="">
-        <img src="{{ $placeholder }}" alt="">
-      </div>
+        <h2>Gallery</h2>
+        <div class="img-group">
+            @foreach ( $gallery as $title => $file )
+                <span class="{{ $loop->iteration < 3 ? 'show' : '' }}">
+                    <img src="{{$file}}" alt="">
+                    <h3>{{ $title }}</h3>
+                </span>
+            @endforeach
+        </div>
+        <button class="button">VIEW ALL</button>
+    </div>
+
+    <div class="news">
+        <h2>BI NEWS</h2>
+        <div class="news-group">
+            @for ($i = 0; $i < 4; $i++)
+            <a href="">
+                <img src="{{ $placeholder }}" alt="">
+                <div class="news-info">
+                    <div class="tags">
+                        <p>Info Sekolah</p>
+                        <p>Info PSB</p>
+                        <p>JHIC 2025</p>
+                    </div>
+                    <div class="date">
+                        <p>03/12/2008</p>
+                    </div>
+                </div>
+                <h2>Title</h2>
+                <h3>desc</h3>
+            </a>
+            @endfor
+        </div>
     </div>
 
 
 </div>
 
+
+
+
+
+
 <script>
+const majors = document.querySelectorAll('.major-content');
+const counters = document.querySelectorAll('.major-count');
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            counters.forEach(c => c.classList.remove('selected'));
+            const index = Array.from(majors).indexOf(entry.target);
+            counters[index]?.classList.add('selected');
+        }
+    });
+}, {
+    threshold: 0.6,
+    root: document.querySelector('.major-slider')
+});
+
+majors.forEach(major => observer.observe(major));
+
+
+
 const nav = document.querySelector(".navigation-user");
 let lastScroll = window.scrollY;
 let ticking = false;
