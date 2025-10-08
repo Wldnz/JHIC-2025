@@ -16,7 +16,7 @@ Route::get('/profile', [UserController::class, 'profile'])->name('profile');
 Route::put('/profile', [UserController::class, 'updateProfile'])->name('updateProfile');
 
 // isLogin & is Siswa
-Route::name('student.')->middleware([isLogin::class])->group(function () {
+Route::name('student.')->middleware([])->group(function () {
     Route::get('/', [UserController::class, 'dashboard'])->name('dashboard');
     Route::get('/about', [UserController::class, 'about'])->name('about');
     Route::get('/products', [UserController::class, 'products'])->name('products');

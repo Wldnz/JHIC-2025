@@ -20,43 +20,70 @@
                 asset("images/banner2/asset4.png"),
                 asset("images/banner2/asset5.png"),
                 asset("images/banner2/asset6.png")
-            ]
+            ],
+            [
+                asset("images/banner2/bg.png"),
+                asset("images/banner2/asset1.png"),
+                asset("images/banner2/asset2.png"),
+                asset("images/banner2/asset3.png"),
+                asset("images/banner2/asset4.png"),
+                asset("images/banner2/asset5.png"),
+                asset("images/banner2/asset6.png")
+            ],
+            [
+                asset("images/banner2/bg.png"),
+                asset("images/banner2/asset1.png"),
+                asset("images/banner2/asset2.png"),
+                asset("images/banner2/asset3.png"),
+                asset("images/banner2/asset4.png"),
+                asset("images/banner2/asset5.png"),
+                asset("images/banner2/asset6.png")
+            ],
+            [
+                asset("images/banner2/bg.png"),
+                asset("images/banner2/asset1.png"),
+                asset("images/banner2/asset2.png"),
+                asset("images/banner2/asset3.png"),
+                asset("images/banner2/asset4.png"),
+                asset("images/banner2/asset5.png"),
+                asset("images/banner2/asset6.png")
+            ],
         ];
 
         $majors = 
         [
             [
-                asset("images/majors images/bc.png"),
+                asset("images/majors images/anim.png"),
                 asset("icons/majors icons/anim.svg"),
-                "ANIMATION",
+                "Animation",
                 "Menciptakan kreator animasi yang berkarakter, kreatif, aktif, dan inovatif yang mampu bekerja dan berkarya di industri animasi."
             ],
             [
                 asset("images/majors images/bc.png"),
                 asset("icons/majors icons/bc.svg"),
-                "BROADCASTING FILM & TV",
+                "Broadcasting Film & TV",
                 "Membentuk Sineas berkarakter yang kreatif, aktif, inovatif, berjiwa enterpreneur yang unggul di dunia pertelevisian dan film."
             ],
             [
-                asset("images/majors images/bc.png"),
+                asset("images/majors images/gmdv.png"),
                 asset("icons/majors icons/gmdv.svg"),
-                "GAME DEVELOPMENT",
+                "Game Development",
                 "Mencetak game developer yang handal dalam pemodelan serta merancang game sesuai kebutuhan industri"
             ],
             [
-                asset("images/majors images/bc.png"),
+                asset("images/majors images/dkv.png"),
+                asset("icons/majors icons/dkv.svg"),
+                "Visual Communication Design",
+                "Mencetak Seniman Digital yang kreatif, aktif, dan inovatif yang mampu bekerja dan bersaing di industri kreatif."
+            ],
+            [
+                asset("images/majors images/tkj.png"),
                 asset("icons/majors icons/tkj.svg"),
                 "IT Network",
                 "Mencetak administrator server dan jaringan yang handal, cermat, inovatif dan profesional di bidang teknologi informasi dan komunikasi."
             ],
             [
-                asset("images/majors images/bc.png"),
-                asset("icons/majors icons/dkv.svg"),
-                "DESIGN KOMUNIKASI VISUAL",
-                "Mencetak Seniman Digital yang kreatif, aktif, dan inovatif yang mampu bekerja dan bersaing di industri kreatif."
-            ],
-            [
-                asset("images/majors images/bc.png"),
+                asset("images/majors images/rpl.png"),
                 asset("icons/majors icons/rpl.svg"),
                 "IT Software",
                 "Menghasilkan lulusan yang cerdas, disiplin, kreatif, inovatif dan sikap profesional dibidang Rekayasa Perangkat Lunak."
@@ -66,16 +93,22 @@
 
         $gallery =
         [
-            'Ruangan A1' => $placeholder,
-            'Ruangan A2' => $placeholder,
-            'Ruangan A3' => 'A3.png',
-            'Ruangan A4' => 'A4.png',
-            'Ruangan A5' => 'A5.png',
-        ]
+            'Ruangan A1' => asset("images/kelas king/a1.svg"),
+            'Ruangan A2' => asset("images/kelas king/a2.svg"),
+            'Ruangan A3' => asset("images/kelas king/a3.svg"),
+            'Ruangan LapBasket' => asset("images/kelas king/lapbasket.svg"),
+            'Ruangan LapFutsal' => asset("images/kelas king/lapfutsal.svg"),
+            'Ruangan B1' => asset("images/kelas king/b1.svg"),
+        ];
 @endphp
 @include('_components._header', ['title' => 'product'])
 <div class="dashboard no-fade">
     <div class="banner">
+        <div class="trinkets star-group star-group-1 no-fade">
+            <img src="{{ asset("images/trinkets/star.svg") }}" alt="">
+            <img src="{{ asset("images/trinkets/star.svg") }}" alt="">
+        </div>
+        <span class="trinkets circle circle-1 no-fade"></span>
         <div class="change-banner left"><img class="no-fade" src="{{ asset("icons/arrow-down.svg") }}" alt=""></div>
         <div class="center">
             <div class="sliding-banner">
@@ -102,45 +135,58 @@
         </div>
         <div class="change-banner right"><img class="no-fade" src="{{ asset("icons/arrow-down.svg") }}" alt=""></div>
     </div>
-
+    
     <h2>WE ARE</h2>
-    <h1>THE PIONEER OF <br> IT SCHOOL</h1>
+    <h1>THE PIONEER OF IT&nbspSCHOOL</h1>
     <h3>THE SKILL BUILDING WE SPECIALIZE IN ARE</h3>
     <div class="majors">
-        <div class="major-slider">
-            @foreach ( $majors as $major )
-            <a class="major-content">
-                <img src="{{ $major[0] }}" alt="">
-                <img class="icon" src="{{ $major[1] }}" alt=""> 
-                <h2>{{ $major[2] }} </h2>
-                <h3>{{ $major[3] }} </h3>
-            </a>
-            @endforeach
-        </div>
-        <div class="change-major">
-            <img src="{{ asset("icons/left-arrow.svg") }}" alt="">
-            <div class="major-counter">
-                @foreach ($majors as $major)
-                <span class="major-count"><img src="{{ $major[1] }}" alt=""></span>
+        <div class="up">
+            <div class="change-major arrow-left"><img src="{{ asset("icons/arrow-down.svg") }}" alt=""><img src="{{$placeholder}}" class="floating-major"></div>
+            <div class="major-slider">
+                @foreach ( $majors as $major )
+                <a class="major-content">
+                    <img src="{{ $major[0] }}" alt="">
+                    <img class="icon" src="{{ $major[1] }}" alt=""> 
+                    <h2>{{ $major[2] }} </h2>
+                    <h3>{{ $major[3] }} </h3>
+                </a>
                 @endforeach
             </div>
-            <img src="{{ asset("icons/left-arrow.svg") }}" alt="" style="rotate: 180deg;">
+            <div class="change-major arrow-right"><img src="{{ asset("icons/arrow-down.svg") }}" alt=""><img src="{{$placeholder}}" class="floating-major right"></div>
+        </div>
+        <div class="down">
+
+            <div class="change-major">
+                <img src="{{ asset("icons/left-arrow.svg") }}" class="arrow-left">
+                <div class="major-counter">
+                    @foreach ($majors as $major)
+                    <span class="major-count"><img src="{{ $major[1] }}" alt=""></span>
+                    @endforeach
+                </div>
+                <img src="{{ asset("icons/left-arrow.svg") }}" class="arrow-right" style="rotate: 180deg">
+            </div>
         </div>
     </div>
-
+    
     <div class="gallery">
+        <img src="{{ asset("images/trinkets/wave.svg") }}" alt="" class="trinkets wave wave-1 no-fade">
+        <div class="trinkets star-group star-group-2 no-fade">
+            <img src="{{ asset("images/trinkets/star.svg") }}" alt="">
+            <img src="{{ asset("images/trinkets/star.svg") }}" alt="">
+        </div>
         <h2>Gallery</h2>
         <div class="img-group">
             @foreach ( $gallery as $title => $file )
                 <span class="{{ $loop->iteration < 3 ? 'show' : '' }}">
-                    <img src="{{$file}}" alt="">
+                    <img src="{{$file}}" alt="" class="gallery-img">
                     <h3>{{ $title }}</h3>
                 </span>
             @endforeach
         </div>
         <div class="img-full no-fade">
             <div class="bar">
-
+                <p>Kelas A1</p>
+                <img src="{{ asset("icons/Add_Plus.svg") }}" alt="" class="close-img-full">
             </div>
             <img src="{{ $placeholder }}" alt="">
             <div class="other-img">
@@ -157,119 +203,206 @@
     <div class="news">
         <h2>BI NEWS</h2>
         <div class="news-group">
-            @for ($i = 0; $i < 4; $i++)
+            @for ($i = 0; $i < 3; $i++)
             <a href="">
-                <img src="{{ $placeholder }}" alt="">
+                <img src="{{ asset("images/news/mamah aku menang.png") }}" alt="">
                 <div class="news-info">
                     <div class="tags">
-                        <p>Info Sekolah</p>
-                        <p>Info PSB</p>
-                        <p>JHIC 2025</p>
+                        <div class="tags-slider">
+                            <p class="tag1">Info Sekolah</p>
+                            <p class="tag2">Info PSB</p>
+                            <p class="tag3">JHIC 2025</p>
+                        </div>
                     </div>
                     <div class="date">
                         <p>03/12/2008</p>
                     </div>
                 </div>
-                <h3>Title</h3>
-                <h4>desc</h4>
+                <h3>SEKOLAH SWASTA MENOLAK SEKOLAH GRATIS BLA BLA BLA AKU CINTA JHIC SELAMANYA TEST TEST TEST</h3>
+                <h4>really long description of the news, one might say it's a paragraph of some sort i don't even know like bro wtf i'm just writing this for testing but wtf</h4>
             </a>
             @endfor
         </div>
     </div>
-    <div class="test">
-        <p>Lapangan</p>
-        <p>Lapangan</p>
-        <p>Lapangan</p>
-        <p>Lapangan</p>
-        <p>Lapangan</p>
-        <p>Lapangan</p>
-        <p>Lapangan</p>
-        <p>Lapangan</p>
-        <p>Lapangan</p>
-        <p>Lapangan</p>
-    </div>
 
 </div>
 
-
-
-
-
-
 <script>
-const majors = document.querySelectorAll('.major-content');
-const counters = document.querySelectorAll('.major-count');
+document.addEventListener("DOMContentLoaded", () => {
+    const banner = document.querySelector(".sliding-banner")
+    const leftBtn = document.querySelector(".change-banner.left")
+    const rightBtn = document.querySelector(".change-banner.right")
+    const scrollStep = banner.clientWidth
+    const scrollSpeed = 5000
+    let autoScroll
+    let scrollTimeout
+
+    const scrollLeft = () => {
+        if (banner.scrollLeft <= 0) {
+            banner.scrollTo({ left: banner.scrollWidth, behavior: "instant" })
+        }
+        banner.scrollBy({ left: -scrollStep, behavior: "smooth" })
+    }
+
+    const scrollRight = () => {
+        if (banner.scrollLeft + banner.clientWidth >= banner.scrollWidth - 1) {
+            banner.scrollTo({ left: 0, behavior: "smooth" })
+        } else {
+            banner.scrollBy({ left: scrollStep, behavior: "smooth" })
+        }
+    }
+
+    const startAutoScroll = () => {
+        stopAutoScroll()
+        autoScroll = setInterval(scrollRight, scrollSpeed)
+    }
+
+    const stopAutoScroll = () => {
+        clearInterval(autoScroll)
+    }
+
+    leftBtn.addEventListener("click", () => {
+        scrollLeft()
+        stopAutoScroll()
+        startAutoScroll()
+    })
+
+    rightBtn.addEventListener("click", () => {
+        scrollRight()
+        stopAutoScroll()
+        startAutoScroll()
+    })
+
+    banner.addEventListener("mouseenter", stopAutoScroll)
+    banner.addEventListener("mouseleave", startAutoScroll)
+
+    banner.addEventListener("scroll", () => {
+        stopAutoScroll()
+        clearTimeout(scrollTimeout)
+        scrollTimeout = setTimeout(() => {
+            startAutoScroll()
+        }, 200)
+    })
+
+    startAutoScroll()
+})
+
+
+
+
+
+const gallery_img = document.querySelectorAll(".gallery-img")
+const full_img = document.querySelector(".img-full")
+const close_full_img = document.querySelector(".close-img-full")
+
+gallery_img.forEach(image => {
+    image.addEventListener("click", () => {
+        full_img.classList.add("active")
+        document.body.style.overflowY = "hidden"
+    })
+})
+
+close_full_img.addEventListener("click", () => {
+    full_img.classList.remove("active")
+    document.body.style.overflowY = "auto"
+})
+
+
+const majors = document.querySelectorAll('.major-content')
+const counters = document.querySelectorAll('.major-count')
 
 const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
-            counters.forEach(c => c.classList.remove('selected'));
-            const index = Array.from(majors).indexOf(entry.target);
-            counters[index]?.classList.add('selected');
+            counters.forEach(c => c.classList.remove('selected'))
+            const index = Array.from(majors).indexOf(entry.target)
+            counters[index]?.classList.add('selected')
         }
-    });
+    })
 }, {
     threshold: 0.6,
     root: document.querySelector('.major-slider')
-});
+    
+})
 
-majors.forEach(major => observer.observe(major));
+majors.forEach(major => observer.observe(major))
 
 
 
-const nav = document.querySelector(".navigation-user");
-let lastScroll = window.scrollY;
-let ticking = false;
+const nav = document.querySelector(".navigation-user")
+let lastScroll = window.scrollY
+let ticking = false
 
 window.addEventListener("scroll", () => {
   if (!ticking) {
     window.requestAnimationFrame(() => {
-      const currentScroll = window.scrollY;
+      const currentScroll = window.scrollY
 
       if (Math.abs(currentScroll - lastScroll) > 50) {
         if (currentScroll > lastScroll && currentScroll > 20) {
-          nav.style.top = "-200px";
+          nav.style.top = "-200px"
         } else {
-          nav.style.top = "0";
+          nav.style.top = "0"
         }
-        lastScroll = currentScroll;
+        lastScroll = currentScroll
       }
 
-      ticking = false;
-    });
+      ticking = false
+    })
 
-    ticking = true;
+    ticking = true
   }
-});
+})
 
 document.addEventListener("DOMContentLoaded", () => {
   const elements = [...document.querySelectorAll(
   "*:not(.no-fade):not(body):not(html):not(main):not(header):not(footer):not(nav):not(.container):not(.wrapper)"
-)];
+)]
 
 
   elements.forEach(el => {
-    const computed = window.getComputedStyle(el);
-    el.dataset.originalOpacity = computed.opacity || 1;
-  });
+    const computed = window.getComputedStyle(el)
+    el.dataset.originalOpacity = computed.opacity || 1
+  })
 
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
-      const el = entry.target;
-      const original = parseFloat(el.dataset.originalOpacity);
-      const faded = Math.max(original - 0.5, 0);
+      const el = entry.target
+      const original = parseFloat(el.dataset.originalOpacity)
+      const faded = Math.max(original - 0.5, 0)
 
       if (entry.isIntersecting) {
-        el.style.opacity = original;
+        el.style.opacity = original
       } else {
-        el.style.opacity = faded;
+        el.style.opacity = faded
       }
-    });
-  }, { threshold: 0.1 });
+    })
+  }, { threshold: 0.1 })
 
-  elements.forEach(el => observer.observe(el));
-});
+  elements.forEach(el => observer.observe(el))
+})
 
+document.addEventListener("DOMContentLoaded", () => {
+    const slider = document.querySelector(".major-slider")
+    const leftArrow = document.querySelector(".arrow-left")
+    const rightArrow = document.querySelector(".arrow-right")
+
+    const slideWidth = slider.querySelector(".major-content").offsetWidth
+
+    leftArrow.addEventListener("click", () => {
+        slider.scrollBy({
+            left: -slideWidth,
+            behavior: "smooth"
+        })
+    })
+
+    rightArrow.addEventListener("click", () => {
+        slider.scrollBy({
+            left: slideWidth,
+            behavior: "smooth"
+        })
+    })
+})
 
 
 </script>
