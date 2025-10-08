@@ -1,3 +1,4 @@
-<div>
-    <!-- Act only according to that maxim whereby you can, at the same time, will that it should become a universal law. - Immanuel Kant -->
+@include("_components._header")
+<div class="progsil-page">
+    <h2>PROGRAM SILANssasGasasasasas 4jkjskdksj</h2>
 </div>
