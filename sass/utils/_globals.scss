@@ -1,6 +1,7 @@
 @import 'animation.scss';
 @import '../components/alert';
 @import '../components/profile';
+
 .open-sidebar {
     animation: openSidebar 200ms forwards;
 }
@@ -29,13 +30,17 @@
 }
 
 .btn {
-    height: 50px;
+    min-height: 30px;
     padding: 10px;
-    font-size: $font-size-xl;
+
+    font-size: $font-size-m;
     font-weight: bold;
-    border: none;
+    
     color: $color-accent;
-    border-radius: 12px;
+    
+    border: none;
+    border-radius: $border-radius;
+    
     cursor: pointer;
 }
 
@@ -49,6 +54,19 @@
     height: 25px;
     background-color: transparent;
     border: none;
+    cursor: pointer;
+}
+
+.btn-media{
+    min-width: max-content;
+    background-color: transparent;
+    color: $color-secondary-background;
+    border: 2px solid $color-secondary-background;
+
+    &:hover{
+        color: $color-accent;
+        border-color:  $color-accent;
+    }
 }
 
 .static {
@@ -70,4 +88,30 @@ a {
 
 .tree-row-grid {
     grid-template-columns: repeat(3, 1fr) !important;
+}
+
+.pad-0{
+    padding: 0 !important;
+}
+
+.flex-row{
+    flex-direction: row !important;
+}
+
+.justify-start{
+    justify-content: start !important;
+}
+
+
+.justify-between{
+    justify-content: space-between !important;
+}
+
+.items-start{
+    align-items: start !important;
+}
+
+
+.self-end{
+    align-self: flex-end !important;
 }

@@ -9,14 +9,14 @@
 <body>
 
     <nav class="navigation-user">
-        <div class="left"><a href="{{ route('student.dashboard') }}"><img src="https://smkbinainformatika.sch.id/wp-content/uploads/2022/11/logo.png"></a></div>
+        <div class="left"><a href="{{ route('user.index') }}"><img src="https://smkbinainformatika.sch.id/wp-content/uploads/2022/11/logo.png"></a></div>
         <div class="center">
             <div class="links">
-                <a href="{{ route('student.dashboard') }}">HOME</a>
-                <a href="{{ route('student.products') }}">PROFILE</a>
-                <a href="{{ route('student.about') }}">MAJOR</a>
-                <a href="{{ route('student.about') }}">PROGRAM</a>
-                <a href="{{ route('student.about') }}">NEWS</a>
+                <a href="{{ route('user.index') }}">HOME</a>
+                <a href="{{ route('user.profile') }}">PROFILE</a>
+                <a>MAJOR</a>
+                <a>PROGRAM</a>
+                <a href="{{ route('user.news') }}">NEWS</a>
             </div>
         </div>
         
@@ -30,7 +30,7 @@
     <div class="mobile-nav no-fade">
         <div class="up">
             <img class="exit-burger" src="{{ asset("icons/Add_Plus.svg") }}" alt="">
-            <a href="{{ route('student.dashboard') }}">HOME</a>
+            <a href="{{ route('user.index') }}">HOME</a>
             <a class="expandable">PROFILE <img src="{{ asset("icons/arrow-down.svg") }}" alt=""></a>
                 <div class="branch">
                     <a href="">Tentang Kami</a>
@@ -56,7 +56,7 @@
                     <a href="">Bimbingan Konseling</a>
                     <a href="">Project Work</a>
                 </div>
-            <a href="{{ route('student.about') }}">NEWS</a>
+            <a href="{{ route('user.news') }}">NEWS</a>
             
         </div>
         <div class="down">

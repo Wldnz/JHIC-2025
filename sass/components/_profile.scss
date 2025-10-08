@@ -8,11 +8,12 @@
     position: relative;
 
     .icon {
-        font-size: $font-size-4xl;
+        font-size: $font-size-xl;
     }
 
     .main-menu {
-        width: calc($font-size-2xl * 8);
+        min-width: calc($font-size-xl * 5.5);
+        width: max-content;
 
         position: absolute;
         top: 50px;
@@ -29,7 +30,7 @@
         border-radius: 10px;
 
         li {
-            font-size: $font-size-m;
+            font-size: $font-size-s;
 
             a {
                 display: flex;

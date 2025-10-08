@@ -1,3 +1,4 @@
+const maxImages = max_images ?? 3;
 function setActionToImage() {
     document.querySelectorAll('.action-product').forEach(element => {
         const id = element.parentElement.children[0].getAttribute('alt').split('-')[1];
@@ -25,7 +26,7 @@ function changeImage(id, file) {
 
 function insertImage(file) {
     if (file == null) return;
-    if (image.length < 3) {
+    if (image.length < maxImages) {
         image.push({
             id: `added_image_${new Date().getTime()}`,
             url: URL.createObjectURL(file),
@@ -119,7 +120,7 @@ function loadImage() {
                                 </div>
                             </div>`;
 
-        if (index == image.length - 1 && image.length < 3) stringImage += defaultImage();
+        if (index == image.length - 1 && image.length < maxImages) stringImage += defaultImage();
     });
     if (image.length == 0) stringImage += defaultImage(true);
     document.getElementById("image-picker").innerHTML = stringImage;

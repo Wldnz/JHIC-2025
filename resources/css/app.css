@@ -311,10 +311,11 @@ img {
   position: relative;
 }
 .profile .icon {
-  font-size: clamp(0.6rem, 5.5vw, 3.5rem);
+  font-size: clamp(0.6rem, 3.5vw, 2rem);
 }
 .profile .main-menu {
-  width: calc(clamp(0.6rem, 4vw, 2.5rem) * 8);
+  min-width: calc(clamp(0.6rem, 3.5vw, 2rem) * 5.5);
+  width: max-content;
   position: absolute;
   top: 50px;
   right: 0;
@@ -327,7 +328,7 @@ img {
   border-radius: 10px;
 }
 .profile .main-menu li {
-  font-size: clamp(0.4rem, 1.25vw, 1rem);
+  font-size: clamp(0.2rem, 1vw, 0.85rem);
   padding: 5px;
   border-bottom: 1px solid white;
   position: relative;
@@ -377,13 +378,13 @@ img {
 }
 
 .btn {
-  height: 50px;
+  min-height: 30px;
   padding: 10px;
-  font-size: clamp(0.6rem, 3.5vw, 2rem);
+  font-size: clamp(0.4rem, 1.25vw, 1rem);
   font-weight: bold;
-  border: none;
   color: #273b98;
-  border-radius: 12px;
+  border: none;
+  border-radius: 8px;
   cursor: pointer;
 }
 
@@ -397,6 +398,18 @@ img {
   height: 25px;
   background-color: transparent;
   border: none;
+  cursor: pointer;
+}
+
+.btn-media {
+  min-width: max-content;
+  background-color: transparent;
+  color: rgba(95, 119, 247, 0.6);
+  border: 2px solid rgba(95, 119, 247, 0.6);
+}
+.btn-media:hover {
+  color: #273b98;
+  border-color: #273b98;
 }
 
 .static {
@@ -418,6 +431,30 @@ a {
 
 .tree-row-grid {
   grid-template-columns: repeat(3, 1fr) !important;
+}
+
+.pad-0 {
+  padding: 0 !important;
+}
+
+.flex-row {
+  flex-direction: row !important;
+}
+
+.justify-start {
+  justify-content: start !important;
+}
+
+.justify-between {
+  justify-content: space-between !important;
+}
+
+.items-start {
+  align-items: start !important;
+}
+
+.self-end {
+  align-self: flex-end !important;
 }
 
 body .button {

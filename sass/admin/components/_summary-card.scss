@@ -1,0 +1,59 @@
+@import '../../utils/variables';
+@mixin summary_card {
+    .summary {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        .greeting {
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+
+            h4 {
+                font-size: calc($font-size-m + 2.4px);
+            }
+
+            a {
+                font-size: $font-size-s;
+            }
+        }
+
+        .wrapper-summary {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+
+            .card-summary {
+                min-width: 200px;
+                width: 200px;
+                padding: 8px;
+                border-radius: 6px;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+
+                .wrapper-icon {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 10px;
+                    background-color: $color-accent;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+                .wrapper-information {
+                    display: flex;
+                    flex-direction: column;
+                    h5 {
+                        font-size: $font-size-m;
+                    }
+                    span {
+                        font-size: calc($font-size-s - 2px);
+                    }
+                }
+                box-shadow: 0px 0px 4px $color-accent;
+            }
+        }
+    }
+}
