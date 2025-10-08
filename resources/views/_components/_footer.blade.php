@@ -1,49 +1,59 @@
 </main>
 
 <footer>
-    <div class="links">
-        <h4>BiTU </h4>
-        <a href="{{ route('student.dashboard') }}"><p>Home</p></a>
-        <a href="{{ route('student.products') }}"><p>Products</p></a>
-        <a href="{{ route('student.about') }}"><p>About Us</p></a>
-        <a href="{{ route('student.cart') }}"><p>Your Cart</p></a>
+    <div class="sosmed">
+        <p>GET CONNECTED WITH US ON SOCIAL NETWORKS</p>
+        <div class="sosmed-links">
+            <a href="https://www.youtube.com/@officialsmkbi"><img src="{{ asset("icons/sosmed/youtube.svg") }}" alt=""></a>
+            <a href="https://www.instagram.com/officialsmkbi/"><img src="{{ asset("icons/sosmed/instagram.svg") }}" alt=""></a>
+            <a href="https://www.tiktok.com/@official.smkbi"><img src="{{ asset("icons/sosmed/tiktok.svg") }}" alt=""></a>
+            <a href="https://www.linkedin.com/company/smk-bina-informatika/"><img src="{{ asset("icons/sosmed/linkedin.svg") }}" alt=""></a>
+        </div>
     </div>
-    <div class="links">
-        <h4>SMK Bina Informatika </h4>
-        <a href="https://www.smkbinainformatika.sch.id"><p>Website</p></a>
-        <a href="https://www.youtube.com/@officialsmkbi"><p>Youtube</p></a>
-        <a href="https://www.instagram.com/officialsmkbi/"><p>Instagram</p></a>
-        <a href="https://www.tiktok.com/@official.smkbi"><p>Tiktok</p></a>
-        <a href="https://www.linkedin.com/company/smk-bina-informatika"><p>LinkedIn</p></a>
+
+    <div class="footer-links">
+        <div class="links">
+            <h3>Profile Singkat</h3>
+            <a>SMK Bina Informatika didirikan sejak tahun 2007. Kami adalah sekolah yang berada di naungan Yayasan Bakti Nusantara dan berfokus pada bidang keahlian Teknologi Informasi Komunikasi serta Seni dan Ekonomi Kreatif.</a>
+        </div>
+        <div class="links">
+            <h3>Major</h3>
+            <a href="Youtube.com"><img src="{{ asset("icons/majors icons/anim.svg") }}" alt="">Animation</a>
+            <a href="Youtube.com"><img src="{{ asset("icons/majors icons/bc.svg") }}" alt="">Broadcasting</a>
+            <a href="Youtube.com"><img src="{{ asset("icons/majors icons/gmdv.svg") }}" alt="">Game Development</a>
+            <a href="Youtube.com"><img src="{{ asset("icons/majors icons/dkv.svg") }}" alt="">Visual Communication Design</a>
+            <a href="Youtube.com"><img src="{{ asset("icons/majors icons/tkj.svg") }}" alt="">IT Network</a>
+            <a href="Youtube.com"><img src="{{ asset("icons/majors icons/rpl.svg") }}" alt="">IT Software</a>
+        </div>
+        <div class="links">
+            <h3>Programs</h3>
+            <a href="Youtube.com">Extracurricular</a>
+            <a href="Youtube.com">Program Silang</a>
+            <a href="Youtube.com">BTQ</a>
+            <a href="Youtube.com">USM</a>
+            <a href="Youtube.com">Bimbingan Konseling</a>
+            <a href="Youtube.com">Project Work</a>
+        </div>
+        <div class="links">
+            <h3>Contact</h3>
+            <a href="https://maps.app.goo.gl/bYVZMmQYAzxCFtRb6"><img src="{{ asset("icons/map.svg") }}">Ciputat, Jl Cendrawasih Raya 9A</a>
+            <a href="wa.me/6281280063529"><img src="{{ asset("icons/telp.svg") }}">(021) - 745 3048</a>
+            <a href="wa.me/6281280063529"><img src="{{ asset("icons/wa.svg") }}">+62 812-8006-3529</a>
+            <a href="mailto:info@smkbinainformatika.sch.id"><img src="{{ asset("icons/email.svg") }}">info@smkbinainformatika.sch.id</a>
+        </div>
     </div>
-    <div class="links">
-        <h4>Contact </h4>
-        <a href="https://maps.app.goo.gl/vfUXsErkEc6igeDe8"><p>Ciputat, Jl Cendrawasih Raya 9A</p></a><br>
-        <p onclick="copy(this)">info@smkbinainformatika.sch.id</p></a><br>
-        <a onclick="copy(this)"><p>(021) - 745 3048</p></a>
-        <a onclick="copy(this)"><p>+62 812-8006-3529</p></a><br>
+
+    <div class="copyright">
+        <div class="logo">
+            <img src="{{ $placeholder }}" alt="">
+            <img src="{{ $placeholder }}" alt="">
+            <img src="{{ $placeholder }}" alt="">
+            <img src="{{ $placeholder }}" alt="">
+        </div>
+        <p>Copyright Fazbear Entertainment 2025. All&nbsp;Rights&nbsp;Reserved</p>
     </div>
-    <span id="pop-up-copy"><p>Copied!</p></span>
+
 </footer>
 
-<script>
-    function copy(el)
-    {
-        const text = el.innerText;
-
-        navigator.clipboard.writeText(text);
-
-        const popup = document.querySelector("#pop-up-copy");
-        popup.style.visibility = "visible";
-        popup.style.opacity = 1;
-
-        setTimeout(() => {
-            popup.style.opacity = 0;
-        }, 1000);
-        setTimeout(() => {
-            popup.style.visibility = "hidden";
-        }, 1500);
-    }
-</script>
 </body>
 </html>

@@ -13,20 +13,10 @@
                     </a>
                 </li>
 
-                <li class="menu multiple" id="menu-inventory" data-open=false>
-                    <a class="display-menu">
-                        @include('_components._sprite-icons', ['name' => 'product', "color" => $currentPath == 'products' ? '#273B98' : 'black', 'size' => 23])
+                <li class="menu" id="menu-inventory" data-open=false>
+                    <a class="display-menu" href="{{ route('admin.transactions') }}">
+                        @include('_components._sprite-icons', ['name' => 'transaction', "color" => $currentPath == 'products' ? '#273B98' : 'black', 'size' => 23])
                         <span>Inventory</span>
-                    </a>
-                    <a class="sub-menu" 
-                        href="{{ route('admin.products') }}" id="products"
-                    >
-                        <span>Products</span>
-                    </a>
-                    <a class="sub-menu" 
-                        href="{{ route("admin.transactions") }}" id="transactions"
-                    >
-                        <span>Transactions</span>
                     </a>
                 </li>
 
@@ -35,19 +25,19 @@
                         @include('_components._sprite-icons', ['name' => 'eye', "color" => $currentPath == 'public' ? '#273B98' : 'black', 'size' => 23])
                         <span>Public</span>
                     </a>
-                    <a class="sub-menu" href="{{ route("admin.news") }}">
+                    <a class="sub-menu" href="{{ route("admin.news") }}" id="news">
                         <span>News</span>
                     </a>
-                    <a class="sub-menu" href="{{ route('admin.media') }}">
+                    <a class="sub-menu" href="{{ route('admin.media') }}" id="medias">
                         <span>Gallery & Media</span>
                     </a>
-                    <a class="sub-menu" href="{{ route('admin.facility') }}">
+                    <a class="sub-menu" href="{{ route('admin.facility') }}" id="facilities">
                         <span>Facilities</span>
                     </a>
-                    <a class="sub-menu" href="{{ route('admin.portfolio') }}">
+                    <a class="sub-menu" href="{{ route('admin.portfolio') }}" id="portfolios">
                         <span>Portfolio</span>
                     </a>
-                    <a class="sub-menu" href="{{ route('admin.achievement') }}">
+                    <a class="sub-menu" href="{{ route('admin.achievement') }}" id="achievements">
                         <span>Achievement</span>
                     </a>
                 </li>
@@ -162,9 +152,9 @@
             ],
             "public": [
                 "news",
-                "media",
-                "portfolio",
-                "achievement",
+                "medias",
+                "portfolios",
+                "achievements",
                 "facilities"
             ]
         };
