@@ -7,29 +7,27 @@ use Illuminate\Database\Eloquent\Model;
 
 class Student extends Model
 {
+    /** @use HasFactory<\Database\Factories\StudentFactory> */
     use HasFactory;
-
+    protected $table = 'students';
     protected $primaryKey = 'nis';
-    public $incrementing = false;
     protected $keyType = 'string';
+    public $incrementing = false;
+    public $timestamps = false;
 
     protected $fillable = [
         'nis',
-        'user_id',
-        'name',
+        'gender',
+        'address',
+        'birthdate',
         'class',
         'major_id',
         'major_name',
-        'gender',
-        'birthdate',
     ];
 
-    /**
-     * Relations
-     */
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'nis', 'nis');
     }
 
     public function major()
