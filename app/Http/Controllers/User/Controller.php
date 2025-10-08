@@ -16,6 +16,16 @@ class Controller extends \App\Http\Controllers\Controller
         return view('user.profile');
     }
 
+    public function about()
+    {
+        return view('user.about');
+    }
+
+    public function visiMisi()
+    {
+        return view('user.visi-misi');
+    }
+
     public function galleries()
     {
         return view('user.galleries');

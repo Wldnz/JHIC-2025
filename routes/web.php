@@ -12,6 +12,8 @@ use App\Http\Middleware\isAdmin;
 Route::name('user.')->group(function () {
     Route::get('/', [User\Controller::class, 'index'])->name('index');
     Route::get('/profile', [User\Controller::class, 'profile'])->name('profile');
+    Route::get('/about', [User\Controller::class, 'about'])->name('about');
+    Route::get('/visi-misi', [User\Controller::class, 'visiMisi'])->name('visi-misi');
     Route::get('/galleries', [User\Controller::class, 'galleries'])->name('galleries');
     Route::get('/facilities', [User\Controller::class, 'facilities'])->name('facilities');
 
