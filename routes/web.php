@@ -36,18 +36,17 @@ Route::name('user.')->group(function () {
         Route::get('/program-kecakapan-hidup', 'programKecakapanHidup')->name('program-kecakapan-hidup');
         Route::get('/project-works', 'projectWorks')->name('project-works');
 
-        Route::controller(User\ExtracurricularsController::class)->prefix('ex-school')->name('ex-school.')->group(function () {
+        Route::controller(User\ExtracurricularsController::class)->prefix('extracurriculars')->name('extracurriculars.')->group(function () {
+            Route::get('/', 'index')->name('index');
             Route::get('/merpati-putih', 'merpatiPutih')->name('merpati-putih');
             Route::get('/futsal', 'futsal')->name('futsal');
             Route::get('/basketball', 'basketball')->name('basketball');
             Route::get('/paduan-suara', 'paduanSuara')->name('paduan-suara');
             Route::get('/bicoustic', 'bicoustic')->name('bicoustic');
             Route::get('/tari-tradisional', 'tariTradisional')->name('tari-tradisional');
-            Route::get('/student-company', 'studentCompany')->name('student-company');
             Route::get('/bi-channel', 'biChannel')->name('bi-channel');
             Route::get('/english-club', 'englishClub')->name('english-club');
             Route::get('/paskibra', 'paskibra')->name('paskibra');
-            Route::get('/palang-merah', 'palangMerah')->name('palang-merah');
         });
     });
 
