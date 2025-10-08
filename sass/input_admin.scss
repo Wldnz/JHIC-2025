@@ -166,6 +166,24 @@
                                     resize: vertical;
                                 }
                             }
+
+                            .wrapper-preview{
+                                width: max-content;
+                                display: flex;
+                                flex-direction: row;
+                                gap: 5px;
+                                justify-content: start;
+                                align-items: center;
+                                font-size: $font-size-s;
+                                
+                                label{
+                                    cursor: pointer;
+                                }
+
+                                svg{
+                                    rotate: -140deg;
+                                }
+                            }
                         }
                     }
                 }

@@ -1,3 +1,4 @@
+@use '../admin/components/preview' as preview;
 @import '../utils/variables';
 .alert-message {
     width: 100vw;
@@ -15,6 +16,9 @@
     backdrop-filter: blur(4px);
     text-align: center;
     z-index: 999;
+
+    @include preview.preview-media;
+
     .card-message {
         min-width: 320px;
         max-width: 350px;

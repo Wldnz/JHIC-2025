@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Student;
 use Illuminate\Http\Request;
 
 class AchievementController extends Controller
@@ -14,7 +15,8 @@ class AchievementController extends Controller
 
     public function createAchievement()
     {
-        return view('admin.achievement.create');
+        $students = Student::all()->load('user');
+        return view('admin.achievement.create', compact('students'));
     }
 
     public function storeAchievement(Request $request)
@@ -24,7 +26,8 @@ class AchievementController extends Controller
 
     public function detailAchievement($achievement)
     {
-        return view('admin.achievement.detail', compact('achievement'));
+        $students = Student::all()->load('user');
+        return view('admin.achievement.detail', compact('achievement', 'students'));
     }
 
     public function updateAchievement(Request $request, $achievement)
