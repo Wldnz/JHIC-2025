@@ -353,6 +353,74 @@ img {
   animation: line-break 1500ms forwards;
 }
 
+.login {
+  max-width: 800px;
+  min-height: 300px;
+  width: max-content;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 15px;
+  border-radius: 10px;
+  background-color: #fff;
+  position: relative;
+  box-shadow: -5px 0 5px #0fcbbc, 0 -5px 5px #8780fc, 0 5px 5px #8780fc, 5px 0 5px #5f77f7;
+}
+.login .title {
+  max-width: 400px;
+  width: calc(100% - 200px);
+  min-width: 300px;
+  font-size: calc(clamp(0.6rem, 2vw, 1.5rem) - 0.3rem);
+}
+.login .wrapper-field {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.login .wrapper-field .wrapper-input {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.login .wrapper-field .wrapper-input label {
+  font-size: clamp(0.4rem, 1.25vw, 1rem);
+  color: #273b98;
+  font-weight: 600;
+}
+.login .wrapper-field .wrapper-input input {
+  width: 100%;
+  min-width: 200px;
+  height: 45px;
+  padding: 5px;
+  padding-left: 10px;
+  border-radius: 4px;
+  outline: none;
+  border: 1px solid #273b98;
+}
+.login .buttons button {
+  height: clamp(0.6rem, 4vw, 2.5rem);
+  border-radius: 4px;
+}
+.login .footers {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  font-size: clamp(0.2rem, 1vw, 0.85rem);
+}
+.login .footers .link {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.login .footers .link p {
+  color: black;
+}
+.login .footers .link a {
+  color: #273b98;
+}
+
 .open-sidebar {
   animation: openSidebar 200ms forwards;
 }
@@ -433,6 +501,10 @@ a {
   grid-template-columns: repeat(3, 1fr) !important;
 }
 
+.w-full {
+  width: 100%;
+}
+
 .pad-0 {
   padding: 0 !important;
 }
@@ -445,12 +517,28 @@ a {
   justify-content: start !important;
 }
 
+.justify-center {
+  justify-content: center !important;
+}
+
 .justify-between {
   justify-content: space-between !important;
 }
 
 .items-start {
   align-items: start !important;
+}
+
+.items-center {
+  align-items: center !important;
+}
+
+.justify-self-center {
+  justify-self: center !important;
+}
+
+.self-center {
+  align-self: center !important;
 }
 
 .self-end {
@@ -719,6 +807,11 @@ body .wrapper-user .dashboard .circle-1 {
   width: 50vw;
   left: -60px;
   bottom: -60px;
+}
+body .wrapper-user .dashboard .circle-auth {
+  width: 40vw;
+  left: 0;
+  top: -50px;
 }
 body .wrapper-user .dashboard .star-group {
   display: flex;

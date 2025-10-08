@@ -4,7 +4,7 @@
     logger('as', [$students])
 @endphp
 <form class="content flex-row justify-between pad-0">
-    <div class="wrapper-content-media">
+    <div class="wrapper-content-media-management">
         <div class="wrapper-container-media">
             <h2>Data Siswa</h2>
             <div class="form-data" id="student-siswa-form">

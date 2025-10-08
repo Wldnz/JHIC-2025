@@ -68,11 +68,11 @@ Route::name('candidate.')->prefix('candidate')->middleware([isLogin::class])->gr
 
 // Admin-side
 Route::name('admin.')->prefix('admin')->middleware([isLogin::class, isAdmin::class])->group(function () {
-    Route::get('/signup', [Admin\AuthController::class, 'signupPage'])->name('signup-page');
-    Route::post('/signup', [Admin\AuthController::class, 'signup'])->name('signup');
-    Route::get('/login', [Admin\AuthController::class, 'loginPage'])->name('login-page');
-    Route::post('/login', [Admin\AuthController::class, 'login'])->name('login');
-    Route::post('/logout', [Admin\AuthController::class, 'logout'])->name('logout');
+    Route::withoutMiddleware([isLogin::class, isAdmin::class])->group(function () {
+        Route::get('/login', [Admin\AuthController::class, 'loginPage'])->name('login-page');
+        Route::post('/login', [Admin\AuthController::class, 'login'])->name('login');
+        Route::post('/logout', [Admin\AuthController::class, 'logout'])->name('logout');
+    });
 
     Route::get('/dashboard', [Admin\Controller::class, 'dashboard'])->name('dashboard');
     Route::get('/settings', [Admin\Controller::class, 'settings'])->name('settings');
