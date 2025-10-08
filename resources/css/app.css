@@ -134,6 +134,9 @@ img {
   z-index: 999;
   animation: animate-alert 300ms forwards;
 }
+.alert-message .preview-media {
+  background-color: red;
+}
 .alert-message .card-message {
   min-width: 320px;
   max-width: 350px;

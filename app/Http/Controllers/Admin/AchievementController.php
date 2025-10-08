@@ -16,14 +16,11 @@ class AchievementController extends Controller
 {
     public function achievement(Request $request)
     {
-        $page = $request->query('page', 1);
         $search = $request->query('search', null);
         $major_id = $request->query('major_id', null);
 
         $achievements = Achievement::query()
             ->orderBy('id', 'asc')
-            ->offset(($page - 1) * 10)
-            ->limit(10)
             ->when($search, function ($query, $search) {
                 return $query
                     ->where('student_name', 'like', "%{$search}%")

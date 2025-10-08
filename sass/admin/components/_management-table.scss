@@ -1,4 +1,5 @@
 @use "../pages/achievement" as achievement;
+@use "../pages/news" as news;
 @import "../../utils/variables";
 @mixin table {
     .management-table {
@@ -262,6 +263,7 @@
             }
 
             @include achievement.card;
+            @include news.card;
 
         }
 
