@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 body {
   font-family: "Montserrat", "sans-serif";
   background-color: #fff;
@@ -84,6 +85,54 @@ body {
   color: rgb(0, 0, 156);
   filter: none;
 }
+
+::selection:hover {
+  filter: none;
+}
+
+.selector {
+  user-select: none;
+  -webkit-user-drag: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  transition: opacity 0.4s;
+}
+
+*::-webkit-scrollbar {
+  display: none;
+}
+
+img {
+  object-fit: fill;
+  object-position: center;
+}
+
+body {
+  font-family: "Montserrat", "sans-serif";
+  background-color: #fff;
+  font-size: clamp(0.6rem, 2vw, 1.5rem);
+  color: #273b98;
+}
+
+::selection {
+  background-color: transparent;
+  color: rgb(0, 0, 156);
+  filter: none;
+}
 ::selection:hover {
   filter: none;
 }
@@ -135,7 +184,17 @@ img {
   animation: animate-alert 300ms forwards;
 }
 .alert-message .preview-media {
-  background-color: red;
+  width: 80%;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 8px;
+}
+.alert-message .preview-media .management-table,
+.alert-message .preview-media .wrapper-content-media {
+  height: 100%;
+}
+.alert-message .preview-media .wrapper-image {
+  border-radius: 8px;
+  background-color: #fff;
 }
 .alert-message .card-message {
   min-width: 320px;

@@ -2,8 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\Major;
-use App\Models\Student;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
@@ -17,7 +15,6 @@ class UserSeeder extends Seeder
     {
         User::query()->insert([
             [
-                'nis' => '1234567890123456',
                 'fullname' => 'Admin',
                 'email' => 'admin@example.com',
                 'phone' => '086598987678',
@@ -27,7 +24,6 @@ class UserSeeder extends Seeder
                 'role' => 'admin',
             ],
             [
-                'nis' => '0987654321098765',
                 'fullname' => 'Super Admin',
                 'email' => 'superadmin@example.com',
                 'phone' => '086598987679',

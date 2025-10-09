@@ -81,12 +81,12 @@
             </div>
             <a class="expandable">PROGRAM <img src="{{ asset("icons/arrow-down.svg") }}" alt=""></a>
             <div class="branch">
-                <a href="">Extracurricular </a>
-                <a href="">Progsil</a>
-                <a href="">BTQ</a>
-                <a href="">USM</a>
-                <a href="">Bimbingan Konseling</a>
-                <a href="">Project Work</a>
+                <a href="{{ route("user.programs.extracurriculars.index") }}">Extracurricular </a>
+                <a href="{{ route("user.programs.program-silang") }}">Progsil</a>
+                <a href="{{ route("user.programs.baca-tulis-quran") }}">BTQ</a>
+                <a href="{{ route("candidate.index") }}">USM</a>
+                <a href="{{ route("user.programs.bimbingan-konseling") }}">Bimbingan Konseling</a>
+                <a href="{{ route("user.programs.project-works") }}">Project Work</a>
             </div>
             <a href="{{ route('user.news') }}">NEWS <img src="{{ asset("icons/majors icons/non.png") }}" alt=""></a>
             
