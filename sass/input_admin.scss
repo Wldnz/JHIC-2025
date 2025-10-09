@@ -2,6 +2,7 @@
 @use "admin/components/management-table" as table;
 @use "admin/components/summary-card" as summary_card;
 @use "admin/components/form-data" as form_data;
+@use "admin/pages/news" as news;
 @import "utils/variables";
 @import "utils/globals";
 @import "admin/index";
@@ -40,9 +41,9 @@
             justify-content: space-between;
             align-items: center;
             border-bottom: solid 1px #dfdfdf;
-            
-            h4{
-                font-size: calc($font-size-l - .3rem);
+
+            h4 {
+                font-size: calc($font-size-l - 0.3rem);
             }
         }
 
@@ -77,6 +78,7 @@
                     flex-direction: column;
                     gap: 15px;
                 }
+                @include news.form;
             }
 
             @include table.table;
@@ -86,6 +88,11 @@
             .wrapper-save-media {
                 width: 300px;
                 height: 85dvh;
+
+                position: sticky;
+                top: 0;
+                right: 0;
+
                 .card-save-media {
                     width: inherit;
                     height: inherit;
@@ -94,15 +101,13 @@
 
                     border-bottom: 2px solid $color-accent;
                     border-left: 2px solid $color-accent;
-                    border-bottom-left-radius: $border-radius;
 
                     display: flex;
                     flex-direction: column;
                     gap: 20px;
 
-                    .wrapper-action{
-
-                        >:first-child{
+                    .wrapper-action {
+                        > :first-child {
                             display: none;
                         }
                     }
@@ -119,13 +124,15 @@
                             flex-direction: column;
                             gap: 20px;
 
-                            .wrapper-input {
-                                font-size: $font-size-m;
-
+                            .wrapper-input,
+                            .wrapper-tags {
                                 display: flex;
                                 flex-direction: column;
                                 gap: 8px;
+                                font-size: $font-size-m;
+                            }
 
+                            .wrapper-input {
                                 label {
                                     font-weight: 600;
                                     span {
@@ -133,25 +140,19 @@
                                     }
                                 }
 
-                                input {
-                                    min-height: 30px;
-                                    padding: 5px;
-                                    padding-left: 0;
+                                input,
+                                select,
+                                textarea {
                                     outline: none;
                                     border: none;
                                     border-bottom: 1px solid $color-accent;
                                 }
 
+                                input,
                                 select {
                                     min-height: 30px;
                                     padding: 5px;
                                     padding-left: 0;
-
-                                    // border-radius: $border-radius;
-
-                                    outline: none;
-                                    border: none;
-                                    border-bottom: 1px solid $color-accent;
                                 }
 
                                 textarea {
@@ -159,15 +160,11 @@
                                     min-height: 70px;
                                     max-height: 120px;
 
-                                    outline: none;
-                                    border: none;
-                                    border-bottom: 1px solid $color-accent;
-
                                     resize: vertical;
                                 }
                             }
 
-                            .wrapper-preview{
+                            .wrapper-preview {
                                 width: max-content;
                                 display: flex;
                                 flex-direction: row;
@@ -175,13 +172,57 @@
                                 justify-content: start;
                                 align-items: center;
                                 font-size: $font-size-s;
-                                
-                                label{
+
+                                label {
                                     cursor: pointer;
                                 }
 
-                                svg{
+                                svg {
                                     rotate: -140deg;
+                                }
+                            }
+
+                            .wrapper-tags {
+                                .tags {
+                                    display: flex;
+                                    align-items: center;
+                                    flex-wrap: wrap;
+                                    gap: 10px;
+                                    height: max-content;
+                                    min-height: 60px;
+                                    max-height: 200px;
+                                    border: 1px solid $color-accent;
+                                    border-radius: $border-radius;
+
+                                    padding: 10px 5px;
+
+                                    .wrapper-tag {
+                                        position: relative;
+                                        .tag {
+                                            padding: 6px;
+                                            width: max-content;
+
+                                            font-size: $font-size-s;
+
+                                            color: $tags1;
+                                            background-color: $tags1-bg;
+                                            border: 1px solid $tags1;
+                                            outline-color: $tags1;
+
+                                            border-radius: $border-radius;
+                                        }
+                                        .btn-tag {
+                                            position: absolute;
+                                            top: -5px;
+                                            right: 0;
+                                            font-size: 10px;
+                                            border: none;
+                                            background-color: transparent;
+                                            color: $color-accent;
+                                            font-weight: 600;
+                                            cursor: pointer;
+                                        }
+                                    }
                                 }
                             }
                         }

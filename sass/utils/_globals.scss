@@ -94,6 +94,9 @@
     }
 }
 
+.rotate-y-360{
+    animation: rotate-y-360 600ms alternate-reverse infinite;
+}
 
 .open-sidebar {
     animation: openSidebar 200ms forwards;
