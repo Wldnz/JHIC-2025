@@ -56,39 +56,56 @@
                 asset("images/majors images/anim.png"),
                 asset("icons/majors icons/anim.svg"),
                 "Animation",
-                "Menciptakan kreator animasi yang berkarakter, kreatif, aktif, dan inovatif yang mampu bekerja dan berkarya di industri animasi."
+                "Menciptakan kreator animasi yang berkarakter, kreatif, aktif, dan inovatif yang mampu bekerja dan berkarya di industri animasi.",
+                asset("icons/majors icons/rpl.svg"),
+                asset("icons/majors icons/bc.svg"),
+                route("user.majors.animation"),
             ],
             [
                 asset("images/majors images/bc.png"),
                 asset("icons/majors icons/bc.svg"),
                 "Broadcasting Film & TV",
-                "Membentuk Sineas berkarakter yang kreatif, aktif, inovatif, berjiwa enterpreneur yang unggul di dunia pertelevisian dan film."
+                "Membentuk Sineas berkarakter yang kreatif, aktif, inovatif, berjiwa enterpreneur yang unggul di dunia pertelevisian dan film.",
+                asset("icons/majors icons/anim.svg"),
+                asset("icons/majors icons/gmdv.svg"),
+                route("user.majors.broadcasting"),
             ],
             [
                 asset("images/majors images/gmdv.png"),
                 asset("icons/majors icons/gmdv.svg"),
                 "Game Development",
-                "Mencetak game developer yang handal dalam pemodelan serta merancang game sesuai kebutuhan industri"
+                "Mencetak game developer yang handal dalam pemodelan serta merancang game sesuai kebutuhan industri",
+                asset("icons/majors icons/bc.svg"),
+                asset("icons/majors icons/dkv.svg"),
+                route("user.majors.game-development")
             ],
             [
                 asset("images/majors images/dkv.png"),
                 asset("icons/majors icons/dkv.svg"),
                 "Visual Communication Design",
-                "Mencetak Seniman Digital yang kreatif, aktif, dan inovatif yang mampu bekerja dan bersaing di industri kreatif."
+                "Mencetak Seniman Digital yang kreatif, aktif, dan inovatif yang mampu bekerja dan bersaing di industri kreatif.",
+                asset("icons/majors icons/gmdv.svg"),
+                asset("icons/majors icons/tkj.svg"),
+                route("user.majors.visual-communication-design")
             ],
             [
                 asset("images/majors images/tkj.png"),
                 asset("icons/majors icons/tkj.svg"),
                 "IT Network",
-                "Mencetak administrator server dan jaringan yang handal, cermat, inovatif dan profesional di bidang teknologi informasi dan komunikasi."
+                "Mencetak administrator server dan jaringan yang handal, cermat, inovatif dan profesional di bidang teknologi informasi dan komunikasi.",
+                asset("icons/majors icons/dkv.svg"),
+                asset("icons/majors icons/rpl.svg"),
+                route("user.majors.network-engineering")
             ],
             [
                 asset("images/majors images/rpl.png"),
                 asset("icons/majors icons/rpl.svg"),
                 "IT Software",
-                "Menghasilkan lulusan yang cerdas, disiplin, kreatif, inovatif dan sikap profesional dibidang Rekayasa Perangkat Lunak."
+                "Menghasilkan lulusan yang cerdas, disiplin, kreatif, inovatif dan sikap profesional dibidang Rekayasa Perangkat Lunak.",
+                asset("icons/majors icons/tkj.svg"),
+                asset("icons/majors icons/anim.svg"),
+                route("user.majors.software-engineering")
             ],
-            
         ];
 
         $gallery =
@@ -128,7 +145,7 @@
                 <span class="banner-timer"></span>
                 <div class="banner-counter">
                     @foreach ( $newscontent as $count)
-                    <span class="banner-count"></span>
+                    <span class="banner-count selected"></span>
                     @endforeach
                 </div>
             </div>
@@ -141,10 +158,10 @@
     <h3>THE SKILL BUILDING WE SPECIALIZE IN ARE</h3>
     <div class="majors">
         <div class="up">
-            <div class="change-major arrow-left"><img src="{{ asset("icons/arrow-down.svg") }}" alt=""><img src="{{$placeholder}}" class="floating-major"></div>
+            <div class="change-major arrow-left"><img src="{{ asset("icons/arrow-down.svg") }}" alt=""><img src="{{ $majors[0][4] }}" class="floating-major left"></div>
             <div class="major-slider">
                 @foreach ( $majors as $major )
-                <a class="major-content">
+                <a href="{{ $major[6] }}" class="major-content">
                     <img src="{{ $major[0] }}" alt="">
                     <img class="icon" src="{{ $major[1] }}" alt=""> 
                     <h2>{{ $major[2] }} </h2>
@@ -152,7 +169,7 @@
                 </a>
                 @endforeach
             </div>
-            <div class="change-major arrow-right"><img src="{{ asset("icons/arrow-down.svg") }}" alt=""><img src="{{$placeholder}}" class="floating-major right"></div>
+            <div class="change-major arrow-right"><img src="{{ asset("icons/arrow-down.svg") }}" alt=""><img src="{{ $majors[0][5] }}" class="floating-major right"></div>
         </div>
         <div class="down">
 
@@ -177,8 +194,8 @@
         <h2>Gallery</h2>
         <div class="img-group">
             @foreach ( $gallery as $title => $file )
-                <span class="{{ $loop->iteration < 3 ? 'show' : '' }}">
-                    <img src="{{$file}}" alt="" class="gallery-img">
+                <span class="{{ $loop->iteration < 3 ? 'show' : '' }} gallery-img">
+                    <img src="{{$file}}" alt="">
                     <h3>{{ $title }}</h3>
                 </span>
             @endforeach
@@ -228,20 +245,32 @@
 </div>
 
 <script>
+// ========================================================================================================================================
+
 document.addEventListener("DOMContentLoaded", () => {
     const banner = document.querySelector(".sliding-banner")
     const leftBtn = document.querySelector(".change-banner.left")
     const rightBtn = document.querySelector(".change-banner.right")
+    const counters = document.querySelectorAll(".banner-count")
+    const banners = document.querySelectorAll(".banner-content")
+
     const scrollStep = banner.clientWidth
     const scrollSpeed = 5000
     let autoScroll
     let scrollTimeout
 
+    const updateCounter = () => {
+        const index = Math.round(banner.scrollLeft / scrollStep)
+        counters.forEach((c, i) => c.classList.toggle("selected", i === index))
+    }
+
     const scrollLeft = () => {
         if (banner.scrollLeft <= 0) {
-            banner.scrollTo({ left: banner.scrollWidth, behavior: "instant" })
+            banner.scrollTo({ left: banner.scrollWidth - scrollStep, behavior: "instant" })
+        } else {
+            banner.scrollBy({ left: -scrollStep, behavior: "smooth" })
         }
-        banner.scrollBy({ left: -scrollStep, behavior: "smooth" })
+        setTimeout(updateCounter, 600)
     }
 
     const scrollRight = () => {
@@ -250,16 +279,17 @@ document.addEventListener("DOMContentLoaded", () => {
         } else {
             banner.scrollBy({ left: scrollStep, behavior: "smooth" })
         }
+        setTimeout(updateCounter, 600)
     }
 
     const startAutoScroll = () => {
         stopAutoScroll()
-        autoScroll = setInterval(scrollRight, scrollSpeed)
+        autoScroll = setInterval(() => {
+            scrollRight()
+        }, scrollSpeed)
     }
 
-    const stopAutoScroll = () => {
-        clearInterval(autoScroll)
-    }
+    const stopAutoScroll = () => clearInterval(autoScroll)
 
     leftBtn.addEventListener("click", () => {
         scrollLeft()
@@ -280,16 +310,18 @@ document.addEventListener("DOMContentLoaded", () => {
         stopAutoScroll()
         clearTimeout(scrollTimeout)
         scrollTimeout = setTimeout(() => {
+            updateCounter()
             startAutoScroll()
         }, 200)
     })
 
+    // Initialize everything
+    updateCounter()
     startAutoScroll()
 })
 
 
-
-
+// ========================================================================================================================================
 
 const gallery_img = document.querySelectorAll(".gallery-img")
 const full_img = document.querySelector(".img-full")
@@ -307,27 +339,35 @@ close_full_img.addEventListener("click", () => {
     document.body.style.overflowY = "auto"
 })
 
+// ========================================================================================================================================
 
 const majors = document.querySelectorAll('.major-content')
 const counters = document.querySelectorAll('.major-count')
+const leftIcon = document.querySelector('.floating-major.left')
+const rightIcon = document.querySelector('.floating-major.right')
+
+const majorsData = @json($majors)
 
 const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
             counters.forEach(c => c.classList.remove('selected'))
+
             const index = Array.from(majors).indexOf(entry.target)
             counters[index]?.classList.add('selected')
+
+            if (majorsData[index]) {
+                leftIcon.src = majorsData[index][4]
+                rightIcon.src = majorsData[index][5]
+            }
         }
     })
 }, {
     threshold: 0.6,
     root: document.querySelector('.major-slider')
-    
 })
 
 majors.forEach(major => observer.observe(major))
-
-
 
 const nav = document.querySelector(".navigation-user")
 let lastScroll = window.scrollY
@@ -336,72 +376,94 @@ let ticking = false
 window.addEventListener("scroll", () => {
   if (!ticking) {
     window.requestAnimationFrame(() => {
-      const currentScroll = window.scrollY
-
-      if (Math.abs(currentScroll - lastScroll) > 50) {
+        const currentScroll = window.scrollY
+        
+        if (Math.abs(currentScroll - lastScroll) > 50) {
         if (currentScroll > lastScroll && currentScroll > 20) {
           nav.style.top = "-200px"
         } else {
           nav.style.top = "0"
         }
         lastScroll = currentScroll
-      }
-
-      ticking = false
-    })
-
-    ticking = true
-  }
+    }
+    
+    ticking = false
 })
+
+ticking = true
+}
+})
+
+// ==========================================================================================================================================================================
 
 document.addEventListener("DOMContentLoaded", () => {
-  const elements = [...document.querySelectorAll(
-  "*:not(.no-fade):not(body):not(html):not(main):not(header):not(footer):not(nav):not(.container):not(.wrapper)"
-)]
-
-
-  elements.forEach(el => {
+    const elements = [...document.querySelectorAll(
+        "*:not(.no-fade):not(body):not(html):not(main):not(header):not(footer):not(nav):not(.container):not(.wrapper)"
+    )]
+    
+    
+    elements.forEach(el => {
     const computed = window.getComputedStyle(el)
     el.dataset.originalOpacity = computed.opacity || 1
-  })
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      const el = entry.target
-      const original = parseFloat(el.dataset.originalOpacity)
-      const faded = Math.max(original - 0.5, 0)
-
-      if (entry.isIntersecting) {
-        el.style.opacity = original
-      } else {
-        el.style.opacity = faded
-      }
-    })
-  }, { threshold: 0.1 })
-
-  elements.forEach(el => observer.observe(el))
 })
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        const el = entry.target
+        const original = parseFloat(el.dataset.originalOpacity)
+        const faded = Math.max(original - 0.5, 0)
+        
+        if (entry.isIntersecting) {
+            el.style.opacity = original
+        } else {
+            el.style.opacity = faded
+        }
+    })
+}, { threshold: 0.1 })
+
+elements.forEach(el => observer.observe(el))
+})
+
+// ========================================================================================================================================
 
 document.addEventListener("DOMContentLoaded", () => {
     const slider = document.querySelector(".major-slider")
-    const leftArrow = document.querySelector(".arrow-left")
-    const rightArrow = document.querySelector(".arrow-right")
+    const leftArrows = document.querySelectorAll(".arrow-left")
+    const rightArrows = document.querySelectorAll(".arrow-right")
 
     const slideWidth = slider.querySelector(".major-content").offsetWidth
-
-    leftArrow.addEventListener("click", () => {
+    
+    leftArrows.forEach(arrow => {
+        arrow.addEventListener("click", () => {
+        if (slider.scrollLeft <= 0) {
+            slider.scrollBy({
+                left: majors.length * slideWidth,
+                behavior: "smooth"
+            })
+            return;
+        }
         slider.scrollBy({
             left: -slideWidth,
             behavior: "smooth"
         })
     })
-
-    rightArrow.addEventListener("click", () => {
+    });
+    
+    rightArrows.forEach(arrow => {
+        arrow.addEventListener("click", () => {        
+        if (slider.scrollLeft >= ((majors.length - 1) * slideWidth)) {
+            slider.scrollBy({
+                left: -(majors.length * slideWidth),
+                behavior: "smooth"
+            })
+            return;
+        }
         slider.scrollBy({
             left: slideWidth,
             behavior: "smooth"
         })
     })
+    });
 })
 
 
