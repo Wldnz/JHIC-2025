@@ -106,6 +106,8 @@
                     flex-direction: column;
                     gap: 20px;
 
+                    background-color: $color-primary;
+
                     .wrapper-action {
                         > :first-child {
                             display: none;
@@ -184,21 +186,25 @@
 
                             .wrapper-tags {
                                 .tags {
+                                    max-width: 100%;
                                     display: flex;
                                     align-items: center;
                                     flex-wrap: wrap;
                                     gap: 10px;
-                                    height: max-content;
                                     min-height: 60px;
-                                    max-height: 200px;
+                                    max-height: 210px;
+                                    overflow:none;
+                                    overflow-y: scroll;
                                     border: 1px solid $color-accent;
                                     border-radius: $border-radius;
 
                                     padding: 10px 5px;
 
                                     .wrapper-tag {
+                                        max-width: 100%;
                                         position: relative;
                                         .tag {
+                                            max-width: inherit;
                                             padding: 6px;
                                             width: max-content;
 
@@ -224,6 +230,10 @@
                                         }
                                     }
                                 }
+                            }
+
+                            .wrapper-hidden{
+                                display: none;
                             }
                         }
                     }

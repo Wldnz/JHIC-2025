@@ -151,10 +151,15 @@
                 "transactions",
             ],
             "public": [
+                "news-create",
                 "news",
                 "medias",
+                "medias-create",
+                "portfolios-create",
                 "portfolios",
+                "achievements-create",
                 "achievements",
+                "facilities-create",
                 "facilities"
             ]
         };
@@ -168,7 +173,7 @@
                     display_name.classList.add('active');
                     Array.from(menu.children)
                         .find(sub => sub.id == pathname)
-                        .classList.add('active');
+                        ?.classList.add('active');
                     handleSubMenu(menu, true);
                 }
             }else if(name == pathname){
