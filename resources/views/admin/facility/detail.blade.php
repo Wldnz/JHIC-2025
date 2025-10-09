@@ -1,4 +1,4 @@
-@include('_components._headerAdmin', ['title' => 'Management Fasilitas'])
+@include('_components._headerAdmin', ['title' => 'Tambahkan Fasilitas'])
 @php
     $currentPath = explode('/admin/', url()->current())[1];
 @endphp

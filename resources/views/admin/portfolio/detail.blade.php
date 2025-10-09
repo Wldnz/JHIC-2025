@@ -4,14 +4,14 @@
     logger('as', [$students])
 @endphp
 <form class="content flex-row justify-between pad-0">
-    <div class="wrapper-content-media">
+    <div class="wrapper-content-media-management">
         <div class="wrapper-container-media">
             <h2>Data Siswa</h2>
             <div class="form-data" id="student-siswa-form">
                 <div class="wrapper-field container">
                     <div class="wrapper-input">
-                        <label for="nis">Nama Siswa<span> *</span></label>
-                        <select name="nis" id="nis" required>
+                        <label for="student_nis">Nama Siswa<span> *</span></label>
+                        <select name="student_nis" id="student_nis" required>
                             <option value=""></option>
                             @foreach ($students as $student)
                                 <option value="{{ $student->nis }}">{{ $student['user']['fullname'] }}</option>
@@ -108,50 +108,18 @@
     </div>
 </form>
 
-@vite('resources/js/handle/image-product.js')
+@vite(['resources/js/handle/image-product.js', 'resources/js/handle/student-data.js', 'resources/js/handle/save-media.js'])
 
 <script defer>
-    
+    const students = @json($students);
     let image = @json(old('images', [] ));
     const max_images = 2;
-
-    document.getElementById('nis').addEventListener('change', (e) => {
-        const students = @json($students);
-        const student = students.find(s => s.nis == e.target.value);
-        if(!student) return;
+    const handlerStudentData = (student) => {
         document.getElementById('class').value = student.class;
         document.getElementById('major').value = student.major_name;
         document.getElementById('fullname').value = student.user.fullname;
         document.getElementById('fullname_').textContent = student.user.fullname;
-    });
-
-    function handleMedia(){
-        const btn_close_media = document.getElementById('btn-close-media');
-        const btn_open_media = document.getElementById('btn-open-media');
-        const wrapper_save_media = document.getElementById('wrapper-save-media');
-        const card_media = document.getElementById('card-save-media');
-        btn_close_media.addEventListener('click', () => {
-            wrapper_save_media.classList.add('close-sidebar');
-            wrapper_save_media.classList.remove('open-sidebar');
-            Array.from(card_media.children)
-                .filter((_,index) => index != 0)
-                .forEach(c => c.style.display = 'none');
-            btn_close_media.style.display = 'none';
-            btn_open_media.style.display = 'flex';
-        });
-
-        btn_open_media.addEventListener('click', () => {
-            wrapper_save_media.classList.remove('close-sidebar');
-            wrapper_save_media.classList.add('open-sidebar');
-            Array.from(card_media.children)
-                .filter((_,index) => index != 0)
-                .forEach(c => c.style.display = 'flex');
-            btn_close_media.style.display = 'flex';
-            btn_open_media.style.display = 'none';
-        });
     }
-
-    handleMedia();
 
 </script>
 @include('_components._footerAdmin')

@@ -7,7 +7,7 @@
         <div class="title">
             <h3 class=''>Ada 10 Achievement</h3>
             <a href='{{ route('admin.create-achievement') }}' class="btn" id="btn-add-management">
-                <span class=""> Tambahkan Portfolio </span>
+                <span class=""> Tambahkan Achievement </span>
                 @include('_components._sprite-icons', ['name' => 'add', 'size' => 15])
             </a>
         </div>
@@ -31,27 +31,24 @@
                 </button>
             </form>
         </div>
-        <div class="wrapper-content-media items-start">
-            <a class="wrapper-card-media"
-                href="{{ route('admin.detail-portfolio', ['portfolio' => 1]) }}"
+        <div class="wrapper-content-media flex-row items-start">
+            <a class="wrapper-card-media-achievement"
+                href="{{ route('admin.detail-achievement', ['achievement' => 1]) }}"
             >
                 <div class="card-media">
                     <div class="wrapper-image">
-                        <img src="https://tse1.mm.bing.net/th/id/OIP.W81pUm4Cky36gAu4f7poQgHaFj?rs=1&pid=ImgDetMain&o=7&rm=3" alt="wrapper-iamge">
+                        <img src="https://tipkerja.com/wp-content/uploads/2022/03/Contoh-Foto-Full-Body-Pria-685x1024.webp" alt="wrapper-iamge">
                     </div>
                     <div class="detail-media">
-                        <h3 class="title">Aplikasi Pemesanan Website</h3>
-                        <p class="description">Aplikasi pemesanan hotel adalah sebuah aplikasi yang dibuat dan khussukan untuk penggun yang
-                            ingin memesan hotel secara online</p>
+                        <div class="ranking">
+                            @include('_components._sprite-icons', ['name' => 'rank-3', 'size' => 25])
+                        </div>
                         <div class="profile">
-                            <div class="tag-name">
-                                <h5>Wildan Izhar Al Haqq</h5>
-                                <h5>XII - RPL</h5>
+                            <div class="horizontal">
+                                <h5>Wildan Izhar Al Haqq - XII RPL</h5>
                             </div>
-                            <div class="action">
-                                <button type="button" name="visible" id="button-visible" value="public">
-                                    @include('_components._sprite-icons', ['name' => 'eye', 'size' => 20])
-                                </button>
+                            <div class="horizontal">
+                                <h6>BI GOT TALENT</h6>
                             </div>
                         </div>
                     </div>

@@ -1,8 +1,10 @@
 <?php
 namespace App\Utilities;
 
-class CloudinaryUtils {
+use Illuminate\Http\UploadedFile;
 
+class CloudinaryUtils
+{
     /**
      * Extract the public ID from a Cloudinary URL.
      *
@@ -28,6 +30,22 @@ class CloudinaryUtils {
      */
     public static function isCloudinaryUrl($url) {
         return strpos($url, "res.cloudinary.com") !== false;
+    }
+
+    /**
+     * Uploads a given image file to Cloudinary and returns the uploaded URL.
+     *
+     * @param UploadedFile $file The image file to upload.
+     * @return string The uploaded URL.
+     */
+    public static function uploadImageFile(UploadedFile $file) {
+        $uploadedUrl = cloudinary()->uploadApi()->upload($file->getRealPath())['secure_url'];
+        return $uploadedUrl;
+    }
+
+    public static function replaceImageFile(UploadedFile $file, string $publicUrl) {
+        $uploadedUrl = cloudinary()->uploadApi()->upload($file->getRealPath())['secure_url'];
+        return $uploadedUrl;
     }
 }
 

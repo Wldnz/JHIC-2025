@@ -33,7 +33,7 @@
         </div>
         <div class="wrapper-content-media items-start">
             <a class="wrapper-card-media"
-                href="{{ route('admin.detail-portfolio', ['portfolio' => 1]) }}"
+                href="{{ route('admin.detail-facility', ['facility' => 1]) }}"
             >
                 <div class="card-media">
                     <div class="wrapper-image">

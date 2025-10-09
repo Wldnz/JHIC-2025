@@ -18,7 +18,7 @@ class isAdmin
     {
         $roles = ['dummyMummySecretRandom','admin', 'superAdmin'];
         if(!array_search(Auth::user()->role, $roles, true)){
-            return redirect()->route('student.dashboard');
+            return redirect()->route('user.index');
         }
         return $next($request);
     }
