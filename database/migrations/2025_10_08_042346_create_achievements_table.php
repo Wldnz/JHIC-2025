@@ -13,9 +13,9 @@ return new class extends Migration {
             $table->enum('student_class', ['X', 'XI', 'XII']);
             $table->foreignId('student_major_id')->nullable()->constrained('majors')->nullOnDelete();
             $table->string('student_major_name', 120);
-            $table->enum('competition_position', ['grade_1', 'grade_2', 'grade_3'])->default('school');
+            $table->enum('competition_position', ['grade_1', 'grade_2', 'grade_3'])->default('grade_3');
             $table->string('competition_name', 255);
-            $table->enum('competition_level', ['school', 'subdistrict', 'district', 'provincial', 'national', 'international'])->default('grade_1');
+            $table->enum('competition_level', ['school', 'subdistrict', 'district', 'provincial', 'national', 'international'])->default('school');
             $table->timestamp('won_at');
             $table->text('thumbnail_url');
             $table->timestamps();
