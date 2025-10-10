@@ -1,6 +1,7 @@
 @include('_components._headerAdmin', ['title' => 'Tambahkan Fasilitas'])
 @php
     $currentPath = explode('/admin/', url()->current())[1];
+    logger('as', [$achievement])
 @endphp
 <form class="content flex-row justify-between pad-0" method="get">
     @csrf
@@ -14,24 +15,29 @@
                         <select name="student_nis" id="student_nis" required>
                             <option value=""></option>
                             @foreach ($students as $student)
-                                <option value="{{ $student->nis }}">{{ $student['name'] }}</option>
+                                <option value="{{ $student->nis }}" @selected(old('student_nis', $achievement['student_nis']) == $student->nis)>{{ $student->name }}</option>
                             @endforeach
                         </select>
                     </div>
                     <div class="wrapper-input" style="display:none">
                         <label for="student_name">Nama Siswa<span> *</span></label>
-                        <input type="hidden" name="student_name" id="student_name" value="{{ old('student_name', '') }}"
+                        <input type="hidden" name="student_name" id="student_name" value="{{ old('student_name', $achievement['student_name']) }}"
                             readonly>
                     </div>
                     <div class="wrapper-input">
                         <label for="class">Kelas</label>
                         <input type="text" name="class" id="class" placeholder="Masukkan kelas siswa"
-                            value="{{ old('class', '') }}" readonly required>
+                            value="{{ old('class', $achievement['student_class']) }}" readonly required>
                     </div>
-                    <div class="wrapper-input">
+                    <div class="wrapper-input" style="display:none">
                         <label for="major">Jurusan</label>
                         <input type="text" name="major" id="major" placeholder="Masukkan jurusan siswa"
-                            value="{{ old('major', '') }}" readonly required>
+                            value="{{ old('major', $achievement['student_major_id']) }}" readonly>
+                    </div>
+                    <div class="wrapper-input">
+                        <label for="major_name">Jurusan</label>
+                        <input type="text" name="major_name" id="major_name" placeholder="Masukkan jurusan siswa"
+                            value="{{ old('major', $achievement['student_major_name']) }}" readonly required>
                     </div>
                 </div>
             </div>
@@ -72,33 +78,27 @@
                     <div class="wrapper-input">
                         <label for="competition_position">Juara <span>*</span></label>
                         <select name="competition_position" id="competition_position" required>
-                            <option value="grade_1" @selected(old('competition_position', '') == '1')>Juara 1</option>
-                            <option value="grade_2" @selected(old('competition_position', '') == '2')>Juara 2</option>
-                            <option value="grade_3" @selected(old('competition_position', '') == '3')>Juara 3</option>
+                            @foreach($competitionPositions as $key=>$position)
+                                <option value="{{ $position }}" @selected(old('competition_position', $achievement['competition_position']) == $position)>{{ $key }}</option>
+                            @endforeach
                         </select>
                     </div>
                     <div class="wrapper-input">
                         <label for="competition_name">Nama Perlombaan <span>*</span></label>
                         <input type="text" name="competition_name" id="competition_name" minlength="5"
-                            placeholder="Perlombaan Pembuatan Video" value="{{ old('competition_name', '') }}" required>
+                            placeholder="Perlombaan Pembuatan Video" value="{{ old('competition_name', $achievement['competition_name']) }}" required>
                     </div>
                     <div class="wrapper-input">
                         <label for="won_at">Dimenangkan Pada <span>*</span></label>
                         <input type="date" inputmode="numeric" name="won_at" id="won_at" minlength="5"
-                            value="{{ old('won_at', date('Y-m-d')) }}" required>
+                            value="{{ old('won_at', substr($achievement['won_at'], 0 ,10)) }}" required>
                     </div>
                     <div class="wrapper-input">
                         <label for="competition_level">Tingkat Perlombaan <span>*</span></label>
                         <select name="competition_level" id="competition_level" required>
-                            <option value="nasional" @selected(old('competition_level', '') == 'nasionak')>Nasional
-                            </option>
-                            <option value="internasional" @selected(old('competition_level', '') == 'internasional')>
-                                Internasional</option>
-                            <option value="kabupaten" @selected(old('competition_level', '') == 'kabupaten')>
-                                Kabupaten/Kota</option>
-                            <option value="kecamatan" @selected(old('competition_level', '') == 'kecamatan')>Kecamatan
-                            </option>
-                            <option value="sekolah" @selected(old('competition_level', '') == 'sekolah')>Sekolah</option>
+                            @foreach ($competitionLevels as $key=>$level)
+                                <option value="{{ $level }}" @selected(old('competition_level', $achievement['competition_level']) == $level)>{{ $key }}</option>
+                            @endforeach
                         </select>
                     </div>
                     <div class="wrapper-input">
@@ -168,7 +168,8 @@
         document.getElementById('fullname_').textContent = student.name;
         document.getElementById('_preview_fullname').textContent = student.name;
         document.getElementById('class').value = student.class;
-        document.getElementById('major').value = student.major_name;
+        document.getElementById('major').value = student.major_id;
+        document.getElementById('major_name').value = student.major_long_name;
     };
 </script>
 @include('_components._footerAdmin')

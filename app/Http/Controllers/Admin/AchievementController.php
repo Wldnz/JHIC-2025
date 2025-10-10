@@ -116,7 +116,7 @@ class AchievementController extends Controller
 
     public function detailAchievement(Achievement $achievement)
     {
-        $students = Student::all(['nis', 'name', 'class', 'major_name']);
+        $students = Student::all(['nis', 'name', 'class', 'major_id', 'major_long_name']);
         $competitionPositions = [
             "Juara 1" => 'grade_1',
             "Juara 2" => 'grade_2',

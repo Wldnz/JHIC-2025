@@ -14,10 +14,29 @@
                 </li>
                 @if(Auth::user()->role == 'admin' || Auth::user()->role == 'super_admin')
 
-                    <li class="menu" id="menu-inventory" data-open=false>
+
+                    <li class="menu" id="menu-transactions" data-open=false>
                         <a class="display-menu" href="{{ route('admin.transactions') }}">
                             @include('_components._sprite-icons', ['name' => 'transaction', "color" => $currentPath == 'products' ? '#273B98' : 'black', 'size' => 23])
                             <span>Transactions</span>
+                        </a>
+                    </li>
+                    <li class="menu multiple" id="menu-public" data-open=false>
+                        <a class="display-menu">
+                            @include('_components._sprite-icons', ['name' => 'eye', "color" => $currentPath == 'public' ? '#273B98' : 'black', 'size' => 23])
+                            <span>Public</span>
+                        </a>
+                        <a class="sub-menu" href="{{ route("admin.news") }}" id="news">
+                            <span>News</span>
+                        </a>
+                        <a class="sub-menu" href="{{ route("admin.facility") }}" id="faciliti">
+                            <span>Facility</span>
+                        </a>
+                        <a class="sub-menu" href="{{ route("admin.portfolio") }}" id="portfolio">
+                            <span>Portfolio</span>
+                        </a>
+                        <a class="sub-menu" href="{{ route("admin.achievement") }}" id="achievement">
+                            <span>Achievement</span>
                         </a>
                     </li>
 

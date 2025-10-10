@@ -47,24 +47,25 @@
             }
         }
 
-        @include summary_card.summary_card;
-
+        
         .content {
             padding: 15px;
-
+            
             display: flex;
             flex-direction: column;
             gap: 25px;
-
+            
             .greeting {
                 display: flex;
                 flex-direction: column;
                 gap: 1px;
-
+                
                 span {
                     font-size: $font-size-m;
                 }
             }
+            
+            @include summary_card.summary_card;
 
             .wrapper-content-media-management {
                 display: flex;
