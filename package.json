@@ -20,6 +20,7 @@
         "vite": "^7.1.4"
     },
     "dependencies": {
+        "@toast-ui/editor": "^3.2.2",
         "chart.js": "^4.5.0"
     }
 }
