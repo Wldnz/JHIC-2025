@@ -12,7 +12,8 @@ return new class extends Migration {
             $table->string('name', 255);
             $table->enum('class', ['X', 'XI', 'XII']);
             $table->foreignId('major_id')->nullable()->constrained('majors')->nullOnDelete();
-            $table->string('major_name', 255);
+            $table->string('major_long_name', 120);
+            $table->string('major_short_name', 50);
             $table->enum('gender', ['male', 'female']);
             $table->date('birthdate');
             $table->timestamps();

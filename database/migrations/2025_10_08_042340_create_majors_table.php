@@ -10,6 +10,7 @@ return new class extends Migration {
             $table->id();
             $table->string('long_name', 120);
             $table->string('short_name', 50);
+            $table->timestamps();
         });
     }
 

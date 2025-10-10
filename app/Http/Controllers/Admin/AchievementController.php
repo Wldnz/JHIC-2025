@@ -136,13 +136,108 @@ class AchievementController extends Controller
 
     public function updateAchievement(UpdateAchievementRequest $request, Achievement $achievement)
     {
-        return back();
+        $validated = $request->validated();
+
+        if ($validated['student_nis']) {
+            $student = Student::find($validated['student_nis'], ['name', 'class', 'major_id', 'major_name']);
+
+            if (!$student) {
+                AlertDataGenerator::generateAsFlashToSession(
+                    AlertType::DANGER,
+                    "Gagal mengubah prestasi",
+                    "Siswa dengan NIS {$validated['student_nis']} tidak ditemukan",
+                    $request->session(),
+                );
+                return back()->withInput($validated);
+            }
+
+            $achievement->student_nis = $validated['student_nis'];
+            $achievement->student_name = $student->name;
+            $achievement->student_class = $student->class;
+            $achievement->student_major_id = $student->major_id;
+            $achievement->student_major_name = $student->major_name;
+        }
+
+        if ($validated['image_file']) {
+            $thumbnailPublicId = CloudinaryUtils::getPublicIdByCloudinaryUrl($achievement->thumbnail_url);
+            if (!$thumbnailPublicId) {
+                AlertDataGenerator::generateAsFlashToSession(
+                    AlertType::DANGER,
+                    "Gagal mengubah prestasi",
+                    "Terjadi kesalahan saat menghapus gambar lama (public id tidak ditemukan)",
+                    $request->session(),
+                );
+                return back()->withInput($validated);
+            }
+
+            $uploadedUrl = CloudinaryUtils::replaceImageFile(
+                $validated['image_file'],
+                $achievement->thumbnail_url
+            );
+            if (!$uploadedUrl) {
+                AlertDataGenerator::generateAsFlashToSession(
+                    AlertType::DANGER,
+                    "Gagal mengubah prestasi",
+                    "Terjadi kesalahan saat mengunggah gambar baru",
+                    $request->session(),
+                );
+                return back()->withInput($validated);
+            }
+
+            $achievement->thumbnail_url = $uploadedUrl;
+        }
+
+        $achievement->competition_position = $validated['competition_position'];
+        $achievement->competition_name = $validated['competition_name'];
+        $achievement->competition_level = $validated['competition_level'];
+        $achievement->won_at = $validated['won_at'];
+
+        $isUpdated = $achievement->save();
+
+        if ($isUpdated) {
+            AlertDataGenerator::generateAsFlashToSession(
+                AlertType::SUCCESS,
+                "Berhasil mengubah prestasi",
+                "Prestasi berhasil diubah",
+                $request->session(),
+            );
+            return redirect()->route('admin.achievement');
+        } else {
+            AlertDataGenerator::generateAsFlashToSession(
+                AlertType::DANGER,
+                "Gagal mengubah prestasi",
+                "Prestasi gagal diubah",
+                $request->session(),
+            );
+            return back()->withInput($validated);
+        }
     }
 
     public function deleteAchievement(Request $request, Achievement $achievement)
     {
-        $isDeleted = $achievement->delete();
+        $thumbnailPublicId = CloudinaryUtils::getPublicIdByCloudinaryUrl($achievement->thumbnail_url);
+        if (!$thumbnailPublicId) {
+            AlertDataGenerator::generateAsFlashToSession(
+                AlertType::DANGER,
+                "Gagal menghapus prestasi",
+                "Terjadi kesalahan saat menghapus gambar prestasi (public id tidak ditemukan)",
+                $request->session(),
+            );
+            return back();
+        }
 
+        $isImageDeleted = CloudinaryUtils::deleteImageFile($thumbnailPublicId);
+        if (!$isImageDeleted) {
+            AlertDataGenerator::generateAsFlashToSession(
+                AlertType::DANGER,
+                "Gagal menghapus prestasi",
+                "Terjadi kesalahan saat menghapus gambar prestasi",
+                $request->session(),
+            );
+            return back();
+        }
+
+        $isDeleted = $achievement->delete();
         if ($isDeleted) {
             AlertDataGenerator::generateAsFlashToSession(
                 AlertType::SUCCESS,

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Major;
 use DB;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -13,13 +14,31 @@ class MajorSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('majors')->insert([
-            ['name' => 'Animasi'],
-            ['name' => 'Desain Komunikasi Visual'],
-            ['name' => 'Teknik Komputer Jaringan'],
-            ['name' => 'Rekayasa Perangkat Lunak'],
-            ['name' => 'Broadcasting'],
-            ['name' => 'Game Development'],
+        Major::query()->insert([
+            [
+                'long_name' => 'Animasi',
+                'short_name' => 'ANM',
+            ],
+            [
+                'long_name' => 'Desain Komunikasi Visual',
+                'short_name' => 'DKV',
+            ],
+            [
+                'long_name' => 'Teknik Komputer Jaringan',
+                'short_name' => 'TKJ',
+            ],
+            [
+                'long_name' => 'Rekayasa Perangkat Lunak',
+                'short_name' => 'RPL',
+            ],
+            [
+                'long_name' => 'Broadcasting',
+                'short_name' => 'BC',
+            ],
+            [
+                'long_name' => 'Game Development',
+                'short_name' => 'GAMEDEV',
+            ],
         ]);
     }
 }

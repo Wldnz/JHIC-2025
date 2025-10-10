@@ -11,6 +11,7 @@ return new class extends Migration {
             $table->foreignId('portfolio_id')->constrained('portfolios')->cascadeOnDelete();
             $table->text('url');
             $table->boolean('is_thumbnail')->default(false);
+            $table->timestamps();
         });
     }
 

@@ -9,22 +9,31 @@ return new class extends Migration {
         Schema::create('candidates', function (Blueprint $table) {
             $table->string('nisn', 10)->primary();
             $table->foreignId('user_id')->nullable()->constrained('users')->nullOnDelete();
+
             $table->string('full_name', 255);
             $table->string('short_name', 100)->nullable();
             $table->date('birthdate');
             $table->string('birthplace', 255);
-            $table->enum('gender', ['male', 'female']);
-            $table->enum('citizenship', ['indonesia', 'other'])->nullable();
-            $table->enum('religion', ['islam', 'catholic', 'buddha', 'hindu', 'protestant', 'confucian', 'other'])->nullable();
+            $table->string('gender', 50);
+            $table->string('citizenship', 100)->nullable();
+            $table->string('religion', 100)->nullable();
             $table->text('address')->nullable();
-            $table->enum('status_family', ['biological_child', 'adopted_child', 'step_child', 'foster_child'])->nullable();
+            $table->string('status_family', 100)->nullable();
             $table->integer('order_family')->nullable();
             $table->integer('sum_siblings')->nullable();
             $table->integer('sum_half_siblings')->nullable();
             $table->integer('sum_adopted_siblings')->nullable();
             $table->string('phone', 12);
+
             $table->foreignId('selected_phase_id')->nullable()->constrained('registration_phases')->nullOnDelete();
-            $table->string('selected_phase_name', 255)->nullable();
+            $table->string('selected_phase_name', 255);
+            $table->foreignId('registration_source_id')->nullable()->constrained('registration_sources')->nullOnDelete();
+            $table->string('registration_source', 255);
+
+            $table->string('origin_school', 255);
+            $table->string('origin_school_address', 255);
+            $table->text('enrolling_reason');
+
             $table->timestamps();
         });
     }

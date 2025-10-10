@@ -5,13 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Achievement extends Model
+class Portfolio extends Model
 {
-    /** @use HasFactory<\Database\Factories\AchievementFactory> */
+    /** @use HasFactory<\Database\Factories\PortfolioFactory> */
     use HasFactory;
-
-    protected $table = 'achievements';
 
     protected $fillable = [
         'student_nis',
@@ -19,19 +18,14 @@ class Achievement extends Model
         'student_class',
         'student_major_id',
         'student_major_name',
-        'competition_position',
-        'competition_name',
-        'competition_level',
-        'won_at',
-        'thumbnail_url',
-    ];
-
-    protected $casts = [
-        'won_at' => 'datetime',
+        'title',
+        'description',
+        'link_type',
+        'supporting_link',
     ];
 
     /**
-     * Get the student that owns the achievement.
+     * Get the student that owns the portfolio.
      */
     public function student(): BelongsTo
     {
@@ -44,5 +38,13 @@ class Achievement extends Model
     public function major(): BelongsTo
     {
         return $this->belongsTo(Major::class, 'student_major_id');
+    }
+
+    /**
+     * Get the portfolio images for the portfolio.
+     */
+    public function portfolioImages(): HasMany
+    {
+        return $this->hasMany(PortfolioImage::class);
     }
 }
