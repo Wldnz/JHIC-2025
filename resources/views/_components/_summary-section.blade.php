@@ -1,24 +1,26 @@
 <section class="summary">
-    <div class="greeting">
-        <h4>{{ $name }}s</h4>
-        @if(isset($destination))
-            <a href="{{ $destination ?? route("admin.dashboard") }}">Manage ></a>
-        @endif
-    </div>
+    @isset($greeting)
+        <div class="greeting">
+            <h4>{{ $title }}</h4>
+            @if(isset($destination))
+                <a href="{{ $destination ?? route("admin.dashboard") }}">Manage ></a>
+            @endif
+        </div>
+    @endisset
     <div class="wrapper-summary">
         @foreach ($data as $key=>$value)
             @if(gettype($value) != "array")
                 <div class="card-summary">
                     <div class="wrapper-icon">
                         @include("_components._sprite-icons", [
-                        "name" => strtolower($name),
-                        "color" => "white",
+                        "name" => $icon['name'] ?? 'box',
+                        "color" => $icon['color'] ?? 'white',
                         "size" => 25
                         ])
                     </div>
                     <div class="wrapper-information">
-                        <h5>{{ gettype($value) == "integer" ? $value : count($value) }} {{ strtoupper($key[0]) . substr($key, 1) }}</h5>
-                        <span>{{ strtoupper($key[0]) . substr($key, 1) }} {{ $name }}</span>
+                        <h5>{{ gettype($value) == "integer" ? $value : count($value) }} {{ $title }} </h5>
+                        <span>{{ strtoupper($key[0]) . substr($key, 1) }}</span>
                     </div>
                 </div>
             @else

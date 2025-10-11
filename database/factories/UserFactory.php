@@ -11,6 +11,11 @@ use Illuminate\Support\Str;
  */
 class UserFactory extends Factory
 {
+    private $availableRoles = [
+        'candidate',
+        'admin',
+    ];
+
     /**
      * The current password being used by the factory.
      */
@@ -23,17 +28,15 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
-        $roles = ["siswa", "admin"];
-
         return [
-            "nis" => fake()->unique()->numerify('################'),
             'fullname' => fake()->name(),
             'phone' => fake()->phoneNumber(),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => Hash::make('admin1234#'),
             'remember_token' => Str::random(10),
-            'role' => fake()->randomElement($roles),
+            'role' => fake()->randomElement($this->availableRoles),
+            'created_at' => fake()->dateTime(),
         ];
     }
 

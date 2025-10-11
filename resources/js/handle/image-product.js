@@ -1,4 +1,13 @@
 const maxImages = max_images ?? 3;
+
+function additionalHandler(file){
+   try{
+    return additionalHandlerImage(file);
+   }catch(error){
+    return;
+   }
+}
+
 function setActionToImage() {
     document.querySelectorAll('.action-product').forEach(element => {
         const id = element.parentElement.children[0].getAttribute('alt').split('-')[1];
@@ -22,6 +31,7 @@ function setActionToImage() {
 function changeImage(id, file) {
     if (!file) return;
     id == "default_image" ? insertImage(file) : updateImage(id, file);
+    additionalHandler(file);
 }
 
 function insertImage(file) {

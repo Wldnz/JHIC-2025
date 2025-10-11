@@ -18,7 +18,7 @@ class isLogin
     public function handle(Request $request, Closure $next): Response
     {
         if(!Auth::check()){
-            return redirect()->route('login', ['redirect_uri' => $request->getUri()]);
+            return redirect()->route('admin.login-page', ['redirect_uri' => $request->getUri()]);
         }
         return $next($request);
     }

@@ -1,13 +1,14 @@
 @include('_components._headerAdmin', ['title' => 'Achievement Management'])
 @php
     $currentPath = explode('/admin/', url()->current())[1];
+    logger('achievements', [$achievements]);
 @endphp
 <main class="content">
     <div class="management-table">
         <div class="title">
             <h3 class=''>Ada 10 Achievement</h3>
             <a href='{{ route('admin.create-achievement') }}' class="btn" id="btn-add-management">
-                <span class=""> Tambahkan Portfolio </span>
+                <span class=""> Tambahkan Achievement </span>
                 @include('_components._sprite-icons', ['name' => 'add', 'size' => 15])
             </a>
         </div>
@@ -31,32 +32,31 @@
                 </button>
             </form>
         </div>
-        <div class="wrapper-content-media items-start">
-            <a class="wrapper-card-media"
-                href="{{ route('admin.detail-portfolio', ['portfolio' => 1]) }}"
+        <div class="wrapper-content-media flex-row items-start">
+            @foreach ($achievements as $achievement)
+                <a class="wrapper-card-media-achievement"
+                href="{{ route('admin.detail-achievement', ['achievement' => $achievement->id]) }}"
             >
                 <div class="card-media">
                     <div class="wrapper-image">
-                        <img src="https://tse1.mm.bing.net/th/id/OIP.W81pUm4Cky36gAu4f7poQgHaFj?rs=1&pid=ImgDetMain&o=7&rm=3" alt="wrapper-iamge">
+                        <img src="{{ $achievement->thumbnail_url }}" alt="{{ $achievement->student_name }}">
                     </div>
                     <div class="detail-media">
-                        <h3 class="title">Aplikasi Pemesanan Website</h3>
-                        <p class="description">Aplikasi pemesanan hotel adalah sebuah aplikasi yang dibuat dan khussukan untuk penggun yang
-                            ingin memesan hotel secara online</p>
+                        <div class="ranking">
+                            @include('_components._sprite-icons', ['name' => 'rank-'. explode('_', $achievement->competition_position)[1] , 'size' => 25])
+                        </div>
                         <div class="profile">
-                            <div class="tag-name">
-                                <h5>Wildan Izhar Al Haqq</h5>
-                                <h5>XII - RPL</h5>
+                            <div class="horizontal">
+                                <h5>{{ $achievement->student_name }}</h5>
                             </div>
-                            <div class="action">
-                                <button type="button" name="visible" id="button-visible" value="public">
-                                    @include('_components._sprite-icons', ['name' => 'eye', 'size' => 20])
-                                </button>
+                            <div class="horizontal">
+                                <h6>{{ $achievement->competition_name}}</h6>
                             </div>
                         </div>
                     </div>
                 </div>
             </a>
+            @endforeach
         </div>
     </div>
 </main>

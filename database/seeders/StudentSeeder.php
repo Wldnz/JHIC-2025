@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\Major;
 use App\Models\Student;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -15,19 +14,17 @@ class StudentSeeder extends Seeder
      */
     public function run(): void
     {
-        $users = User::query()->where('role', '=', 'siswa')->get();
+        $users = User::query()
+            ->where('role', '=', 'candidate')
+            ->offset(0)
+            ->limit(200)
+            ->get(['id', 'fullname']);
 
-        $users->each(function ($user) {
-            $major = Major::query()->inRandomOrder()->firstOrFail();
-            Student::create([
-                'nis' => $user->nis,
-                'gender' => fake()->randomElement(['male', 'female']),
-                'address' => fake()->address(),
-                'birthdate' => fake()->date(),
-                'class' => fake()->randomElement(['X', 'XI', 'XII']),
-                'major_id' => $major->id,
-                'major_name' => $major->name,
+        foreach ($users as $user) {
+            Student::factory()->create([
+                'user_id' => $user->id,
+                'name' => $user->fullname,
             ]);
-        });
+        }
     }
 }

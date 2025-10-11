@@ -1,0 +1,66 @@
+@import '../../utils/variables';
+
+@mixin card{
+    gap: 100px 60px;
+    .wrapper-card-media-achievement{
+        &:hover{
+          border: 2px solid $color-accent;
+        }
+        border-radius: $border-radius;
+        padding: 5px;
+        .card-media{
+            max-width: 400px;
+            min-height: 400px;
+            
+            display: flex;
+            flex-direction: column;
+
+            font-size: $font-size-l;
+
+            .wrapper-image{
+                width: 300px;
+                height: 400px;
+
+                
+                border-radius: $border-radius;
+                img{
+                    width: inherit;
+                    height: inherit;
+                    border-radius: $border-radius;
+                }
+            }
+            .detail-media{
+                min-height: 60px ;
+
+                display: flex;
+                align-items: center;
+                gap:5px;
+
+                padding: 5px;
+
+                .ranking{
+                    width: 35px;
+                    height: 35px;
+                    background-color: $color-accent;
+                    border-radius: 50%;
+
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+
+                .profile{
+                    font-size: calc($font-size-m + .1rem);
+                    display: flex;
+                    flex-direction: column;
+                    .horizontal{
+                        display: flex;
+                        align-items: center;
+                        gap: 4px;
+                    }
+                }
+
+            }
+        }
+    }
+}

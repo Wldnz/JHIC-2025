@@ -2,7 +2,8 @@
 
 namespace Database\Factories;
 
-use App\Models\User;
+use App\Models\Candidate;
+use App\Models\PaymentMethod;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -10,29 +11,38 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class TransactionFactory extends Factory
 {
+    private $availableStatuses = [
+        'authorize',
+        'capture',
+        'settlement',
+        'deny',
+        'pending',
+        'cancel',
+        'refund',
+        'partial_refund',
+        'partial_chargeback',
+        'expire',
+        'failure',
+    ];
+
     /**
      * Define the model's default state.
      *
      * @return array<string, mixed>
      */
-
-    protected $status = ['pending', 'success', 'ongoing', 'fail'];
     public function definition(): array
     {
-        $user = User::query()->inRandomOrder()->first();
-
+        $candidate = Candidate::query()->inRandomOrder()->first();
+        $paymentMethod = PaymentMethod::query()->inRandomOrder()->first();
+        
         return [
-            'user_nis' => $user->nis,
-            'user_fullname' => $user->fullname,
-            'received_email' => fake()->email(),
-            'received_phone' => fake()->phoneNumber(),
-            'total_product' => fake()->numberBetween(1, 10),
-            'total_price' => fake()->numberBetween(100_000, 1_000_000),
-            'payment_method' => fake()->creditCardType(),
-            'expired_at' => now()->addDays(3),
-            'received_at' => fake()->dateTimeBetween(now(), now()->addDays(3)),
-            'status' => fake()->randomElement($this->status),
-            'note' => fake()->optional()->text(100),
+            'candidate_nisn' => $candidate->nisn,
+            'candidate_full_name' => $candidate->full_name,
+            'payment_method_id' => $paymentMethod->id,
+            'payment_method_display_name' => $paymentMethod->display_name,
+            'total_cost' => 5_787_900,
+            'expired_at' => now()->addHours(rand(12, 24)),
+            'status' => fake()->randomElement($this->availableStatuses),
         ];
     }
 }

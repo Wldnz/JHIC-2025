@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class ExtracurricularsController extends Controller
 {
+    public function index()
+    {
+        return view('user.extracurriculars.index');
+    }
+
     public function merpatiPutih()
     {
         return view('user.extracurriculars.merpati-putih');
@@ -37,16 +42,6 @@ class ExtracurricularsController extends Controller
         return view('user.extracurriculars.tari-tradisional');
     }
 
-    public function studentCompany()
-    {
-        return view('user.extracurriculars.student-company');
-    }
-
-    public function biChannel()
-    {
-        return view('user.extracurriculars.bi-channel');
-    }
-
     public function englishClub()
     {
         return view('user.extracurriculars.english-club');
@@ -55,10 +50,5 @@ class ExtracurricularsController extends Controller
     public function paskibra()
     {
         return view('user.extracurriculars.paskibra');
-    }
-
-    public function palangMerah()
-    {
-        return view('user.extracurriculars.palang-merah');
     }
 }

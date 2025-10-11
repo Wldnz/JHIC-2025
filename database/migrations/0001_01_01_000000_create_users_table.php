@@ -5,20 +5,16 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration {
-    /**
-     * Run the migrations.
-     */
-    public function up(): void
-    {
+    public function up(): void {
         Schema::create('users', function (Blueprint $table) {
-            $table->string("nis", 16)->primary();
+            $table->id();
             $table->string('fullname');
             $table->string('email')->unique();
             $table->string('phone', 12);
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
-            $table->enum('role', ['siswa', 'admin', 'superAdmin'])->default('siswa');
+            $table->enum('role', ['candidate', 'article_creator', 'admin', 'super_admin'])->default('candidate');
             $table->timestamps();
         });
 
@@ -38,11 +34,9 @@ return new class extends Migration {
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
-    {
+
+
+    public function down(): void {
         Schema::dropIfExists('users');
         Schema::dropIfExists('password_reset_tokens');
         Schema::dropIfExists('sessions');

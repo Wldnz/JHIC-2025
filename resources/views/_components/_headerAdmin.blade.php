@@ -19,5 +19,7 @@
         <aside class="right">
             @include('_components._bar-top-admin', ["title" => $title])
 
-
+<script defer>
+    const defaultSrc = "{{ asset('icons/loading-image.png') }}";
+</script>
 @includeWhen(session()->has('alert'), '_components._alert-message', ['data' => session()->get('alert'), 'icon_name' => 'product'])
