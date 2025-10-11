@@ -9,13 +9,13 @@ use Illuminate\Http\Request;
 class FacilityController extends Controller
 {
 
-     protected $maxPage = 10;
+     protected $maxPage = 4;
     public function facility(Request $request)
     {
         $search = $request->get('search', '');
         $search_status = $request->get('search_status', '');
         $page =  $request->get('page', 1);
-
+        $max = $this->maxPage;
         $facilities = Gallery::select();
         $stats = [
             "total" => $facilities->get()->count(),
@@ -33,7 +33,7 @@ class FacilityController extends Controller
             ->get();
 
         
-        return view('admin.facility.index',compact('facilities', 'search', 'search_status', 'page', 'total', 'stats'));
+        return view('admin.facility.index',compact('facilities', 'search', 'search_status', 'page', 'total', 'stats', 'max'));
     }
 
     public function createFacility()
@@ -46,7 +46,7 @@ class FacilityController extends Controller
         return back();
     }
 
-    public function detailFacility($facility)
+    public function detailFacility(Gallery $facility)
     {
         return view('admin.facility.detail', compact('facility'));
     }

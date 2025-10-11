@@ -1,16 +1,16 @@
 @import '../../utils/variables';
 
 @mixin card{
-    gap: 100px 60px;
+    gap: 100px 20px;
     .wrapper-card-media-achievement{
+        border: 2px solid $color-accent;
         &:hover{
-          border: 2px solid $color-accent;
         }
         border-radius: $border-radius;
         padding: 5px;
         .card-media{
-            max-width: 400px;
-            min-height: 400px;
+            max-width: 300px;
+            min-height: 350px;
             
             display: flex;
             flex-direction: column;
@@ -18,10 +18,8 @@
             font-size: $font-size-l;
 
             .wrapper-image{
-                width: 300px;
-                height: 400px;
-
-                
+                width: 250px;
+                min-height: inherit;
                 border-radius: $border-radius;
                 img{
                     width: inherit;

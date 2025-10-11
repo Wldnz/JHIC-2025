@@ -737,6 +737,10 @@ img {
   animation: line-break 1500ms forwards;
 }
 
+img {
+  font-size: 14px;
+}
+
 .login {
   max-width: 800px;
   min-height: 300px;
@@ -931,6 +935,10 @@ a {
 
 .self-end {
   align-self: flex-end !important;
+}
+
+.hidden {
+  display: none !important;
 }
 
 .inside-container {
@@ -1191,7 +1199,6 @@ a {
 }
 .wrapper-admin .right .content .summary .wrapper-summary .card-summary {
   min-width: 200px;
-  width: 200px;
   padding: 8px;
   border-radius: 6px;
   display: flex;
@@ -1466,7 +1473,8 @@ a {
   align-items: center;
   flex-wrap: wrap;
   gap: 10px;
-  gap: 100px 60px;
+  gap: 100px 20px;
+  gap: 20px;
 }
 .wrapper-admin .right .content .management-table .wrapper-content-media .wrapper-card-media {
   width: 250px;
@@ -1481,10 +1489,15 @@ a {
   background-color: #fff;
   border-radius: 10px;
 }
+.wrapper-admin .right .content .management-table .wrapper-content-media .wrapper-card-media .card-media .wrapper-image {
+  aspect-ratio: 1/1;
+}
 .wrapper-admin .right .content .management-table .wrapper-content-media .wrapper-card-media .card-media .wrapper-image img {
+  aspect-ratio: 1/1;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   width: 100%;
+  font-size: clamp(0.2rem, 1vw, 0.85rem);
 }
 .wrapper-admin .right .content .management-table .wrapper-content-media .wrapper-card-media .card-media .detail-media {
   padding: 10px;
@@ -1529,22 +1542,20 @@ a {
   cursor: pointer;
 }
 .wrapper-admin .right .content .management-table .wrapper-content-media .wrapper-card-media-achievement {
+  border: 2px solid #273b98;
   border-radius: 8px;
   padding: 5px;
 }
-.wrapper-admin .right .content .management-table .wrapper-content-media .wrapper-card-media-achievement:hover {
-  border: 2px solid #273b98;
-}
 .wrapper-admin .right .content .management-table .wrapper-content-media .wrapper-card-media-achievement .card-media {
-  max-width: 400px;
-  min-height: 400px;
+  max-width: 300px;
+  min-height: 350px;
   display: flex;
   flex-direction: column;
   font-size: clamp(0.6rem, 2vw, 1.5rem);
 }
 .wrapper-admin .right .content .management-table .wrapper-content-media .wrapper-card-media-achievement .card-media .wrapper-image {
-  width: 300px;
-  height: 400px;
+  width: 250px;
+  min-height: inherit;
   border-radius: 8px;
 }
 .wrapper-admin .right .content .management-table .wrapper-content-media .wrapper-card-media-achievement .card-media .wrapper-image img {
@@ -1627,9 +1638,9 @@ a {
 .wrapper-admin .right .content .management-table .wrapper-content-media .wrapper-card-news .card-media .bottom .tags .tag {
   width: max-content;
   border-radius: 8px;
-  border: 1.5px solid #007FC4;
+  border: 1.5px solid #007fc4;
   background-color: #d9ecf6;
-  color: #007FC4;
+  color: #007fc4;
   padding: 5px;
 }
 .wrapper-admin .right .content .management-table .wrapper-content-media .wrapper-card-news:hover {
@@ -1899,10 +1910,10 @@ a {
   padding: 6px;
   width: max-content;
   font-size: clamp(0.2rem, 1vw, 0.85rem);
-  color: #007FC4;
+  color: #007fc4;
   background-color: #d9ecf6;
-  border: 1px solid #007FC4;
-  outline-color: #007FC4;
+  border: 1px solid #007fc4;
+  outline-color: #007fc4;
   border-radius: 8px;
 }
 .wrapper-admin .right .content .wrapper-save-media .card-save-media .wrapper-content .card-content .wrapper-tags .tags .wrapper-tag .btn-tag {

@@ -6,7 +6,7 @@ use App\Models\User;
 class RoleLevelChecker
 {
     private static $roleLevels = [
-        'superAdmin' => 0,
+        'super_admin' => 0,
         'admin' => 1,
         'user' => 2,
     ];

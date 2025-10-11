@@ -13,7 +13,7 @@ class UpdateAchievementRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return Auth::check() && RoleLevelChecker::checkMinimumByRoleName(Auth::user(), 'admin');
+        return Auth::check() && \App\Utilities\RoleLevelChecker::checkMinimumByRoleName(Auth::user(), 'admin');
     }
 
     /**

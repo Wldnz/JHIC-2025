@@ -124,7 +124,7 @@
                     @endif
                         <button type="submit" class="btn-page {{ $pagination['current'] == 1 ? 'btn-active' : '' }}"
                             name="page" value="1">1</button>
-                        @if($pagination['current'] > 1)
+                        @if($pagination['current'] + 1 > 1)
                             @for($i = $pagination['current']; $i <= $pagination['current'] + 2; $i++)
                                 @if($i > 1 && $pagination['total'] - ($i * 10) >= 1)
                                     <button type="submit" class="btn-page {{ $pagination['current'] == $i ? 'btn-active' : '' }}"
