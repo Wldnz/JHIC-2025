@@ -3,8 +3,14 @@
     $currentPath = explode('/admin/', url()->current())[1];
 @endphp
 <main class="content">
+    @include('_components._summary-section',
+    [
+        'title' => 'Transactions',
+        'greeting' => true,
+        'data' => $stats
+    ])
     @include('_components._management-table',[
-        'title' => 'Transaksi',
+        'title' => 'Transactions',
         'management' => [ 'title' => 'Tambahkan Transaksi', 'destination' => route('admin.add-transaction')],
         'datas' => $transactions,
         'columns' => [

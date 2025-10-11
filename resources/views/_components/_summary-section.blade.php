@@ -1,7 +1,7 @@
 <section class="summary">
     @isset($greeting)
         <div class="greeting">
-            <h4>{{ $title }}</h4>
+            <h4>Summary Section ({{ $title }})</h4>
             @if(isset($destination))
                 <a href="{{ $destination ?? route("admin.dashboard") }}">Manage ></a>
             @endif

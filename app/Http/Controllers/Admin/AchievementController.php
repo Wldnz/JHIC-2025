@@ -14,10 +14,19 @@ use Illuminate\Http\Request;
 
 class AchievementController extends Controller
 {
+
+    protected $maxPage = 3;
     public function achievement(Request $request)
     {
         $search = $request->query('search', null);
         $major_id = $request->query('major_id', null);
+        $page = $request->query('page', 1);
+        $max = $this->maxPage;
+        $achievements = Achievement::select();
+
+        $stats = [
+            'total' => $achievements->get()->count(),
+        ];
 
         $achievements = Achievement::query()
             ->orderBy('id', 'asc')
@@ -29,15 +38,19 @@ class AchievementController extends Controller
             })
             ->when($major_id, function ($query, $major_id) {
                 return $query->where('major_id', "=", $major_id);
-            })
+            });
+            $totalPage =  $achievements->get()->count();
+            $achievements= $achievements
+            ->limit($this->maxPage)
+            ->offset(($page - 1) * $this->maxPage)
             ->get();
 
-        return view('admin.achievement.index', compact('achievements'));
+        return view('admin.achievement.index', compact('achievements', 'stats', 'page', 'totalPage', 'max'));
     }
 
     public function createAchievement()
     {
-        $students = Student::all(['nis', 'name', 'class', 'major_name']);
+        $students = Student::all(['nis', 'name', 'class', 'major_id','major_long_name']);
         $competitionPositions = [
             "Juara 1" => 'grade_1',
             "Juara 2" => 'grade_2',
@@ -139,7 +152,7 @@ class AchievementController extends Controller
         $validated = $request->validated();
 
         if ($validated['student_nis']) {
-            $student = Student::find($validated['student_nis'], ['name', 'class', 'major_id', 'major_name']);
+            $student = Student::find($validated['student_nis'], ['name', 'class', 'major_id', 'major_long_name']);
 
             if (!$student) {
                 AlertDataGenerator::generateAsFlashToSession(

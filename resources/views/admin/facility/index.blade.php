@@ -6,14 +6,15 @@
 <main class="content">
     @include('_components._summary-section', [
         'title' => 'Facilities',
+        'greeting' => true,
         'data' => $stats,
         'icon' => [ 
             'name' => 'facility',
-        ]
+            ]
     ])
     <div class="management-table">
         <div class="title">
-            <h3 class=''>Ada 10 Fasilitas</h3>
+            <h3 class=''>Show {{ count($facilities) }} / {{ $stats['total'] }} Facilities</h3>
             <a href='{{ route('admin.create-facility') }}' class="btn" id="btn-add-management">
                 <span class=""> Tambahkan Fasilitas</span>
                 @include('_components._sprite-icons', ['name' => 'add', 'size' => 15])
@@ -58,19 +59,17 @@
                             <div class="tag-name">
                                 <h5>{{ strtoupper($facility->gallery_type_name[0]) . substr($facility->gallery_type_name, 1) }}</h5>
                             </div>
-                            {{-- <div class="action">
-                                <form id="action">
-                                    <button type="button" name="visible" id="button-visible" value="public">
-                                        @include('_components._sprite-icons', ['name' => 'eye', 'size' => 20])
-                                    </button>
-                                </form>
-                            </div> --}}
                         </div>
                     </div>
                 </div>
             </a>
             @endforeach
         </div>
+          @include('_components._pagination-media', [
+                'max' => $max,
+                'totalPage' => $total,
+                'page' => $page
+        ])
     </div>
 </main>
 

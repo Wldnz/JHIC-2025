@@ -4,9 +4,14 @@
     logger('achievements', [$achievements]);
 @endphp
 <main class="content">
+    @include('_components._summary-section', [
+        'title' => 'Achievement',
+        'greeting' => true,
+        'data' => $stats,
+    ])
     <div class="management-table">
         <div class="title">
-            <h3 class=''>Ada 10 Achievement</h3>
+            <h3 class=''>Show {{ count($achievements) }}/{{ $stats['total'] }} Achievements</h3>
             <a href='{{ route('admin.create-achievement') }}' class="btn" id="btn-add-management">
                 <span class=""> Tambahkan Achievement </span>
                 @include('_components._sprite-icons', ['name' => 'add', 'size' => 15])
@@ -26,7 +31,7 @@
                 </div>
             </form>
             <form class="wrapper-search">
-                <input type="text" name="search" placeholder="Cari Portfolio Disini..">
+                <input type="text" name="search" placeholder="Cari Achievement Disini..">
                 <button type="submit" class="search-engine">
                     @include("_components._sprite-icons", ["name" => "search", "color" => "white", "size" => 20])
                 </button>
@@ -58,6 +63,11 @@
             </a>
             @endforeach
         </div>
+        @include('_components._pagination-media', [
+                'max' => $max,
+                'totalPage' => $totalPage,
+                'page' => $page
+        ])
     </div>
 </main>
 

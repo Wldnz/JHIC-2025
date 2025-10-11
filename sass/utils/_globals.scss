@@ -2,6 +2,12 @@
 @import '../components/alert';
 @import '../components/profile';
 
+// element
+
+img{
+    font-size: 14px;
+}
+
 .login{
     max-width: 800px;
     min-height: 300px;
@@ -230,4 +236,8 @@ a {
 
 .self-end{
     align-self: flex-end !important;
+}
+
+.hidden{
+    display: none !important;
 }

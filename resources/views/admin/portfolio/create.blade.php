@@ -32,9 +32,14 @@
                             value="{{ old('class', '') }}" readonly required>
                     </div>
                     <div class="wrapper-input">
-                        <label for="major">Jurusan</label>
-                        <input type="text" name="major" id="major" placeholder="Masukkan jurusan siswa"
-                            value="{{ old('major', '') }}" readonly required>
+                        <label for="major_name">Jurusan</label>
+                        <input type="text" name="major_name" id="major_name" placeholder="Masukkan jurusan siswa"
+                            value="{{ old('major_name', '') }}" readonly required>
+                    </div>
+                    <div class="wrapper-input hidden">
+                        <label for="major_id">Jurusan</label>
+                        <input type="text" name="major_id" id="major_id" placeholder="Masukkan jurusan siswa"
+                            value="{{ old('major_id', '') }}" readonly required>
                     </div>
                 </div>
             </div>
@@ -121,7 +126,8 @@
 
     const handlerStudentData = (student) => {
         document.getElementById('class').value = student.class;
-        document.getElementById('major').value = student.major_name;
+        document.getElementById('major_name').value = student.major_long_name;
+        document.getElementById('major_id').value = student.major_id;
         document.getElementById('fullname').value = student.user.fullname;
         document.getElementById('fullname_').textContent = student.user.fullname;
     }
