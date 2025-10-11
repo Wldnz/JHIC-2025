@@ -19,6 +19,7 @@ class NewsController extends Controller
 
     public function storeNews(Request $request)
     {
+        dd($request);
         return back();
     }
 

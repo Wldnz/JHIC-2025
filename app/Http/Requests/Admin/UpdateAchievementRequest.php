@@ -24,8 +24,8 @@ class UpdateAchievementRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'student_nis' => ['required', 'string', 'exists:students,nis'],
-            'image_file' => ['required', 'image', 'mimes:jpg,jpeg,png', 'max:2500'],
+            'student_nis' => ['nullable', 'string', 'exists:students,nis'],
+            'image_file' => ['nullable', 'image', 'mimes:jpg,jpeg,png', 'max:2500'],
             'competition_name' => ['required', 'string', 'min:1', 'max:255'],
             'won_at' => ['required', 'date', 'date_format:Y-m-d'],
             'competition_position' => ['required', 'string', 'in:grade_1,grade_2,grade_3'],

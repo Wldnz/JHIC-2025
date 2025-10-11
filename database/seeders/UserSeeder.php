@@ -30,10 +30,18 @@ class UserSeeder extends Seeder
                 'email_verified_at' => now(),
                 'password' => bcrypt('superadmin1234#'),
                 'remember_token' => Str::random(10),
-                'role' => 'superAdmin',
+                'role' => 'super_admin',
             ]
         ]);
 
-        User::factory()->count(10)->create();
+        User::factory()->count(200 + 100)->create([
+            'role' => 'candidate',
+        ]);
+        User::factory()->count(10)->create([
+            'role' => 'article_creator',
+        ]);
+        User::factory()->count(10)->create([
+            'role' => 'admin',
+        ]);
     }
 }

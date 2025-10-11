@@ -2,7 +2,10 @@
 @php
     $currentPath = explode('/admin/', url()->current())[1];
 @endphp
-<form class="content flex-row justify-between pad-0" method="get">
+<form class="content flex-row justify-between pad-0" 
+    method="POST"
+    enctype="multipart/form-data"
+>
     @csrf
     <div class="wrapper-content-media-management">
         <div class="wrapper-container-media">

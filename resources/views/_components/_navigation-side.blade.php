@@ -12,50 +12,61 @@
                         <span>Dashboard</span>
                     </a>
                 </li>
+                @if(Auth::user()->role == 'admin' || Auth::user()->role == 'super_admin')
 
-                <li class="menu" id="menu-inventory" data-open=false>
-                    <a class="display-menu" href="{{ route('admin.transactions') }}">
-                        @include('_components._sprite-icons', ['name' => 'transaction', "color" => $currentPath == 'products' ? '#273B98' : 'black', 'size' => 23])
-                        <span>Inventory</span>
-                    </a>
-                </li>
 
-                <li class="menu multiple" id="menu-public" data-open=false>
-                    <a class="display-menu">
-                        @include('_components._sprite-icons', ['name' => 'eye', "color" => $currentPath == 'public' ? '#273B98' : 'black', 'size' => 23])
-                        <span>Public</span>
-                    </a>
-                    <a class="sub-menu" href="{{ route("admin.news") }}" id="news">
-                        <span>News</span>
-                    </a>
-                    <a class="sub-menu" href="{{ route('admin.media') }}" id="medias">
-                        <span>Gallery & Media</span>
-                    </a>
-                    <a class="sub-menu" href="{{ route('admin.facility') }}" id="facilities">
-                        <span>Facilities</span>
-                    </a>
-                    <a class="sub-menu" href="{{ route('admin.portfolio') }}" id="portfolios">
-                        <span>Portfolio</span>
-                    </a>
-                    <a class="sub-menu" href="{{ route('admin.achievement') }}" id="achievements">
-                        <span>Achievement</span>
-                    </a>
-                </li>
+                    <li class="menu" id="menu-transactions" data-open=false>
+                        <a class="display-menu" href="{{ route('admin.transactions') }}">
+                            @include('_components._sprite-icons', ['name' => 'transaction', "color" => $currentPath == 'products' ? '#273B98' : 'black', 'size' => 23])
+                            <span>Transactions</span>
+                        </a>
+                    </li>
+                    <li class="menu multiple" id="menu-public" data-open=false>
+                        <a class="display-menu">
+                            @include('_components._sprite-icons', ['name' => 'eye', "color" => $currentPath == 'public' ? '#273B98' : 'black', 'size' => 23])
+                            <span>Public</span>
+                        </a>
+                        <a class="sub-menu" href="{{ route("admin.news") }}" id="news">
+                            <span>News</span>
+                        </a>
+                        <a class="sub-menu" href="{{ route("admin.facility") }}" id="faciliti">
+                            <span>Facility</span>
+                        </a>
+                        <a class="sub-menu" href="{{ route("admin.portfolio") }}" id="portfolio">
+                            <span>Portfolio</span>
+                        </a>
+                        <a class="sub-menu" href="{{ route("admin.achievement") }}" id="achievement">
+                            <span>Achievement</span>
+                        </a>
+                    </li>
 
-                <li  class="menu" id="menu-accounts">
-                    <a class="display-menu" href="{{ route("admin.accounts") }}">
-                        @include('_components._sprite-icons', ['name' => 'account', "color" => $currentPath == 'accounts' ? '#273B98' : 'black', 'size' => 23])
-                        <span>Accounts</span>
-                    </a>
-                </li>
+                    <li class="menu" id="menu-accounts">
+                        <a class="display-menu" href="{{ route("admin.accounts") }}">
+                            @include('_components._sprite-icons', ['name' => 'account', "color" => $currentPath == 'accounts' ? '#273B98' : 'black', 'size' => 23])
+                            <span>Accounts</span>
+                        </a>
+                    </li>
 
-                <li  class="menu" id="menu-settings">
-                    <a class="display-menu" href="{{ route("admin.settings") }}">
-                        @include('_components._sprite-icons', ['name' => 'settings', "color" => $currentPath == 'settings' ? '#273B98' : 'black', 'size' => 25])
-                        <span>Settings</span>
-                    </a>
-                </li>
+                    <li class="menu" id="menu-settings">
+                        <a class="display-menu" href="{{ route("admin.settings") }}">
+                            @include('_components._sprite-icons', ['name' => 'settings', "color" => $currentPath == 'settings' ? '#273B98' : 'black', 'size' => 25])
+                            <span>Settings</span>
+                        </a>
+                    </li>
 
+                @else
+
+                    <li class="menu multiple" id="menu-public" data-open=false>
+                        <a class="display-menu">
+                            @include('_components._sprite-icons', ['name' => 'eye', "color" => $currentPath == 'public' ? '#273B98' : 'black', 'size' => 23])
+                            <span>Public</span>
+                        </a>
+                        <a class="sub-menu" href="{{ route("admin.news") }}" id="news">
+                            <span>News</span>
+                        </a>
+                    </li>
+
+                @endif
             </ul>
         </div>
         <div class="wrapper-action">
@@ -80,8 +91,8 @@
         menu_chidrens.forEach(menu => {
             if (menu.classList.contains('multiple')) {
                 menu.addEventListener('click', (e) => {
-                    if(asideleft.children[0].dataset.open.includes('false')){
-                        openSideBar({target: button_open})
+                    if (asideleft.children[0].dataset.open.includes('false')) {
+                        openSideBar({ target: button_open })
                     };
                     handleSubMenu(menu);
                 });
@@ -90,7 +101,7 @@
     }
 
     function handleSubMenu(menuElement, isInitialize = false) {
-        if(isInitialize) return;
+        if (isInitialize) return;
         const open = menuElement.dataset.open.includes('true');
         Array.from(menuElement.children)
             .filter((s, index) => s.classList.contains('sub-menu'))
@@ -102,8 +113,8 @@
         menuElement.dataset.open = !open;
     }
 
-    function openSideBar({target}) {
-       menu_chidrens.forEach(element => {
+    function openSideBar({ target }) {
+        menu_chidrens.forEach(element => {
             element.children[0].children[1].style.display = 'block';
             element.children[0].style.justifyContent = 'start';
         });
@@ -121,10 +132,10 @@
     }
 
     function closeSideBar() {
-       menu_chidrens.forEach(element => {
+        menu_chidrens.forEach(element => {
             element.children[0].children[1].style.display = 'none';
             element.children[0].style.justifyContent = 'center';
-            if(element.classList.contains('multiple')){
+            if (element.classList.contains('multiple')) {
                 element.dataset.open = true;
                 handleSubMenu(element);
             }
@@ -151,10 +162,15 @@
                 "transactions",
             ],
             "public": [
+                "news-create",
                 "news",
                 "medias",
+                "medias-create",
+                "portfolios-create",
                 "portfolios",
+                "achievements-create",
                 "achievements",
+                "facilities-create",
                 "facilities"
             ]
         };
@@ -162,16 +178,16 @@
             const name = menu.id.split('-')[1];
             const isMultiple = menu.classList.contains('multiple');
             const display_name = menu.children[0];
-            if(isMultiple){
+            if (isMultiple) {
                 const isCurrentLocation = locations[name].includes(pathname);
-                if(isCurrentLocation){
+                if (isCurrentLocation) {
                     display_name.classList.add('active');
                     Array.from(menu.children)
                         .find(sub => sub.id == pathname)
-                        .classList.add('active');
+                        ?.classList.add('active');
                     handleSubMenu(menu, true);
                 }
-            }else if(name == pathname){
+            } else if (name == pathname) {
                 display_name.classList.add('active');
             }
         });

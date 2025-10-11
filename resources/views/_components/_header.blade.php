@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $title  ?? "Bina Tata Usaha" }}</title>
+    <title>{{ $title  ?? "SMK BINA INFORMATIKA" }}</title>
+    <meta content="{{ $title  ?? "SMK BINA INFORMATIKA"  }}" name="{{ $description ?? 'Smk Bina Informatika Bintaro, adalah sebuah sekolah kejuruaan yang memiliki 6 jurusan' }}">
+    <meta content="{{ $title  ?? "SMK BINA INFORMATIKA"  }}" name="{{ $keywords ?? 'SMK BINA INFORMATIKA BINTARO, SEKOLAH SMK BINTARO, SMK JURUSAN, (RPL, TKJ, ANIMASI, DKV, BC, GAMEDEV), Pendaftaran Online SMK' }}">
     @vite(["resources/css/app.css", "resources/js/app.js"])
 </head>
 <body>

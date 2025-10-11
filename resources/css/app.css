@@ -73,6 +73,11 @@ img {
     width: 100%;
   }
 }
+@keyframes rotate-y-360 {
+  100% {
+    rotate: 360deg;
+  }
+}
 body {
   font-family: "Montserrat", "sans-serif";
   background-color: #fff;
@@ -365,6 +370,11 @@ img {
     width: 100%;
   }
 }
+@keyframes rotate-y-360 {
+  100% {
+    rotate: 360deg;
+  }
+}
 .profile:hover > ul {
   display: flex;
 }
@@ -481,6 +491,10 @@ img {
 }
 .login .footers .link a {
   color: #273b98;
+}
+
+.rotate-y-360 {
+  animation: rotate-y-360 600ms alternate-reverse infinite;
 }
 
 .open-sidebar {

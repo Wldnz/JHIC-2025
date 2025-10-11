@@ -3,7 +3,11 @@
     $currentPath = explode('/admin/', url()->current())[1];
     logger('as', [$students])
 @endphp
-<form class="content flex-row justify-between pad-0">
+<form class="content flex-row justify-between pad-0"
+    method="POST"
+    enctype="multipart/form-data"
+>
+    @csrf
     <div class="wrapper-content-media-management">
         <div class="wrapper-container-media">
             <h2>Data Siswa</h2>

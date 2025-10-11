@@ -3,13 +3,33 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 
 class TransactionController extends Controller
 {
-    public function transactions()
+
+    protected $maxPage = 10;
+
+    public function transactions(Request $request)
     {
-        return view('admin.transactions.index');
+        $search = $request->get('search', '');
+        $search_status = $request->get('search_status', '');
+        $page =  $request->get('page', 1);
+
+        $transactions = Transaction::select();
+        if($search){
+            $transactions = $transactions->where('candidate_full_name', '=', $search)
+                ->orWhere('candidate_full_name', 'like', '%'.$search.'%');
+        }
+        if($search_status){
+            $transactions = $transactions->where('status', '=', $search_status);
+        }
+        $total = $transactions->get()->count();
+        $transactions = $transactions->limit($this->maxPage)
+        ->offset(($page - 1) * $this->maxPage)
+            ->get();
+        return view('admin.transactions.index', compact('transactions', 'search', 'search_status', 'page', 'total'));
     }
 
     public function detailTransaction($transaction)

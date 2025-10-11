@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
-            $table->enum('role', ['candidate', 'admin', 'superAdmin'])->default('candidate');
+            $table->enum('role', ['candidate', 'article_creator', 'admin', 'super_admin'])->default('candidate');
             $table->timestamps();
         });
 
@@ -33,6 +33,8 @@ return new class extends Migration {
             $table->integer('last_activity')->index();
         });
     }
+
+
 
     public function down(): void {
         Schema::dropIfExists('users');

@@ -1,17 +1,14 @@
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
 import tailwindcss from '@tailwindcss/vite';
+import * as glob from 'glob';
 
 export default defineConfig({
     plugins: [
         laravel({
             input: [
-                'resources/css/app.css',
-                'resources/js/app.js',
-                'resources/js/handle/image-product.js',
-                'resources/js/handle/variant-product.js',
-                'resources/js/handle/transactions.js',
-                "resources/js/chart.js",
+                ...glob.globSync('resources/js/**/*', { nodir: true }),
+                ...glob.globSync('resources/css/**/*.css', { nodir: true }),
             ],
             refresh: true,
         }),

@@ -43,9 +43,32 @@ class CloudinaryUtils
         return $uploadedUrl;
     }
 
-    public static function replaceImageFile(UploadedFile $file, string $publicUrl) {
+    /**
+     * Replaces an image file in Cloudinary.
+     *
+     * @param UploadedFile $file The new image file to upload.
+     * @param string $publicId The public ID of the image to replace.
+     * @return string|null The URL of the uploaded image file, or null if the replacement failed.
+     */
+    public static function replaceImageFile(UploadedFile $file, string $publicId) {
+        $response = cloudinary()->uploadApi()->destroy($publicId);
+        if ($response['result'] !== 'ok') {
+            return null;
+        }
+
         $uploadedUrl = cloudinary()->uploadApi()->upload($file->getRealPath())['secure_url'];
         return $uploadedUrl;
+    }
+
+    /**
+     * Deletes an image file in Cloudinary.
+     *
+     * @param string $publicId The public ID of the image file to delete.
+     * @return bool True if the deletion was successful, false otherwise.
+     */
+    public static function deleteImageFile(string $publicId) {
+        $response = cloudinary()->uploadApi()->destroy($publicId);
+        return $response['result'] !== 'ok';
     }
 }
 
