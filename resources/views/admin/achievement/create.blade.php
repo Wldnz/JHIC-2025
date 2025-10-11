@@ -2,7 +2,7 @@
 @php
     $currentPath = explode('/admin/', url()->current())[1];
 @endphp
-<form class="content flex-row justify-between pad-0" 
+<form class="content flex-row justify-between pad-0"
     method="POST"
     enctype="multipart/form-data"
 >
@@ -75,9 +75,9 @@
                     <div class="wrapper-input">
                         <label for="competition_position">Juara <span>*</span></label>
                         <select name="competition_position" id="competition_position" required>
-                            <option value="grade_1" @selected(old('competition_position', '') == '1')>Juara 1</option>
-                            <option value="grade_2" @selected(old('competition_position', '') == '2')>Juara 2</option>
-                            <option value="grade_3" @selected(old('competition_position', '') == '3')>Juara 3</option>
+                            @foreach($competitionPositions as $key=>$position)
+                            <option value="{{ $position }}" @selected(old('competition_position', 'grade_1') == $position)>{{ $key }}</option>
+                        @endforeach
                         </select>
                     </div>
                     <div class="wrapper-input">
@@ -93,15 +93,9 @@
                     <div class="wrapper-input">
                         <label for="competition_level">Tingkat Perlombaan <span>*</span></label>
                         <select name="competition_level" id="competition_level" required>
-                            <option value="nasional" @selected(old('competition_level', '') == 'nasionak')>Nasional
-                            </option>
-                            <option value="internasional" @selected(old('competition_level', '') == 'internasional')>
-                                Internasional</option>
-                            <option value="kabupaten" @selected(old('competition_level', '') == 'kabupaten')>
-                                Kabupaten/Kota</option>
-                            <option value="kecamatan" @selected(old('competition_level', '') == 'kecamatan')>Kecamatan
-                            </option>
-                            <option value="sekolah" @selected(old('competition_level', '') == 'sekolah')>Sekolah</option>
+                            @foreach ($competitionLevels as $key=>$level)
+                                <option value="{{ $level }}" @selected(old('competition_level', 'school') == $level)>{{ $key }}</option>
+                            @endforeach
                         </select>
                     </div>
                     <div class="wrapper-input">
@@ -171,7 +165,7 @@
         document.getElementById('fullname_').textContent = student.name;
         document.getElementById('_preview_fullname').textContent = student.name;
         document.getElementById('class').value = student.class;
-        document.getElementById('major').value = student.major_name;
+        document.getElementById('major').value = student.major_long_name;
     };
 </script>
 @include('_components._footerAdmin')

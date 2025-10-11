@@ -3,8 +3,10 @@
 namespace Database\Factories;
 
 use App\Models\Student;
+use App\Utilities\CloudinaryUtils;
 use Exception;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\File;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Achievement>
@@ -33,13 +35,34 @@ class AchievementFactory extends Factory
      */
     public function definition(): array
     {
-        $images = cloudinary()->adminApi()->assets([
-            'resource_type' => 'image',
-            'max_results' => 20,
-        ])['resources'];
+        $imageTag = 'student person';
+        $maxResults = 20;
 
-        if (empty($images)) {
-            throw new Exception('No cloudinary images found');
+        $images = cloudinary()->adminApi()->assetsByTag(
+            $imageTag,
+            [
+                'resource_type' => 'image',
+                'max_results' => $maxResults,
+                'fields' => 'secure_url',
+            ],
+        )['resources'];
+
+        if (count($images) < $maxResults) {
+            $imageFiles = File::files(public_path('images\student persons'));
+
+            for ($i = 0; $i < ($maxResults - count($images)); $i++) {
+                $uploadedUrl = cloudinary()->uploadApi()->upload(
+                    fake()->randomElement($imageFiles)->getPathname(),
+                    [
+                        'resource_type' => 'image',
+                        'tags' => $imageTag,
+                    ]
+                )['secure_url'];
+
+                $images[] = [
+                    'secure_url' => $uploadedUrl,
+                ];
+            }
         }
 
         $thumbnailUrl = fake()->randomElement($images)['secure_url'];

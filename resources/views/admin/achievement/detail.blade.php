@@ -3,7 +3,8 @@
     $currentPath = explode('/admin/', url()->current())[1];
     logger('as', [$achievement])
 @endphp
-<form class="content flex-row justify-between pad-0" method="get">
+<form class="content flex-row justify-between pad-0" method="post" enctype="multipart/form-data">
+    @method('PUT')
     @csrf
     <div class="wrapper-content-media-management">
         <div class="wrapper-container-media">
@@ -116,7 +117,7 @@
                     </div>
                 </div>
                 <button type="submit" class="btn btn-media">
-                    Tambahkan Prestasi
+                    Simpan Prestasi
                 </button>
             </div>
         </div>
