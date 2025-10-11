@@ -35,6 +35,7 @@ class AchievementFactory extends Factory
      */
     public function definition(): array
     {
+        $publicDirPath = 'images\student persons';
         $imageTag = 'student person';
         $maxResults = 20;
 
@@ -48,7 +49,7 @@ class AchievementFactory extends Factory
         )['resources'];
 
         if (count($images) < $maxResults) {
-            $imageFiles = File::files(public_path('images\student persons'));
+            $imageFiles = File::files(public_path($publicDirPath));
 
             for ($i = 0; $i < ($maxResults - count($images)); $i++) {
                 $uploadedUrl = cloudinary()->uploadApi()->upload(

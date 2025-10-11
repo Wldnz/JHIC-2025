@@ -20,6 +20,9 @@ return Application::configure(basePath: dirname(__DIR__))
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->render(function (Exception $exception, Request $request) {
+            logger()->error($exception);
+            report($exception);
+
             if ($request->hasSession()) {
                 AlertDataGenerator::generateAsFlashToSession(
                     AlertType::DANGER,

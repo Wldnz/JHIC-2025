@@ -28,21 +28,21 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->truncateAllModels();
-        $this->call(UserSeeder::class);
-        $this->call(MajorSeeder::class);
-        $this->call(StudentSeeder::class);
-        $this->call(GalleryTypeSeeder::class);
-        $this->call(PortfolioSeeder::class);
-        $this->call(RegistrationPhaseSeeder::class);
-        $this->call(RegistrationSourceSeeder::class);
-        $this->call(CandidateSeeder::class);
-        $this->call(GallerySeeder::class);
+        // $this->call(UserSeeder::class);
+        // $this->call(MajorSeeder::class);
+        // $this->call(StudentSeeder::class);
+        // $this->call(GalleryTypeSeeder::class);
+        // $this->call(PortfolioSeeder::class);
+        // $this->call(RegistrationPhaseSeeder::class);
+        // $this->call(RegistrationSourceSeeder::class);
+        // $this->call(CandidateSeeder::class);
+        // $this->call(GallerySeeder::class);
         $this->call(PortfolioImageSeeder::class);
-        $this->call(AchievementSeeder::class);
-        $this->call(CandidateMajorSeeder::class);
-        $this->call(CandidateGuardianSeeder::class);
-        $this->call(PaymentMethodSeeder::class);
-        $this->call(TransactionSeeder::class);
+        // $this->call(AchievementSeeder::class);
+        // $this->call(CandidateMajorSeeder::class);
+        // $this->call(CandidateGuardianSeeder::class);
+        // $this->call(PaymentMethodSeeder::class);
+        // $this->call(TransactionSeeder::class);
     }
 
     /**
@@ -52,21 +52,21 @@ class DatabaseSeeder extends Seeder
     {
         DB::statement('SET FOREIGN_KEY_CHECKS = 0');
 
-        User::query()->truncate();
-        Major::query()->truncate();
-        Student::query()->truncate();
-        GalleryType::query()->truncate();
-        Portfolio::query()->truncate();
-        RegistrationPhase::query()->truncate();
-        RegistrationSource::query()->truncate();
-        Candidate::query()->truncate();
-        Gallery::query()->truncate();
+        // User::query()->truncate();
+        // Major::query()->truncate();
+        // Student::query()->truncate();
+        // GalleryType::query()->truncate();
+        // Portfolio::query()->truncate();
+        // RegistrationPhase::query()->truncate();
+        // RegistrationSource::query()->truncate();
+        // Candidate::query()->truncate();
+        // Gallery::query()->truncate();
         PortfolioImage::query()->truncate();
-        Achievement::query()->truncate();
-        CandidateMajor::query()->truncate();
-        CandidateGuardian::query()->truncate();
-        PaymentMethod::query()->truncate();
-        Transaction::query()->truncate();
+        // Achievement::query()->truncate();
+        // CandidateMajor::query()->truncate();
+        // CandidateGuardian::query()->truncate();
+        // PaymentMethod::query()->truncate();
+        // Transaction::query()->truncate();
 
         DB::statement('SET FOREIGN_KEY_CHECKS = 1');
     }

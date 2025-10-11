@@ -3,7 +3,9 @@
     $currentPath = explode('/admin/', url()->current())[1];
     logger('as', [$portfolio, $students])
 @endphp
-<form class="content flex-row justify-between pad-0">
+<form class="content flex-row justify-between pad-0" method="POST" enctype="multipart/form-data">
+    @method('PUT')
+    @csrf
     <div class="wrapper-content-media-management">
         <div class="wrapper-container-media">
             <h2>Data Siswa</h2>
@@ -14,7 +16,7 @@
                         <select name="student_nis" id="student_nis" required>
                             <option value=""></option>
                             @foreach ($students as $student)
-                                <option value="{{ $student->nis }}" @selected(old('student_nis', $portfolio->student_nis) == $student->nis)>{{ $student['user']['fullname'] }}</option>
+                                <option value="{{ $student->nis }}" @selected(old('student_nis', $portfolio->student_nis) == $student->nis)>{{ $student['name'] }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -88,16 +90,9 @@
                     <div class="wrapper-input">
                         <label for="type">Portfolio Type<span>*</span></label>
                         <select name="type" id="type" required>
-                            <option value="youtube" @selected(old('type', $portfolio->link_type) == 'youtube')>Youtube
-                            </option>
-                            <option value="instragam" @selected(old('type', $portfolio->link_type) == 'instragam')>
-                                Instragam</option>
-                            <option value="tiktok" @selected(old('type', $portfolio->link_type) == 'tiktok')>Tiktok
-                            </option>
-                            <option value="website" @selected(old('type', $portfolio->link_type) == 'website')>Website
-                            </option>
-                            <option value="other" @selected(old('type', $portfolio->link_type) == 'other')>Lainnya
-                            </option>
+                            @foreach($availableLinkTypes as $key => $linkType)
+                                <option value="{{ $linkType }}" @selected(old('type', '') == $linkType)>{{ $key }}</option>
+                            @endforeach
                         </select>
                     </div>
                     <div class="wrapper-input">
@@ -118,20 +113,14 @@
 
 <script defer>
     const students = @json($students);
-    let image = @json([
-        [
-            'id' => $portfolio->id,
-            'url' => $portfolio->url,
-            'thumbnail' => true
-        ]
-    ]);
+    let image = @json($portfolio->portfolioImages);
     const max_images = 2;
     const handlerStudentData = (student) => {
         document.getElementById('class').value = student.class;
         document.getElementById('major_name').value = student.major_long_name;
         document.getElementById('major_id').value = student.major_id;
-        document.getElementById('fullname').value = student.user.fullname;
-        document.getElementById('fullname_').textContent = student.user.fullname;
+        document.getElementById('fullname').value = student.name;
+        document.getElementById('fullname_').textContent = student.name;
     }
 
 </script>
