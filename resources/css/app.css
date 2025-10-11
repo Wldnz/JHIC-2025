@@ -427,6 +427,10 @@ img {
   animation: line-break 1500ms forwards;
 }
 
+img {
+  font-size: 14px;
+}
+
 .login {
   max-width: 800px;
   min-height: 300px;
@@ -621,6 +625,10 @@ a {
 
 .self-end {
   align-self: flex-end !important;
+}
+
+.hidden {
+  display: none !important;
 }
 
 body {
