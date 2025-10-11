@@ -113,8 +113,8 @@
             'Ruangan A1' => asset("images/kelas king/a1.svg"),
             'Ruangan A2' => asset("images/kelas king/a2.svg"),
             'Ruangan A3' => asset("images/kelas king/a3.svg"),
-            'Ruangan LapBasket' => asset("images/kelas king/lapbasket.svg"),
-            'Ruangan LapFutsal' => asset("images/kelas king/lapfutsal.svg"),
+            'Lapangan Basket' => asset("images/kelas king/lapbasket.svg"),
+            'Lapangan Futsal' => asset("images/kelas king/lapfutsal.svg"),
             'Ruangan B1' => asset("images/kelas king/b1.svg"),
         ];
 @endphp
@@ -368,6 +368,8 @@ const observer = new IntersectionObserver((entries) => {
 })
 
 majors.forEach(major => observer.observe(major))
+
+// =================================================================================================================
 
 const nav = document.querySelector(".navigation-user")
 let lastScroll = window.scrollY

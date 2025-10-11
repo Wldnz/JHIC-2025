@@ -19,9 +19,9 @@
                     <a class="expandable-pc">ABOUT</a>
                     <div class="branch">
                         <a href="{{ route("user.profile") }}">Profile</a>
-                        <a href="{{ route("user.profile") }}">About Us</a>
-                        <a href="{{ route("user.profile") }}">Vision and Mission</a>
-                        <a href="{{ route("user.profile") }}">Facility</a>
+                        <a href="{{ route("user.about") }}">About Us</a>
+                        <a href="{{ route("user.visi-misi") }}">Vision and Mission</a>
+                        <a href="{{ route("user.facilities") }}">Facility</a>
                     </div>
                 </div>
                 <div class="expandable-wrapper">
@@ -38,12 +38,14 @@
                 <div class="expandable-wrapper">
                 <a class="expandable-pc">PROGRAM</a>
                     <div class="branch">
-                        <a href="Youtube.com">Extracurricular</a>
-                        <a href="Youtube.com">Program Silang</a>
-                        <a href="Youtube.com">BTQ</a>
-                        <a href="Youtube.com">USM</a>
-                        <a href="Youtube.com">Bimbingan Konseling</a>
-                        <a href="Youtube.com">Project Work</a>
+                        <a href="{{ route("user.programs.extracurriculars.index") }}">Extracurricular </a>
+                        <a href="{{ route("user.programs.bi-channel") }}">BI Channel</a>
+                        <a href="https://webosis-smkbi.wuaze.com/" target="blank">OSIS</a>
+                        <a href="{{ route("user.programs.program-silang") }}">Progsil</a>
+                        <a href="{{ route("user.programs.baca-tulis-quran") }}">BTQ</a>
+                        <a href="{{ route("candidate.index") }}">USM</a>
+                        <a href="{{ route("user.programs.bimbingan-konseling") }}">Bimbingan Konseling</a>
+                        <a href="{{ route("user.programs.project-works") }}">Project Work</a>
                     </div>
                 </div>
                 <div class="expandable-wrapper">
@@ -66,9 +68,9 @@
             <a class="expandable">PROFILE <img src="{{ asset("icons/arrow-down.svg") }}" alt=""></a>
             <div class="branch">
                 <a href="{{ route("user.profile") }}">Profile</a>
-                <a href="{{ route("user.profile") }}">About Us</a>
-                <a href="{{ route("user.profile") }}">Vision and Mission</a>
-                <a href="{{ route("user.profile") }}">Facility</a>
+                <a href="{{ route("user.about") }}">About Us</a>
+                <a href="{{ route("user.visi-misi") }}">Vision and Mission</a>
+                <a href="{{ route("user.facilities") }}">Facility</a>
             </div>
             <a class="expandable">MAJOR <img src="{{ asset("icons/arrow-down.svg") }}" alt=""></a>
             <div class="branch">
@@ -82,6 +84,8 @@
             <a class="expandable">PROGRAM <img src="{{ asset("icons/arrow-down.svg") }}" alt=""></a>
             <div class="branch">
                 <a href="{{ route("user.programs.extracurriculars.index") }}">Extracurricular </a>
+                <a href="{{ route("user.programs.bi-channel") }}">BI Channel</a>
+                <a href="https://webosis-smkbi.wuaze.com/" target="blank">OSIS</a>
                 <a href="{{ route("user.programs.program-silang") }}">Progsil</a>
                 <a href="{{ route("user.programs.baca-tulis-quran") }}">BTQ</a>
                 <a href="{{ route("candidate.index") }}">USM</a>
@@ -127,7 +131,7 @@
         clearTimeout(timeoutId)
         timeoutId = setTimeout(() => {
             target.classList.remove("active")
-        }, 10)
+        }, 100)
     }
 
     expand.addEventListener("mouseenter", show)
@@ -135,11 +139,6 @@
     expand.addEventListener("mouseleave", hide)
     target.addEventListener("mouseleave", hide)
 })
-s
-
-
-
-
     </script>
 
     <main class="wrapper-user">

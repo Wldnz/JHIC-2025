@@ -18,27 +18,29 @@
         </div>
         <div class="links">
             <h3>Major</h3>
-            <a href="Youtube.com"><img src="{{ asset("icons/majors icons/anim.svg") }}" alt="">Animation</a>
-            <a href="Youtube.com"><img src="{{ asset("icons/majors icons/bc.svg") }}" alt="">Broadcasting</a>
-            <a href="Youtube.com"><img src="{{ asset("icons/majors icons/gmdv.svg") }}" alt="">Game Development</a>
-            <a href="Youtube.com"><img src="{{ asset("icons/majors icons/dkv.svg") }}" alt="">Visual Communication Design</a>
-            <a href="Youtube.com"><img src="{{ asset("icons/majors icons/tkj.svg") }}" alt="">IT Network</a>
-            <a href="Youtube.com"><img src="{{ asset("icons/majors icons/rpl.svg") }}" alt="">IT Software</a>
+            <a href="{{ route("user.majors.animation") }}"><img src="{{ asset("icons/majors icons/anim.svg") }}" alt="">Animation</a>
+            <a href="{{ route("user.majors.broadcasting") }}"><img src="{{ asset("icons/majors icons/bc.svg") }}" alt="">Broadcasting</a>
+            <a href="{{ route("user.majors.game-development") }}"><img src="{{ asset("icons/majors icons/gmdv.svg") }}" alt="">Game Development</a>
+            <a href="{{ route("user.majors.visual-communication-design") }}"><img src="{{ asset("icons/majors icons/dkv.svg") }}" alt="">Visual Communication Design</a>
+            <a href="{{ route("user.majors.network-engineering") }}"><img src="{{ asset("icons/majors icons/tkj.svg") }}" alt="">IT Network</a>
+            <a href="{{ route("user.majors.software-engineering") }}"><img src="{{ asset("icons/majors icons/rpl.svg") }}" alt="">IT Software</a>
         </div>
         <div class="links">
             <h3>Programs</h3>
-            <a href="Youtube.com">Extracurricular</a>
-            <a href="Youtube.com">Program Silang</a>
-            <a href="Youtube.com">BTQ</a>
-            <a href="Youtube.com">USM</a>
-            <a href="Youtube.com">Bimbingan Konseling</a>
-            <a href="Youtube.com">Project Work</a>
+                <a href="{{ route("user.programs.extracurriculars.index") }}">Extracurricular </a>
+                <a href="{{ route("user.programs.bi-channel") }}">BI Channel</a>
+                <a href="https://webosis-smkbi.wuaze.com/">OSIS</a>
+                <a href="{{ route("user.programs.program-silang") }}">Progsil</a>
+                <a href="{{ route("user.programs.baca-tulis-quran") }}">BTQ</a>
+                <a href="{{ route("candidate.index") }}">USM</a>
+                <a href="{{ route("user.programs.bimbingan-konseling") }}">Bimbingan Konseling</a>
+                <a href="{{ route("user.programs.project-works") }}">Project Work</a>
         </div>
         <div class="links">
             <h3>Contact</h3>
             <a href="https://maps.app.goo.gl/bYVZMmQYAzxCFtRb6"><img src="{{ asset("icons/map.svg") }}">Ciputat, Jl Cendrawasih Raya 9A</a>
-            <a href="wa.me/6281280063529"><img src="{{ asset("icons/telp.svg") }}">(021) - 745 3048</a>
-            <a href="wa.me/6281280063529"><img src="{{ asset("icons/wa.svg") }}">+62 812-8006-3529</a>
+            <a href="https://wa.me/6281280063529"><img src="{{ asset("icons/telp.svg") }}">(021) - 745 3048</a>
+            <a href="https://wa.me/6281280063529"><img src="{{ asset("icons/wa.svg") }}">+62 812-8006-3529</a>
             <a href="mailto:info@smkbinainformatika.sch.id"><img src="{{ asset("icons/email.svg") }}">info@smkbinainformatika.sch.id</a>
         </div>
     </div>
