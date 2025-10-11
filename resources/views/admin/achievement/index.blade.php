@@ -1,6 +1,7 @@
 @include('_components._headerAdmin', ['title' => 'Achievement Management'])
 @php
     $currentPath = explode('/admin/', url()->current())[1];
+    logger('achievements', [$achievements]);
 @endphp
 <main class="content">
     <div class="management-table">
@@ -32,28 +33,30 @@
             </form>
         </div>
         <div class="wrapper-content-media flex-row items-start">
-            <a class="wrapper-card-media-achievement"
-                href="{{ route('admin.detail-achievement', ['achievement' => 1]) }}"
+            @foreach ($achievements as $achievement)
+                <a class="wrapper-card-media-achievement"
+                href="{{ route('admin.detail-achievement', ['achievement' => $achievement->id]) }}"
             >
                 <div class="card-media">
                     <div class="wrapper-image">
-                        <img src="https://tipkerja.com/wp-content/uploads/2022/03/Contoh-Foto-Full-Body-Pria-685x1024.webp" alt="wrapper-iamge">
+                        <img src="{{ $achievement->thumbnail_url }}" alt="{{ $achievement->student_name }}">
                     </div>
                     <div class="detail-media">
                         <div class="ranking">
-                            @include('_components._sprite-icons', ['name' => 'rank-3', 'size' => 25])
+                            @include('_components._sprite-icons', ['name' => 'rank-'. explode('_', $achievement->competition_position)[1] , 'size' => 25])
                         </div>
                         <div class="profile">
                             <div class="horizontal">
-                                <h5>Wildan Izhar Al Haqq - XII RPL</h5>
+                                <h5>{{ $achievement->student_name }}</h5>
                             </div>
                             <div class="horizontal">
-                                <h6>BI GOT TALENT</h6>
+                                <h6>{{ $achievement->competition_name}}</h6>
                             </div>
                         </div>
                     </div>
                 </div>
             </a>
+            @endforeach
         </div>
     </div>
 </main>

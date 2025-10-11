@@ -13,22 +13,28 @@ $color-primary: #fff;
 $color-secondary: #eaf7f9;
 $color-accent: #273b98;
 $color-accent-gradient: linear-gradient(#485bb1 0%, #273b98 100%);
-$color-bi-gradient: linear-gradient(135deg,#0fcbbc 0%, #5f77f7 41%, #8780fc 62%, #a387ff 100%);
+$color-bi-gradient: linear-gradient(
+    135deg,
+    #0fcbbc 0%,
+    #5f77f7 41%,
+    #8780fc 62%,
+    #a387ff 100%
+);
 $color-secondary-background: rgba(95, 119, 247, 0.6);
 $border-radius: 8px;
 
-$tags1 : #007FC4;
+$tags1: #007fc4;
 $tags1-bg: #d9ecf6;
-$tags2 : #E55941;
+$tags2: #e55941;
 $tags2-bg: #fbebe8;
-$tags3 : #6741E5;
+$tags3: #6741e5;
 $tags3-bg: #e9e3ff;
 
-body{
+body {
     font-family: "Montserrat", "sans-serif";
     background-color: $color-primary;
     font-size: $font-size-l;
     color: $color-accent;
 }
-@import 'others';
+@import "others";
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");

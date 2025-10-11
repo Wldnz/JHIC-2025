@@ -1,0 +1,73 @@
+@import "../../utils/variables";
+
+.btq {
+    margin-top: 100px;
+    width: 100vw;
+    padding: 10px;
+
+    h2 {
+        margin-bottom: 20px;
+        font-size: calc($font-size-l - -7px);
+        color: $color-accent;
+        text-align: center;
+    }
+
+    .btq-text {
+        display: flex;
+        justify-content: center;
+
+        p {
+            max-width: 90%;
+            text-align: justify;
+        }
+    }
+
+    .btq-method {
+        display: flex;
+        justify-content: center;
+        margin: 40px 0 20px 0;
+    }
+    .btq-content {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
+
+        .btq-kotak {
+            flex: 0 0 calc(50% - 20px);
+            height: 100px;
+            background-color: whitesmoke;
+            border-radius: 10px;
+        }
+    }
+
+    @media (max-width: 320px) {
+        .btq-content {
+            .btq-kotak {
+                flex: 0 0 100%;
+            }
+        }
+    }
+
+    .btq-system {
+        h3 {
+            margin-top: 40px;
+            text-align: center;
+        }
+
+        .btq-system1 {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+
+            .btq-kotak1 {
+                width: 90%;
+                height: 150px;
+                background-color: black;
+                border-radius: 10px;
+            }
+        }
+    }
+}

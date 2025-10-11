@@ -42,11 +42,6 @@ class ExtracurricularsController extends Controller
         return view('user.extracurriculars.tari-tradisional');
     }
 
-    public function biChannel()
-    {
-        return view('user.extracurriculars.bi-channel');
-    }
-
     public function englishClub()
     {
         return view('user.extracurriculars.english-club');

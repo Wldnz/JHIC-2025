@@ -16,7 +16,7 @@ class isAdmin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $roles = ['dummyMummySecretRandom','admin', 'superAdmin'];
+        $roles = ['dummyMummySecretRandom','admin', 'super_admin'];
         if(!array_search(Auth::user()->role, $roles, true)){
             return redirect()->route('user.index');
         }

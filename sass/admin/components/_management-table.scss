@@ -195,16 +195,16 @@
             gap: 10px;
 
             .wrapper-card-media {
-                width: 300px;
-                min-height: max-content;
+                width: 250px;
+                min-height: 350px;
 
                 background-color: $color-secondary-background;
-
                 padding: 5px;
                 border-radius: 10px;
                 cursor: pointer;
 
                 .card-media {
+                    height: 100%;
                     background-color: $color-primary;
 
                     border-radius: 10px;
@@ -224,13 +224,20 @@
                         gap: 4px;
 
                         .title {
+                            width: 100%;
                             font-size: $font-size-m;
+                            white-space: nowrap;
+                            overflow: hidden;
                         }
 
                         .description {
+                            width: 100%;
                             font-size: calc($font-size-s - 2px);
                             font-weight: normal;
                             padding-left: 1px;
+                            white-space: wrap;
+                            overflow: hidden;
+                            max-height: 30px;
                         }
 
                         .profile {

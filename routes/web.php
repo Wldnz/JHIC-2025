@@ -35,6 +35,7 @@ Route::name('user.')->group(function () {
         Route::get('/bimbingan-konseling', 'bimbinganKonseling')->name('bimbingan-konseling');
         Route::get('/program-kecakapan-hidup', 'programKecakapanHidup')->name('program-kecakapan-hidup');
         Route::get('/project-works', 'projectWorks')->name('project-works');
+        Route::get('/bi-channel', 'biChannel')->name('bi-channel');
 
         Route::controller(User\ExtracurricularsController::class)->prefix('extracurriculars')->name('extracurriculars.')->group(function () {
             Route::get('/', 'index')->name('index');
@@ -44,7 +45,6 @@ Route::name('user.')->group(function () {
             Route::get('/paduan-suara', 'paduanSuara')->name('paduan-suara');
             Route::get('/bicoustic', 'bicoustic')->name('bicoustic');
             Route::get('/tari-tradisional', 'tariTradisional')->name('tari-tradisional');
-            Route::get('/bi-channel', 'biChannel')->name('bi-channel');
             Route::get('/english-club', 'englishClub')->name('english-club');
             Route::get('/paskibra', 'paskibra')->name('paskibra');
         });

@@ -1154,56 +1154,6 @@ a {
 .wrapper-admin .right .bar-top h4 {
   font-size: calc(clamp(0.6rem, 2vw, 1.5rem) - 0.3rem);
 }
-.wrapper-admin .right .summary {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-.wrapper-admin .right .summary .greeting {
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-}
-.wrapper-admin .right .summary .greeting h4 {
-  font-size: calc(clamp(0.4rem, 1.25vw, 1rem) + 2.4px);
-}
-.wrapper-admin .right .summary .greeting a {
-  font-size: clamp(0.2rem, 1vw, 0.85rem);
-}
-.wrapper-admin .right .summary .wrapper-summary {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-}
-.wrapper-admin .right .summary .wrapper-summary .card-summary {
-  min-width: 200px;
-  width: 200px;
-  padding: 8px;
-  border-radius: 6px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  box-shadow: 0px 0px 4px #273b98;
-}
-.wrapper-admin .right .summary .wrapper-summary .card-summary .wrapper-icon {
-  width: 40px;
-  height: 40px;
-  border-radius: 10px;
-  background-color: #273b98;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.wrapper-admin .right .summary .wrapper-summary .card-summary .wrapper-information {
-  display: flex;
-  flex-direction: column;
-}
-.wrapper-admin .right .summary .wrapper-summary .card-summary .wrapper-information h5 {
-  font-size: clamp(0.4rem, 1.25vw, 1rem);
-}
-.wrapper-admin .right .summary .wrapper-summary .card-summary .wrapper-information span {
-  font-size: calc(clamp(0.2rem, 1vw, 0.85rem) - 2px);
-}
 .wrapper-admin .right .content {
   padding: 15px;
   display: flex;
@@ -1217,6 +1167,56 @@ a {
 }
 .wrapper-admin .right .content .greeting span {
   font-size: clamp(0.4rem, 1.25vw, 1rem);
+}
+.wrapper-admin .right .content .summary {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.wrapper-admin .right .content .summary .greeting {
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.wrapper-admin .right .content .summary .greeting h4 {
+  font-size: calc(clamp(0.4rem, 1.25vw, 1rem) + 2.4px);
+}
+.wrapper-admin .right .content .summary .greeting a {
+  font-size: clamp(0.2rem, 1vw, 0.85rem);
+}
+.wrapper-admin .right .content .summary .wrapper-summary {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+.wrapper-admin .right .content .summary .wrapper-summary .card-summary {
+  min-width: 200px;
+  width: 200px;
+  padding: 8px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0px 0px 4px #273b98;
+}
+.wrapper-admin .right .content .summary .wrapper-summary .card-summary .wrapper-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background-color: #273b98;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.wrapper-admin .right .content .summary .wrapper-summary .card-summary .wrapper-information {
+  display: flex;
+  flex-direction: column;
+}
+.wrapper-admin .right .content .summary .wrapper-summary .card-summary .wrapper-information h5 {
+  font-size: clamp(0.4rem, 1.25vw, 1rem);
+}
+.wrapper-admin .right .content .summary .wrapper-summary .card-summary .wrapper-information span {
+  font-size: calc(clamp(0.2rem, 1vw, 0.85rem) - 2px);
 }
 .wrapper-admin .right .content .wrapper-content-media-management {
   display: flex;
@@ -1466,16 +1466,18 @@ a {
   align-items: center;
   flex-wrap: wrap;
   gap: 10px;
+  gap: 100px 60px;
 }
 .wrapper-admin .right .content .management-table .wrapper-content-media .wrapper-card-media {
-  width: 300px;
-  min-height: max-content;
+  width: 250px;
+  min-height: 350px;
   background-color: rgba(95, 119, 247, 0.6);
   padding: 5px;
   border-radius: 10px;
   cursor: pointer;
 }
 .wrapper-admin .right .content .management-table .wrapper-content-media .wrapper-card-media .card-media {
+  height: 100%;
   background-color: #fff;
   border-radius: 10px;
 }
@@ -1491,12 +1493,19 @@ a {
   gap: 4px;
 }
 .wrapper-admin .right .content .management-table .wrapper-content-media .wrapper-card-media .card-media .detail-media .title {
+  width: 100%;
   font-size: clamp(0.4rem, 1.25vw, 1rem);
+  white-space: nowrap;
+  overflow: hidden;
 }
 .wrapper-admin .right .content .management-table .wrapper-content-media .wrapper-card-media .card-media .detail-media .description {
+  width: 100%;
   font-size: calc(clamp(0.2rem, 1vw, 0.85rem) - 2px);
   font-weight: normal;
   padding-left: 1px;
+  white-space: wrap;
+  overflow: hidden;
+  max-height: 30px;
 }
 .wrapper-admin .right .content .management-table .wrapper-content-media .wrapper-card-media .card-media .detail-media .profile {
   display: flex;
@@ -1519,6 +1528,13 @@ a {
   background-color: transparent;
   cursor: pointer;
 }
+.wrapper-admin .right .content .management-table .wrapper-content-media .wrapper-card-media-achievement {
+  border-radius: 8px;
+  padding: 5px;
+}
+.wrapper-admin .right .content .management-table .wrapper-content-media .wrapper-card-media-achievement:hover {
+  border: 2px solid #273b98;
+}
 .wrapper-admin .right .content .management-table .wrapper-content-media .wrapper-card-media-achievement .card-media {
   max-width: 400px;
   min-height: 400px;
@@ -1529,6 +1545,7 @@ a {
 .wrapper-admin .right .content .management-table .wrapper-content-media .wrapper-card-media-achievement .card-media .wrapper-image {
   width: 300px;
   height: 400px;
+  border-radius: 8px;
 }
 .wrapper-admin .right .content .management-table .wrapper-content-media .wrapper-card-media-achievement .card-media .wrapper-image img {
   width: inherit;
