@@ -1,0 +1,59 @@
+@import "../../utils/variables";
+
+.progsil {
+    margin-top: 100px;
+    width: 100vw;
+    padding: 10px;
+
+    h2 {
+        margin-bottom: 20px;
+        font-size: calc($font-size-l - -7px);
+        color: $color-accent;
+        text-align: center;
+    }
+
+    .progsil-image {
+        img {
+            width: 100%;
+        }
+    }
+
+    .progsil-content {
+        h3 {
+            padding: 20px;
+            text-align: center;
+            font-size: calc($font-size-l - -3px);
+        }
+
+        p {
+            max-width: 90%;
+            text-align: justify;
+        }
+
+        .progsil-text {
+            display: flex;
+            justify-content: center;
+        }
+    }
+
+    .artexample-text {
+        margin: 20px 0;
+        text-align: center;
+    }
+
+    .progsil-art {
+        display: flex;
+        width: 100%;
+        gap: 10px;
+
+        .art {
+            min-height: 400px;
+            width: 10%;
+            background-color: grey;
+
+            &.main {
+                width: 80%;
+            }
+        }
+    }
+}

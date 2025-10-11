@@ -14,32 +14,54 @@
             <div class="links">
                 <a href="{{ route('user.index') }}">HOME</a>
                 <a href="{{ route('user.profile') }}">PROFILE</a>
-                <a href="{{ route('user.index') }}">MAJOR</a>
-                <a href="{{ route('user.index') }}">PROGRAM</a>
-                <a href="{{ route('user.index') }}">NEWS</a>
+                <a>MAJOR</a>
+                <a>PROGRAM</a>
+                <a href="{{ route('user.news') }}">NEWS</a>
             </div>
         </div>
         
         <div class="right">
             <img src="{{asset('icons/burgur.svg')}}" class="burger">
-            <a href="http://wa.me/6281280063529" target="_blank" rel="noopener noreferrer"><button class="button button-circle"><img src="{{asset('icons/telp.svg')}}"></button></a>
-            <a href="mailto:pefiye@gmail.com"><button class="button button-circle"><img src="{{asset('icons/email.svg')}}"></button></a>
+            <a href="https://wa.me/6281280063529" target="_blank" rel="noopener noreferrer"><button class="button button-circle"><img src="{{asset('icons/telp.svg')}}"></button></a>
+            <a href="mailto:info@smkbinainformatika.sch.id"><button class="button button-circle"><img src="{{asset('icons/email.svg')}}"></button></a>
         </div>
 
     </nav>
     <div class="mobile-nav no-fade">
         <div class="up">
             <img class="exit-burger" src="{{ asset("icons/Add_Plus.svg") }}" alt="">
-                <a href="{{ route('user.index') }}">HOME</a>
-                <a href="{{ route('user.profile') }}">PROFILE</a>
-                <a href="{{ route('user.index') }}">MAJOR</a>
-                <a href="{{ route('user.index') }}">PROGRAM</a>
-                <a href="{{ route('user.index') }}">NEWS</a>
+            <a href="{{ route('user.index') }}">HOME</a>
+            <a class="expandable">PROFILE <img src="{{ asset("icons/arrow-down.svg") }}" alt=""></a>
+                <div class="branch">
+                    <a href="">Tentang Kami</a>
+                    <a href="">Department Kurikulum</a>
+                    <a href="">Department Kesiswaan</a>
+                    <a href="">Department Kewirausahaan dan Industri</a>
+                </div>
+                <a class="expandable">MAJOR <img src="{{ asset("icons/arrow-down.svg") }}" alt=""></a>
+                <div class="branch">
+                    <a href="">Animation</a>
+                    <a href="">Broadcasting Film & TV</a>
+                    <a href="">Game Development</a>
+                    <a href="">Visual Communication Design</a>
+                    <a href="">IT Network</a>
+                    <a href="">IT Software</a>
+                </div>
+                <a class="expandable">PROGRAM <img src="{{ asset("icons/arrow-down.svg") }}" alt=""></a>
+                <div class="branch">
+                    <a href="">Extracurricular </a>
+                    <a href="">Progsil</a>
+                    <a href="">BTQ</a>
+                    <a href="">USM</a>
+                    <a href="">Bimbingan Konseling</a>
+                    <a href="">Project Work</a>
+                </div>
+            <a href="{{ route('user.news') }}">NEWS</a>
             
         </div>
         <div class="down">
-            <a href="http://wa.me/6281280063529" target="_blank" rel="noopener noreferrer"><button class="button"><img src="{{asset('icons/telp.svg')}}"></button></a>
-            <a href="mailto:pefiye@gmail.com"><button class="button"><img src="{{asset('icons/email.svg')}}"></button></a>
+            <a href="https://wa.me/6281280063529" target="_blank" rel="noopener noreferrer"><img src="{{asset('icons/telp.svg')}}"> +62 812-8006-3529</a>
+            <a href="mailto:info@smkbinainformatika.sch.id"><img src="{{asset('icons/email.svg')}}">info@smkbinainformatika.sch.id</a>
 
         </div>
     </div>
@@ -51,6 +73,18 @@
     document.querySelector(".exit-burger").addEventListener("click", () => {
             document.querySelector(".mobile-nav").classList.remove("on")
         })
+        
+    document.querySelectorAll(".expandable").forEach(expand => {
+        let rotated = false
+        expand.addEventListener("click", () => {
+            rotated = !rotated
+            expand.children[0].style.rotate = rotated ? "180deg" : "0deg"
+            expand.nextElementSibling.classList.toggle("active")
+        })
+    })
+
+
+
     </script>
 
     <main class="wrapper-user">
