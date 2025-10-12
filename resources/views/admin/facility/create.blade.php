@@ -54,9 +54,9 @@
                     <div class="wrapper-input">
                         <label for="type">Facility Type<span>*</span></label>
                         <select name="type" id="type" required>
-                            <option value="ruangan" @selected(old('type', '') == 'ruangan')>Ruangan</option>
-                            <option value="labotarium" @selected(old('type', '') == 'labotarium')>Labotarium</option>
-                            <option value="publik" @selected(old('type', '') == 'publik')>Publik</option>
+                            @foreach ($availableFacilityTypes as $facilityType)
+                                <option value="{{ $facilityType->id }}" @selected(old('type', '') == $facilityType->id)>{{ $facilityType->name }}</option>
+                            @endforeach
                         </select>
                     </div>
                     <div class="wrapper-input">

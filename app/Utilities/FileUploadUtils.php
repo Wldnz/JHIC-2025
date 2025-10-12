@@ -56,6 +56,21 @@ class FileUploadUtils
         return $results;
     }
 
+    public static function getUpdatedFileUpload(Request $request, string $fieldName = 'images', string $fileFieldKey = 'file')
+    {
+        $results = [];
+
+        if ($request->has($fieldName)) {
+            foreach ($request[$fieldName] as $fileKey => $fileData) {
+                if ($fileData[$fileFieldKey] ?? false) {
+                    $results[] = $fileData;
+                }
+            }
+        }
+
+        return $results;
+    }
+
     public static function splitFileUploads(Request $request, string $fieldName = 'images', string $addedPrefix = 'added_', string $fileFieldKey = 'file') {
         if (!$request->has($fieldName)) {
             return null;

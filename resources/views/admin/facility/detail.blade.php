@@ -3,7 +3,9 @@
     $currentPath = explode('/admin/', url()->current())[1];
     logger('fac', [$facility])
 @endphp
-<form class="content flex-row justify-between pad-0">
+<form class="content flex-row justify-between pad-0" method="POST" enctype="multipart/form-data">
+    @method('PUT')
+    @csrf
     <div class="wrapper-content-media-management">
         <div class="wrapper-container-media">
             <h2>Foto - Foto Fasilitas</h2>
@@ -51,9 +53,9 @@
                     <div class="wrapper-input">
                         <label for="type">Facility Type<span>*</span></label>
                         <select name="type" id="type" required>
-                            <option value="ruangan" @selected(old('type', $facility->media_type) == 'ruangan')>Ruangan</option>
-                            <option value="labotarium" @selected(old('type', $facility->media_type) == 'labotarium')>Labotarium</option>
-                            <option value="publik" @selected(old('type', $facility->media_type) == 'publik')>Publik</option>
+                            @foreach ($availableFacilityTypes as $facilityType)
+                                <option value="{{ $facilityType->id }}" @selected(old('type', '') == $facilityType->id)>{{ $facilityType->name }}</option>
+                            @endforeach
                         </select>
                     </div>
                 </div>
@@ -68,7 +70,7 @@
 @vite(['resources/js/handle/image-product.js', 'resources/js/handle/save-media.js'])
 
 <script defer>
-    
+
     let image = @json([
         [
             'id' => $facility->id,
