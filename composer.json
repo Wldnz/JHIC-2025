@@ -13,7 +13,8 @@
         "laravel/tinker": "^2.10.1",
         "midtrans/midtrans-php": "^2.6",
         "php-ds/php-ds": "^1.7",
-        "spatie/async": "^1.8"
+        "spatie/async": "^1.8",
+        "spatie/laravel-sitemap": "^7.3"
     },
 
 

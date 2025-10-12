@@ -44,8 +44,6 @@ class CandidateFactory extends Factory
     public function definition(): array
     {
         $user = User::query()->inRandomOrder()->first();
-        $registrationPhase = RegistrationPhase::query()->inRandomOrder()->first();
-        $registrationSource = RegistrationSource::query()->inRandomOrder()->first();
 
         return [
             'nisn' => fake()->numerify('##########'),
@@ -64,14 +62,9 @@ class CandidateFactory extends Factory
             'sum_half_siblings' => fake()->randomNumber(),
             'sum_adopted_siblings' => fake()->randomNumber(),
             'phone' => fake()->phoneNumber(),
-            'selected_phase_id' => $registrationPhase->id,
-            'selected_phase_name' => $registrationPhase->name,
             'created_at' => fake()->dateTime(),
-            'registration_source_id' => $registrationSource->id,
-            'registration_source' => $registrationSource->name,
             'origin_school' => fake()->company(),
             'origin_school_address' => fake()->address(),
-            'enrolling_reason' => fake()->sentence(5),
         ];
     }
 }

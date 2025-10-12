@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\CandidatePhase;
 use App\Models\User;
 use DB;
 use Illuminate\Database\Seeder;
@@ -27,7 +28,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $this->truncateAllModels();
+        $this->resetAllModels();
         $this->call(UserSeeder::class);
         $this->call(MajorSeeder::class);
         $this->call(StudentSeeder::class);
@@ -41,6 +42,7 @@ class DatabaseSeeder extends Seeder
         $this->call(AchievementSeeder::class);
         $this->call(CandidateMajorSeeder::class);
         $this->call(CandidateGuardianSeeder::class);
+        $this->call(CandidatePhaseSeeder::class);
         $this->call(PaymentMethodSeeder::class);
         $this->call(TransactionSeeder::class);
     }
@@ -48,25 +50,39 @@ class DatabaseSeeder extends Seeder
     /**
      * Truncate all models.
      */
-    private function truncateAllModels(): void
+    private function resetAllModels(): void
     {
         DB::statement('SET FOREIGN_KEY_CHECKS = 0');
 
         User::query()->truncate();
         Major::query()->truncate();
-        Student::query()->truncate();
+
+        Student::query()->delete();
+        DB::statement("ALTER TABLE " . (new Student())->getTable() . " AUTO_INCREMENT = 1");
+
         GalleryType::query()->truncate();
-        Portfolio::query()->truncate();
+        Portfolio::query()->delete();
+        DB::statement("ALTER TABLE " . (new Portfolio())->getTable() . " AUTO_INCREMENT = 1");
+
         RegistrationPhase::query()->truncate();
         RegistrationSource::query()->truncate();
-        Candidate::query()->truncate();
+
+        Candidate::query()->delete();
+        DB::statement("ALTER TABLE " . (new Candidate())->getTable() . " AUTO_INCREMENT = 1");
+
         Gallery::query()->truncate();
         PortfolioImage::query()->truncate();
-        Achievement::query()->truncate();
+
+        Achievement::query()->delete();
+        DB::statement("ALTER TABLE " . (new Achievement())->getTable() . " AUTO_INCREMENT = 1");
+
         CandidateMajor::query()->truncate();
         CandidateGuardian::query()->truncate();
+        CandidatePhase::query()->truncate();
         PaymentMethod::query()->truncate();
-        Transaction::query()->truncate();
+
+        Transaction::query()->delete();
+        DB::statement("ALTER TABLE " . (new Transaction())->getTable() . " AUTO_INCREMENT = 1");
 
         DB::statement('SET FOREIGN_KEY_CHECKS = 1');
     }

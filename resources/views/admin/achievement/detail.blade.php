@@ -3,7 +3,8 @@
     $currentPath = explode('/admin/', url()->current())[1];
     logger('as', [$achievement])
 @endphp
-<form class="content flex-row justify-between pad-0" method="POST" enctype="multipart/form-data">
+<form class="content flex-row justify-between pad-0" method="post" enctype="multipart/form-data">
+    @method('PUT')
     @csrf
     @method('PUT')
     <div class="wrapper-content-media-management">

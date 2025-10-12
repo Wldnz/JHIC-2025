@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests\Admin;
 
+use App\Utilities\RoleLevelChecker;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
-use \App\Utilities\RoleLevelChecker;
 
 class UpdateAchievementRequest extends FormRequest
 {
@@ -13,7 +13,7 @@ class UpdateAchievementRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return Auth::check() && \App\Utilities\RoleLevelChecker::checkMinimumByRoleName(Auth::user(), 'admin');
+        return Auth::check() && RoleLevelChecker::checkMinimumByRoleName(Auth::user(), 'admin');
     }
 
     /**
@@ -25,11 +25,12 @@ class UpdateAchievementRequest extends FormRequest
     {
         return [
             'student_nis' => ['nullable', 'string', 'exists:students,nis'],
-            'images' => ['nullable', 'image', 'mimes:jpg,jpeg,png', 'max:2500'],
+            'images.*.thumbnail' => ['required', 'boolean'],
+            'images.*.file' => ['sometimes', 'required', 'image', 'mimes:jpg,jpeg,png', 'max:2500'],
             'competition_name' => ['required', 'string', 'min:1', 'max:255'],
             'won_at' => ['required', 'date', 'date_format:Y-m-d'],
             'competition_position' => ['required', 'string', 'in:grade_1,grade_2,grade_3'],
-            'competition_level' => ['required', 'string', 'in:,school,subdistrict,district,provincial,national,international'],
+            'competition_level' => ['required', 'string', 'in:school,subdistrict,district,provincial,national,international'],
         ];
     }
 }

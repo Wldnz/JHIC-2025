@@ -41,7 +41,8 @@ function insertImage(file) {
             id: `added_image_${new Date().getTime()}`,
             url: URL.createObjectURL(file),
             file: file,
-            thumbnail: false
+            thumbnail: false,
+            is_thumbnail: false
         });
     }
     randomThumbnailGiven();
@@ -77,19 +78,19 @@ function updateImage(id, file) {
 }
 
 function randomThumbnailGiven() {
-    const hasThumbnail = image.find(value => value.thumbnail);
+    const hasThumbnail = image.find(value => value.is_thumbnail);
     if (hasThumbnail) return;
     image = image.map(value => {
-        value.thumbnail = false;
+        value.is_thumbnail = false;
         return value;
     });
-    image[0].thumbnail = true;
+    image[0].is_thumbnail = true;
 }
 
 
 function changeThumbnailTo(id) {
     image = image.map(value => {
-        value.thumbnail = value.id == id;
+        value.is_thumbnail = value.id == id;
         return value;
     });
     loadImage();
@@ -117,16 +118,16 @@ function loadImage() {
         stringImage += ` <div class="image-product">
                                 <img src="${value.url}" alt="image-${value.id}">
                                 <div class="action-product" >
-                                    ${!value.thumbnail ? '<button class="btn-pin" type="button">Jadikan Sebagai Thumbnail</button>' : ''}
+                                    ${!value.is_thumbnail ? '<button class="btn-pin" type="button">Jadikan Sebagai Thumbnail</button>' : ''}
                                     <button class="btn-choose" type="button">
                                         <span class="">Pilih Gambar</span>
                                         <input class='input_image_produk' id='input_image-${value.id}' type="file" accept="image/jpeg, image/png" multiple name="images[${value.id}][file]" required=${value.thumbnail}>
-                                        <input type="hidden" name="images[${value.id}][thumbnail]" value=${value.thumbnail ? '1' : '0'}>
+                                        <input type="hidden" name="images[${value.id}][thumbnail]" value=${value.is_thumbnail ? '1' : '0'}>
                                     </button>
                                     <button class="btn-delete" type="button">Hapus Gambar</button>
                                 </div>
                                 <div class="identifier">
-                                    ${value.thumbnail ? '<span class="">📌</span>' : `<span>${index + 1}</span>`}
+                                    ${value.is_thumbnail ? '<span class="">📌</span>' : `<span>${index + 1}</span>`}
                                 </div>
                             </div>`;
 

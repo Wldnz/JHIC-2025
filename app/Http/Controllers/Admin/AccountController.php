@@ -20,7 +20,6 @@ class AccountController extends Controller
         $page =  $request->get('page', 1);
 
         $initiliazeAccounts = User::all();
-        $accounts = User::select();
 
         $stats = [
             'total' => $initiliazeAccounts->count(),
@@ -30,11 +29,17 @@ class AccountController extends Controller
             'owner' => $initiliazeAccounts->where('role', '=','super_admin')->count(),
         ];
 
-        if($search){
-            $accounts = $accounts->where('fullname', '=', $search)
-                ->orWhere('fullname', 'like', '%'.$search.'%');
+        $accounts = User::query()
+            ->select(['id', 'fullname', 'email', 'phone', 'role', 'created_at']);
+
+        if ($search) {
+            $accounts = $accounts
+                ->where('fullname', 'like', "%$search%")
+                ->orWhere('email', 'like', "%$search%")
+                ->orWhere('phone', 'like', "%$search%");
         }
-        if($search_role){
+
+        if ($search_role) {
             $accounts = $accounts->where('role', '=', $search_role);
         }
 

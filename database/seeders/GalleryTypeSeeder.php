@@ -14,9 +14,9 @@ class GalleryTypeSeeder extends Seeder
     public function run(): void
     {
         GalleryType::query()->insert([
-            [ 'name' => 'classroom' ],
-            [ 'name' => 'laboratorium' ],
-            [ 'name' => 'public facility' ],
+            [ 'name' => 'Classroom' ],
+            [ 'name' => 'Laboratorium' ],
+            [ 'name' => 'Public Facility' ],
         ]);
     }
 }
