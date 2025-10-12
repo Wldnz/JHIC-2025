@@ -16,17 +16,24 @@ class AccountController extends Controller
         $search_role = $request->get('search_role', 'candidate');
         $page =  $request->get('page', 1);
 
-        $accounts = User::select();
-        if($search){
-            $accounts = $accounts->where('fullname', '=', $search)
-                ->orWhere('fullname', 'like', '%'.$search.'%');
+        $accounts = User::query()
+            ->select(['id', 'fullname', 'email', 'phone', 'role', 'created_at']);
+
+        if ($search) {
+            $accounts = $accounts
+                ->where('fullname', 'like', "%$search%")
+                ->orWhere('email', 'like', "%$search%")
+                ->orWhere('phone', 'like', "%$search%");
         }
-        if($search_role){
+
+        if ($search_role) {
             $accounts = $accounts->where('role', '=', $search_role);
         }
-        $total = $accounts->get()->count();
-        $accounts = $accounts->limit($this->maxPage)
-        ->offset(($page - 1) * $this->maxPage)
+
+        $total = $accounts->count();
+        $accounts = $accounts
+            ->limit($this->maxPage)
+            ->offset(($page - 1) * $this->maxPage)
             ->get();
 
         return view('admin.accounts.index', compact('accounts', 'search', 'search_role', 'page', 'total'));
