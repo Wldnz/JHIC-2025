@@ -4,6 +4,14 @@
     logger('as', [$accounts])
 @endphp
 <main class="content">
+      @include('_components._summary-section', [
+        'title' => 'Accounts',
+        'greeting' => true,
+        'data' => $stats,
+        'icon' => [ 
+            'name' => 'account',
+        ]
+    ])
       @include('_components._management-table',[
         'title' => 'Data Pengguna',
         'management' => [ 'title' => 'Tambahkan Pengguna', 'destination' => route('admin.create-account')],
@@ -36,16 +44,16 @@
         ],
         'actions' => [
             'Lihat Transaksi' => [
-                'action-name' => 'transaction',
-                'route-name' => 'admin.detail-transaction',
+                'action-name' => 'account',
+                'route-name' => 'admin.detail-account',
                 'icon-name' => 'eye'
             ],
             'Hapus Transaksi' => [
                 'action-name' => 'delete',
                 'icon-name' => 'trash',
                 'destination' => [
-                    'name' => 'admin.delete-transaction',
-                    'parameter' => 'transaction'
+                    'name' => 'admin.delete-account',
+                    'parameter' => 'account'
                 ]
             ]
         ],

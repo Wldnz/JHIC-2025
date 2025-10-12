@@ -45,10 +45,11 @@
         </div>
         <div class="wrapper-content-media items-start">
             @foreach ($facilities as $facility)
-                <a class="wrapper-card-media"
-                href="{{ route('admin.detail-facility', ['facility' => $facility->id]) }}"
-            >
-                <div class="card-media">
+                <div class="wrapper-card-media"
+                >
+                <a class="card-media"
+                    href="{{ route('admin.detail-facility', ['facility' => $facility->id]) }}"
+                >
                     <div class="wrapper-image">
                         <img src="{{ $facility->url }}" alt="{{ $facility->name . $facility->gallery_type_name }}">
                     </div>
@@ -61,8 +62,23 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </a>
+                </a>
+                <form class="floating-action" 
+                    action="{{ route('admin.delete-facility', ['facility' => $facility->id]) }}"
+                    method="POST"
+                    id="media-floating-icon"
+                >                    
+                    @csrf
+                    @method('DELETE')
+                    <button type="button" class="action">
+                        @include('_components._sprite-icons', [
+                            'name' => 'trash',
+                            'size' => 20,
+                        ])
+                        <span>Delete Facility</span>
+                    </button>
+                </form>
+            </div>
             @endforeach
         </div>
           @include('_components._pagination-media', [
@@ -72,5 +88,9 @@
         ])
     </div>
 </main>
+
+<script defer>
+
+</script>
 
 @include('_components._footerAdmin')

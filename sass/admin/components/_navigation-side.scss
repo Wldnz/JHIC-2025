@@ -29,19 +29,8 @@
                 height: 100px;
 
                 padding: 10px;
-
-                div {
-                    height: 50px;
-                    background-image: url("/public/icons/logo-sprite.png");
-                    background-repeat: no-repeat;
-                    background-size: cover;
-                }
-
                 .brand {
                     display: none;
-                    width: 160px;
-                    background-position-x: 0;
-                    scale: 1.5;
                 }
 
                 .logo {

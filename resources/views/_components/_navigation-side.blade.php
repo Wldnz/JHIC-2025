@@ -2,8 +2,12 @@
     <nav class="navigation-side" data-open="false">
         <div class="wrapper-navigation">
             <div class="wrapper-image">
-                <div class="brand"></div>
-                <div class="logo"></div>
+                <a href="{{ route('admin.dashboard') }}" class="brand">
+                    <img src="{{ asset('images/bi-full.png') }}" alt="logo-bi">
+                </a>
+                <a href="{{ route('admin.dashboard') }}" class="logo">
+                    <img src="{{ asset('images/logo-bi.png') }}" alt="logo-bi">
+                </a>
             </div>
             <ul class="main-menu">
                 <li class="menu" id="menu-dashboard">

@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Candidate;
+use App\Models\Major;
+use App\Models\RegistrationPhase;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -16,7 +19,17 @@ class AccountController extends Controller
         $search_role = $request->get('search_role', 'candidate');
         $page =  $request->get('page', 1);
 
+        $initiliazeAccounts = User::all();
         $accounts = User::select();
+
+        $stats = [
+            'total' => $initiliazeAccounts->count(),
+            'candidate' => $initiliazeAccounts->where('role', '=','candidate')->count(),
+            'article Creator' => $initiliazeAccounts->where('role', '=','article_creator')->count(),
+            'admin' => $initiliazeAccounts->where('role', '=','admin')->count(),
+            'owner' => $initiliazeAccounts->where('role', '=','super_admin')->count(),
+        ];
+
         if($search){
             $accounts = $accounts->where('fullname', '=', $search)
                 ->orWhere('fullname', 'like', '%'.$search.'%');
@@ -24,12 +37,13 @@ class AccountController extends Controller
         if($search_role){
             $accounts = $accounts->where('role', '=', $search_role);
         }
+
         $total = $accounts->get()->count();
         $accounts = $accounts->limit($this->maxPage)
         ->offset(($page - 1) * $this->maxPage)
             ->get();
 
-        return view('admin.accounts.index', compact('accounts', 'search', 'search_role', 'page', 'total'));
+        return view('admin.accounts.index', compact('accounts','stats', 'search', 'search_role', 'page', 'total'));
     }
 
     public function createAccount()
@@ -42,9 +56,28 @@ class AccountController extends Controller
         return back();
     }
 
-    public function detailAccount($account)
+    public function detailAccount(User $account)
     {
-        return view('admin.accounts.detail', compact('account'));
+        $candidate = null;
+        $majors = null;
+        $phases = null;
+        if($account->role == 'candidate'){
+            $candidate = Candidate::all()
+            ->load([
+                'user',
+                'registrationPhase',
+                'registrationSource',
+                'candidateMajors',
+                'candidateGuardians',
+                'candidateDocuments',
+                'transactions'
+            ])
+            ->where('user_id', '=', $account->id)
+            ->first();
+            $majors = Major::all();
+            $phases = RegistrationPhase::all();
+        }
+        return view('admin.accounts.detail', compact('account', 'candidate', 'majors', 'phases'));
     }
 
     public function updateAccount(Request $request, $account)
