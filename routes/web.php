@@ -54,17 +54,38 @@ Route::name('user.')->group(function () {
 
 // Candidate-side
 Route::name('candidate.')->prefix('candidate')->middleware([isLogin::class])->group(function () {
-    Route::get('/', [Candidate\Controller::class, 'index'])->name('index');
+    Route::withoutMiddleware([isLogin::class])->group(function () {
+        Route::get('/', [Candidate\Controller::class, 'index'])->name('index');
+
+        Route::get('/signup', [Candidate\AuthController::class, 'signupPage'])->name('signup-page');
+        Route::post('/signup', [Candidate\AuthController::class, 'signup'])->name('signup');
+        Route::get('/login', [Candidate\AuthController::class, 'loginPage'])->name('login-page');
+        Route::post('/login', [Candidate\AuthController::class, 'login'])->name('login');
+        Route::post('/logout', [Candidate\AuthController::class, 'logout'])->name('logout');
+    });
+
     Route::get('/dashboard', [Candidate\Controller::class, 'dashboard'])->name('dashboard');
     Route::get('/schedule', [Candidate\Controller::class, 'schedule'])->name('schedule');
     Route::get('/contact', [Candidate\Controller::class, 'contact'])->name('contact');
     Route::get('/learning-materials', [Candidate\Controller::class, 'learningMaterials'])->name('learning-materials');
 
-    Route::get('/signup', [Candidate\AuthController::class, 'signupPage'])->name('signup-page');
-    Route::post('/signup', [Candidate\AuthController::class, 'signup'])->name('signup');
-    Route::get('/login', [Candidate\AuthController::class, 'loginPage'])->name('login-page');
-    Route::post('/login', [Candidate\AuthController::class, 'login'])->name('login');
-    Route::post('/logout', [Candidate\AuthController::class, 'logout'])->name('logout');
+    Route::controller(Candidate\StageController::class)->prefix('stage')->name('satge.')->group(function () {
+        Route::get('/stage-1', 'stage1')->name('stage1');
+        Route::put('/stage-1', 'saveStage1')->name('save-stage1');
+
+        Route::get('/stage-2', 'stage2')->name('stage2');
+        Route::put('/stage-2', 'saveStage2')->name('save-stage2');
+
+        Route::get('/stage-3', 'stage3')->name('stage3');
+        Route::put('/start-transaction', 'startTransaction')->name('start-transaction');
+        Route::get('/transaction-status', 'transactionStatus')->name('transaction-status');
+
+        Route::get('/stage-4', 'stage4')->name('stage4');
+        Route::put('/stage-4', 'saveStage4')->name('save-stage4');
+
+        Route::get('/stage-5', 'stage5')->name('stage5');
+        Route::put('/stage-5', 'saveStage5')->name('save-stage5');
+    });
 });
 
 // Admin-side

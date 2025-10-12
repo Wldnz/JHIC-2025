@@ -25,16 +25,14 @@ return new class extends Migration {
             $table->integer('sum_adopted_siblings')->nullable();
             $table->string('phone', 12);
 
-            $table->foreignId('selected_phase_id')->nullable()->constrained('registration_phases')->nullOnDelete();
-            $table->string('selected_phase_name', 255);
-            $table->foreignId('registration_source_id')->nullable()->constrained('registration_sources')->nullOnDelete();
-            $table->string('registration_source', 255);
-
             $table->string('origin_school', 255);
             $table->string('origin_school_address', 255);
-            $table->text('enrolling_reason');
 
             $table->timestamps();
+
+            $table->fullText(['nisn']);
+            $table->fullText(['full_name']);
+            $table->fullText(['short_name']);
         });
     }
 

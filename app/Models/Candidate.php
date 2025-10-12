@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Candidate extends Model
 {
@@ -34,13 +35,8 @@ class Candidate extends Model
         'sum_half_siblings',
         'sum_adopted_siblings',
         'phone',
-        'selected_phase_id',
-        'selected_phase_name',
-        'registration_source_id',
-        'registration_source',
         'origin_school',
         'origin_school_address',
-        'enrolling_reason',
     ];
 
     protected $casts = [
@@ -80,11 +76,11 @@ class Candidate extends Model
     }
 
     /**
-     * Get the candidate guardians for the candidate.
+     * Get the candidate guardian for the candidate.
      */
-    public function candidateGuardians(): HasMany
+    public function candidateGuardian(): HasOne
     {
-        return $this->hasMany(CandidateGuardian::class, 'candidate_nisn', 'nisn');
+        return $this->hasOne(CandidateGuardian::class, 'candidate_nisn', 'nisn');
     }
 
     /**
@@ -93,6 +89,14 @@ class Candidate extends Model
     public function candidateDocuments(): HasMany
     {
         return $this->hasMany(CandidateDocument::class, 'candidate_nisn', 'nisn');
+    }
+
+    /**
+     * Get the candidate guardian for the candidate.
+     */
+    public function candidatePhase(): HasOne
+    {
+        return $this->hasOne(CandidatePhase::class, 'candidate_nisn', 'nisn');
     }
 
     /**

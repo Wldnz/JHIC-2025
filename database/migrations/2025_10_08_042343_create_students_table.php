@@ -16,7 +16,14 @@ return new class extends Migration {
             $table->string('major_short_name', 50);
             $table->enum('gender', ['male', 'female']);
             $table->date('birthdate');
+
             $table->timestamps();
+
+            $table->fullText(['nis']);
+            $table->fullText(['name']);
+            $table->index(['class']);
+            $table->fullText(['major_long_name']);
+            $table->fullText(['major_short_name']);
         });
     }
 
