@@ -39,16 +39,16 @@
             ],
             'search-engine' => [
                 'name' => 'search',
-                'placeholder' => 'Cari Nama Pengguna'
+                'placeholder' => 'Cari Nama Akun'
             ]
         ],
         'actions' => [
-            'Lihat Transaksi' => [
+            'Lihat Akun' => [
                 'action-name' => 'account',
                 'route-name' => 'admin.detail-account',
                 'icon-name' => 'eye'
             ],
-            'Hapus Transaksi' => [
+            'Hapus Akun' => [
                 'action-name' => 'delete',
                 'icon-name' => 'trash',
                 'destination' => [

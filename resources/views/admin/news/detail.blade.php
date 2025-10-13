@@ -12,15 +12,14 @@
         <div class="wrapper-container-media form-news">
             <div class="wrapper-title">
                 <input type="text" name="title" id="title" placeholder="Pengenalan Apa Itu Shooting Video"
-                    minlength="10" maxlength="180" {{ old('title') != null ? 'value="'. old('title') .'"' : ''  }} required>
+                    minlength="10" maxlength="180" {{ old('title') != null ? 'value="' . old('title') . '"' : ''  }}
+                    required>
             </div>
 
+
             <div class="wrapper-thumbnail">
-               <img class="thumbnail" id="thumbnail" src="" alt="thumbnail-image">
-                <input type="file"  accept="image/jpeg, image/png"
-                    id="thumbnail_image" name="thumbnail"
-                    required
-                >
+                <img class="thumbnail" id="thumbnail" src="" alt="thumbnail-image">
+                <input type="file" accept="image/jpeg, image/png" id="thumbnail_image" name="thumbnail" required>
             </div>
 
             <div class="wrapper-content wrapper-content-action">
@@ -73,7 +72,7 @@
     const image = document.getElementById('thumbnail');
     let prev_filelist = null;
 
-    const defaultContent = "{{ old('content','') }}";
+    const defaultContent = "{{ old('content', '') }}";
     let keywords = @json(old('tags', [
         [
             "id" => 1,
@@ -81,30 +80,30 @@
         ]
     ]));
 
-    function initProject(){
+    function initProject() {
         image.src = "{{ asset('images/default.png') }}";
         loadKeywords();
     }
 
-    function loadKeywords(){
+    function loadKeywords() {
         let keywordsHTML = '';
         keywords.forEach(key => {
             keywordsHTML += createKeyword(key);
         });
-        if(keywords.length < 10) keywordsHTML += createKeyword({});
+        if (keywords.length < 10) keywordsHTML += createKeyword({});
         document.getElementById('tags-tag').innerHTML = keywordsHTML;
         handleFunctionKeywords();
         createTagsSender();
     }
 
-    function createKeyword({keyword = null, id= null}){
+    function createKeyword({ keyword = null, id = null }) {
         return `<div class="wrapper-tag">
                 <div class="tag" id="${id ?? 'default'}" contenteditable="true">${keyword ?? "Tambahkan Keyword"}</div>
                 <button class="btn-tag" type="button">X</button>
             </div>`;
     }
 
-    function createTagsSender(){
+    function createTagsSender() {
         let keywordsHTML = '';
         keywords.forEach((key, index) => {
             keywordsHTML += `<input type="hidden" name="tags[${index}]" id="tags_sender_${index}" value="${key.keyword}" readonly">`;
@@ -112,60 +111,49 @@
         document.getElementById('tags_sender').innerHTML = keywordsHTML;
     }
 
-    thumbnail.addEventListener('change' ,(e) => {
-        let file = e.target.files[0];
-        if(!file && !prev_filelist) return;
-        if(!file && prev_filelist){
-            e.target.files = prev_filelist;
-            file = prev_filelist.item(0);
-        };
-        image.src = URL.createObjectURL(file);
-        prev_filelist = e.target.files;
-    });
-
-    function handleFunctionKeywords(){
+    function handleFunctionKeywords() {
         document.querySelectorAll('.wrapper-tag').forEach(wrapper => {
             wrapper.children[0].addEventListener('input', (e) => {
                 const text = e.target.textContent;
-                if(!text) return handleRemoveKeyword(e.target, true);
-                if(e.inputType == "insertParagraph") return handleRemoveParagraph(e.target);
-                if(e.target.id == "default") handleAddKeyword(e.target);
+                if (!text) return handleRemoveKeyword(e.target, true);
+                if (e.inputType == "insertParagraph") return handleRemoveParagraph(e.target);
+                if (e.target.id == "default") handleAddKeyword(e.target);
                 handleUpdateKeyword(e.target);
             });
             wrapper.children[1].addEventListener('click', (e) => {
-                if(confirm('apakah anda yakin ingin menghapus tag ini?')){
+                if (confirm('apakah anda yakin ingin menghapus tag ini?')) {
                     handleRemoveKeyword(wrapper.children[0]);
                 }
             });
         });
     }
 
-    function handleAddKeyword(keyword){
-        if(keyword.id != "default") return;
+    function handleAddKeyword(keyword) {
+        if (keyword.id != "default") return;
         const id = `added_keyword_${new Date().getTime()}`;
         keywords.push({
             id,
-            keyword : "Keyword Baru"
+            keyword: "Keyword Baru"
         });
-       loadKeywords();
+        loadKeywords();
     }
 
-    function handleUpdateKeyword(keyword){
+    function handleUpdateKeyword(keyword) {
         keywords = keywords.map(key => {
-            if(key.id == keyword.id){
+            if (key.id == keyword.id) {
                 key = {
-                   ...key, ...{
-                    keyword : keyword.textContent
-                   }
+                    ...key, ...{
+                        keyword: keyword.textContent
+                    }
                 }
             }
             return key;
         })
     }
 
-    function handleRemoveKeyword(keyword){
+    function handleRemoveKeyword(keyword) {
         const wrapper = keyword.parentElement;
-        if(wrapper.children[0].id == "default"){
+        if (wrapper.children[0].id == "default") {
             keyword.textContent = "Tidak Bisa Dihapus!";
             setTimeout(() => {
                 keyword.textContent = "Tambahkan Keyword!"
@@ -176,12 +164,22 @@
         keywords = keywords.filter(key => key.id != keyword.id);
     }
 
-    function handleRemoveParagraph(element){
+    function handleRemoveParagraph(element) {
         const cleantInput = element.innerText.replace('\n', '');
         element.textContent = cleantInput;
     }
 
     initProject();
+    thumbnail.addEventListener('change', (e) => {
+        let file = e.target.files[0];
+        if (!file && !prev_filelist) return;
+        if (!file && prev_filelist) {
+            e.target.files = prev_filelist;
+            file = prev_filelist.item(0);
+        };
+        image.src = URL.createObjectURL(file);
+        prev_filelist = e.target.files;
+    });
 </script>
 
 @vite(['resources/js/handle/create-news.js'])
