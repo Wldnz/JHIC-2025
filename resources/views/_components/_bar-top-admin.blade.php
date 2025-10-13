@@ -1,5 +1,8 @@
 <div class="bar-top">
-    <h4>{{ $title }}</h4>
+    <div class="side-left">
+        <h4>{{ $title }} | </h4>
+        <img class="logo-sponsor" src="{{ asset('icons/logo-sponsor.png') }}" alt="logo-sponsor">
+    </div>
     <div class="profile" id="profile-admin">
         <span class="icon" id="profile-admin" data-show_main_menu="true">🧒🏻</span>
         <ul class="main-menu">

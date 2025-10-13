@@ -1201,8 +1201,18 @@ a {
   align-items: center;
   border-bottom: solid 1px #dfdfdf;
 }
-.wrapper-admin .right .bar-top h4 {
+.wrapper-admin .right .bar-top .side-left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.wrapper-admin .right .bar-top .side-left h4 {
   font-size: calc(clamp(0.6rem, 2vw, 1.5rem) - 0.3rem);
+}
+.wrapper-admin .right .bar-top .side-left .logo-sponsor {
+  width: 200px;
+  height: 100%;
+  object-fit: contain;
 }
 .wrapper-admin .right .content {
   padding: 15px;
@@ -1217,6 +1227,26 @@ a {
 }
 .wrapper-admin .right .content .greeting span {
   font-size: clamp(0.4rem, 1.25vw, 1rem);
+}
+.wrapper-admin .right .content .section-chart {
+  width: 100%;
+}
+.wrapper-admin .right .content .section-chart .wrapper-chart {
+  width: 100%;
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.wrapper-admin .right .content .section-chart .wrapper-chart .chart {
+  width: 100%;
+  max-height: 300px;
+  padding: 10px;
+  border: 2px solid #273b98;
+  border-radius: 8px;
+}
+.wrapper-admin .right .content .section-chart .wrapper-chart .chart-barchart {
+  width: 10px;
 }
 .wrapper-admin .right .content .summary {
   display: flex;
