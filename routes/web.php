@@ -114,6 +114,13 @@ Route::name('admin.')->prefix('admin')->middleware([isLogin::class, isAdmin::cla
     Route::put('/accounts/{account}', [Admin\AccountController::class, 'updateAccount'])->name('update-account');
     Route::delete('/accounts/{account}', [Admin\AccountController::class, 'deleteAccount'])->name('delete-account');
     Route::patch('/account/reset-password/{account}', [Admin\AccountController::class, 'resetPassword'])->name('reset-password-account');
+    
+    Route::get('/students', [Admin\AccountController::class, 'student'])->name('students');
+    Route::get('/students-create', [Admin\AccountController::class, 'createStudent'])->name('create-student');
+    Route::post('/students-create', [Admin\AccountController::class, 'storeStudent'])->name('store-student');
+    Route::get('/students/{student}', [Admin\AccountController::class, 'detailStudent'])->name('detail-student');
+    Route::put('/students/{student}', [Admin\AccountController::class, 'updateStudent'])->name('update-student');
+    Route::delete('/student/{student}', [Admin\AccountController::class, 'deleteStudent'])->name('delete-student');
 
     Route::get('/students', [Admin\StudentController::class, 'students'])->name('students');
     Route::get('/students-create', [Admin\StudentController::class, 'createStudent'])->name('create-student');

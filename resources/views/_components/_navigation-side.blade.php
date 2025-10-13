@@ -44,10 +44,16 @@
                         </a>
                     </li>
 
-                    <li class="menu" id="menu-accounts">
-                        <a class="display-menu" href="{{ route("admin.accounts") }}">
+                    <li class="menu multiple" id="menu-accounts" data-open=false>
+                        <a class="display-menu">
                             @include('_components._sprite-icons', ['name' => 'account', "color" => $currentPath == 'accounts' ? '#273B98' : 'black', 'size' => 23])
                             <span>Accounts</span>
+                        </a>
+                        <a class="sub-menu" href="{{ route("admin.accounts") }}" id="account">
+                            <span>Accounts</span>
+                        </a>
+                        <a class="sub-menu" href="{{ route("admin.students") }}" id="student">
+                            <span>Students</span>
                         </a>
                     </li>
 
@@ -59,7 +65,6 @@
                     </li>
 
                 @else
-
                     <li class="menu multiple" id="menu-public" data-open=false>
                         <a class="display-menu">
                             @include('_components._sprite-icons', ['name' => 'eye', "color" => $currentPath == 'public' ? '#273B98' : 'black', 'size' => 23])
@@ -176,6 +181,12 @@
                 "achievements",
                 "facilities-create",
                 "facilities"
+            ],
+            "accounts" : [
+                "accounts-create",
+                "accounts",
+                "students-create",
+                "students"
             ]
         };
         menu_chidrens.forEach(menu => {
