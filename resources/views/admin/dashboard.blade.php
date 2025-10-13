@@ -44,7 +44,7 @@
 
     <section class="section-chart">
         <div class="wrapper-chart">
-            <h2>Ringkasan Calon Peserta Didik (Dari Tahun Ajaran {{ intval(date('m')) >= 9? intval(date('Y')) + 1 . ' - ' .intval(date('Y')) + 2 : intval(date('Y')) - 1 . ' - ' .intval(date('Y'))  }})</h2>
+            <h2>Ringkasan Calon Peserta Didik (Dari Tahun Ajaran {{ intval(date('m')) >= $registrationMonth? intval(date('Y')) + 1 . ' - ' .intval(date('Y')) + 2 : intval(date('Y')) - 1 . ' - ' .intval(date('Y'))  }})</h2>
             <canvas class="chart chart-barchart" id="barchart"></canvas>
         </div>
         <div class="wrapper-chart">

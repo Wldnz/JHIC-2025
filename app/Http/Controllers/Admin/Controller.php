@@ -29,6 +29,7 @@ class Controller extends \App\Http\Controllers\Controller
 
         $currentYear = intval(date('Y'));
         $currentMonth = intval(date('m'));
+        $registrationMonth = $this->openRegisMonth;
         $registrationYear = [
             'first' => ($currentMonth >= $this->openRegisMonth) ? $currentYear + 1 : $currentYear - 1,
             'second' => ($currentMonth >= $this->openRegisMonth) ? $currentYear + 2 : $currentYear,
@@ -64,7 +65,7 @@ class Controller extends \App\Http\Controllers\Controller
             ->select(['created_at'])->groupBy('created_at')->get(),
         ];
 
-        return view('admin.dashboard', compact('stats', 'summary'));
+        return view('admin.dashboard', compact('stats', 'summary', 'registrationMonth'));
     }
 
     public function settings()
