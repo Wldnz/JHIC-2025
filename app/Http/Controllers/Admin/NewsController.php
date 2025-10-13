@@ -30,6 +30,7 @@ class NewsController extends Controller
 
     public function updateNews(Request $request, $news)
     {
+        dd($request);
         return back();
     }
 

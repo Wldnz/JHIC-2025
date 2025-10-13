@@ -113,6 +113,7 @@ Route::name('admin.')->prefix('admin')->middleware([isLogin::class, isAdmin::cla
     Route::get('/accounts/{account}', [Admin\AccountController::class, 'detailAccount'])->name('detail-account');
     Route::put('/accounts/{account}', [Admin\AccountController::class, 'updateAccount'])->name('update-account');
     Route::delete('/accounts/{account}', [Admin\AccountController::class, 'deleteAccount'])->name('delete-account');
+    Route::patch('/account/reset-password/{account}', [Admin\AccountController::class, 'resetPassword'])->name('reset-password-account');
 
     Route::get('/news', [Admin\NewsController::class, 'news'])->name('news');
     Route::get('/news-create', [Admin\NewsController::class, 'createNews'])->name('create-news');

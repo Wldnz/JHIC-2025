@@ -66,6 +66,7 @@ class AccountController extends Controller
         $candidate = null;
         $majors = null;
         $phases = null;
+        $articles = null;
         if($account->role == 'candidate'){
             $candidate = Candidate::all()
             ->load([
@@ -73,7 +74,7 @@ class AccountController extends Controller
                 'registrationPhase',
                 'registrationSource',
                 'candidateMajors',
-                'candidateGuardians',
+                'candidateGuardian',
                 'candidateDocuments',
                 'transactions'
             ])
@@ -81,8 +82,10 @@ class AccountController extends Controller
             ->first();
             $majors = Major::all();
             $phases = RegistrationPhase::all();
+        }else if($account->role == 'article_creator'){
+            $articles = null;
         }
-        return view('admin.accounts.detail', compact('account', 'candidate', 'majors', 'phases'));
+        return view('admin.accounts.detail', compact('account', 'candidate', 'majors', 'phases', 'articles'));
     }
 
     public function updateAccount(Request $request, $account)
@@ -92,6 +95,10 @@ class AccountController extends Controller
 
     public function deleteAccount($account)
     {
+        return back();
+    }
+
+    public function resetPassword($account){
         return back();
     }
 }
