@@ -4,7 +4,6 @@
 @endphp
 <form class="content flex-row justify-between pad-0" method="POST" enctype="multipart/form-data">
     @csrf
-    @method('PUT')
     <div class="wrapper-content-media-management">
         <div class="wrapper-container-media">
             <h2>Data Siswa</h2>

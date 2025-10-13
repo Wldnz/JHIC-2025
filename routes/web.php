@@ -114,6 +114,13 @@ Route::name('admin.')->prefix('admin')->middleware([isLogin::class, isAdmin::cla
     Route::put('/accounts/{account}', [Admin\AccountController::class, 'updateAccount'])->name('update-account');
     Route::delete('/accounts/{account}', [Admin\AccountController::class, 'deleteAccount'])->name('delete-account');
 
+    Route::get('/students', [Admin\StudentController::class, 'students'])->name('students');
+    Route::get('/students-create', [Admin\StudentController::class, 'createStudent'])->name('create-student');
+    Route::post('/students-create', [Admin\StudentController::class, 'storeStudent'])->name('store-student');
+    Route::get('/students/{student}', [Admin\StudentController::class, 'detailStudent'])->name('detail-student');
+    Route::put('/students/{student}', [Admin\StudentController::class, 'updateStudent'])->name('update-student');
+    Route::delete('/students/{student}', [Admin\StudentController::class, 'deleteStudent'])->name('delete-student');
+
     Route::get('/news', [Admin\NewsController::class, 'news'])->name('news');
     Route::get('/news-create', [Admin\NewsController::class, 'createNews'])->name('create-news');
     Route::post('/news-create', [Admin\NewsController::class, 'storeNews'])->name('store-news');

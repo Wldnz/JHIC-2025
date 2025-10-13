@@ -13,6 +13,7 @@ class UserFactory extends Factory
 {
     private $availableRoles = [
         'candidate',
+        'article_creator',
         'admin',
     ];
 

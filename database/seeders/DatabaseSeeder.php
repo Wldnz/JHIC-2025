@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\CandidatePhase;
+use App\Models\RegistrationDocument;
 use App\Models\User;
 use DB;
 use Illuminate\Database\Seeder;
@@ -20,6 +21,7 @@ use App\Models\CandidateMajor;
 use App\Models\CandidateGuardian;
 use App\Models\PaymentMethod;
 use App\Models\Transaction;
+use App\Models\Article;
 
 class DatabaseSeeder extends Seeder
 {
@@ -36,6 +38,7 @@ class DatabaseSeeder extends Seeder
         $this->call(PortfolioSeeder::class);
         $this->call(RegistrationPhaseSeeder::class);
         $this->call(RegistrationSourceSeeder::class);
+        $this->call(RegistrationDocumentSeeder::class);
         $this->call(CandidateSeeder::class);
         $this->call(GallerySeeder::class);
         $this->call(PortfolioImageSeeder::class);
@@ -45,6 +48,7 @@ class DatabaseSeeder extends Seeder
         $this->call(CandidatePhaseSeeder::class);
         $this->call(PaymentMethodSeeder::class);
         $this->call(TransactionSeeder::class);
+        $this->call(ArticleSeeder::class);
     }
 
     /**
@@ -66,6 +70,7 @@ class DatabaseSeeder extends Seeder
 
         RegistrationPhase::query()->truncate();
         RegistrationSource::query()->truncate();
+        RegistrationDocument::query()->truncate();
 
         Candidate::query()->delete();
         DB::statement("ALTER TABLE " . (new Candidate())->getTable() . " AUTO_INCREMENT = 1");
@@ -83,6 +88,8 @@ class DatabaseSeeder extends Seeder
 
         Transaction::query()->delete();
         DB::statement("ALTER TABLE " . (new Transaction())->getTable() . " AUTO_INCREMENT = 1");
+
+        Article::query()->truncate();
 
         DB::statement('SET FOREIGN_KEY_CHECKS = 1');
     }

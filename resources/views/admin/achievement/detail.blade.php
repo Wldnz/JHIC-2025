@@ -6,7 +6,6 @@
 <form class="content flex-row justify-between pad-0" method="post" enctype="multipart/form-data">
     @method('PUT')
     @csrf
-    @method('PUT')
     <div class="wrapper-content-media-management">
         <div class="wrapper-container-media">
             <h2>Data Siswa</h2>

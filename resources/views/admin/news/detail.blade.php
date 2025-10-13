@@ -6,6 +6,7 @@
     method="POST"
     enctype="multipart/form-data"
 >
+    @method('PUT')
     @csrf
     <div class="wrapper-content-media-management">
         <div class="wrapper-container-media form-news">
@@ -13,10 +14,10 @@
                 <input type="text" name="title" id="title" placeholder="Pengenalan Apa Itu Shooting Video"
                     minlength="10" maxlength="180" {{ old('title') != null ? 'value="'. old('title') .'"' : ''  }} required>
             </div>
-            
+
             <div class="wrapper-thumbnail">
                <img class="thumbnail" id="thumbnail" src="" alt="thumbnail-image">
-                <input type="file"  accept="image/jpeg, image/png" 
+                <input type="file"  accept="image/jpeg, image/png"
                     id="thumbnail_image" name="thumbnail"
                     required
                 >
@@ -25,7 +26,7 @@
             <div class="wrapper-content wrapper-content-action">
                 <div id="editor"></div>
             </div>
-        </div> 
+        </div>
     </div>
     <div class="wrapper-save-media" id="wrapper-save-media">
         <div class="card-save-media" id="card-save-media">
@@ -42,7 +43,7 @@
                     <div class="wrapper-tags">
                         <label for="keyword">Kata Kunci <span>*</span></label>
                         <div class="tags" id="tags-tag">
-                            
+
                         </div>
                     </div>
                     <div class="wrapper-input">
@@ -54,7 +55,7 @@
                     </div>
 
                     <div class="wrapper-hidden" id="tags_sender">
-                       
+
                     </div>
                 </div>
                 <button type="button" class="btn btn-media" id="btn-submit-news">
@@ -86,7 +87,7 @@
     }
 
     function loadKeywords(){
-        let keywordsHTML = ''; 
+        let keywordsHTML = '';
         keywords.forEach(key => {
             keywordsHTML += createKeyword(key);
         });
@@ -104,7 +105,7 @@
     }
 
     function createTagsSender(){
-        let keywordsHTML = ''; 
+        let keywordsHTML = '';
         keywords.forEach((key, index) => {
             keywordsHTML += `<input type="hidden" name="tags[${index}]" id="tags_sender_${index}" value="${key.keyword}" readonly">`;
         });
@@ -116,10 +117,10 @@
         if(!file && !prev_filelist) return;
         if(!file && prev_filelist){
             e.target.files = prev_filelist;
-            file = prev_filelist.item(0);     
-        };        
+            file = prev_filelist.item(0);
+        };
         image.src = URL.createObjectURL(file);
-        prev_filelist = e.target.files; 
+        prev_filelist = e.target.files;
     });
 
     function handleFunctionKeywords(){
@@ -155,7 +156,7 @@
                 key = {
                    ...key, ...{
                     keyword : keyword.textContent
-                   } 
+                   }
                 }
             }
             return key;
