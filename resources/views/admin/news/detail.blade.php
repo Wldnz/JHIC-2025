@@ -2,8 +2,11 @@
 @php
     $currentPath = explode('/admin/', url()->current())[1];
 @endphp
-<form class="content flex-row justify-between pad-0" id="management-form-news" method="POST"
-    enctype="multipart/form-data">
+<form class="content flex-row justify-between pad-0" id="management-form-news"
+    method="POST"
+    enctype="multipart/form-data"
+>
+    @method('PUT')
     @csrf
     <div class="wrapper-content-media-management">
         <div class="wrapper-container-media form-news">
@@ -12,6 +15,7 @@
                     minlength="10" maxlength="180" {{ old('title') != null ? 'value="' . old('title') . '"' : ''  }}
                     required>
             </div>
+
 
             <div class="wrapper-thumbnail">
                 <img class="thumbnail" id="thumbnail" src="" alt="thumbnail-image">

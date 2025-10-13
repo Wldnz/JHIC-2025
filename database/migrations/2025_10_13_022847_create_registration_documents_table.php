@@ -11,15 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('candidate_documents', function (Blueprint $table) {
+        Schema::create('registration_documents', function (Blueprint $table) {
             $table->id();
-            $table->string('candidate_nisn', 10);
-            $table->string('name', 255);
-            $table->text('file_url');
-            $table->boolean('is_valid')->default(false);
+            $table->string('name');
+            $table->string('mime_types');
+            $table->boolean('is_required')->default(true);
+            $table->text('download_file_url')->nullable();
             $table->timestamps();
-
-            $table->foreign('candidate_nisn')->references('nisn')->on('candidates')->cascadeOnDelete();
         });
     }
 
@@ -28,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('candidate_documents');
+        Schema::dropIfExists('registration_documents');
     }
 };
