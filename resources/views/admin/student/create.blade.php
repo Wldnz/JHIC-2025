@@ -15,7 +15,7 @@
                 <div class="wrapper-input wrapper-input-full">
                     <label for="nis">Nomor Induk Siswa</label>
                     <input type="text" name="nis" id="nis" placeholder="Nis Peserta Didik"
-                        value="{{ old('nis', '') }}" aria-describedby="nis">
+                        value="{{ old('nis', '') }}" aria-describedby="nis" required>
                 </div>
                 <div class="wrapper-input">
                     <label for="name">Nama Lengkap</label>
@@ -30,20 +30,20 @@
                         required>
                 </div>
                 <div class="wrapper-input">
-                    <label for="gender">Kelas</label>
+                    <label for="gender">Jenis Kelamin</label>
                     <select name="gender" id="gender" required>
                         <option value=""></option>
-                        <option @selected(old('gender', '') == 'male') value="gender">Laki - Laki</option>
-                        <option @selected(old('gender', '') == 'female') value="gender">Perempuan</option>
+                        <option @selected(old('gender') == 'male') value="male">Laki - Laki</option>
+                        <option @selected(old('gender') == 'female') value="female">Perempuan</option>
                     </select>
                 </div>
                 <div class="wrapper-input">
                     <label for="class">Kelas</label>
                     <select name="class" id="class" required>
                         <option value=""></option>
-                        <option @selected(old('class', '') == 'X') value="class">Kelas 10</option>
-                        <option @selected(old('class', '') == 'XI') value="class">Kelas 11</option>
-                        <option @selected(old('class', '') == 'XII') value="class">Kelas 12</option>
+                        <option @selected(old('class') == 'X') value="X">Kelas 10</option>
+                        <option @selected(old('class') == 'XI') value="XI">Kelas 11</option>
+                        <option @selected(old('class') == 'XII') value="XII">Kelas 12</option>
                     </select>
                 </div>
                 <div class="wrapper-input">
@@ -51,14 +51,8 @@
                     <select name="major_id" id="major_id" required>
                         <option value=""></option>
                         @foreach ($majors as $major)
-                            <option @selected(old('major_id', ) == $major->id) value="major">{{ $major->long_name }}</option>
+                            <option @selected(old('major_id') == $major->id) value="{{ $major->id }}">{{ $major->long_name }}</option>
                         @endforeach
-                    </select>
-                </div>
-                <div class="wrapper-input">
-                    <label for="role">Role</label>
-                    <select name="role" id="role" required>
-                        <option value="student">Siswa</option>
                     </select>
                 </div>
             </div>
