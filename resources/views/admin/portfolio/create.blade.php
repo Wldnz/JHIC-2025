@@ -18,7 +18,7 @@
                         <select name="student_nis" id="student_nis" required>
                             <option value=""></option>
                             @foreach ($students as $student)
-                                <option value="{{ $student->nis }}">{{ $student['user']['fullname'] }}</option>
+                                <option value="{{ $student->nis }}">{{ $student['name'] }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -32,9 +32,14 @@
                             value="{{ old('class', '') }}" readonly required>
                     </div>
                     <div class="wrapper-input">
-                        <label for="major">Jurusan</label>
-                        <input type="text" name="major" id="major" placeholder="Masukkan jurusan siswa"
-                            value="{{ old('major', '') }}" readonly required>
+                        <label for="major_name">Jurusan</label>
+                        <input type="text" name="major_name" id="major_name" placeholder="Masukkan jurusan siswa"
+                            value="{{ old('major_name', '') }}" readonly required>
+                    </div>
+                    <div class="wrapper-input hidden">
+                        <label for="major_id">Jurusan</label>
+                        <input type="text" name="major_id" id="major_id" placeholder="Masukkan jurusan siswa"
+                            value="{{ old('major_id', '') }}" readonly required>
                     </div>
                 </div>
             </div>
@@ -85,11 +90,9 @@
                     <div class="wrapper-input">
                         <label for="type">Portfolio Type<span>*</span></label>
                         <select name="type" id="type" required>
-                            <option value="youtube" @selected(old('type', '') == 'youtube')>Youtube</option>
-                            <option value="instragam" @selected(old('type', '') == 'instragam')>Instragam</option>
-                            <option value="tiktok" @selected(old('type', '') == 'tiktok')>Tiktok</option>
-                            <option value="website" @selected(old('type', '') == 'website')>Website</option>
-                            <option value="other" @selected(old('type', '') == 'other')>Lainnya</option>
+                            @foreach($availableLinkTypes as $key => $linkType)
+                                <option value="{{ $linkType }}" @selected(old('type', '') == $linkType)>{{ $key }}</option>
+                            @endforeach
                         </select>
                     </div>
                     <div class="wrapper-input">
@@ -121,9 +124,10 @@
 
     const handlerStudentData = (student) => {
         document.getElementById('class').value = student.class;
-        document.getElementById('major').value = student.major_name;
-        document.getElementById('fullname').value = student.user.fullname;
-        document.getElementById('fullname_').textContent = student.user.fullname;
+        document.getElementById('major_name').value = student.major_long_name;
+        document.getElementById('major_id').value = student.major_id;
+        document.getElementById('fullname').value = student.name;
+        document.getElementById('fullname_').textContent = student.name;
     }
 </script>
 @include('_components._footerAdmin')

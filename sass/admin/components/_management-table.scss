@@ -186,13 +186,12 @@
             }
         }
 
-
-
         .wrapper-content-media {
             display: flex;
             align-items: center;
             flex-wrap: wrap;
             gap: 10px;
+
 
             .wrapper-card-media {
                 width: 250px;
@@ -203,16 +202,51 @@
                 border-radius: 10px;
                 cursor: pointer;
 
+                position: relative;
+
+                .floating-action {
+                    width: max-content;
+                    min-height: 20px;
+
+                    position: absolute;
+                    bottom: 20px;
+                    right: -40px;
+
+                    background-color: $color-primary;
+                    border-radius: $border-radius;
+                    border: 2px solid $color-accent;
+
+                    display: flex;
+                    flex-direction: column;
+                    gap: 10px;
+
+                    .action{
+                        display: flex;
+                        align-items: center;
+                        gap: 5px;
+                        padding: 5px 8px;
+                        background-color: transparent;
+                        border: none;
+                        span{
+                            font-size: $font-size-s;
+                        }
+                    }
+                    z-index: 100;
+                }
+
                 .card-media {
                     height: 100%;
                     background-color: $color-primary;
 
                     border-radius: 10px;
                     .wrapper-image {
+                        aspect-ratio: 1/1;
                         img {
+                            aspect-ratio: 1/1;
                             border-top-left-radius: 10px;
                             border-top-right-radius: 10px;
                             width: 100%;
+                            font-size: $font-size-s;
                         }
                     }
 
@@ -222,6 +256,9 @@
                         display: flex;
                         flex-direction: column;
                         gap: 4px;
+
+                        background-color: $color-primary;
+                        border-radius: $border-radius;
 
                         .title {
                             width: 100%;
@@ -271,7 +308,6 @@
 
             @include achievement.card;
             @include news.card;
-
         }
 
         .wrapper-pagination {

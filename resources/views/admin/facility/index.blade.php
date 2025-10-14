@@ -6,14 +6,15 @@
 <main class="content">
     @include('_components._summary-section', [
         'title' => 'Facilities',
+        'greeting' => true,
         'data' => $stats,
         'icon' => [ 
             'name' => 'facility',
-        ]
+            ]
     ])
     <div class="management-table">
         <div class="title">
-            <h3 class=''>Ada 10 Fasilitas</h3>
+            <h3 class=''>Show {{ count($facilities) }} / {{ $stats['total'] }} Facilities</h3>
             <a href='{{ route('admin.create-facility') }}' class="btn" id="btn-add-management">
                 <span class=""> Tambahkan Fasilitas</span>
                 @include('_components._sprite-icons', ['name' => 'add', 'size' => 15])
@@ -44,10 +45,11 @@
         </div>
         <div class="wrapper-content-media items-start">
             @foreach ($facilities as $facility)
-                <a class="wrapper-card-media"
-                href="{{ route('admin.detail-facility', ['facility' => $facility->id]) }}"
-            >
-                <div class="card-media">
+                <div class="wrapper-card-media"
+                >
+                <a class="card-media"
+                    href="{{ route('admin.detail-facility', ['facility' => $facility->id]) }}"
+                >
                     <div class="wrapper-image">
                         <img src="{{ $facility->url }}" alt="{{ $facility->name . $facility->gallery_type_name }}">
                     </div>
@@ -58,20 +60,37 @@
                             <div class="tag-name">
                                 <h5>{{ strtoupper($facility->gallery_type_name[0]) . substr($facility->gallery_type_name, 1) }}</h5>
                             </div>
-                            {{-- <div class="action">
-                                <form id="action">
-                                    <button type="button" name="visible" id="button-visible" value="public">
-                                        @include('_components._sprite-icons', ['name' => 'eye', 'size' => 20])
-                                    </button>
-                                </form>
-                            </div> --}}
                         </div>
                     </div>
-                </div>
-            </a>
+                </a>
+                <form class="floating-action" 
+                    action="{{ route('admin.delete-facility', ['facility' => $facility->id]) }}"
+                    method="POST"
+                    id="media-floating-icon"
+                >                    
+                    @csrf
+                    @method('DELETE')
+                    <button type="button" class="action">
+                        @include('_components._sprite-icons', [
+                            'name' => 'trash',
+                            'size' => 20,
+                        ])
+                        <span>Delete Facility</span>
+                    </button>
+                </form>
+            </div>
             @endforeach
         </div>
+          @include('_components._pagination-media', [
+                'max' => $max,
+                'totalPage' => $total,
+                'page' => $page
+        ])
     </div>
 </main>
+
+<script defer>
+
+</script>
 
 @include('_components._footerAdmin')

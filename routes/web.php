@@ -54,17 +54,38 @@ Route::name('user.')->group(function () {
 
 // Candidate-side
 Route::name('candidate.')->prefix('candidate')->middleware([isLogin::class])->group(function () {
-    Route::get('/', [Candidate\Controller::class, 'index'])->name('index');
+    Route::withoutMiddleware([isLogin::class])->group(function () {
+        Route::get('/', [Candidate\Controller::class, 'index'])->name('index');
+
+        Route::get('/signup', [Candidate\AuthController::class, 'signupPage'])->name('signup-page');
+        Route::post('/signup', [Candidate\AuthController::class, 'signup'])->name('signup');
+        Route::get('/login', [Candidate\AuthController::class, 'loginPage'])->name('login-page');
+        Route::post('/login', [Candidate\AuthController::class, 'login'])->name('login');
+        Route::post('/logout', [Candidate\AuthController::class, 'logout'])->name('logout');
+    });
+
     Route::get('/dashboard', [Candidate\Controller::class, 'dashboard'])->name('dashboard');
     Route::get('/schedule', [Candidate\Controller::class, 'schedule'])->name('schedule');
     Route::get('/contact', [Candidate\Controller::class, 'contact'])->name('contact');
     Route::get('/learning-materials', [Candidate\Controller::class, 'learningMaterials'])->name('learning-materials');
 
-    Route::get('/signup', [Candidate\AuthController::class, 'signupPage'])->name('signup-page');
-    Route::post('/signup', [Candidate\AuthController::class, 'signup'])->name('signup');
-    Route::get('/login', [Candidate\AuthController::class, 'loginPage'])->name('login-page');
-    Route::post('/login', [Candidate\AuthController::class, 'login'])->name('login');
-    Route::post('/logout', [Candidate\AuthController::class, 'logout'])->name('logout');
+    Route::controller(Candidate\StageController::class)->prefix('stage')->name('satge.')->group(function () {
+        Route::get('/stage-1', 'stage1')->name('stage1');
+        Route::put('/stage-1', 'saveStage1')->name('save-stage1');
+
+        Route::get('/stage-2', 'stage2')->name('stage2');
+        Route::put('/stage-2', 'saveStage2')->name('save-stage2');
+
+        Route::get('/stage-3', 'stage3')->name('stage3');
+        Route::put('/start-transaction', 'startTransaction')->name('start-transaction');
+        Route::get('/transaction-status', 'transactionStatus')->name('transaction-status');
+
+        Route::get('/stage-4', 'stage4')->name('stage4');
+        Route::put('/stage-4', 'saveStage4')->name('save-stage4');
+
+        Route::get('/stage-5', 'stage5')->name('stage5');
+        Route::put('/stage-5', 'saveStage5')->name('save-stage5');
+    });
 });
 
 // Admin-side
@@ -92,6 +113,21 @@ Route::name('admin.')->prefix('admin')->middleware([isLogin::class, isAdmin::cla
     Route::get('/accounts/{account}', [Admin\AccountController::class, 'detailAccount'])->name('detail-account');
     Route::put('/accounts/{account}', [Admin\AccountController::class, 'updateAccount'])->name('update-account');
     Route::delete('/accounts/{account}', [Admin\AccountController::class, 'deleteAccount'])->name('delete-account');
+    Route::patch('/account/reset-password/{account}', [Admin\AccountController::class, 'resetPassword'])->name('reset-password-account');
+    
+    Route::get('/students', [Admin\AccountController::class, 'student'])->name('students');
+    Route::get('/students-create', [Admin\AccountController::class, 'createStudent'])->name('create-student');
+    Route::post('/students-create', [Admin\AccountController::class, 'storeStudent'])->name('store-student');
+    Route::get('/students/{student}', [Admin\AccountController::class, 'detailStudent'])->name('detail-student');
+    Route::put('/students/{student}', [Admin\AccountController::class, 'updateStudent'])->name('update-student');
+    Route::delete('/student/{student}', [Admin\AccountController::class, 'deleteStudent'])->name('delete-student');
+
+    Route::get('/students', [Admin\StudentController::class, 'students'])->name('students');
+    Route::get('/students-create', [Admin\StudentController::class, 'createStudent'])->name('create-student');
+    Route::post('/students-create', [Admin\StudentController::class, 'storeStudent'])->name('store-student');
+    Route::get('/students/{student}', [Admin\StudentController::class, 'detailStudent'])->name('detail-student');
+    Route::put('/students/{student}', [Admin\StudentController::class, 'updateStudent'])->name('update-student');
+    Route::delete('/students/{student}', [Admin\StudentController::class, 'deleteStudent'])->name('delete-student');
 
     Route::get('/news', [Admin\NewsController::class, 'news'])->name('news');
     Route::get('/news-create', [Admin\NewsController::class, 'createNews'])->name('create-news');

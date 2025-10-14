@@ -1,11 +1,12 @@
 <?php
+namespace App\Utilities;
 
 use App\Models\User;
 
 class RoleLevelChecker
 {
-    final public static $roleLevels = [
-        'superAdmin' => 0,
+    private static $roleLevels = [
+        'super_admin' => 0,
         'admin' => 1,
         'user' => 2,
     ];

@@ -38,3 +38,5 @@ rr
 **/caddy
 frankenphp
 frankenphp-worker.php
+
+/.unlighthouse

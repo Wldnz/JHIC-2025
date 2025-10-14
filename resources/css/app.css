@@ -427,6 +427,10 @@ img {
   animation: line-break 1500ms forwards;
 }
 
+img {
+  font-size: 14px;
+}
+
 .login {
   max-width: 800px;
   min-height: 300px;
@@ -517,7 +521,7 @@ img {
   right: 10px;
   border: 1px solid #273b98;
   color: #273b98;
-  background-color: transparent;
+  background-color: #fff;
   border-radius: 8px;
   font-weight: bold;
   cursor: pointer;
@@ -556,6 +560,10 @@ img {
 .btn-media:hover {
   color: #273b98;
   border-color: #273b98;
+}
+
+.mt-25 {
+  margin-top: 25px;
 }
 
 .static {
@@ -621,6 +629,10 @@ a {
 
 .self-end {
   align-self: flex-end !important;
+}
+
+.hidden {
+  display: none !important;
 }
 
 body {

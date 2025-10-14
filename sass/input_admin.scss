@@ -2,6 +2,7 @@
 @use "admin/components/management-table" as table;
 @use "admin/components/summary-card" as summary_card;
 @use "admin/components/form-data" as form_data;
+@use "admin/components/profile" as profile;
 @use "admin/pages/news" as news;
 @import "utils/variables";
 @import "utils/globals";
@@ -9,7 +10,8 @@
 
 .wrapper-admin {
     width: 100vw;
-    height: 100dvh;
+    height: max-content;
+    min-height: 100dvh;
 
     display: flex;
     position: relative;
@@ -29,7 +31,7 @@
 
     .right {
         width: 100%;
-        overflow-x: hidden;
+        // overflow-x: hidden;
 
         h2 {
             font-size: calc($font-size-l - 0.3rem);
@@ -42,8 +44,20 @@
             align-items: center;
             border-bottom: solid 1px #dfdfdf;
 
-            h4 {
-                font-size: calc($font-size-l - 0.3rem);
+            .side-left{
+                h4 {
+                    font-size: calc($font-size-l - 0.3rem);
+                }
+
+                display: flex;
+                align-items: center;
+                gap: 20px;
+
+                .logo-sponsor{
+                    width: 200px;
+                    height: 100%;
+                    object-fit: contain;
+                }
             }
         }
 
@@ -64,6 +78,30 @@
                     font-size: $font-size-m;
                 }
             }
+
+           .section-chart{
+                width: 100%;
+                .wrapper-chart{
+                    width: 100%;
+                    padding: 5px;
+
+                    display: flex;
+                    flex-direction: column;
+                    gap: 10px;
+
+                    .chart{
+                        width: 100%;
+                        // max-width: 600px;
+                        max-height: 300px;
+                        padding: 10px;
+                        border: 2px solid $color-accent;
+                        border-radius: $border-radius;
+                        &-barchart{
+                            width: 10px;
+                        }
+                    }
+                }
+           }
             
             @include summary_card.summary_card;
 
@@ -85,6 +123,8 @@
             @include table.table;
 
             @include form_data.form_data;
+
+            @include profile.card;
 
             .wrapper-save-media {
                 width: 300px;
@@ -238,6 +278,31 @@
                             }
                         }
                     }
+                }
+            }
+
+            .wrapper-button{
+                width: 100%;
+
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+
+                margin-top: 10px;
+                
+                button{
+                    width: 98%;
+                    height: 50px;
+                    background-color: $color-accent;
+                    color: $color-primary;
+                    border: none;
+                }
+
+                .btn-back{
+                    border: 2px solid $color-accent;
+                    background-color: $color-primary;
+                    color: $color-accent;
                 }
             }
         }

@@ -1,6 +1,7 @@
 @import "../../utils/variables";
 @import "../../utils/animation.scss";
 @mixin card {
+    gap: 20px;
     .wrapper-card-news {
         width: 100%;
         display: flex;
@@ -39,6 +40,7 @@
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
+                
                 .tags {
                     min-width: 200px;
                     width: 100%;
@@ -59,8 +61,6 @@
 
                         padding: 5px;
                     }
-                }
-                .identifier {
                 }
             }
         }

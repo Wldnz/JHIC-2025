@@ -1,10 +1,13 @@
 <div class="bar-top">
-    <h4>{{ $title }}</h4>
+    <div class="side-left">
+        <h4>{{ $title }} | </h4>
+        <img class="logo-sponsor" src="{{ asset('icons/logo-sponsor.png') }}" alt="logo-sponsor">
+    </div>
     <div class="profile" id="profile-admin">
         <span class="icon" id="profile-admin" data-show_main_menu="true">🧒🏻</span>
         <ul class="main-menu">
             <li>
-                <a href="{{ route("admin.logout") }}">
+                <a href="{{ route("admin.detail-account", ['account' => Auth::user()->id]) }}">
                     @include('_components._sprite-icons', ['name' => 'account', 'color' => '#273B98', 'size' => 20])
                     Profile
                 </a>

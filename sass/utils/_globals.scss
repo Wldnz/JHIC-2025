@@ -2,6 +2,12 @@
 @import '../components/alert';
 @import '../components/profile';
 
+// element
+
+img{
+    font-size: 14px;
+}
+
 .login{
     max-width: 800px;
     min-height: 300px;
@@ -118,7 +124,7 @@
 
     border: 1px solid $color-accent;
     color: $color-accent;
-    background-color: transparent;
+    background-color: $color-primary;
     border-radius: 8px;
     font-weight: bold;
 
@@ -163,6 +169,11 @@
         color: $color-accent;
         border-color:  $color-accent;
     }
+}
+
+// margin
+.mt-25{
+    margin-top: 25px;
 }
 
 .static {
@@ -230,4 +241,8 @@ a {
 
 .self-end{
     align-self: flex-end !important;
+}
+
+.hidden{
+    display: none !important;
 }

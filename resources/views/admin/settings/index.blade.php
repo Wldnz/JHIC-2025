@@ -1,6 +1,7 @@
 @include('_components._headerAdmin', ['title' => 'Settings'])
 @php
     $currentPath = explode('/admin/', url()->current())[1];
+    logger('as', [$payments]);
 @endphp
 <form method="post" action="{{ route('admin.update-settings') }}" class="content">
     @method('PUT')
@@ -11,17 +12,22 @@
                 Metode Pembayaran
             </summary>
             <div class="inside-container">
-                @foreach ($payment_methods as $method)
+                @foreach ($payments as $payment)
                     <div class="wrapper-input wrapper-payment-methode">
-                        <input type="checkbox" name="payment_methods[{{ $method->code_name }}]" id="{{ $method->code_name }}" {{ $method->is_enable ? "checked" : '' }}>
+                        <input type="checkbox" name="payment_methods[{{ $payment->code_name }}]" id="{{ $payment->code_name }}" {{ $payment->is_enable ? "checked" : '' }}>
                         <div class="wrapper-detail-payment">
-                            <img src="{{ $method->icon_url }}" alt="{{ $method->display_name }}">
-                            <label for="{{ $method->code_name }}">{{ $method->display_name }}</label>
+                            <img src="{{ $payment->icon_url }}" alt="{{ $payment->display_name }}">
+                            <label for="{{ $payment->code_name }}">{{ $payment->display_name }}</label>
                         </div>
                     </div>
                 @endforeach
             </div>
         </details>
+        <div class="inside-container">
+            <div class="wrapper-input">
+                
+            </div>
+        </div>
     </div>
     <button class="button-submit-form">
         <span>Simpan Perubahan</span>

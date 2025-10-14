@@ -1,6 +1,7 @@
 <?php
 
 use App\AlertType;
+use App\Http\Middleware\FrameGuard;
 use App\Utilities\AlertDataGenerator;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -16,10 +17,13 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        $middleware->append(FrameGuard::class);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->render(function (Exception $exception, Request $request) {
+            logger()->error($exception);
+            report($exception);
+
             if ($request->hasSession()) {
                 AlertDataGenerator::generateAsFlashToSession(
                     AlertType::DANGER,

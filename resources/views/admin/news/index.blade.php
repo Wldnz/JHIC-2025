@@ -42,13 +42,14 @@
                     <div class="detail-media">
                         <div class="information">
                             <h3 class="title">Aplikasi Pemesanan Website</h3>
-                            <p class="description">Aplikasi pemesanan hotel adalah sebuah aplikasi yang dibuat dan khussukan untuk penggun yang
-                                ingin memesan hotel secara online</p>
+                            <p class="description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas veniam, ipsum, sapiente sunt error perferendis consectetur cum dolore voluptate ducimus quia dolor architecto deserunt sequi explicabo officia ad, delectus ipsam!</p>
                             <i>Wildan Izhar A.</i>
                         </div>
                         <div class="bottom">
                             <div class="tags">
                                 <div class="tag"><p>Informasi Sekolah</p></div>
+                                <div class="tag"><p>Informasi Sekolah</p></div>
+                                <p>6+ more</p>
                             </div>
                             <div class="identifier">
                                 <p>2025-10-07</p>

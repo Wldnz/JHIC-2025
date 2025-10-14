@@ -13,7 +13,9 @@
         "laravel/tinker": "^2.10.1",
         "midtrans/midtrans-php": "^2.6",
         "php-ds/php-ds": "^1.7",
-        "spatie/async": "^1.8"
+        "spatie/async": "^1.8",
+        "spatie/laravel-sitemap": "^7.3",
+        "yaza/laravel-google-drive-storage": "^4.1"
     },
 
 
@@ -39,6 +41,9 @@
         }
     },
     "scripts": {
+        "pre-autoload-dump": [
+            "Google\\Task\\Composer::cleanup"
+        ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi"
@@ -66,10 +71,12 @@
     "extra": {
         "laravel": {
             "dont-discover": [
-                "laravel/tinker",
                 "fakerphp/faker"
             ]
-        }
+        },
+        "google/apiclient-services": [
+            "Drive"
+        ]
     },
     "config": {
         "optimize-autoloader": true,
@@ -78,7 +85,8 @@
         "allow-plugins": {
             "pestphp/pest-plugin": true,
             "php-http/discovery": true
-        }
+        },
+        "process-timeout": 3600
     },
     "minimum-stability": "stable",
     "prefer-stable": true

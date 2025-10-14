@@ -1,9 +1,12 @@
-@include('_components._headerAdmin', ['title' => 'Tambahkan Fasilitas'])
+@include('_components._headerAdmin', ['title' => 'Facility Management'])
 @php
     $currentPath = explode('/admin/', url()->current())[1];
+    logger('fac', [$facility])
 @endphp
-<form class="content flex-row justify-between pad-0">
-    <div class="wrapper-content-media">
+<form class="content flex-row justify-between pad-0" method="POST" enctype="multipart/form-data">
+    @method('PUT')
+    @csrf
+    <div class="wrapper-content-media-management">
         <div class="wrapper-container-media">
             <h2>Foto - Foto Fasilitas</h2>
             <div class="form-data">
@@ -39,27 +42,20 @@
                     <div class="wrapper-input">
                         <label for="title">Title <span>*</span></label>
                         <input type="text" name="title" id="title" minlength="5" placeholder="Aplikasi pemesanan hotel"
-                            value="{{ old('title', '') }}" required>
+                            value="{{ old('title', $facility->name) }}" required>
                     </div>
                     <div class="wrapper-input">
                         <label for="description">Description <span>*</span></label>
                         <textarea name="description" id="description" minlength="10"
                             placeholder="Kelompok ini dapat membuat sebuah aplikasi yang amat keren"
-                            required>{{ old('description', '') }}</textarea>
+                            required>{{ old('description', $facility->description) }}</textarea>
                     </div>
                     <div class="wrapper-input">
                         <label for="type">Facility Type<span>*</span></label>
                         <select name="type" id="type" required>
-                            <option value="ruangan" @selected(old('type', '') == 'ruangan')>Ruangan</option>
-                            <option value="labotarium" @selected(old('type', '') == 'labotarium')>Labotarium</option>
-                            <option value="publik" @selected(old('type', '') == 'publik')>Publik</option>
-                        </select>
-                    </div>
-                    <div class="wrapper-input">
-                        <label for="visible">Visible<span>*</span></label>
-                        <select name="visible" id="visible" required>
-                            <option value="public" @selected(old('type', '') == 'public')>Public</option>
-                            <option value="arhcive" @selected(old('type', '') == 'archive')>Archive</option>
+                            @foreach ($availableFacilityTypes as $facilityType)
+                                <option value="{{ $facilityType->id }}" @selected(old('type', '') == $facilityType->id)>{{ $facilityType->name }}</option>
+                            @endforeach
                         </select>
                     </div>
                 </div>
@@ -74,8 +70,14 @@
 @vite(['resources/js/handle/image-product.js', 'resources/js/handle/save-media.js'])
 
 <script defer>
-    
-    let image = @json(old('images', [] ));
+
+    let image = @json([
+        [
+            'id' => $facility->id,
+            'url' => $facility->url,
+            'thumbnail' => true
+        ]
+    ]);
     const max_images = 1;
 
 

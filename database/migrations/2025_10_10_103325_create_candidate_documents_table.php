@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('candidate_nisn', 10);
             $table->string('name', 255);
             $table->text('file_url');
+            $table->boolean('is_valid')->default(false);
             $table->timestamps();
 
             $table->foreign('candidate_nisn')->references('nisn')->on('candidates')->cascadeOnDelete();
