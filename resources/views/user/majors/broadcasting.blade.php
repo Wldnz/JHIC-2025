@@ -23,26 +23,26 @@
 
             "icons" => 
             [
-            asset("icons/major/anim/app-icons/icon1.png"),
-            asset("icons/major/anim/app-icons/icon2.png"),
-            asset("icons/major/anim/app-icons/icon3.png"),
-            asset("icons/major/anim/app-icons/icon4.png"),
-            asset("icons/major/anim/app-icons/icon5.png"),
+            asset("icons/major/bc/app-icons/icon1.png"),
+            asset("icons/major/bc/app-icons/icon2.png"),
+            asset("icons/major/bc/app-icons/icon3.png"),
+            asset("icons/major/bc/app-icons/icon4.png"),
+            asset("icons/major/bc/app-icons/icon5.png"),
             ],
 
             "portfolio" => (object)
             [
-            "portfolio1" => ["Dalang Pelo","Animasi Hybrid 2D dan 3D bertema persahabatan melawan kejahatan yang sering memberi kutukan kepada hewan hewan dan tanaman di dunia ini dengan sihirnya ","Wildan Izhar Al-Haqq",asset("images/major/anim/portfolio/portfolio1.png")],
-            "portfolio2" => ["Palang Delo","Animasi Hybrid 2D dan 3D bertema persahabatan melawan kejahatan yang sering memberi kutukan kepada hewan hewan dan tanaman di dunia ini dengan sihirnya ","Wildan Izhar Al-Haqq",asset("images/major/anim/portfolio/portfolio1.png")],
-            "portfolio3" => ["Palang Pelo","Animasi Hybrid 2D dan 3D bertema persahabatan melawan kejahatan yang sering memberi kutukan kepada hewan hewan dan tanaman di dunia ini dengan sihirnya ","Wildan Izhar Al-Haqq",asset("images/major/anim/portfolio/portfolio1.png")],
-            "portfolio4" => ["Dalang Delo","Animasi Hybrid 2D dan 3D bertema persahabatan melawan kejahatan yang sering memberi kutukan kepada hewan hewan dan tanaman di dunia ini dengan sihirnya ","Wildan Izhar Al-Haqq",asset("images/major/anim/portfolio/portfolio1.png")],
+            "portfolio1" => ["Dalang Pelo","Animasi Hybrid 2D dan 3D bertema persahabatan melawan kejahatan yang sering memberi kutukan kepada hewan hewan dan tanaman di dunia ini dengan sihirnya ","Wildan Izhar Al-Haqq",asset("images/major/bc/portfolio/portfolio1.png")],
+            "portfolio2" => ["Palang Delo","Animasi Hybrid 2D dan 3D bertema persahabatan melawan kejahatan yang sering memberi kutukan kepada hewan hewan dan tanaman di dunia ini dengan sihirnya ","Wildan Izhar Al-Haqq",asset("images/major/bc/portfolio/portfolio1.png")],
+            "portfolio3" => ["Palang Pelo","Animasi Hybrid 2D dan 3D bertema persahabatan melawan kejahatan yang sering memberi kutukan kepada hewan hewan dan tanaman di dunia ini dengan sihirnya ","Wildan Izhar Al-Haqq",asset("images/major/bc/portfolio/portfolio1.png")],
+            "portfolio4" => ["Dalang Delo","Animasi Hybrid 2D dan 3D bertema persahabatan melawan kejahatan yang sering memberi kutukan kepada hewan hewan dan tanaman di dunia ini dengan sihirnya ","Wildan Izhar Al-Haqq",asset("images/major/bc/portfolio/portfolio1.png")],
             ],
 
             "alumni" => (object)
             [
-            "alumni1" => ["Wildan Izhar Al-Haqq","CEO Growtopia","pesan yang panjang karena sekolah ini hebat banget oh my god", asset("images/major/anim/alumni/alumni1/person.png"), asset("images/major/anim/alumni/alumni1/company.png")],
-            "alumni2" => ["Rizky Sugiharto","Pembuat Python","pesan yang panjang karena sekolah ini hebat banget oh my god", asset("images/major/anim/alumni/alumni2/person.png"), asset("images/major/anim/alumni/alumni2/company.png")],
-            "alumni3" => ["Raditya Putra Hidayat","CEO SEGA","pesan yang panjang karena sekolah ini hebat banget oh my god", asset("images/major/anim/alumni/alumni3/person.png"), asset("images/major/anim/alumni/alumni3/company.png")],
+            "alumni1" => ["Nabila Nadazera","Alumni BI","Saat sekolah disini mental kebentuk, skill juga dan berguna di kuliah ku sih, lebih unggul dri temen temen lainnya, emang capek, tapi ada kok hasilnya", asset("images/major/bc/alumni/alumni1.png")],
+            "alumni2" => ["Deni Maulana Dipraja","Alumni BI","Saya tertarik akan bidang Audio Visual, dan memutuskan untuk masuk ke jurusan Broadcasting Tv & Film. Dengan ilmu serta pengalaman yang di dapat, alhamdulillah mengantarkan saya ke tingkat Nasional dalam lomba Short Movie dan magang di Kominfo.", asset("images/major/bc/alumni/alumni2.png")],
+            "alumni3" => ["Rahmalia Dhamayanti","Alumni BI","Gue bangga sih jadi alumni SMK Bina Informatika, dari thn 2011-2014 sekolah udh rasa ngampus banget!!! Gimana gak bangga, pas kuliah temen2 baru tau tehnik2 Multimedia/broadcast gue udh biasa sama hal2 itu di SMK", asset("images/major/bc/alumni/alumni3.png")],
             ]
         ]
 @endphp
@@ -104,12 +104,11 @@
     </div>
 
     <div class="alumni">
-        <h2>Alumni Success Story</h2>
+        <h2>Alumni's Story</h2>
         @foreach ($major->alumni as $alumni)
         <div class="alumni-tab">
             <div class="img-group">
                 <img src="{{ $alumni[3] }}" alt="">
-                <img src="{{ $alumni[4] }}" alt="">
             </div>
             <h2>{{ $alumni[0] }}</h2>
             <h4>{{ $alumni[1] }}</h4>
