@@ -1,4 +1,4 @@
-@include('_components._headerAdmin', ['title' => 'Tambahkan Artikel/Blog'])
+@include('_components._headerAdmin', ['title' => 'Adding Articles/Blogs/News'])
 @php
     $currentPath = explode('/admin/', url()->current())[1];
 @endphp

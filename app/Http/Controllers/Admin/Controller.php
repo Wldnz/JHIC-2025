@@ -12,61 +12,70 @@ use App\Models\Student;
 use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class Controller extends \App\Http\Controllers\Controller
 {
     protected $openRegisMonth = 12;
-
     public function dashboard()
     {
-
-        $initiliazeTransactions = Transaction::all();
-        $initiliazeAccounts = User::all();
-        $initiliazeStudents = Student::all();
-        $initiliazeCandidates = Candidate::all();
-        $initiliazeGallery = Gallery::all();
-        $initiliazeAchievements = Achievement::all();
-        $initiliazePortfolios = Portfolio::all();
-
-        $currentYear = intval(date('Y'));
-        $currentMonth = intval(date('m'));
         $registrationMonth = $this->openRegisMonth;
-        $registrationYear = [
-            'first' => ($currentMonth >= $this->openRegisMonth) ? $currentYear + 1 : $currentYear - 1,
-            'second' => ($currentMonth >= $this->openRegisMonth) ? $currentYear + 2 : $currentYear,
-        ];
+        $initiliazeGallery = Gallery::all();
+        $summary =[];
+        $stats = [];
+        
+        if (Auth::user()->role == 'admin' || Auth::user()->role == 'super_admin') {
+            $initiliazeTransactions = Transaction::all();
+            $initiliazeAccounts = User::all();
+            $initiliazeStudents = Student::all();
+            $initiliazeCandidates = Candidate::all();
+            $initiliazeAchievements = Achievement::all();
+            $initiliazePortfolios = Portfolio::all();
+    
+            $currentYear = intval(date('Y'));
+            $currentMonth = intval(date('m'));
+            $registrationYear = [
+                'first' => ($currentMonth >= $this->openRegisMonth) ? $currentYear + 1 : $currentYear - 1,
+                'second' => ($currentMonth >= $this->openRegisMonth) ? $currentYear + 2 : $currentYear,
+            ];
+            $stats = [
+                'transaction' => [
+                    'total' => $initiliazeTransactions->count(),
+                    'Menunggu' => $initiliazeTransactions->where('status', '=', 'pending')->count(),
+                    'Berhasil' => $initiliazeTransactions->where('status', '=', 'success')->count(),
+                    'Gagal' => $initiliazeTransactions->where('status', '=', 'expired')->count(),
+                ],
+                'account' => [
+                    'total' => $initiliazeAccounts->count(),
+                    'Calon Peserta Didik' => $initiliazeAccounts->where('role', '=', 'candidate')->count(),
+                    'Pembuat Artikel' => $initiliazeAccounts->where('role', '=', 'article_creator')->count(),
+                    'Adminitrasi' => $initiliazeAccounts->where('role', '=', 'admin')->count(),
+                ],
+                'student' => [
+                    'total' => $initiliazeStudents->count(),
+                    'total Prestasi' => $initiliazeAchievements->count(),
+                    'total Portofolio' => $initiliazePortfolios->count(),
+                ],
+                'media' => [
+                    'total Artikel' => Article::all()->count(),
+                    'total Fasilitas' => $initiliazeGallery->count(),
+                ]
+            ];
 
-        $stats = [
-            'transaction' => [
-                'total' => $initiliazeTransactions->count(),
-                'Menunggu' => $initiliazeTransactions->where('status', '=', 'pending')->count(),
-                'Berhasil' => $initiliazeTransactions->where('status', '=', 'capture')->count(),
-                'Gagal' => $initiliazeTransactions->where('status', '=', 'fail')->count(),
-            ],
-            'account' => [
-                'total' => $initiliazeAccounts->count(),
-                'Calon Peserta Didik' => $initiliazeAccounts->where('role', '=', 'candidate')->count(),
-                'Pembuat Artikel' => $initiliazeAccounts->where('role', '=', 'article_creator')->count(),
-                'Adminitrasi' => $initiliazeAccounts->where('role', '=', 'admin')->count(),
-            ],
-            'student' => [
-                'total' => $initiliazeStudents->count(),
-                'total Prestasi' => $initiliazeAchievements->count(),
-                'total Portofolio' => $initiliazePortfolios->count(),
-            ],
-            'media' => [
-                'total Artikel' => 0,
-                'total Fasilitas' => $initiliazeGallery->count(),
-            ]
-        ];
+            $summary = [
+                'candidates' => Candidate::where('created_at', 'like', '%' . $registrationYear['first'] . '%')
+                    ->orWhere('created_at', 'like', '%' . $registrationYear['second'] . '%')
+                    ->select(['created_at'])->groupBy('created_at')->get(),
+            ];
+        }else if(Auth::user()->role == 'article_creator'){
+            $stats = [
+                'media' => [
+                    'total Artikel' => Article::all()->count(),
+                    'total Fasilitas' => $initiliazeGallery->count(),
+                ]
+            ];
+        }
 
-        $summary = [
-            'candidates' => Candidate::where('created_at', 'like', '%'. $registrationYear['first'] .'%')
-            ->orWhere('created_at', 'like', '%'. $registrationYear['second'] .'%')
-            ->select(['created_at'])->groupBy('created_at')->get(),
-            Candidate::where('created_at', $currentYear)
-            ->select(['created_at'])->groupBy('created_at')->get(),
-        ];
 
         return view('admin.dashboard', compact('stats', 'summary', 'registrationMonth'));
     }

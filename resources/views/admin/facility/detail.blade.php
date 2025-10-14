@@ -1,4 +1,4 @@
-@include('_components._headerAdmin', ['title' => 'Facility Management'])
+@include('_components._headerAdmin', ['title' => 'Detail Facility'])
 @php
     $currentPath = explode('/admin/', url()->current())[1];
     logger('fac', [$facility])
@@ -70,7 +70,6 @@
 @vite(['resources/js/handle/image-product.js', 'resources/js/handle/save-media.js'])
 
 <script defer>
-
     let image = @json([
         [
             'id' => $facility->id,
@@ -79,7 +78,5 @@
         ]
     ]);
     const max_images = 1;
-
-
 </script>
 @include('_components._footerAdmin')

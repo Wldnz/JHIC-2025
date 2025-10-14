@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Article;
 use App\Models\Candidate;
 use App\Models\Major;
 use App\Models\RegistrationDocument;
@@ -89,7 +90,8 @@ class AccountController extends Controller
             $sources = RegistrationSource::all(['id', 'name']);
             $documents = RegistrationDocument::all();
         }else if($account->role == 'article_creator'){
-            $articles = null;
+            $articles = Article::all()
+            ->where('writter_user_id', '=', $account->id);
         }
         return view('admin.accounts.detail', compact('account', 'candidate', 'majors', 'phases', 'articles','sources', 'documents'));
     }

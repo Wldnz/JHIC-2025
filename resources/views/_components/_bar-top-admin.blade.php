@@ -13,10 +13,13 @@
                 </a>
             </li>
             <li>
-                <a href="{{ route("admin.logout") }}">
-                    @include('_components._sprite-icons', ['name' => 'logout', 'color' => '#273B98', 'size' => 20])
-                    Log Out
-                </a>
+                <form action="{{ route("admin.logout") }}" method="post">
+                    @csrf
+                    <button type="submit">
+                        @include('_components._sprite-icons', ['name' => 'logout', 'color' => '#273B98', 'size' => 20])
+                        Log Out
+                    </button>
+                </form>
             </li>
         </ul>
     </div>
@@ -24,11 +27,13 @@
 
 <script defer>
     document.getElementById('profile-admin').addEventListener('click', (e) => {
-        if(e.target.dataset.show_main_menu){
-            e.target.parentElement.children[1].style.display = 'none';
+        const main_menu = e.target.parentElement.querySelector('.main-menu');
+        if(e.target.dataset.show_main_menu ==="true"){
+            main_menu.style.display = 'none';
+            e.target.dataset.show_main_menu = "false";
         }else{
-            e.target.parentElement.children[1].style.display = 'flex';
+            main_menu.style.display = 'flex';
+            e.target.dataset.show_main_menu = "true";
         }
-        e.target.dataset.show_main_menu = !e.target.dataset.show_main_menu;
     });
 </script>

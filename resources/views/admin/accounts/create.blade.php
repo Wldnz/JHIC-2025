@@ -1,4 +1,4 @@
-@include('_components._headerAdmin', ['title' => 'Add Account'])
+@include('_components._headerAdmin', ['title' => 'Adding Account'])
 @php
     $currentPath = explode('/admin/', url()->current())[1];
 @endphp

@@ -1,4 +1,4 @@
-@include('_components._headerAdmin', ['title' => "Detail Artikel/Blog ($article->visited_times Pengunjung)"])
+@include('_components._headerAdmin', ['title' => "Articles/Blogs/News ($article->visited_times Pengunjung)"])
 @php
     $currentPath = explode('/admin/', url()->current())[1];
     logger('as', [$article])

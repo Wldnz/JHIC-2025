@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin;
 use App\Http\Controllers\Candidate;
 use App\Http\Controllers\User;
 use App\Http\Controllers\MidtransController;
+use App\Http\Middleware\isCreator;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\isLogin;
 use App\Http\Middleware\isAdmin;
@@ -97,7 +98,6 @@ Route::name('admin.')->prefix('admin')->middleware([isLogin::class, isAdmin::cla
         Route::post('/logout', [Admin\AuthController::class, 'logout'])->name('logout');
     });
 
-    Route::get('/dashboard', [Admin\Controller::class, 'dashboard'])->name('dashboard');
     Route::get('/settings', [Admin\Controller::class, 'settings'])->name('settings');
     Route::put('/settings', [Admin\Controller::class, 'updateSettings'])->name('update-settings');
 
@@ -107,35 +107,38 @@ Route::name('admin.')->prefix('admin')->middleware([isLogin::class, isAdmin::cla
     Route::post('/transactions', [Admin\TransactionController::class, 'storeTransaction'])->name('store-transaction');
     Route::put('/transactions/{transaction}', [Admin\TransactionController::class, 'updateTransaction'])->name('update-transaction');
     Route::delete('/transactions/{transaction}', [Admin\TransactionController::class, 'deleteTransaction'])->name('delete-transaction');
-
+    
     Route::get('/accounts', [Admin\AccountController::class, 'accounts'])->name('accounts');
     Route::get('/accounts-create', [Admin\AccountController::class, 'createAccount'])->name('create-account');
     Route::post('/accounts-create', [Admin\AccountController::class, 'storeAccount'])->name('store-account');
-    Route::get('/accounts/{account}', [Admin\AccountController::class, 'detailAccount'])->name('detail-account');
-    Route::put('/accounts/{account}', [Admin\AccountController::class, 'updateAccount'])->name('update-account');
     Route::delete('/accounts/{account}', [Admin\AccountController::class, 'deleteAccount'])->name('delete-account');
     Route::patch('/account/reset-password/{account}', [Admin\AccountController::class, 'resetPassword'])->name('reset-password-account');
-    
+
     Route::get('/students', [Admin\AccountController::class, 'student'])->name('students');
     Route::get('/students-create', [Admin\AccountController::class, 'createStudent'])->name('create-student');
     Route::post('/students-create', [Admin\AccountController::class, 'storeStudent'])->name('store-student');
     Route::get('/students/{student}', [Admin\AccountController::class, 'detailStudent'])->name('detail-student');
     Route::put('/students/{student}', [Admin\AccountController::class, 'updateStudent'])->name('update-student');
     Route::delete('/student/{student}', [Admin\AccountController::class, 'deleteStudent'])->name('delete-student');
-
+    
     Route::get('/students', [Admin\StudentController::class, 'students'])->name('students');
     Route::get('/students-create', [Admin\StudentController::class, 'createStudent'])->name('create-student');
     Route::post('/students-create', [Admin\StudentController::class, 'storeStudent'])->name('store-student');
     Route::get('/students/{student}', [Admin\StudentController::class, 'detailStudent'])->name('detail-student');
     Route::put('/students/{student}', [Admin\StudentController::class, 'updateStudent'])->name('update-student');
     Route::delete('/students/{student}', [Admin\StudentController::class, 'deleteStudent'])->name('delete-student');
-
-    Route::get('/news', [Admin\NewsController::class, 'news'])->name('news');
-    Route::get('/news-create', [Admin\NewsController::class, 'createNews'])->name('create-news');
-    Route::post('/news-create', [Admin\NewsController::class, 'storeNews'])->name('store-news');
-    Route::get('/news/{news}', [Admin\NewsController::class, 'detailNews'])->name('detail-news');
-    Route::put('/news/{news}', [Admin\NewsController::class, 'updateNews'])->name('update-news');
-    Route::delete('/news/{news}', [Admin\NewsController::class, 'deleteNews'])->name('delete-news');
+    
+    Route::withoutMiddleware([isAdmin::class])->middleware([isCreator::class])->group(function () {
+        Route::get('/dashboard', [Admin\Controller::class, 'dashboard'])->name('dashboard');
+        Route::get('/accounts/{account}', [Admin\AccountController::class, 'detailAccount'])->name('detail-account');
+        Route::put('/accounts/{account}', [Admin\AccountController::class, 'updateAccount'])->name('update-account');
+        Route::get('/news', [Admin\NewsController::class, 'news'])->name('news');
+        Route::get('/news-create', [Admin\NewsController::class, 'createNews'])->name('create-news');
+        Route::post('/news-create', [Admin\NewsController::class, 'storeNews'])->name('store-news');
+        Route::get('/news/{news}', [Admin\NewsController::class, 'detailNews'])->name('detail-news');
+        Route::put('/news/{news}', [Admin\NewsController::class, 'updateNews'])->name('update-news');
+        Route::delete('/news/{news}', [Admin\NewsController::class, 'deleteNews'])->name('delete-news');
+    });
 
     Route::get('/medias', [Admin\MediaController::class, 'media'])->name('media');
     Route::get('/medias-create', [Admin\MediaController::class, 'createMedia'])->name('create-media');

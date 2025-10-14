@@ -1,4 +1,4 @@
-@include('_components._headerAdmin', ['title' => 'Achievement Management'])
+@include('_components._headerAdmin', ['title' => 'Achievements Management'])
 @php
     $currentPath = explode('/admin/', url()->current())[1];
     logger('achievements', [$achievements]);
@@ -20,10 +20,22 @@
         <div class="find-something">
             <form class="wrapper-filter">
                 <div class="wrapper-select">
-                    <select name="search_status" required>
-                        <option value="">Status: Semuanya</option>
-                        <option value="public">Status: Public</option>
-                        <option value="private">Status: Private</option>
+                    <select name="search_major" required>
+                        <option value="">Semuanya</option>
+                        @foreach ($majors as $major)
+                            <option value="{{ $major->long_name }}" @selected(app('request')->get('search_major') == $major->long_name)>{{ $major->long_name }}</option>
+                        @endforeach
+                    </select>
+                    <div class="wrapper-icon">
+                        @include("_components._sprite-icons", ["name" => "drop-down", "size" => 20])
+                    </div>
+                </div>
+                <div class="wrapper-select">
+                    <select name="search_class" required>
+                        <option value="">Semuanya</option>
+                        <option value="X" @selected(app('request')->get('search_class') == 'X')>Kelas 10</option>
+                        <option value="XI" @selected(app('request')->get('search_class') == 'XI')>Kelas 11</option>
+                        <option value="XII" @selected(app('request')->get('search_class') == 'XII')>Kelas 12</option>
                     </select>
                     <div class="wrapper-icon">
                         @include("_components._sprite-icons", ["name" => "drop-down", "size" => 20])
