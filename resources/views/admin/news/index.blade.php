@@ -1,23 +1,30 @@
-@include('_components._headerAdmin', ['title' => 'Portfolio Management'])
+@include('_components._headerAdmin', ['title' => 'Articles/Blogs/News Management'])
 @php
     $currentPath = explode('/admin/', url()->current())[1];
+    logger('x', [$articles])
 @endphp
 <main class="content">
+    @include('_components._summary-section',[
+        'title' => 'Articles',
+        'greeting' => true,
+        'data' => $stats
+    ])
     <div class="management-table">
         <div class="title">
-            <h3 class=''>Ada 10 Artikel</h3>
+            <h3 class=''>Show {{ $articles->count() }} / {{ $total }} Articles</h3>
             <a href='{{ route('admin.create-news') }}' class="btn" id="btn-add-management">
                 <span class=""> Tambahkan Artikel </span>
                 @include('_components._sprite-icons', ['name' => 'add', 'size' => 15])
             </a>
         </div>
         <div class="find-something">
-            <form class="wrapper-filter">
+            <form class="wrapper-filter" id="wrapper-filter">
                 <div class="wrapper-select">
                     <select name="search_status" required>
                         <option value="">Status: Semuanya</option>
-                        <option value="public">Status: Public</option>
-                        <option value="private">Status: Private</option>
+                        <option value="published" @selected(app('request')->get('search_status') == 'published')>Status: Publish</option>
+                        <option value="archived" @selected(app('request')->get('search_status') == 'archived')>Status: Archive</option>
+                        <option value="draft" @selected(app('request')->get('search_status') == 'draft')>Status: Draft</option>
                     </select>
                     <div class="wrapper-icon">
                         @include("_components._sprite-icons", ["name" => "drop-down", "size" => 20])
@@ -32,34 +39,67 @@
             </form>
         </div>
         <div class="wrapper-content-media items-start">
-            <a class="wrapper-card-news"
-                href="{{ route('admin.detail-news', ['news' => 1]) }}"
-            >
-                <div class="card-media">
-                    <div class="wrapper-image">
-                        <img src="https://static01.nyt.com/images/2024/12/26/multimedia/23Labov-ltbc-print1/23Labov-ltbc-videoSixteenByNine3000.jpg" alt="wrapper-iamge">
-                    </div>
-                    <div class="detail-media">
-                        <div class="information">
-                            <h3 class="title">Aplikasi Pemesanan Website</h3>
-                            <p class="description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas veniam, ipsum, sapiente sunt error perferendis consectetur cum dolore voluptate ducimus quia dolor architecto deserunt sequi explicabo officia ad, delectus ipsam!</p>
-                            <i>Wildan Izhar A.</i>
+            @foreach ($articles as $article)
+                <a class="wrapper-card-news" href="{{ route('admin.detail-news', ['news' => $article->id]) }}">
+                    <div class="card-media">
+                        <div class="wrapper-image">
+                            <img src="{{ $article->thumbnail_url }}" alt="thumbnail-image-article">
                         </div>
-                        <div class="bottom">
-                            <div class="tags">
-                                <div class="tag"><p>Informasi Sekolah</p></div>
-                                <div class="tag"><p>Informasi Sekolah</p></div>
-                                <p>6+ more</p>
+                        <div class="detail-media">
+                            <div class="information">
+                                <h3 class="title">{{ $article->title }}</h3>
+                                <!-- <p class="description"></i> -->
+                                <p class="title">Author: {{ $article->written_by }}</p>
                             </div>
-                            <div class="identifier">
-                                <p>2025-10-07</p>
+                            <div class="bottom">
+                                <div class="tags">
+                                    @if (count($article->keywords) == 0)
+                                        <div class="tag">
+                                            <p>Belum ada tag</p>
+                                        </div>
+                                    @else
+                                        @foreach ($article->keywords as $keyword)
+                                            @if ($loop->index + 1 < 2)
+                                                <div class="tag">
+                                                    <p>{{ $keyword->name }}</p>
+                                                </div>
+                                            @endif
+                                        @endforeach
+                                        @if (count($article->keywords) > 2)
+                                            <p>{{ count($article->keywords) - 2 }}+ more</p>
+                                        @endif
+                                    @endif
+                                </div>
+                                <div class="identifier">
+                                    <p>{{ substr($article->created_at, 0, 10) }}</p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </a>
+                </a>
+                <form class="floating-action"
+                    action="{{ route('admin.delete-news', ['news' => $article->id]) }}"
+                    method="POST"
+                    id="media-floating-icon"
+                >
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="action">
+                        @include('_components._sprite-icons', [
+                            'name' => 'trash',
+                            'size' => 20,
+                        ])
+                        <span>Delete Article</span>
+                    </button>
+                </form>
+            @endforeach
         </div>
+         @include('_components._pagination-media', [
+            'max' => $max,
+            'page' => $page,
+            'totalPage' => $total
+        ])
     </div>
 </main>
-
+@vite('resources/js/handle/delete-media');
 @include('_components._footerAdmin')

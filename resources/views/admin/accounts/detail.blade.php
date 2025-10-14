@@ -1,7 +1,7 @@
 @include('_components._headerAdmin', ['title' => 'Detail Account'])
 @php
     $currentPath = explode('/admin/', url()->current())[1];
-    logger('as', [$account, $candidate]);
+    logger('as', [$account, $candidate, $sources]);
     $status_families = [
         'biological_child' => 'Anak Kandung',
         'step_child' => 'Anak Angkat',
@@ -96,14 +96,14 @@
     </div>
     <div class="wrapper-content">
         @includeWhen($account->role == 'candidate' && $candidate, 'admin.accounts.components.details.index')
-        @includeWhen($account->role == 'article_creator' && $articles, 'admin.accounts.components.details.index')
+        @includeWhen($account->role == 'article_creator' && $articles, 'admin.accounts.components.details.articles')
         @if($account->role == 'candidate' && !$candidate)
             <div class="form-data-profile" id="candidate-document-form">
                 <div class="wrapper-form">
                     <div class="container container-1">
                         <div class="wrapper-document">
                             <div class="wrapper-thumbnail">
-                                <h4>Calon Peserta Didik Belum Mengisi Formulir</h4>
+                                <h4 class="text-center">Calon Peserta Didik Belum Mengisi Formulir</h4>
                             </div>
                         </div>
                     </div>
@@ -125,7 +125,7 @@
     </div>
     <div class="wrapper-button">
         <button class="btn" type="submit">Simpan Perubahan</button>
-        <button class="btn btn-back" type="button" id="reset-password-btn">Reset Password</button>
+        <!-- <button class="btn btn-back" type="button" id="reset-password-btn">Reset Password</button> -->
     </div>
 </form>
 
@@ -139,21 +139,20 @@
     });
 
     let resetPassword = true;
-    const handlerResetPassword = (e) => {
-        fetch("{{ route('admin.reset-password-account', ['account', Auth::user()->id]) }}", {
-            headers : {
-                'Content-Type': 'application/json',
-            },
-            method : 'PATCH',
-            body : JSON.stringify( {
-                _token : csrfToken
-            })
-        })
-        .then(e => e.json())
-        .then(e => console.log(e));
-
-    };
-    document.getElementById('reset-password-btn').addEventListener('click', handlerResetPassword)
+    // const handlerResetPassword = (e) => {
+    //     fetch("", {
+    //         headers : {
+    //             'Content-Type': 'application/json',
+    //         },
+    //         method : 'PATCH',
+    //         body : JSON.stringify( {
+    //             _token : csrfToken
+    //         })
+    //     })
+    //     .then(e => e.json())
+    //     .then(e => console.log(e));
+    // };
+    // document.getElementById('reset-password-btn').addEventListener('click', handlerResetPassword)
 </script>
 
 @include('_components._footerAdmin')

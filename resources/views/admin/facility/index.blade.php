@@ -8,7 +8,7 @@
         'title' => 'Facilities',
         'greeting' => true,
         'data' => $stats,
-        'icon' => [ 
+        'icon' => [
             'name' => 'facility',
             ]
     ])
@@ -22,19 +22,9 @@
         </div>
         <div class="find-something">
             <form class="wrapper-filter">
-                <div class="wrapper-select">
-                    <select name="search_status" required>
-                        <option value="">Status: Semuanya</option>
-                        <option value="public">Status: Public</option>
-                        <option value="private">Status: Private</option>
-                    </select>
-                    <div class="wrapper-icon">
-                        @include("_components._sprite-icons", ["name" => "drop-down", "size" => 20])
-                    </div>
-                </div>
             </form>
             <form class="wrapper-search">
-                <input type="text" name="search" placeholder="Cari Fasilitas Disini.."  
+                <input type="text" name="search" placeholder="Cari Fasilitas Disini.."
                     value="{{ app('request')->get('search','') }}"
                     aria-describedby="search"
                 >
@@ -63,14 +53,14 @@
                         </div>
                     </div>
                 </a>
-                <form class="floating-action" 
+                <form class="floating-action"
                     action="{{ route('admin.delete-facility', ['facility' => $facility->id]) }}"
                     method="POST"
                     id="media-floating-icon"
-                >                    
+                >
                     @csrf
                     @method('DELETE')
-                    <button type="button" class="action">
+                    <button type="submit" class="action">
                         @include('_components._sprite-icons', [
                             'name' => 'trash',
                             'size' => 20,
@@ -89,8 +79,6 @@
     </div>
 </main>
 
-<script defer>
-
-</script>
+@vite('resources/js/handle/delete-media');
 
 @include('_components._footerAdmin')

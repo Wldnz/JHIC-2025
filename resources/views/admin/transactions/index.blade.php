@@ -27,7 +27,7 @@
                 'search_status' => [
                     'options' => [
                         '' => 'Semuanya',
-                        'capture' => 'Terbayar',
+                        'success' => 'Terbayar',
                         'canceled' => 'Dibatalkan',
                         'refund' => 'Dikembalikan',
                         'expire' => 'Kadaluarsa'

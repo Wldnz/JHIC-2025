@@ -59,7 +59,8 @@ class StudentController extends Controller
 
     public function createStudent()
     {
-        return view('admin.student.create');
+        $majors = Major::all();
+        return view('admin.student.create', compact('majors'));
     }
 
     public function storeStudent(Request $request)

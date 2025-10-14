@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('articles', function (Blueprint $table) {
             $table->id();
             $table->string('title');
+            $table->string('description')->default('');
             $table->text('note');
             $table->text('file_content_url');
             $table->text('thumbnail_url');

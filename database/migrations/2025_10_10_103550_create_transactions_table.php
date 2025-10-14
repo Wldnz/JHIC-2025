@@ -33,6 +33,7 @@ return new class extends Migration
                 'failure',
             ]);
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('candidate_nisn')->references('nisn')->on('candidates')->nullOnDelete();
 

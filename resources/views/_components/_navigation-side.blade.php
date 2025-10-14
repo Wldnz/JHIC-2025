@@ -64,7 +64,7 @@
                         </a>
                     </li>
 
-                @else
+                @elseif(Auth::user()->role == 'article_creator')
                     <li class="menu multiple" id="menu-public" data-open=false>
                         <a class="display-menu">
                             @include('_components._sprite-icons', ['name' => 'eye', "color" => $currentPath == 'public' ? '#273B98' : 'black', 'size' => 23])

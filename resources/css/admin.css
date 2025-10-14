@@ -744,6 +744,9 @@ img {
 .profile .icon {
   font-size: clamp(0.6rem, 3.5vw, 2rem);
 }
+.profile .icon span {
+  cursor: pointer;
+}
 .profile .main-menu {
   min-width: calc(clamp(0.6rem, 3.5vw, 2rem) * 5.5);
   width: max-content;
@@ -764,12 +767,19 @@ img {
   border-bottom: 1px solid white;
   position: relative;
 }
-.profile .main-menu li a {
+.profile .main-menu li a, .profile .main-menu li button {
   display: flex;
   align-items: center;
   gap: 15px;
   font-weight: 600;
+  color: #273b98;
   cursor: pointer;
+}
+.profile .main-menu li button {
+  width: 100%;
+  outline: none;
+  border: none;
+  background-color: transparent;
 }
 .profile .main-menu li::before {
   content: "";
@@ -921,6 +931,11 @@ img {
 
 .mt-25 {
   margin-top: 25px;
+}
+
+.text-center {
+  width: 100%;
+  text-align: center;
 }
 
 .static {
@@ -1568,7 +1583,7 @@ a {
   background-color: #fff;
   border-radius: 8px;
   border: 2px solid #273b98;
-  display: flex;
+  display: none;
   flex-direction: column;
   gap: 10px;
   z-index: 100;
@@ -1747,6 +1762,26 @@ a {
 }
 .wrapper-admin .right .content .management-table .wrapper-content-media .wrapper-card-news:hover {
   background-color: rgba(0, 0, 0, 0.3);
+}
+.wrapper-admin .right .content .management-table .wrapper-content-media .floating-action {
+  padding-left: 5px;
+}
+.wrapper-admin .right .content .management-table .wrapper-content-media .floating-action button {
+  width: 240px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  padding: 6px;
+  font-size: clamp(0.2rem, 1vw, 0.85rem);
+  font-weight: 600;
+  border: none;
+  border-radius: 4px;
+  background-color: transparent;
+  cursor: pointer;
+}
+.wrapper-admin .right .content .management-table .wrapper-content-media .floating-action button:hover {
+  background-color: #DFDFDF;
 }
 .wrapper-admin .right .content .management-table .wrapper-pagination {
   width: 100%;
@@ -1967,6 +2002,7 @@ a {
   border: none;
   outline: none;
   border-bottom: 2px solid #273b98;
+  background-color: transparent;
 }
 .wrapper-admin .right .content .form-data-profile .container .wrapper-input textarea {
   resize: vertical;
@@ -1994,17 +2030,25 @@ a {
 }
 .wrapper-admin .right .content .form-data-profile .container .wrapper-document .wrapper-thumbnail {
   width: 100%;
+  display: flex;
+  height: 80px;
   position: relative;
-  cursor: pointer;
 }
 .wrapper-admin .right .content .form-data-profile .container .wrapper-document .wrapper-thumbnail input[type=file] {
   width: inherit;
+  height: inherit;
   opacity: 0;
+  z-index: 2;
+  cursor: cell;
 }
 .wrapper-admin .right .content .form-data-profile .container .wrapper-document .wrapper-thumbnail span {
+  width: inherit;
+  height: inherit;
   position: absolute;
-  left: 0;
-  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #273b98;
 }
 .wrapper-admin .right .content .form-data-profile .wrapper-form {
   display: flex;

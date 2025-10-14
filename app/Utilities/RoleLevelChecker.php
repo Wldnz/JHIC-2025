@@ -8,7 +8,8 @@ class RoleLevelChecker
     private static $roleLevels = [
         'super_admin' => 0,
         'admin' => 1,
-        'user' => 2,
+        'article_creator' => 2,
+        'user' => 3,
     ];
 
     /**

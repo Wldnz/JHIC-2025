@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreAchievementRequest;
 use App\Http\Requests\Admin\UpdateAchievementRequest;
 use App\Models\Achievement;
+use App\Models\Major;
 use App\Models\Student;
 use App\Utilities\AlertDataGenerator;
 use App\Utilities\CloudinaryUtils;
@@ -20,7 +21,8 @@ class AchievementController extends Controller
     public function achievement(Request $request)
     {
         $search = $request->query('search', null);
-        $major_id = $request->query('major_id', null);
+        $search_major = $request->query('search_major', null);
+        $search_class = $request->query('search_class', null);
         $page = $request->query('page', 1);
         $max = $this->maxPage;
         $achievements = Achievement::select();
@@ -28,6 +30,8 @@ class AchievementController extends Controller
         $stats = [
             'total' => $achievements->get()->count(),
         ];
+
+        $majors = Major::all();
 
         $achievements = Achievement::query()
             ->orderBy('id', 'asc')
@@ -37,8 +41,11 @@ class AchievementController extends Controller
                     ->orWhere('student_class', 'like', "%{$search}%")
                     ->orWhere('student_major_name', 'like', "%{$search}%");
             })
-            ->when($major_id, function ($query, $major_id) {
-                return $query->where('major_id', "=", $major_id);
+            ->when($search_major, function ($query, $search_major) {
+                return $query->where('student_major_name', "=", $search_major);
+            })
+            ->when($search_class, function ($query, $search_class) {
+                return $query->where('student_class', "=", $search_class);
             });
             $totalPage =  $achievements->get()->count();
             $achievements= $achievements
@@ -46,7 +53,7 @@ class AchievementController extends Controller
             ->offset(($page - 1) * $this->maxPage)
             ->get();
 
-        return view('admin.achievement.index', compact('achievements', 'stats', 'page', 'totalPage', 'max'));
+        return view('admin.achievement.index', compact('achievements', 'stats', 'page', 'totalPage', 'max', 'majors'));
     }
 
     public function createAchievement()

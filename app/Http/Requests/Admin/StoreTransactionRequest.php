@@ -6,7 +6,7 @@ use App\Utilities\RoleLevelChecker;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
-class StoreFacilityRequest extends FormRequest
+class StoreTransactionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,10 +24,10 @@ class StoreFacilityRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'images.*.file' => ['sometimes', 'required', 'image', 'mimes:jpg,jpeg,png', 'max:2500'],
-            'title' => ['required', 'string', 'min:1', 'max:255'],
-            'description' => ['required', 'string', 'min:1', 'max:65535'],
-            'type' => ['required', 'exists:gallery_types,id'],
+            'candidate_nisn' => ['required', 'string', 'exists:candidates,nisn'],
+            'total_cost' => ['required', 'integer', 'min:1'],
+            'payment_method' => ['required', 'exists:payment_methods,code_name'],
+            'has_paid' => ['required', 'boolean'],
         ];
     }
 }

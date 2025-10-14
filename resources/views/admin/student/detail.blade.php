@@ -9,8 +9,8 @@
     <div class="profile-container">
         <div class="wrapper-profile-image">
             <img src="{{ asset('images/default.png') }}" alt="profile-{nama}">
-            <span class="name">{{ $student->name }}</span>
-            <span class="sub-name">Student</span>
+            <span class="name" id="name-preview">{{ $student->name }}</span>
+            <span class="sub-name" id="role-preview">Student</span>
         </div>
         <div class="form-data-profile" id="student-siswa-form">
             <div class="container">
@@ -79,5 +79,13 @@
         <button class="btn" type="submit">Simpan Perubahan</button>
     </div>
 </form>
+<script defer>
+    document.getElementById('role').addEventListener('change', (e) => {
+        document.getElementById('role-preview').textContent = e.target.value;
+    });
+    document.getElementById('name').addEventListener('input', (e) => {
+        document.getElementById('name-preview').textContent = e.target.value;
+    });
+</script>
 
 @include('_components._footerAdmin')

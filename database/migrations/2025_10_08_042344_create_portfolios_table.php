@@ -22,6 +22,7 @@ return new class extends Migration {
 
             $table->foreign('student_nis')->references('nis')->on('students')->nullOnDelete();
 
+            
             $table->fullText(['student_name']);
             $table->index(['student_class']);
             $table->fullText(['student_major_name']);
