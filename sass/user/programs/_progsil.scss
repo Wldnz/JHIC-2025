@@ -1,9 +1,7 @@
 @import "../../utils/variables";
 
 .progsil {
-    margin-top: 100px;
-    width: 100vw;
-    padding: 10px;
+    padding: 30px 20px;
 
     h2 {
         margin-bottom: 20px;
@@ -33,6 +31,10 @@
         .progsil-text {
             display: flex;
             justify-content: center;
+
+            p {
+                font-size: calc($font-size-l - -3px);
+            }
         }
     }
 
