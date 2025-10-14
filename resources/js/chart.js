@@ -48,26 +48,30 @@ function setUpChart(id= 'piechart', dataset) {
     );
 }
 
-function setUpTransactionBar(id, dataset_transactions) {
-    const dataTransaction = months.map(m => {
+function setUpBarChart(id, data_chart) {
+    let data_preparation = months.map(m => {
         return {
             month : m,
             total : 0
         }
     });
-    dataset_transactions.forEach(({ created_at, total_products }) => {
-        dataTransaction[new Date(created_at).getMonth()].total = Number(total_products)
+    data_chart.forEach(({ created_at }) => {
+        const month = months[new Date(created_at).getMonth()];
+        data_preparation = data_preparation.map(data => {
+            if(data.month == month) data.total +=1;
+            return data;
+        });
     });
     return new Chart(
         document.getElementById(id),
         {
             type: 'bar',
             data: {
-                labels: dataTransaction.map(dt => dt.month),
+                labels: data_preparation.map(dt => dt.month),
                 datasets: [
                     {
-                        label: 'Jumlah Pembelian',
-                        data: dataTransaction.map(dt => dt.total),
+                        label: 'Jumlah Calon Peserta Didik',
+                        data: data_preparation.map(dt => dt.total),
                         backgroundColor: [
                             "#5c74dbff",
                             "#273b98"
@@ -79,13 +83,27 @@ function setUpTransactionBar(id, dataset_transactions) {
     );
 }
 
-setUpTransactionBar('linechart', dataset_transactions['transaction'])
-setUpChart('piechart', dataset_transactions['uniform']);
 
-document.querySelectorAll('.chart-action').forEach(action => {
-    Array.from(action.children).forEach(btn => {
-        btn.addEventListener('click', () => {
-            btn.classList.toggle('btn-submit')
-        });
-    })
-});
+// setUpChart('piechart', dataset_transactions['uniform']);
+
+function getBarCharts(){
+    try{
+        barChartOptions.forEach( data => setUpBarChart(data.idElement, data.data) );
+    }catch(error){
+       console.log(error)
+    }
+}
+
+function initCharts(){
+   getBarCharts();
+}
+
+// document.querySelectorAll('.chart-action').forEach(action => {
+//     Array.from(action.children).forEach(btn => {
+//         btn.addEventListener('click', () => {
+//             btn.classList.toggle('btn-submit')
+//         });
+//     })
+// });
+
+initCharts();
