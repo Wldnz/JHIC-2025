@@ -15,19 +15,30 @@
         <h3>Foto Foto Kegiatan</h3>
     </div>
     <div class="btq-content">
-        <div class="btq-kotak"></div>
-        <div class="btq-kotak"></div>
-        <div class="btq-kotak"></div>
-        <div class="btq-kotak"></div>
+        <div class="btq-kotak"><img src="{{ asset('images/btq/btq-placeholder.jpg') }}"></div>
+        <div class="btq-kotak"><img src="{{ asset('images/btq/btq-document.jpg') }}"></div>
+        <div class="btq-kotak"><img src="{{ asset('images/btq/btq-placeholder.jpg') }}"></div>
+        <div class="btq-kotak"><img src="{{ asset('images/btq/btq-placeholder.jpg') }}"></div>
     </div>
 
     <div class="btq-system">
         <h3>Sistem Kelompok Pembelajaran</h3>
 
         <div class="btq-system1">
-            <div class="btq-kotak1"></div>
-            <div class="btq-kotak1"></div>
-            <div class="btq-kotak1"></div>
+            <div class="btq-kotak1">
+                <h3>Kelompok Alif ا</h3>
+                <p>Kelompok ini terdiri dari siswa yang baru memulai belajar membaca Al-Qur'an, fokus pada pengenalan huruf hijaiyah dan tajwid dasar.</p>
+            </div>
+            <div class="btq-kotak1">
+                <div class="kelompok-ba">
+                    <h3>Kelompok Ba ب</h3>
+                    <p>Kelompok ini terdiri dari siswa yang sudah mengenal huruf hijaiyah dan mulai belajar membaca ayat-ayat pendek serta memahami tajwid dasar.</p>
+                </div>
+            </div>
+            <div class="btq-kotak1">
+                <h3>Kelompok Ta ت</h3>
+                <p>Kelompok ini terdiri dari siswa yang sudah mampu membaca ayat-ayat pendek dan mulai belajar menulis huruf hijaiyah serta memahami tajwid lanjutan.</p>
+            </div>
     </div>
 </div>
 
