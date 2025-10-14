@@ -14,7 +14,7 @@
     ])
       @include('_components._management-table',[
         'title' => 'Data Siswa',
-        'management' => [ 'title' => 'Tambahkan Siswa', 'destination' => route('admin.create-account')],
+        'management' => [ 'title' => 'Tambahkan Siswa', 'destination' => route('admin.create-student')],
         'datas' => $students,
         'columns' => [
             'nis' => 'Nomor Induk Siswa',

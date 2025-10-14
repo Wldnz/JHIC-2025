@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\AlertType;
 use App\Http\Controllers\Controller;
+use App\Models\Article;
 use App\Http\Requests\Admin\StoreArticleRequest;
 use App\Http\Requests\Admin\UpdateArticleRequest;
-use App\Models\Article;
 use App\Models\Keyword;
 use App\Utilities\AlertDataGenerator;
 use App\Utilities\CloudinaryUtils;
@@ -20,6 +20,7 @@ use Yaza\LaravelGoogleDriveStorage\Gdrive;
 
 class NewsController extends Controller
 {
+    protected $maxPage = 5;
     protected $gdriveFilesContentDirectory = 'articles';
     protected $availableStatus = [
         "Draft" => 'draft',
@@ -27,9 +28,39 @@ class NewsController extends Controller
         "Archived" => 'archived',
     ];
 
-    public function news()
+    public function news(Request $request)
     {
-        return view('admin.news.index');
+
+        $search = $request->get('search', '');
+        $search_status = $request->get('search_status', '');
+        $page =  $request->get('page', 1);
+        $max = $this->maxPage;
+
+        $articles = Article::select();
+        $initiliazeArticles = Article::all();
+
+        $stats = [
+            'total' => $initiliazeArticles->count(),
+            'publish' => $initiliazeArticles->where('status', '=', 'published')->count(),
+            'archive' => $initiliazeArticles->where('status', '=', 'archived')->count(),
+            'draft' => $initiliazeArticles->where('status', '=', 'draft')->count(),
+        ];
+
+        if($search){
+            $articles = $articles->where('title', '=', $search)
+                ->orWhere('title', 'like', "%$search%");
+        }
+
+        if($search_status){
+            $articles = $articles->where('role', '=', $search_status);
+        }
+
+        $total = $articles->get()->count();
+        $articles = $articles->limit($this->maxPage)
+        ->offset(($page - 1) * $this->maxPage)
+            ->get();
+
+        return view('admin.news.index', compact('articles', 'stats', 'page', 'max', 'total'));
     }
 
     public function createNews()
@@ -111,8 +142,9 @@ class NewsController extends Controller
 
     public function detailNews(Article $news)
     {
+        $article = $news->load('keywords');
         $availableStatus = $this->availableStatus;
-        return view('admin.news.detail', compact('news', 'availableStatus'));
+        return view('admin.news.detail', compact('article', 'availableStatus'));
     }
 
     public function updateNews(UpdateArticleRequest $request, Article $news)
