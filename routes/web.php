@@ -19,6 +19,7 @@ Route::name('user.')->group(function () {
 
     Route::get('/news', [User\NewsController::class, 'news'])->name('news');
     Route::get('/news/{article}', [User\NewsController::class, 'newsDetail'])->name('news-detail');
+    Route::get('/news/{article}/content', [User\NewsController::class, 'newsContent'])->name('news-content');
 
     Route::controller(User\MajorsController::class)->prefix('majors')->name('majors.')->group(function () {
         Route::get('/animation', 'animation')->name('animation');

@@ -6,14 +6,14 @@ use App\Utilities\RoleLevelChecker;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
-class StoreFacilityRequest extends FormRequest
+class UpdateArticleRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return Auth::check() && RoleLevelChecker::checkMinimumByRoleName(Auth::user(), 'admin');
+        return Auth::check() && RoleLevelChecker::checkMinimumByRoleName(Auth::user(), 'article_creator');
     }
 
     /**
@@ -24,10 +24,12 @@ class StoreFacilityRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'images.*.file' => ['sometimes', 'required', 'image', 'mimes:jpg,jpeg,png', 'max:2500'],
             'title' => ['required', 'string', 'min:1', 'max:255'],
-            'description' => ['required', 'string', 'min:1', 'max:65535'],
-            'type' => ['required', 'exists:gallery_types,id'],
+            'visible' => ['required', 'in:draft,published,archived'],
+            'tags.*' => ['required', 'string'],
+            'thumbnail' => ['required', 'image', 'mimes:jpg,jpeg,png', 'max:2500'],
+            'isUpdated' => ['nullable', 'image', 'boolean'],
+            'content' => ['required', 'string', 'min:1'],
         ];
     }
 }

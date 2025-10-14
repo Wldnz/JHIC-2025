@@ -61,13 +61,13 @@ class TransactionController extends Controller
         return back();
     }
 
-    public function updateTransaction(Request $request, $transaction)
+    public function updateTransaction(Request $request, Transaction $transaction)
     {
         // handle update later
         return back();
     }
 
-    public function deleteTransaction($transaction)
+    public function deleteTransaction(Request $request, Transaction $transaction)
     {
         // handle delete later
         return back();
