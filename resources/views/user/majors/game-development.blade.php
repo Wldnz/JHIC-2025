@@ -98,6 +98,25 @@
           </div>
         </div>
     </div>
+    <div class="prestasi">
+      <h3>Prestasi Murid {{ $major->name }}</h3>
+      <div class="prestasi-slider">
+        @for ($i = 0; $i < 5; $i++)
+        <div class="prestasi-content">
+          <img src="{{ $placeholder }}" alt="">
+          <div class="info">
+            <div class="img-wrapper">
+              <img src="{{ asset("icons/medal.svg") }}" alt="">
+            </div>
+            <div class="text">
+              <h4>Agus Nongso</h4>
+              <h5>Lomba Makan Karung</h5>
+            </div>
+          </div>
+        </div>
+        @endfor
+      </div>
+    </div>
 <!-- 
     <div class="alumni">
         <h2>Alumni's Story</h2>

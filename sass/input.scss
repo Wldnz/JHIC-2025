@@ -1218,6 +1218,84 @@ body {
                         }
                     }
                 }
+
+                .prestasi
+                {
+                    width: 100%;
+                    padding: 0 20px 30px 20px;
+                    
+                    h3
+                    {
+                        font-size: $font-size-5xl;
+                        width: 100%;
+                        text-align: center;
+                        margin-bottom: 20px;
+                    }
+                    .prestasi-slider
+                    {
+                        padding: 0 20px;
+                        width: 100%;
+                        display: flex;
+                        gap: 10px;
+                        overflow-x: scroll;
+                        scroll-snap-type: x mandatory;
+
+                        .prestasi-content
+                        {
+                            scroll-snap-align: start;
+                            flex-direction: column;
+                            aspect-ratio: 2/3;
+                            display: flex;
+                            flex: 0 0 70%;
+                            gap: 10px;
+
+                            img
+                            {
+                                height: 80%;
+                                object-fit: cover; 
+                                border-radius: $border-radius;
+                            }
+
+                            .info
+                            {
+                                width: 100%;
+                                height: 10%;
+                                display: flex;
+                                gap: 10px;
+
+                                .img-wrapper{
+                                    aspect-ratio: 1/1;
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                    background-color: $color-accent; 
+                                    border-radius: 999px;
+                                    padding: 2%;
+
+                                    img
+                                    {
+                                        aspect-ratio: 1/1;
+                                        height: 100%;
+                                        padding: 0;
+                                        margin: 0;
+                                    }
+                                }
+
+                                .text
+                                {
+                                    width: 70%;
+                                    height: 100%;
+                                    display: flex;
+                                    flex-direction: column;
+                                    justify-content: center;
+
+                                    h4{font-size: $font-size-xl;}
+                                    h5{font-size: $font-size-l;}
+                                }
+                            }
+                        }
+                    }
+                }
         
                 .alumni {
                     display: flex;
@@ -1452,10 +1530,48 @@ body {
                 display: none;
             }
 
+            .info-facility
+            {
+                width: 100%;
+                background-color: $color-primary;
+                display: flex;
+                flex-direction: column;
+                gap: 2px;
+                margin-bottom: 20px;
+
+                hr
+                {
+                    display: none;
+                }
+
+                p
+                {
+                    flex: 1;
+                    color: #fff;
+                    text-align: center;
+                    background-color: $color-accent;
+                    padding: 10px 0;
+                }
+                .rooms
+                {
+                    flex: 1;
+                    display: flex;
+                    gap: 2px;
+                    
+                    p
+                    {
+                        text-align: center;
+                        flex: 1;
+                        padding: calc(10px + .5em) 0;
+                    }
+                }
+            }
+
             .gallery
             {
                 display: flex;
                 flex-direction: column;
+                margin-bottom: 20px;
                 padding: 0 20px;
                 width: 100%;
                 gap: 20px;
@@ -1467,17 +1583,18 @@ body {
 
                 .gallery-images
                 {
-                    gap: 20px;
+                    gap: 10px;
                     justify-content: center;
                     display: flex;
                     flex-wrap: wrap;
 
                     span
                     {
-                        width: calc(50% - 10px);
+                        width: calc(50% - 5px);
                         aspect-ratio: 16/9;
                         border-radius: $border-radius;
                         position: relative;
+                        display: flex;
                         
                         img
                         {
@@ -1497,14 +1614,27 @@ body {
                             background-color: $color-accent;
                             border-radius: $border-radius 0 $border-radius 0;
                             width: max-content;
+                            height: max-content;
                             padding: 5px;
                             color: #fff;
                             font-weight: 500;
                         }
+                        a
+                        {
+                            background-color: $color-accent;
+                            border-radius: $border-radius;
+                            font-size: $font-size-2xl;
+                            justify-content: center;
+                            align-items: center;
+                            text-align: center;
+                            font-weight: 550;
+                            color: #fff;
+                            display: flex;
+                            height: 100%;
+                            width: 100%;
+                        }
                     }
-
                 }
-                a{font-size: $font-size-xl; align-self: center; padding: 10px;}
             }
         }
     }
@@ -1848,6 +1978,12 @@ footer {
                             }
                         }
                     }
+                }
+
+                .prestasi
+                {
+                    padding: 0 15vw;
+                    h3{font-size: $font-size-4xl;}
                 }
 
                 .alumni {
@@ -2207,8 +2343,9 @@ footer {
                     flex-direction: row;
                     flex-wrap: wrap;
                     align-items: stretch;
-                    gap: 0;
                     height: fit-content;
+                    margin-bottom: 60px;
+                    gap: 0;
 
                     h3 {
                         font-size: $font-size-2xl;
@@ -2217,14 +2354,16 @@ footer {
 
                     .body-portfolio {
                         display: flex;
-                        height: auto;
+                        height: 70vh;
+                        overflow: hidden;
+                        align-items: start;
                         padding: 0;
 
                         .main-portfolio {
-                            flex: 7;
+                            width: 70%;
+                            height: fit-content;
                             margin: 0;
                             padding: 20px 10vw;
-                            height: 80vh;
 
                             h3 {
                                 font-size: $font-size-l;
@@ -2238,8 +2377,7 @@ footer {
                             }
                         }
                         .other-portfolio {
-                            height: 80vh;
-                            flex: 3;
+                            width: 30%;
                             margin: 20px 0;
                             padding: 0;
                             overflow-y: scroll;
@@ -2248,6 +2386,7 @@ footer {
                             align-items: center;
                             padding: 0 30px;
                             scrollbar-width: thin;
+                            max-height: 100%;
 
                             .portfolios {
                                 img {
@@ -2260,9 +2399,31 @@ footer {
                         }
                     }
                 }
+                .prestasi{
+                    h3{font-size: $font-size-2xl;}
+                    .prestasi-slider
+                    {
 
+                        .prestasi-content
+                        {
+                            flex: 0 0 calc(70% - 25vw);
+
+                            .info
+                            {
+
+                                .text
+                                {
+                                    h4 {font-size: $font-size-m;}
+                                    h5{font-size: $font-size-s;}
+
+                                }
+                            }
+                        }
+                    }
+                }
                 .alumni {
                     .alumni-tab {
+                        max-width: 40%;
                         width: auto;
                         flex: 1;
 

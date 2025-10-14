@@ -5,17 +5,33 @@
 <div class="facility no-fade">
     <div class="main">
         <div class="unity"></div>
+
+        <div class="info-facility">
+            <hr>
+            <p>ALL THE FACILITY<br> YOU NEED</p>
+            <div class="rooms">
+                <p>10+ Classes</p>
+                <p>6+ Computer Lab</p>
+            </div>
+            <p>Complete With<br> AC, Fan, And Wifi</p>
+            <hr>
+        </div>
+
         <div class="gallery">
             <h1>Gallery</h1>
             <div class="gallery-images">
-                @for ($i = 0; $i < 4; $i++)
+                @for ($i = 0; $i < 3; $i++)
                 <span>
                     <img src="{{$placeholder}}" alt="">
                     <p>Ruangan 4</p>
                 </span>
                 @endfor
+                <span><a href="{{ route("user.galleries") }}">Load More</a></span>
             </div>
-            <a class="button" href="{{ route("user.galleries") }}">Load More</a>
+        </div>
+
+        <div class="location">
+            
         </div>
 
     </div>
