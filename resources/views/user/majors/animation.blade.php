@@ -40,9 +40,8 @@
 
             "alumni" => (object)
             [
-            "alumni1" => ["Wildan Izhar Al-Haqq","CEO Growtopia","pesan yang panjang karena sekolah ini hebat banget oh my god", asset("images/major/anim/alumni/alumni1/person.png"), asset("images/major/anim/alumni/alumni1/company.png")],
-            "alumni2" => ["Rizky Sugiharto","Pembuat Python","pesan yang panjang karena sekolah ini hebat banget oh my god", asset("images/major/anim/alumni/alumni2/person.png"), asset("images/major/anim/alumni/alumni2/company.png")],
-            "alumni3" => ["Raditya Putra Hidayat","CEO SEGA","pesan yang panjang karena sekolah ini hebat banget oh my god", asset("images/major/anim/alumni/alumni3/person.png"), asset("images/major/anim/alumni/alumni3/company.png")],
+            "alumni1" => ["Nur Alif Ramadhan","Creator Dalang Pelo","Alhamdulillah bisa ikut lomba dan menang LKS Animasi tingkat nasional 2018. Di sini aku banyak belajar animasi, sehingga bisa ngembangin bakat aku dan menciptakan animasi Dalang Pelo.", asset("images/major/anim/alumni/alumni1.png")],
+            "alumni2" => ["Tami Lestari","Alumni BI","Sekolah ini memiliki value dan kualitias yang baik serta menyediakan program serta kegiatan untuk meningkatkan skill masing-masing siswa/i untuk siap terjun di dunia industri sesuai jurusan yang dipilih ", asset("images/major/anim/alumni/alumni2.png")],
             ]
         ]
 @endphp
@@ -103,13 +102,32 @@
         </div>
     </div>
 
+    <div class="prestasi">
+      <h3>Prestasi Murid {{ $major->name }}</h3>
+      <div class="prestasi-slider">
+        @for ($i = 0; $i < 5; $i++)
+        <div class="prestasi-content">
+          <img src="{{ $placeholder }}" alt="">
+          <div class="info">
+            <div class="img-wrapper">
+              <img src="{{ asset("icons/medal.svg") }}" alt="">
+            </div>
+            <div class="text">
+              <h4>Agus Nongso</h4>
+              <h5>Lomba Makan Karung</h5>
+            </div>
+          </div>
+        </div>
+        @endfor
+      </div>
+    </div>
+
     <div class="alumni">
-        <h2>Alumni Success Story</h2>
+        <h2>Alumni's Story</h2>
         @foreach ($major->alumni as $alumni)
         <div class="alumni-tab">
             <div class="img-group">
                 <img src="{{ $alumni[3] }}" alt="">
-                <img src="{{ $alumni[4] }}" alt="">
             </div>
             <h2>{{ $alumni[0] }}</h2>
             <h4>{{ $alumni[1] }}</h4>
