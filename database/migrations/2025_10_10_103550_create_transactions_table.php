@@ -36,7 +36,7 @@ return new class extends Migration
 
             $table->foreign('candidate_nisn')->references('nisn')->on('candidates')->nullOnDelete();
 
-            $table->fullText(['candidate_nisn']);
+            
             $table->fullText(['candidate_full_name']);
             $table->fullText(['payment_method_display_name']);
         });

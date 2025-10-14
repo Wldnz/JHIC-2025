@@ -4,6 +4,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 body {
   font-family: "Montserrat", "sans-serif";
   background-color: #fff;
@@ -521,7 +522,7 @@ img {
   right: 10px;
   border: 1px solid #273b98;
   color: #273b98;
-  background-color: transparent;
+  background-color: #fff;
   border-radius: 8px;
   font-weight: bold;
   cursor: pointer;
@@ -560,6 +561,10 @@ img {
 .btn-media:hover {
   color: #273b98;
   border-color: #273b98;
+}
+
+.mt-25 {
+  margin-top: 25px;
 }
 
 .static {
@@ -678,13 +683,11 @@ img {
 }
 
 .btq {
-  margin-top: 100px;
-  width: 100vw;
-  padding: 10px;
+  padding: 50px 20px;
 }
 .btq h2 {
   margin-bottom: 20px;
-  font-size: calc(clamp(0.6rem, 2vw, 1.5rem) + 7px);
+  font-size: calc(clamp(0.6rem, 2vw, 1.5rem) + 10px);
   color: #273b98;
   text-align: center;
 }
@@ -695,6 +698,7 @@ img {
 .btq .btq-text p {
   max-width: 90%;
   text-align: justify;
+  font-size: calc(clamp(0.6rem, 2vw, 1.5rem) + 3px);
 }
 .btq .btq-method {
   display: flex;
@@ -703,22 +707,22 @@ img {
 }
 .btq .btq-content {
   width: 100%;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  gap: 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
   justify-content: center;
 }
 .btq .btq-content .btq-kotak {
-  flex: 0 0 calc(50% - 20px);
-  height: 100px;
-  background-color: whitesmoke;
-  border-radius: 10px;
+  min-width: 250px;
+  width: 100%;
+  height: 500px;
+  max-height: 500px;
 }
-@media (max-width: 320px) {
-  .btq .btq-content .btq-kotak {
-    flex: 0 0 100%;
-  }
+.btq .btq-content .btq-kotak img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
 }
 .btq .btq-system h3 {
   margin-top: 40px;
@@ -728,12 +732,135 @@ img {
   display: flex;
   justify-content: center;
   margin-top: 20px;
+  gap: 30px;
+  flex-wrap: wrap;
+  margin-bottom: 25px;
 }
 .btq .btq-system .btq-system1 .btq-kotak1 {
   width: 90%;
-  height: 150px;
-  background-color: black;
+  height: 160px;
   border-radius: 10px;
+}
+.btq .btq-system .btq-system1 .btq-kotak1 h3 {
+  text-align: left;
+  margin-top: 10px;
+  margin-left: 15px;
+}
+.btq .btq-system .btq-system1 .btq-kotak1 p {
+  text-align: justify;
+  margin: 10px 15px;
+}
+.btq .btq-system .btq-system1 .btq-kotak1 .kelompok-ba h3 {
+  text-align: right;
+  margin-top: 10px;
+  margin-right: 15px;
+}
+.btq .btq-system .btq-system1 .btq-kotak1 .kelompok-ba p {
+  text-align: justify;
+  margin: 10px 15px;
+}
+
+@media (max-width: 768px) {
+  .btq-content {
+    grid-template-columns: 1fr !important;
+  }
+  .btq-system h3 {
+    font-size: 18px;
+  }
+  .btq-system .btq-kotak1 {
+    font-size: 15px;
+  }
+}
+body {
+  font-family: "Montserrat", "sans-serif";
+  background-color: #fff;
+  font-size: clamp(0.6rem, 2vw, 1.5rem);
+  color: #273b98;
+}
+
+::selection {
+  background-color: transparent;
+  color: rgb(0, 0, 156);
+  filter: none;
+}
+::selection:hover {
+  filter: none;
+}
+
+.selector {
+  user-select: none;
+  -webkit-user-drag: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  transition: opacity 0.4s;
+}
+*::-webkit-scrollbar {
+  display: none;
+}
+
+img {
+  object-fit: fill;
+  object-position: center;
+}
+
+.progsil {
+  padding: 30px 20px;
+}
+.progsil h2 {
+  margin-bottom: 20px;
+  font-size: calc(clamp(0.6rem, 2vw, 1.5rem) + 7px);
+  color: #273b98;
+  text-align: center;
+}
+.progsil .progsil-image img {
+  width: 100%;
+}
+.progsil .progsil-content h3 {
+  padding: 20px;
+  text-align: center;
+  font-size: calc(clamp(0.6rem, 2vw, 1.5rem) + 3px);
+}
+.progsil .progsil-content p {
+  max-width: 90%;
+  text-align: justify;
+}
+.progsil .progsil-content .progsil-text {
+  display: flex;
+  justify-content: center;
+}
+.progsil .progsil-content .progsil-text p {
+  font-size: calc(clamp(0.6rem, 2vw, 1.5rem) + 3px);
+}
+.progsil .artexample-text {
+  margin: 20px 0;
+  text-align: center;
+}
+.progsil .progsil-art {
+  display: flex;
+  width: 100%;
+  gap: 10px;
+}
+.progsil .progsil-art .art {
+  min-height: 400px;
+  width: 10%;
+  background-color: grey;
+}
+.progsil .progsil-art .art.main {
+  width: 80%;
 }
 
 body {
@@ -782,49 +909,11 @@ img {
   object-position: center;
 }
 
-.progsil {
-  margin-top: 100px;
-  width: 100vw;
-  padding: 10px;
+.bichen {
+  padding: 30px 20px;
 }
-.progsil h2 {
-  margin-bottom: 20px;
-  font-size: calc(clamp(0.6rem, 2vw, 1.5rem) + 7px);
-  color: #273b98;
+.bichen h2 {
   text-align: center;
-}
-.progsil .progsil-image img {
-  width: 100%;
-}
-.progsil .progsil-content h3 {
-  padding: 20px;
-  text-align: center;
-  font-size: calc(clamp(0.6rem, 2vw, 1.5rem) + 3px);
-}
-.progsil .progsil-content p {
-  max-width: 90%;
-  text-align: justify;
-}
-.progsil .progsil-content .progsil-text {
-  display: flex;
-  justify-content: center;
-}
-.progsil .artexample-text {
-  margin: 20px 0;
-  text-align: center;
-}
-.progsil .progsil-art {
-  display: flex;
-  width: 100%;
-  gap: 10px;
-}
-.progsil .progsil-art .art {
-  min-height: 400px;
-  width: 10%;
-  background-color: grey;
-}
-.progsil .progsil-art .art.main {
-  width: 80%;
 }
 
 body .button {
@@ -1586,8 +1675,8 @@ body .wrapper-user .dashboard .news .news-group a .news-info .tags .tags-slider 
   padding: 0 5%;
   border-radius: 4px;
   background-color: #d9ecf6;
-  border: 1px solid #409fd3;
-  color: #409fd3;
+  border: 1px solid #007fc4;
+  color: #007fc4;
   font-weight: 500;
 }
 body .wrapper-user .dashboard .news .news-group a .news-info .tags .tags-slider p.tag2 {
