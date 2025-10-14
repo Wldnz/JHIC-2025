@@ -3,13 +3,45 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Article;
 use Illuminate\Http\Request;
 
 class NewsController extends Controller
 {
-    public function news()
+    protected $maxPage = 4;
+    public function news(Request $request)
     {
-        return view('admin.news.index');
+
+        $search = $request->get('search', '');
+        $search_status = $request->get('search_status', '');
+        $page =  $request->get('page', 1);
+        $max = $this->maxPage;
+
+        $articles = Article::select();
+        $initiliazeArticles = Article::all();
+
+        $stats = [
+            'total' => $initiliazeArticles->count(),
+            'publish' => $initiliazeArticles->where('status', '=', 'published')->count(),
+            'archive' => $initiliazeArticles->where('status', '=', 'archived')->count(),
+            'draft' => $initiliazeArticles->where('status', '=', 'draft')->count(),
+        ];
+
+        if($search){
+            $articles = $articles->where('title', '=', $search)
+                ->orWhere('title', 'like', "%$search%");
+        }
+
+        if($search_status){
+            $articles = $articles->where('role', '=', $search_status);
+        }
+
+        $total = $articles->get()->count();
+        $articles = $articles->limit($this->maxPage)
+        ->offset(($page - 1) * $this->maxPage)
+            ->get();
+
+        return view('admin.news.index', compact('articles', 'stats', 'page', 'max', 'total'));
     }
 
     public function createNews()
@@ -23,9 +55,10 @@ class NewsController extends Controller
         return back();
     }
 
-    public function detailNews($news)
+    public function detailNews(Article $news)
     {
-        return view('admin.news.detail', compact('news'));
+        $article = $news->load('keywords');
+        return view('admin.news.detail', compact('article'));
     }
 
     public function updateNews(Request $request, $news)

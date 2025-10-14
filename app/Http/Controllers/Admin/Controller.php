@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Achievement;
+use App\Models\Article;
 use App\Models\Candidate;
 use App\Models\Gallery;
 use App\Models\PaymentMethod;
@@ -62,6 +63,8 @@ class Controller extends \App\Http\Controllers\Controller
         $summary = [
             'candidates' => Candidate::where('created_at', 'like', '%'. $registrationYear['first'] .'%')
             ->orWhere('created_at', 'like', '%'. $registrationYear['second'] .'%')
+            ->select(['created_at'])->groupBy('created_at')->get(),
+            Candidate::where('created_at', $currentYear)
             ->select(['created_at'])->groupBy('created_at')->get(),
         ];
 

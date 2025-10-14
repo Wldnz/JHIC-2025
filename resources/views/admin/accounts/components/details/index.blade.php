@@ -1,27 +1,33 @@
 <div class="selection" id="selection">
-    <div class="menu menu-selected" id="selection-self">
+    <a href="#candidate-self-form" class="menu menu-selected" id="selection-self">
         <span>Data Pribadi</span>
-    </div>
-    <div class="menu" id="selection-guard">
+    </a>
+    <a href="#candidate-guard-form" class="menu" id="selection-guard">
         <span>Data Orang Tua</span>
-    </div>
-    <div class="menu" id="selection-document">
+    </a>
+    <a href="#candidate-document-form" class="menu" id="selection-document">
         <span>Dokumen Pendukung</span>
-    </div>
-    <div class="menu" id="selection-transaction">
+    </a>
+    <a href="#candidate-transaction-form" class="menu" id="selection-transaction">
         <span>Data Transaksi</span>
-    </div>
+    </a>
 </div>
 
 @include('admin.accounts.components.details.self')
 @include('admin.accounts.components.details.guard')
 @include('admin.accounts.components.details.document')
 @include('admin.accounts.components.details.transaction')
+@foreach ($candidate->transactions ?? [] as $transaction)
+    @if ($transaction->status == 'settlement' || $transaction->status == 'success')
+        @include('admin.accounts.components.details.result')
+        @break
+    @endif
+@endforeach
 
 <script defer>
     const major = {
         data : @json($majors),
-        selected : @json($candidate->candidateMajors),
+        selected : @json($candidate->candidateMajors ?? []),
         idElement : 'major-card',
         changeSelected : ({ id, long_name, short_name }, element) => {
             const maximum = 2;
@@ -57,12 +63,13 @@
     };
     const phase = {
         data : @json($phases),
-        selected : @json($candidate->registrationPhase),
+        selected : @json($candidate->registrationPhase ?? []),
         idElement : 'phase-card',
         changeSelected : (element) => {
             const name = element.children[0].innerText;
             const currentSelected = phase.data.find(p => p.name == name);
             if(!currentSelected) return;
+            if(currentSelected.quota < 1) return;
             phase.selected = {
                 ...phase.selected,
                 ...currentSelected
@@ -144,6 +151,6 @@
 
     handlerSelectionMajor(major);
     handlerSelectionPhase(phase);
-    handlerSections();
+    // handlerSections();
 
 </script>

@@ -15,7 +15,8 @@
 
             <div class="wrapper-thumbnail">
                 <img class="thumbnail" id="thumbnail" src="" alt="thumbnail-image">
-                <input type="file" accept="image/jpeg, image/png" id="thumbnail_image" name="thumbnail" required>
+                <input type="file" accept="image/jpeg, image/png" id="thumbnail_image" name="thumbnail_image" required>
+                <input type="hidden" id="isUpdated" name="isUpdated" value="0" required>
             </div>
 
             <div class="wrapper-content wrapper-content-action">
@@ -61,123 +62,15 @@
     </div>
 </form>
 
-@vite(['resources/js/handle/save-media.js'])
-
 <script defer>
     const thumbnail = document.getElementById('thumbnail_image');
     const image = document.getElementById('thumbnail');
     let prev_filelist = null;
 
     const defaultContent = "{{ old('content', '') }}";
-    let keywords = @json(old('tags', [
-        [
-            "id" => 1,
-            "keyword" => "informasi sekolah"
-        ]
-    ]));
-
-    function initProject() {
-        image.src = "{{ asset('images/default.png') }}";
-        loadKeywords();
-    }
-
-    function loadKeywords() {
-        let keywordsHTML = '';
-        keywords.forEach(key => {
-            keywordsHTML += createKeyword(key);
-        });
-        if (keywords.length < 10) keywordsHTML += createKeyword({});
-        document.getElementById('tags-tag').innerHTML = keywordsHTML;
-        handleFunctionKeywords();
-        createTagsSender();
-    }
-
-    function createKeyword({ keyword = null, id = null }) {
-        return `<div class="wrapper-tag">
-                <div class="tag" id="${id ?? 'default'}" contenteditable="true">${keyword ?? "Tambahkan Keyword"}</div>
-                <button class="btn-tag" type="button">X</button>
-            </div>`;
-    }
-
-    function createTagsSender() {
-        let keywordsHTML = '';
-        keywords.forEach((key, index) => {
-            keywordsHTML += `<input type="hidden" name="tags[${index}]" id="tags_sender_${index}" value="${key.keyword}" readonly">`;
-        });
-        document.getElementById('tags_sender').innerHTML = keywordsHTML;
-    }
-
-    function handleFunctionKeywords() {
-        document.querySelectorAll('.wrapper-tag').forEach(wrapper => {
-            wrapper.children[0].addEventListener('input', (e) => {
-                const text = e.target.textContent;
-                if (!text) return handleRemoveKeyword(e.target, true);
-                if (e.inputType == "insertParagraph") return handleRemoveParagraph(e.target);
-                if (e.target.id == "default") handleAddKeyword(e.target);
-                handleUpdateKeyword(e.target);
-            });
-            wrapper.children[1].addEventListener('click', (e) => {
-                if (confirm('apakah anda yakin ingin menghapus tag ini?')) {
-                    handleRemoveKeyword(wrapper.children[0]);
-                }
-            });
-        });
-    }
-
-    function handleAddKeyword(keyword) {
-        if (keyword.id != "default") return;
-        const id = `added_keyword_${new Date().getTime()}`;
-        keywords.push({
-            id,
-            keyword: "Keyword Baru"
-        });
-        loadKeywords();
-    }
-
-    function handleUpdateKeyword(keyword) {
-        keywords = keywords.map(key => {
-            if (key.id == keyword.id) {
-                key = {
-                    ...key, ...{
-                        keyword: keyword.textContent
-                    }
-                }
-            }
-            return key;
-        })
-    }
-
-    function handleRemoveKeyword(keyword) {
-        const wrapper = keyword.parentElement;
-        if (wrapper.children[0].id == "default") {
-            keyword.textContent = "Tidak Bisa Dihapus!";
-            setTimeout(() => {
-                keyword.textContent = "Tambahkan Keyword!"
-            }, 2000)
-            return;
-        };
-        wrapper.remove();
-        keywords = keywords.filter(key => key.id != keyword.id);
-    }
-
-    function handleRemoveParagraph(element) {
-        const cleantInput = element.innerText.replace('\n', '');
-        element.textContent = cleantInput;
-    }
-
-    thumbnail.addEventListener('change', (e) => {
-        let file = e.target.files[0];
-        if (!file && !prev_filelist) return;
-        if (!file && prev_filelist) {
-            e.target.files = prev_filelist;
-            file = prev_filelist.item(0);
-        };
-        image.src = URL.createObjectURL(file);
-        prev_filelist = e.target.files;
-    });
-
-    initProject();
+    let keywords = @json(old('tags', []));
+    const defaultImage = "{{ asset('images/default.png') }}";
 </script>
 
-@vite(['resources/js/handle/create-news.js'])
+@vite(['resources/js/handle/create-news.js', 'resources/js/handle/save-media.js', 'resources/js/handle/article.js'])
 @include('_components._footerAdmin')

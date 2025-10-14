@@ -1,7 +1,7 @@
 @include('_components._headerAdmin', ['title' => 'Detail Account'])
 @php
     $currentPath = explode('/admin/', url()->current())[1];
-    logger('as', [$account, $candidate]);
+    logger('as', [$account, $candidate, $sources]);
     $status_families = [
         'biological_child' => 'Anak Kandung',
         'step_child' => 'Anak Angkat',
@@ -139,20 +139,19 @@
     });
 
     let resetPassword = true;
-    const handlerResetPassword = (e) => {
-        fetch("{{ route('admin.reset-password-account', ['account', Auth::user()->id]) }}", {
-            headers : {
-                'Content-Type': 'application/json',
-            },
-            method : 'PATCH',
-            body : JSON.stringify( {
-                _token : csrfToken
-            })
-        })
-        .then(e => e.json())
-        .then(e => console.log(e));
-
-    };
+    // const handlerResetPassword = (e) => {
+    //     fetch("", {
+    //         headers : {
+    //             'Content-Type': 'application/json',
+    //         },
+    //         method : 'PATCH',
+    //         body : JSON.stringify( {
+    //             _token : csrfToken
+    //         })
+    //     })
+    //     .then(e => e.json())
+    //     .then(e => console.log(e));
+    // };
     document.getElementById('reset-password-btn').addEventListener('click', handlerResetPassword)
 </script>
 
