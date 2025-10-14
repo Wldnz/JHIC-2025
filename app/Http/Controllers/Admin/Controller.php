@@ -40,7 +40,7 @@ class Controller extends \App\Http\Controllers\Controller
             'transaction' => [
                 'total' => $initiliazeTransactions->count(),
                 'Menunggu' => $initiliazeTransactions->where('status', '=', 'pending')->count(),
-                'Berhasil' => $initiliazeTransactions->where('status', '=', 'capture')->count(),
+                'Berhasil' => $initiliazeTransactions->where('status', '=', 'settlement')->count(),
                 'Gagal' => $initiliazeTransactions->where('status', '=', 'fail')->count(),
             ],
             'account' => [

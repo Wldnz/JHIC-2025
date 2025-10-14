@@ -27,7 +27,7 @@ class TransactionController extends Controller
         $transactions = Transaction::select();
         $stats = [
             'total' => $initiliazeTrasanctions->count(),
-            'success' => $initiliazeTrasanctions->where('status', '=', 'capture'),
+            'success' => $initiliazeTrasanctions->where('status', '=', 'settlement'),
             'refund' => $initiliazeTrasanctions->where('status', '=', 'refund'),
             'canceled' => $initiliazeTrasanctions->where('status', '=', 'canceled'),
             'expired' => $initiliazeTrasanctions->where('status', '=', 'expired')
