@@ -56,7 +56,7 @@ class Candidate extends Model
      */
     public function registrationPhase(): BelongsTo
     {
-        return $this->belongsTo(RegistrationPhase::class, 'selected_phase_id');
+        return $this->belongsTo(CandidatePhase::class, 'candidate_nisn', 'nisn', 'selected_phase_id');
     }
 
     /**
@@ -64,7 +64,7 @@ class Candidate extends Model
      */
     public function registrationSource(): BelongsTo
     {
-        return $this->belongsTo(RegistrationSource::class, 'registration_source_id');
+        return $this->belongsTo(CandidatePhase::class, 'candidate_nisn', 'nisn', 'registration_source_id');
     }
 
     /**

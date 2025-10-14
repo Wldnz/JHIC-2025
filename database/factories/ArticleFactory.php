@@ -64,16 +64,18 @@ class ArticleFactory extends Factory
         $thumbnailUrl = fake()->randomElement($images)['secure_url'];
 
         $currentTimestamp = time();
+        $fileContent = file_get_contents(Storage::disk('local')->path('articles/placeholder.txt'), false, null, 0, 255);
         Gdrive::put(
             "articles/$currentTimestamp.txt",
             Storage::disk('local')->path('articles/placeholder.txt')
         );
-        $fileContentUrl = Storage::disk('google')->url("articles/$currentTimestamp.txt");
+        $fileContentUrl = Storage::disk('google')->path("articles/$currentTimestamp.txt");
 
         echo "Aricle content file has been saved in Google Drive: ( $fileContentUrl )\n";
 
         return [
             'title' => fake()->sentence(4),
+            'description' => $fileContent,
             'file_content_url' => $fileContentUrl,
             'thumbnail_url' => $thumbnailUrl,
             'writter_user_id' => $user->id,

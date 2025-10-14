@@ -45,8 +45,9 @@
                     <div class="wrapper-input">
                         <label for="visible">Visible<span>*</span></label>
                         <select name="visible" id="visible" required>
-                            <option value="public" @selected(old('type', '') == 'public')>Public</option>
-                            <option value="arhcive" @selected(old('type', '') == 'archive')>Archive</option>
+                            @foreach ($availableStatus as $statusName => $status)
+                                <option value="{{ $status }}" @selected(old('visible', '') == $status)>{{ $statusName }}</option>
+                            @endforeach
                         </select>
                     </div>
 
