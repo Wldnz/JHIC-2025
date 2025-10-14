@@ -1,3 +1,5 @@
-<div>
-    <!-- Simplicity is the essence of happiness. - Cedric Bledsoe -->
-</div>
+@include('_components._headerCandidate')
+<main class="content">
+    
+</main>
+@include('_components._footerCandidate')

@@ -1,0 +1,310 @@
+@use "admin/components/navigation-side" as navigation;
+@use "admin/components/management-table" as table;
+@use "admin/components/summary-card" as summary_card;
+@use "admin/components/form-data" as form_data;
+@use "admin/components/profile" as profile;
+@use "admin/pages/news" as news;
+@import "utils/variables";
+@import "utils/globals";
+@import "admin/index";
+
+.wrapper-content {
+    width: 100vw;
+    height: max-content;
+    min-height: 100dvh;
+
+    display: flex;
+    position: relative;
+
+    color: $color-accent;
+
+    .left {
+        min-width: 300px;
+        height: 100dvh;
+
+        position: relative;
+
+        display: flex;
+
+        @include navigation.navigation;
+    }
+
+    .right {
+        width: 100%;
+        // overflow-x: hidden;
+
+        h2 {
+            font-size: calc($font-size-l - 0.3rem);
+        }
+
+        .bar-top {
+            padding: 10px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: solid 1px #dfdfdf;
+
+            .side-left{
+                h4 {
+                    font-size: calc($font-size-l - 0.3rem);
+                }
+
+                display: flex;
+                align-items: center;
+                gap: 20px;
+
+                .logo-sponsor{
+                    width: 200px;
+                    height: 100%;
+                    object-fit: contain;
+                }
+            }
+        }
+
+        
+        .content {
+            padding: 15px;
+            
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            
+            .greeting {
+                display: flex;
+                flex-direction: column;
+                gap: 1px;
+                
+                span {
+                    font-size: $font-size-m;
+                }
+            }
+
+           .section-chart{
+                width: 100%;
+                .wrapper-chart{
+                    width: 100%;
+                    padding: 5px;
+
+                    display: flex;
+                    flex-direction: column;
+                    gap: 10px;
+
+                    .chart{
+                        width: 100%;
+                        // max-width: 600px;
+                        max-height: 300px;
+                        padding: 10px;
+                        border: 2px solid $color-accent;
+                        border-radius: $border-radius;
+                        &-barchart{
+                            width: 10px;
+                        }
+                    }
+                }
+           }
+            
+            @include summary_card.summary_card;
+
+            .wrapper-content-media-management {
+                display: flex;
+                flex-direction: column;
+                gap: 25px;
+
+                padding: 15px;
+
+                .wrapper-container-media {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 15px;
+                }
+                @include news.form;
+            }
+
+            @include table.table;
+
+            @include form_data.form_data;
+
+            @include profile.card;
+
+            .wrapper-save-media {
+                width: 300px;
+                height: 85dvh;
+
+                position: sticky;
+                top: 0;
+                right: 0;
+
+                .card-save-media {
+                    width: inherit;
+                    height: inherit;
+
+                    padding: 10px;
+
+                    border-bottom: 2px solid $color-accent;
+                    border-left: 2px solid $color-accent;
+
+                    display: flex;
+                    flex-direction: column;
+                    gap: 20px;
+
+                    background-color: $color-primary;
+
+                    .wrapper-action {
+                        > :first-child {
+                            display: none;
+                        }
+                    }
+
+                    .wrapper-content {
+                        height: inherit;
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: space-between;
+                        padding-bottom: 20px;
+
+                        .card-content {
+                            display: flex;
+                            flex-direction: column;
+                            gap: 20px;
+
+                            .wrapper-input,
+                            .wrapper-tags {
+                                display: flex;
+                                flex-direction: column;
+                                gap: 8px;
+                                font-size: $font-size-m;
+                            }
+
+                            .wrapper-input {
+                                label {
+                                    font-weight: 600;
+                                    span {
+                                        color: $color-accent;
+                                    }
+                                }
+
+                                input,
+                                select,
+                                textarea {
+                                    outline: none;
+                                    border: none;
+                                    border-bottom: 1px solid $color-accent;
+                                }
+
+                                input,
+                                select {
+                                    min-height: 30px;
+                                    padding: 5px;
+                                    padding-left: 0;
+                                }
+
+                                textarea {
+                                    width: 100%;
+                                    min-height: 70px;
+                                    max-height: 120px;
+
+                                    resize: vertical;
+                                }
+                            }
+
+                            .wrapper-preview {
+                                width: max-content;
+                                display: flex;
+                                flex-direction: row;
+                                gap: 5px;
+                                justify-content: start;
+                                align-items: center;
+                                font-size: $font-size-s;
+
+                                label {
+                                    cursor: pointer;
+                                }
+
+                                svg {
+                                    rotate: -140deg;
+                                }
+                            }
+
+                            .wrapper-tags {
+                                .tags {
+                                    max-width: 100%;
+                                    display: flex;
+                                    align-items: center;
+                                    flex-wrap: wrap;
+                                    gap: 10px;
+                                    min-height: 60px;
+                                    max-height: 210px;
+                                    overflow:none;
+                                    overflow-y: scroll;
+                                    border: 1px solid $color-accent;
+                                    border-radius: $border-radius;
+
+                                    padding: 10px 5px;
+
+                                    .wrapper-tag {
+                                        max-width: 100%;
+                                        position: relative;
+                                        .tag {
+                                            max-width: inherit;
+                                            padding: 6px;
+                                            width: max-content;
+
+                                            font-size: $font-size-s;
+
+                                            color: $tags1;
+                                            background-color: $tags1-bg;
+                                            border: 1px solid $tags1;
+                                            outline-color: $tags1;
+
+                                            border-radius: $border-radius;
+                                        }
+                                        .btn-tag {
+                                            position: absolute;
+                                            top: -5px;
+                                            right: 0;
+                                            font-size: 10px;
+                                            border: none;
+                                            background-color: transparent;
+                                            color: $color-accent;
+                                            font-weight: 600;
+                                            cursor: pointer;
+                                        }
+                                    }
+                                }
+                            }
+
+                            .wrapper-hidden{
+                                display: none;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .wrapper-button{
+                width: 100%;
+
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+
+                margin-top: 10px;
+                
+                button{
+                    width: 98%;
+                    height: 50px;
+                    background-color: $color-accent;
+                    color: $color-primary;
+                    border: none;
+                }
+
+                .btn-back{
+                    border: 2px solid $color-accent;
+                    background-color: $color-primary;
+                    color: $color-accent;
+                }
+            }
+        }
+    }
+}
