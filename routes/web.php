@@ -19,6 +19,7 @@ Route::name('user.')->group(function () {
 
     Route::get('/news', [User\NewsController::class, 'news'])->name('news');
     Route::get('/news/{article}', [User\NewsController::class, 'newsDetail'])->name('news-detail');
+    Route::get('/news/{article}/content', [User\NewsController::class, 'newsContent'])->name('news-content');
 
     Route::controller(User\MajorsController::class)->prefix('majors')->name('majors.')->group(function () {
         Route::get('/animation', 'animation')->name('animation');
@@ -113,6 +114,21 @@ Route::name('admin.')->prefix('admin')->middleware([isLogin::class, isAdmin::cla
     Route::get('/accounts/{account}', [Admin\AccountController::class, 'detailAccount'])->name('detail-account');
     Route::put('/accounts/{account}', [Admin\AccountController::class, 'updateAccount'])->name('update-account');
     Route::delete('/accounts/{account}', [Admin\AccountController::class, 'deleteAccount'])->name('delete-account');
+    Route::patch('/account/reset-password/{account}', [Admin\AccountController::class, 'resetPassword'])->name('reset-password-account');
+    
+    Route::get('/students', [Admin\AccountController::class, 'student'])->name('students');
+    Route::get('/students-create', [Admin\AccountController::class, 'createStudent'])->name('create-student');
+    Route::post('/students-create', [Admin\AccountController::class, 'storeStudent'])->name('store-student');
+    Route::get('/students/{student}', [Admin\AccountController::class, 'detailStudent'])->name('detail-student');
+    Route::put('/students/{student}', [Admin\AccountController::class, 'updateStudent'])->name('update-student');
+    Route::delete('/student/{student}', [Admin\AccountController::class, 'deleteStudent'])->name('delete-student');
+
+    Route::get('/students', [Admin\StudentController::class, 'students'])->name('students');
+    Route::get('/students-create', [Admin\StudentController::class, 'createStudent'])->name('create-student');
+    Route::post('/students-create', [Admin\StudentController::class, 'storeStudent'])->name('store-student');
+    Route::get('/students/{student}', [Admin\StudentController::class, 'detailStudent'])->name('detail-student');
+    Route::put('/students/{student}', [Admin\StudentController::class, 'updateStudent'])->name('update-student');
+    Route::delete('/students/{student}', [Admin\StudentController::class, 'deleteStudent'])->name('delete-student');
 
     Route::get('/news', [Admin\NewsController::class, 'news'])->name('news');
     Route::get('/news-create', [Admin\NewsController::class, 'createNews'])->name('create-news');

@@ -1,6 +1,6 @@
 @include('_components._headerAdmin', ['title' => 'Adding Transaction'])
 @php
-    logger('as', [$students])
+    logger('as', [$candidates])
 @endphp
 <form class="content" method="post" action="{{ route('admin.store-transaction') }}" enctype="application/x-www-form-urlencoded">
     @csrf
@@ -8,15 +8,15 @@
     <div class="form-data" id="student-siswa-form">
         <div class="wrapper-field container">
             <div class="wrapper-input">
-                <label for="student_nis">NIS</label>
-                <input type="text" name="student_nis" id="student_nis" placeholder="Nis Siswa" value="{{ old('user_nis','') }}" readonly required>
+                <label for="candidate_nisn">NISN</label>
+                <input type="text" name="candidate_nisn" id="candidate_nisn" placeholder="Nis Siswa" value="{{ old('candidate_nisn','') }}" readonly required>
             </div>
             <div class="wrapper-input">
-                <label for="student_name">Nama Pembeli<span> *</span></label>
-                <select name="student_name" id="student_name" required>
-                    <option value="">Pilih Nama Siswa</option>
-                    @foreach ($students as $student)
-                        <option value="{{ $student->name }}" @selected(old('student_name', '')== $student->name)>{{ $student->name }}</option>
+                <label for="candidate_full_name">Nama Calon Siswa<span> *</span></label>
+                <select name="candidate_full_name" id="candidate_full_name" required>
+                    <option value="">Pilih Nama Calon Siswa</option>
+                    @foreach ($candidates as $candidate)
+                        <option value="{{ $candidate->full_name }}" @selected(old('candidate_full_name', '')== $candidate->full_name)>{{ $candidate->full_name }}</option>
                     @endforeach
                 </select>
             </div>
@@ -29,7 +29,7 @@
             <div class="wrapper-input">
                 <label for="total_cost">Total Harga</label>
                 <input type="text" inputmode="numeric" name="total_cost" id="total_cost"
-                    placeholder="Masukkan total harga" value="{{ old('total_cost',700000) }}"  min="0" required>
+                    placeholder="Masukkan total harga" value="{{ old('total_cost', 5787900) }}"  min="0" required>
             </div>
             <div class="wrapper-input">
                 <label for="payment_method">Jenis Pembayaran</label>
@@ -60,14 +60,14 @@
 </form>
 
 <script defer>
-    document.getElementById('student_name').addEventListener('change', (e) => {
-        const students = @json($students);
-        const student = students.find(s => s.name == e.target.value);
-        const student_nis =  document.getElementById('student_nis');
-        if(student){
-            student_nis.value = student.nis;
+    document.getElementById('candidate_full_name').addEventListener('change', (e) => {
+        const candidates = @json($candidates);
+        const candidate = candidates.find(s => s.full_name == e.target.value);
+        const candidate_nisn =  document.getElementById('candidate_nisn');
+        if(candidate){
+            candidate_nisn.value = candidate.nisn;
         }else{
-            student_nis.value = "";
+            candidate_nisn.value = "";
         }
     });
 </script>

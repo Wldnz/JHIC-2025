@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Candidate;
 use App\Models\Major;
+use App\Models\RegistrationDocument;
 use App\Models\RegistrationPhase;
+use App\Models\RegistrationSource;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -66,14 +68,17 @@ class AccountController extends Controller
         $candidate = null;
         $majors = null;
         $phases = null;
+        $articles = null;
+        $sources = null;
+        $documents = null;
         if($account->role == 'candidate'){
             $candidate = Candidate::all()
             ->load([
-                'user',
+                'candidatePhase',
                 'registrationPhase',
                 'registrationSource',
                 'candidateMajors',
-                'candidateGuardians',
+                'candidateGuardian',
                 'candidateDocuments',
                 'transactions'
             ])
@@ -81,8 +86,12 @@ class AccountController extends Controller
             ->first();
             $majors = Major::all();
             $phases = RegistrationPhase::all();
+            $sources = RegistrationSource::all(['id', 'name']);
+            $documents = RegistrationDocument::all();
+        }else if($account->role == 'article_creator'){
+            $articles = null;
         }
-        return view('admin.accounts.detail', compact('account', 'candidate', 'majors', 'phases'));
+        return view('admin.accounts.detail', compact('account', 'candidate', 'majors', 'phases', 'articles','sources', 'documents'));
     }
 
     public function updateAccount(Request $request, $account)
@@ -92,6 +101,10 @@ class AccountController extends Controller
 
     public function deleteAccount($account)
     {
+        return back();
+    }
+
+    public function resetPassword($account){
         return back();
     }
 }
