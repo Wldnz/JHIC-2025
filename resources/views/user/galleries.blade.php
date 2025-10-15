@@ -1,31 +1,29 @@
 @php
-        $placeholder = "https://www.svgrepo.com/show/508699/landscape-placeholder.svg";
+    $placeholder = "https://www.svgrepo.com/show/508699/landscape-placeholder.svg";
 @endphp
 @include('_components._header', ['title' => 'product'])
 
 <div class="galleries no-fade">
     <h1>Gallery</h1>
     <div class="gallery-images no-fade">
-        @for ($i = 0; $i < 20; $i++)
+        @foreach ($galleries as $gallery )
         <span class="gallery-image">
-            <img src="{{$placeholder}}" alt="">
-            <p>Ruangan 4</p>
+            <img class="gallery-image-url" src="{{$gallery->url}}" alt="{{ $gallery->name }}">
+            <p class="gallery-name">{{ $gallery->name }}</p>
+            <input type="hidden" class="gallery-type" value="{{ $gallery->gallery_type_name }}">
         </span>
-        @endfor
+        @endforeach
         <div class="gallery-full">
             <div class="button-wrapper">
-                <p>Kamar Wildan</p>
+                <p class="preview-gallery-name">Kamar Wildan</p>
                 <img class="gallery-close" src="{{ asset("icons/Add_Plus.svg") }}" alt="">
             </div>
             <div class="img-wrapper">
-                <img src="{{ $placeholder }}" alt="">
+                <img class="preview-gallery-url" src="" alt="">
             </div>
             <div class="other-images">
-                @for ($i = 0; $i < 10; $i++)
-                    <img src="{{ $placeholder }}" alt="">
-                @endfor
+                <img src="" alt="">
             </div>
-
         </div>
     </div>
 </div>
@@ -94,10 +92,27 @@ ticking = true
 // ===============================================================
 // gallery-img
 
+const gallery_preview_name = document.querySelector('.preview-gallery-name');
+const gallery_preview_image = document.querySelector('.preview-gallery-url');
+const other_images = document.querySelector('.other-images');
+const galleries = @json($galleries ?? []);
+
 document.querySelectorAll(".gallery-image").forEach(el => {
     el.addEventListener("click", () => {
+        gallery_preview_name.textContent = el.querySelector('.gallery-name').textContent;
+        gallery_preview_image.src = el.querySelector('.gallery-image-url').src;
         document.querySelector(".gallery-full").classList.add("active")
         document.body.style.overflow = "hidden"
+
+        const { name, gallery_type_name } = galleries.find(g => g.name == el.querySelector('.gallery-name').textContent);
+        if(!name || !gallery_type_name) return;
+        const gs = galleries.filter(g => {
+            return g.name != name && g.gallery_type_name == gallery_type_name;
+        });
+
+        let string_images = '';
+        gs.forEach(g => string_images += `<img src="${g.url}" alt="${g.name}">`);
+        other_images.innerHTML = string_images;
     })
 })
 document.querySelector(".gallery-close").addEventListener("click", () => {
