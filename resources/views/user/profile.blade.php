@@ -68,7 +68,7 @@
 
     <div class="department depusaha">
         <div class="image">
-            <img src="{{ asset("images/profile/pa budi.png") }}" alt="">
+            <img src="{{ asset("images/profile/pa budi with bg.png") }}" alt="">
             <h2>Budi Arya Dharma, S.Kom</h2>
             <h3>Waka Bina Rahadin</h3>
         </div>
@@ -76,7 +76,7 @@
         <div class="text">
             <h1>Department Kewirausahaan Dan Industri</h1>
             <div class="image">
-                <img src="{{ asset("images/profile/pa budi.png") }}" alt="">
+                <img src="{{ asset("images/profile/pa budi with bg.png") }}" alt="">
                 <h2>Budi Arya Dharma, S.Kom</h2>
                 <h3>Waka Bina Rahadin</h3>
             </div>
