@@ -72,7 +72,7 @@ Route::name('candidate.')->prefix('candidate')->middleware([isLogin::class, isCa
     Route::get('/contact', [Candidate\Controller::class, 'contact'])->name('contact');
     Route::get('/learning-materials', [Candidate\Controller::class, 'learningMaterials'])->name('learning-materials');
 
-    Route::controller(Candidate\StageController::class)->prefix('stage')->name('satge.')->group(function () {
+    Route::controller(Candidate\StageController::class)->prefix('stage')->name('stage.')->group(function () {
         Route::get('/stage-1', 'stage1')->name('stage1');
         Route::put('/stage-1', 'saveStage1')->name('save-stage1');
 

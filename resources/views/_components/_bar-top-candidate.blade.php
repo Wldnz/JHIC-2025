@@ -1,3 +1,31 @@
+@php
+    $stages = [
+        'stage-1' => [
+            'requirements' => $candidate,
+            'sub-requirements' => [],
+            'destination' => route('candidate.stage.stage1')
+        ],
+        'stage-2' => [
+            'requirements' => $candidate,
+            'sub-requirements' => [
+                $candidate->candidateMajors ?? null,
+                $candidate->candidatePhases ?? null
+            ],
+            'destination' => route('candidate.stage.stage2')
+        ],
+        'stage-3' => [
+            'requirements' => $candidate,
+            'sub-requirements' => [
+                $candidate->candidateMajors ?? null,
+                $candidate->candidatePhases ?? null,
+                $candidate->candidateGuardian ?? null
+            ],
+            'destination' => route('candidate.stage.stage3')
+        ],
+        
+    ]
+@endphp
+
 <div class="bar-top">
     <div class="side-left">
         <h4>{{ $title }}</h4>
@@ -12,7 +40,7 @@
             </div>
             <div class="menus">
                 <li class="menu menu-selected">
-                    <a href="">
+                    <a href="{{ route('candidate.dashboard') }}">
                         @include('_components._sprite-icons', [ 'name' => 'dashboard','color' => $currentPath == 'dashboard' ? 'white' : 'black' ,'size' => 25 ])
                         Dashboard
                     </a>
