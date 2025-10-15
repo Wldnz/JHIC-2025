@@ -16,10 +16,12 @@ use App\Models\RegistrationSource;
 use App\Models\User;
 use App\Utilities\AlertDataGenerator;
 use App\Utilities\FileUploadUtils;
+use App\Utilities\RoleLevelChecker;
 use App\Utilities\StorageUtils;
 use DB;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -117,6 +119,16 @@ class AccountController extends Controller
 
     public function detailAccount(User $account)
     {
+        if (
+            $account->id != Auth::user()->id &&
+            (
+                !RoleLevelChecker::checkMinimumByRoleName(Auth::user(), 'admin') ||
+                $account->role == 'super_admin'
+            )
+        ) {
+            return redirect()->route(Auth::user()->role == 'article_creator' ? 'admin.dashboard' : 'admin.accounts');
+        }
+
         $candidate = null;
         $majors = null;
         $phases = null;
@@ -168,12 +180,14 @@ class AccountController extends Controller
         DB::beginTransaction();
 
         try {
-            $isUpdated = $account->update([
+            $validated['role'] ??= null;
+            $updatedData = [
                 'fullname' => $validated['fullname'],
                 'email' => $validated['email'],
                 'phone' => $validated['phone'],
-                'role' => $validated['role'],
-            ]);
+                'role' => $validated['role'] ?? Auth::user()->role,
+            ];
+            $isUpdated = $account->update($updatedData);
 
             if (!$isUpdated) {
                 throw new Exception("Gagal mengupdate akun dengan nama lengkap \"{$account->fullname}\" dan email \"{$account->email}\"");
@@ -188,10 +202,14 @@ class AccountController extends Controller
                     "Berhasil mengupdate akun dengan nama lengkap \"{$account->fullname}\" dan email \"{$account->email}\"",
                     $request->session()
                 );
-                return redirect()->route('admin.accounts');
+                return Auth::user()->id == $account->id ?
+                    back() :
+                    redirect()->route('admin.accounts');
             }
 
             $validated['role'] = 'candidate';
+            $validated['candidate_nisn'] ??= null;
+
             $candidate = Candidate::find($validated['candidate_nisn']);
 
             if (!$candidate) {

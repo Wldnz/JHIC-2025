@@ -135,8 +135,10 @@ Route::name('admin.')->prefix('admin')->middleware([isLogin::class, isAdmin::cla
 
     Route::withoutMiddleware([isAdmin::class])->middleware([isCreator::class])->group(function () {
         Route::get('/dashboard', [Admin\Controller::class, 'dashboard'])->name('dashboard');
+
         Route::get('/accounts/{account}', [Admin\AccountController::class, 'detailAccount'])->name('detail-account');
         Route::put('/accounts/{account}', [Admin\AccountController::class, 'updateAccount'])->name('update-account');
+
         Route::get('/news', [Admin\NewsController::class, 'news'])->name('news');
         Route::get('/news-create', [Admin\NewsController::class, 'createNews'])->name('create-news');
         Route::post('/news-create', [Admin\NewsController::class, 'storeNews'])->name('store-news');
