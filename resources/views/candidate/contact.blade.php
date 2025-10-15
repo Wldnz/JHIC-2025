@@ -1,3 +1,10 @@
-<div>
-    <!-- Do what you can, with what you have, where you are. - Theodore Roosevelt -->
-</div>
+@include('_components._headerCandidate',[
+    'title' => 'Kontak Kami'   
+])
+<main class="content">
+    <div class="accessoris">
+        <div class="rounded"></div>
+        <div class="stars"></div>
+    </div>
+</main>
+@include('_components._footerCandidate')    

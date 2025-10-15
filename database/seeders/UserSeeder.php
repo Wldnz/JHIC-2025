@@ -40,6 +40,15 @@ class UserSeeder extends Seeder
                 'password' => bcrypt('raditarticle123#'),
                 'remember_token' => Str::random(10),
                 'role' => 'article_creator',
+            ],
+            [
+                'fullname' => 'Ahtvi Si Calon Didik',
+                'email' => 'ahtvi@cpd.id',
+                'phone' => '086598982639',
+                'email_verified_at' => now(),
+                'password' => bcrypt('athvicpd123#'),
+                'remember_token' => Str::random(10),
+                'role' => 'candidate',
             ]
         ]);
 

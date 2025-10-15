@@ -26,7 +26,7 @@ class ArticleFactory extends Factory
             ->inRandomOrder()
             ->firstOrFail();
 
-        $publicDirPath = 'images\news';
+        $publicDirPath = 'images/news';
         $imageTag = 'bi article';
         $maxResults = 5;
 

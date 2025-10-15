@@ -15,7 +15,7 @@ class PortfolioImageSeeder extends Seeder
      */
     public function run(): void
     {
-        $publicDirPath = 'images\portfolios';
+        $publicDirPath = 'images/portfolios';
         $imageTag = 'portfolio';
 
         $portfolios = Portfolio::all();

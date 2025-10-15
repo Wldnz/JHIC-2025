@@ -78,44 +78,50 @@
         <h4>AND MUCH MORE!!</h4>
     </div>
 
+      @if ($portfolios->count() > 0)
     <div class="portfolio">
-        <h3>{{ $major->name }} <br> Portfolio</h3>
-        <div class="body-portfolio">
-
-          <div class="main-portfolio">
-            <img src="{{ $major->portfolio->portfolio1[3] }}" alt="">
-            <h3>{{ $major->portfolio->portfolio1[0] }}</h3>
-            <p>{{ $major->portfolio->portfolio1[1] }}</p>
-            <h4>{{ $major->portfolio->portfolio1[2] }}</h4>
-          </div>
-          <div class="other-portfolio">
-            @foreach ($major->portfolio as $portfolio )
-            <div class="portfolios {{ $loop->first ? 'selected' : '' }}">
-              <img src="{{ $portfolio[3] }}" alt="">
-              <h5>{{ $portfolio[0] }}</h5>
-            </div>
-            @endforeach
-          </div>
+      <h3>{{ $major->name }} Portfolio</h3>
+      <div class="body-portfolio">
+        <div class="main-portfolio">
+          <img src="{{ $portfolios[0]->portfolioImages[0]->url }}" alt="">
+          <h3>{{ $portfolios[0]->title }}</h3>
+          <p>{{ $portfolios[0]->description }}</p>
+          <h4>{{ $portfolios[0]->student_name }}</h4>
         </div>
+        <div class="other-portfolio">
+          @foreach ($portfolios as $portfolio)
+            <div class="portfolios {{ $loop->first ? 'selected' : '' }}">
+              <img src="{{ $portfolio->portfolioImages[0]['url'] }}" alt="{{ $portfolio->title }}">
+              <h5>{{ $portfolio->title }}</h5>
+            </div>
+          @endforeach
+        </div>
+      </div>
     </div>
+  @endif
+
+  @if ($achievements->count() > 0)
     <div class="prestasi">
       <h3>Prestasi Murid {{ $major->name }}</h3>
       <div class="prestasi-slider">
-        @for ($i = 0; $i < 5; $i++)
-        <div class="prestasi-content">
-          <img src="{{ $placeholder }}" alt="">
-          <div class="info">
-            <div class="img-wrapper">
-              <img src="{{ asset("icons/medal.svg") }}" alt="">
-            </div>
-            <div class="text">
-              <h4>Agus Nongso</h4>
-              <h5>Lomba Makan Karung</h5>
+        @foreach($achievements as $achievement)
+          <div class="prestasi-content">
+            <img src="{{ $achievement->thumbnail_url }}" alt="{{ $achievement->competition_name }}">
+            <div class="info">
+              <div class="img-wrapper">
+                <!-- <img src="{{ asset("icons/medal.svg") }}" alt=""> -->
+                @include('_components._sprite-icons', ['name' => 'rank-' . explode('_', $achievement->competition_position)[1] . '', 'size' => 50])
+              </div>
+              <div class="text">
+                <h4>{{ $achievement->student_name }}</h4>
+                <h5>{{ $achievement->competition_name }}</h5>
+              </div>
             </div>
           </div>
-        </div>
-        @endfor
+        @endforeach
       </div>
+    </div>
+  @endif
     </div>
 <!-- 
     <div class="alumni">

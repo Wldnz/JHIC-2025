@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin;
 use App\Http\Controllers\Candidate;
 use App\Http\Controllers\User;
 use App\Http\Controllers\MidtransController;
+use App\Http\Middleware\isCandidate;
 use App\Http\Middleware\isCreator;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\isLogin;
@@ -55,8 +56,8 @@ Route::name('user.')->group(function () {
 });
 
 // Candidate-side
-Route::name('candidate.')->prefix('candidate')->middleware([isLogin::class])->group(function () {
-    Route::withoutMiddleware([isLogin::class])->group(function () {
+Route::name('candidate.')->prefix('candidate')->middleware([isLogin::class, isCandidate::class])->group(function () {
+    Route::withoutMiddleware([isLogin::class, isCandidate::class])->group(function () {
         Route::get('/', [Candidate\Controller::class, 'index'])->name('index');
 
         Route::get('/signup', [Candidate\AuthController::class, 'signupPage'])->name('signup-page');
