@@ -24,6 +24,7 @@ class CandidateMajorSeeder extends Seeder
             foreach ($selectedMajors as $major) {
                 CandidateMajor::query()->insert([
                     'candidate_nisn' => $candidate->nisn,
+                    'user_id' => $candidate->user_id,
                     'major_id' => $major->id,
                     'major_long_name' => $major->long_name,
                     'major_short_name' => $major->short_name,

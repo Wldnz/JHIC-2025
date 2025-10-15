@@ -85,6 +85,7 @@ Route::name('candidate.')->prefix('candidate')->middleware([isLogin::class])->gr
         Route::put('/stage-4', 'saveStage4')->name('save-stage4');
 
         Route::get('/stage-5', 'stage5')->name('stage5');
+        Route::get('/stage-5/documents/{registrationDocument}', 'document')->name('stage5.document');
         Route::put('/stage-5', 'saveStage5')->name('save-stage5');
     });
 });
@@ -112,10 +113,11 @@ Route::name('admin.')->prefix('admin')->middleware([isLogin::class, isAdmin::cla
     Route::get('/accounts-create', [Admin\AccountController::class, 'createAccount'])->name('create-account');
     Route::post('/accounts-create', [Admin\AccountController::class, 'storeAccount'])->name('store-account');
     Route::get('/accounts/{account}', [Admin\AccountController::class, 'detailAccount'])->name('detail-account');
+    Route::get('/accounts/{account}/documents/{candidateDocument}', [Admin\AccountController::class, 'downloadDocument'])->name('detail-account.download-document');
     Route::put('/accounts/{account}', [Admin\AccountController::class, 'updateAccount'])->name('update-account');
     Route::delete('/accounts/{account}', [Admin\AccountController::class, 'deleteAccount'])->name('delete-account');
     Route::patch('/account/reset-password/{account}', [Admin\AccountController::class, 'resetPassword'])->name('reset-password-account');
-    
+
     Route::get('/students', [Admin\AccountController::class, 'student'])->name('students');
     Route::get('/students-create', [Admin\AccountController::class, 'createStudent'])->name('create-student');
     Route::post('/students-create', [Admin\AccountController::class, 'storeStudent'])->name('store-student');

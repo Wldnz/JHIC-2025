@@ -52,6 +52,7 @@ class CandidateGuardianSeeder extends Seeder
         foreach ($candidates as $candidate) {
             CandidateGuardian::create([
                 'candidate_nisn' => $candidate->nisn,
+                'user_id' => $candidate->user_id,
                 'guardian_type' => fake()->randomElement($this->availableGuardianTypes),
                 'full_name' => fake()->name(),
                 'birthplace' => fake()->city(),

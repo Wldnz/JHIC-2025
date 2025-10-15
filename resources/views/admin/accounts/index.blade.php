@@ -8,7 +8,7 @@
         'title' => 'Accounts',
         'greeting' => true,
         'data' => $stats,
-        'icon' => [ 
+        'icon' => [
             'name' => 'account',
         ]
     ])
@@ -21,7 +21,7 @@
             'fullname' => 'Nama Lengkap Pengguna',
             'email' => 'Alamat Email',
             'phone' => 'Nomor Telepon',
-            'role' => 'Role',  
+            'role' => 'Role',
             'created_at' => 'Dibuat Pada'
         ],
         'findDataWith' => [
@@ -65,3 +65,10 @@
 </main>
 
 @include('_components._footerAdmin')
+
+
+<script defer>
+    setActionDelete(true, {
+        title : 'Hapus Akun'
+    })
+</script>

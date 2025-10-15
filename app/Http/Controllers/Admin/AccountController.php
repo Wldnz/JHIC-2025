@@ -7,18 +7,23 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreAccountRequest;
 use App\Http\Requests\Admin\UpdateAccountRequest;
 use App\Models\Candidate;
+use App\Models\CandidateDocument;
 use App\Models\Major;
 use App\Models\RegistrationDocument;
 use App\Models\RegistrationPhase;
 use App\Models\RegistrationSource;
 use App\Models\User;
 use App\Utilities\AlertDataGenerator;
+use App\Utilities\StorageUtils;
 use DB;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Throwable;
+use Yaza\LaravelGoogleDriveStorage\Gdrive;
 
 class AccountController extends Controller
 {
@@ -112,8 +117,8 @@ class AccountController extends Controller
         $sources = null;
         $documents = null;
         if($account->role == 'candidate'){
-            $candidate = Candidate::all()
-            ->load([
+            $candidate = Candidate::query()
+            ->with([
                 'candidatePhase',
                 'registrationPhase',
                 'registrationSource',
@@ -134,6 +139,21 @@ class AccountController extends Controller
         return view('admin.accounts.detail', compact('account', 'candidate', 'majors', 'phases', 'articles','sources', 'documents'));
     }
 
+    public function downloadDocument(User $account, CandidateDocument $candidateDocument)
+    {
+        if ($candidateDocument->candidate->user_id != $account->id) {
+            return response('', 200)
+                ->header('Content-Type', 'application/octet-stream')
+                ->header('Content-Disposition', 'attachment; filename="none"');
+        }
+
+        $data = StorageUtils::getCandidateDocument($candidateDocument);
+        return response($data->file, 200, [
+            'Content-Type' => $data->ext,
+            'Content-Disposition' => "attachment; filename=\"{$data->filename}\""
+        ]);
+    }
+
     public function updateAccount(UpdateAccountRequest $request, User $account)
     {
         $validated = $request->validated();
@@ -148,7 +168,7 @@ class AccountController extends Controller
             ]);
 
             if (!$isUpdated) {
-                throw new Exception("Gagal mengupdate akun dengan nama lengkap {$account->fullname} dan email {$account->email}");
+                throw new Exception("Gagal mengupdate akun dengan nama lengkap \"{$account->fullname}\" dan email \"{$account->email}\"");
             }
 
             if ($validated['role'] != 'candidate' && $validated['role'] != 'student') {
@@ -157,7 +177,7 @@ class AccountController extends Controller
                 AlertDataGenerator::generateAsFlashToSession(
                     AlertType::SUCCESS,
                     "Berhasil mengupdate akun",
-                    "Berhasil mengupdate akun dengan nama lengkap {$account->fullname} dan email {$account->email}",
+                    "Berhasil mengupdate akun dengan nama lengkap \"{$account->fullname}\" dan email \"{$account->email}\"",
                     $request->session()
                 );
                 return redirect()->route('admin.accounts');
@@ -167,7 +187,7 @@ class AccountController extends Controller
             $candidate = Candidate::find($validated['candidate_nisn']);
 
             if (!$candidate) {
-                throw new Exception("Calon siswa dengan NISN {$validated['candidate_nisn']} tidak ditemukan");
+                throw new Exception("Calon siswa dengan NISN \"{$validated['candidate_nisn']}\" tidak ditemukan");
             }
 
             $isUpdated = $candidate->update([
@@ -236,12 +256,27 @@ class AccountController extends Controller
                 throw new Exception("Gagal mengupdate data pilihan gelombang calon siswa");
             }
 
+            $candidateDocuments = CandidateDocument::query()
+                ->where('candidate_nisn', $validated['candidate_nisn'])
+                ->whereIn('id', array_keys($validated['documents']))
+                ->get();
+
+            foreach ($candidateDocuments as $candidateDocument) {
+                $documentData = $request->validate([
+                    "documents.{$candidateDocument->id}.file" => ["mimetypes:{$candidateDocument->mime_types}"]
+                ]);
+                StorageUtils::uploadCandidateDocument(
+                    $candidateDocument,
+                    $documentData['documents'][$candidateDocument->id]['file']->get()
+                );
+            }
+
             DB::commit();
 
             AlertDataGenerator::generateAsFlashToSession(
                 AlertType::SUCCESS,
                 "Berhasil mengupdate akun",
-                "Berhasil mengupdate akun calon siswa dengan nama lengkap {$account->fullname} dan email {$account->email}",
+                "Berhasil mengupdate akun calon siswa dengan nama lengkap \"{$account->fullname}\" dan email \"{$account->email}\"",
                 $request->session()
             );
             return redirect()->route('admin.accounts');
@@ -271,14 +306,14 @@ class AccountController extends Controller
             AlertDataGenerator::generateAsFlashToSession(
                 AlertType::SUCCESS,
                 "Berhasil menghapus akun",
-                "Berhasil menghapus akun calon siswa dengan nama lengkap {$account->fullname} dan email {$account->email}",
+                "Berhasil menghapus akun calon siswa dengan nama lengkap \"{$account->fullname}\" dan email \"{$account->email}\"",
                 $request->session(),
             );
         } else {
             AlertDataGenerator::generateAsFlashToSession(
                 AlertType::DANGER,
                 "Gagal menghapus akun",
-                "Gagal menghapus akun calon siswa dengan nama lengkap {$account->fullname} dan email {$account->email}",
+                "Gagal menghapus akun calon siswa dengan nama lengkap \"{$account->fullname}\" dan email \"{$account->email}\"",
                 $request->session(),
             );
         }

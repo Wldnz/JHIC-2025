@@ -20,12 +20,12 @@ class UpdateAccountRequest extends FormRequest
         'other',
     ];
     public static $availableReligions = [
-        'islam ',
-        'catholic ',
-        'buddha ',
-        'hindu ',
-        'protestant ',
-        'confucian ',
+        'islam',
+        'catholic',
+        'buddha',
+        'hindu',
+        'protestant',
+        'confucian',
         'other',
     ];
     public static $availableStatusFamilies = [
@@ -76,15 +76,15 @@ class UpdateAccountRequest extends FormRequest
             'role'      => ['required', Rule::in(self::$availableRoles)],
         ];
         $candidateRules = [
-            'candidate_nisn'        => ['required', 'string', 'exists:candidates,nisn'],
+            'candidate_nisn'        => ['nullable', 'string', 'exists:candidates,nisn'],
             'candidate_short_name'  => ['nullable', 'string', 'max:100'],
             'candidate_birth_date'  => ['required', 'date', 'date_format:Y-m-d'],
             'candidate_birth_place' => ['required', 'string', 'max:255'],
             'gender'                => ['required', 'in:male,female'],
-            'citizenship'           => ['nullable', Rule::in($this->availableCitizenships)],
-            'religion'              => ['nullable', Rule::in($this->availableReligions)],
+            'citizenship'           => ['nullable', Rule::in(self::$availableCitizenships)],
+            'religion'              => ['nullable', Rule::in(self::$availableReligions)],
             'address'               => ['nullable', 'string', 'min:1', 'max:65535'],
-            'status_family'         => ['nullable', Rule::in($this->availableStatusFamilies)],
+            'status_family'         => ['nullable', Rule::in(self::$availableStatusFamilies)],
             'order_family'          => ['nullable', 'integer', 'min:1'],
             'sum_siblings'          => ['nullable', 'integer', 'min:0'],
             'sum_half_siblings'     => ['nullable', 'integer', 'min:0'],
@@ -101,35 +101,47 @@ class UpdateAccountRequest extends FormRequest
             'phase.id'              => ['nullable', 'exists:registration_phases,id'],
         ];
         $candidateGuardianRules = [
-            'candidate_guardian_name'                   => ['required', 'string', 'min:1', 'max:255'],
+            'candidate_guardian_name'                   => ['nullable', 'string', 'min:1', 'max:255'],
             'candidate_guardian_birthdate'              => ['required', 'date', 'date_format:Y-m-d'],
             'candidate_guardian_birthplace'             => ['required', 'string', 'max:255'],
             'candidate_guardian_education'              => ['required', 'string', 'max:150'],
             'candidate_guardian_job'                    => ['required', 'string', 'max:150'],
             'candidate_guardian_monthly_income'         => ['required', 'string', 'min:0'],
-            'candidate_guardian_citizenship'            => ['required', Rule::in($this->availableCitizenships)],
-            'candidate_guardian_religion'               => ['required', Rule::in($this->availableReligions)],
+            'candidate_guardian_citizenship'            => ['required', Rule::in(self::$availableCitizenships)],
+            'candidate_guardian_religion'               => ['required', Rule::in(self::$availableReligions)],
             'candidate_guardian_city'                   => ['required', 'min:1', 'max:255'],
             'candidate_guardian_district'               => ['required', 'min:1', 'max:255'],
             'candidate_guardian_sub_district'           => ['required', 'min:1', 'max:255'],
             'candidate_guardian_rt_rw'                  => ['required', 'min:1', 'max:10'],
-            'candidate_guardian_postal_code'            => ['required', 'min:11', 'max:11'],
+            'candidate_guardian_postal_code'            => ['required', 'min:1', 'max:11'],
             'candidate_guardian_address'                => ['required', 'min:1', 'max:65535'],
-            'candidate_guardian_office_phone_number'    => ['nullable', 'min:11', 'max:12'],
-            'candidate_guardian_home_phone_number'      => ['nullable', 'min:11', 'max:12'],
+            'candidate_guardian_office_phone_number'    => ['nullable', 'min:11', 'max:20'],
+            'candidate_guardian_home_phone_number'      => ['nullable', 'min:11', 'max:20'],
             'candidate_guardian_phone_number'           => ['required', 'min:11', 'max:12'],
         ];
+        $candidateDocumentsRules = [
+            'documents.*.file' => ['nullable', 'file', 'max:10240'],
+        ];
 
-        if ($this->input('role') == 'candidate') {
-            return array_merge(
-                $baseRules,
-                $candidateRules,
-                $candidateRegistrationSourceRules,
-                $candidateRegistrationPhaseRules,
-                $candidateGuardianRules
-            );
-        } else {
+        if ($this->input('role') != 'candidate') {
             return $baseRules;
         }
+
+        $resultRules = array_merge($baseRules, $candidateDocumentsRules);
+
+        if ($this->input('candidate_nisn')) {
+            $resultRules = array_merge($resultRules, $candidateRules);
+        }
+        if ($this->input('registration_source')) {
+            $resultRules = array_merge($resultRules, $candidateRegistrationSourceRules);
+        }
+        if ($this->input('phase.id')) {
+            $resultRules = array_merge($resultRules, $candidateRegistrationPhaseRules);
+        }
+        if ($this->input('candidate_guardian_name')) {
+            $resultRules = array_merge($resultRules, $candidateGuardianRules);
+        }
+
+        return $resultRules;
     }
 }

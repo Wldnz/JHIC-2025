@@ -11,6 +11,7 @@ class CandidatePhase extends Model
 
     protected $fillable = [
         'candidate_nisn',
+        'user_id',
         'selected_phase_id',
         'selected_phase_name',
         'registration_source_id',
@@ -24,6 +25,14 @@ class CandidatePhase extends Model
     public function candidate(): BelongsTo
     {
         return $this->belongsTo(Candidate::class, 'candidate_nisn', 'nisn');
+    }
+
+    /**
+     * Get the user that owns the candidate.
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 
     /**

@@ -12,7 +12,9 @@ class CandidateDocument extends Model
 
     protected $fillable = [
         'candidate_nisn',
+        'user_id',
         'name',
+        'mime_types',
         'file_url',
     ];
 
@@ -22,5 +24,13 @@ class CandidateDocument extends Model
     public function candidate(): BelongsTo
     {
         return $this->belongsTo(Candidate::class, 'candidate_nisn', 'nisn');
+    }
+
+    /**
+     * Get the user that owns the candidate.
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 }

@@ -5,6 +5,8 @@ namespace Database\Seeders;
 use App\Models\RegistrationDocument;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Storage;
+use Yaza\LaravelGoogleDriveStorage\Gdrive;
 
 class RegistrationDocumentSeeder extends Seeder
 {
@@ -13,12 +15,26 @@ class RegistrationDocumentSeeder extends Seeder
      */
     public function run(): void
     {
+        $baseDir = "registration-documents";
+        $registrationDocumentFilePaths = [
+            "$baseDir/Surat Pernyataan Peserta Didik.docx",
+            "$baseDir/Surat Orang Tua - Wali Peserta Didik.docx",
+        ];
+
+        foreach ($registrationDocumentFilePaths as $registrationDocumentFilePath) {
+            Gdrive::put(
+                $registrationDocumentFilePath,
+                Storage::disk('local')->path($registrationDocumentFilePath)
+            );
+        }
+
         $dateNow = now();
         RegistrationDocument::query()->insert([
             [
                 'name' => 'Surat Pernyataan Peserta Didik',
                 'mime_types' => 'application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document',
                 'is_required' => true,
+                'download_file_url' => Gdrive::getFileInfo($registrationDocumentFilePaths[0])->path,
                 'created_at' => $dateNow,
                 'updated_at' => $dateNow,
             ],
@@ -26,6 +42,7 @@ class RegistrationDocumentSeeder extends Seeder
                 'name' => 'Surat Orang Tua / Wali Peserta Didik',
                 'mime_types' => 'application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document',
                 'is_required' => true,
+                'download_file_url' => Gdrive::getFileInfo($registrationDocumentFilePaths[1])->path,
                 'created_at' => $dateNow,
                 'updated_at' => $dateNow,
             ],
@@ -33,6 +50,7 @@ class RegistrationDocumentSeeder extends Seeder
                 'name' => 'Akta Kelahiran',
                 'mime_types' => 'image/*,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document',
                 'is_required' => true,
+                'download_file_url' => null,
                 'created_at' => $dateNow,
                 'updated_at' => $dateNow,
             ],
@@ -40,6 +58,7 @@ class RegistrationDocumentSeeder extends Seeder
                 'name' => 'Kartu Keluarga',
                 'mime_types' => 'image/*,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document',
                 'is_required' => true,
+                'download_file_url' => null,
                 'created_at' => $dateNow,
                 'updated_at' => $dateNow,
             ],
@@ -47,6 +66,7 @@ class RegistrationDocumentSeeder extends Seeder
                 'name' => 'Surat Keterangan Sehat / Dokter',
                 'mime_types' => 'application/pdf',
                 'is_required' => true,
+                'download_file_url' => null,
                 'created_at' => $dateNow,
                 'updated_at' => $dateNow,
             ],
@@ -54,6 +74,7 @@ class RegistrationDocumentSeeder extends Seeder
                 'name' => 'Surat Keterangan Kelakuan Baik dari Sekolah',
                 'mime_types' => 'application/pdf',
                 'is_required' => true,
+                'download_file_url' => null,
                 'created_at' => $dateNow,
                 'updated_at' => $dateNow,
             ],
@@ -61,27 +82,31 @@ class RegistrationDocumentSeeder extends Seeder
                 'name' => 'Surat Keterangan Catatan Kepolisian (SKCK)',
                 'mime_types' => 'application/pdf',
                 'is_required' => true,
+                'download_file_url' => null,
                 'created_at' => $dateNow,
                 'updated_at' => $dateNow,
             ],
             [
                 'name' => 'FC Raport Kelas III Smt. 5 - 6 di Legalisir',
-                'mime_types' => 'application/pdf',
+                'mime_types' => 'image/*,application/pdf',
                 'is_required' => true,
+                'download_file_url' => null,
                 'created_at' => $dateNow,
                 'updated_at' => $dateNow,
             ],
             [
                 'name' => 'FC Ijazah SLTP/MTs di Legalisir',
-                'mime_types' => 'application/pdf',
+                'mime_types' => 'image/*,application/pdf',
                 'is_required' => true,
+                'download_file_url' => null,
                 'created_at' => $dateNow,
                 'updated_at' => $dateNow,
             ],
             [
                 'name' => 'FC SKHUN SLTP/MTs di Legalisir',
-                'mime_types' => 'application/pdf',
+                'mime_types' => 'image/*,application/pdf',
                 'is_required' => true,
+                'download_file_url' => null,
                 'created_at' => $dateNow,
                 'updated_at' => $dateNow,
             ],

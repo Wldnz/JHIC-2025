@@ -7,10 +7,10 @@
                 <div class="container container-1">
                     <div class="wrapper-document">
                         <div class="wrapper-thumbnail">
-                            <input type="file" accept="{{ $document->mime_types }}" name="{{ $cd->name }}">
+                            <input type="file" accept="{{ $document->mime_types }}" name="documents[{{ $cd->id }}][file]">
                             <span>{{ $cd->name }}</span>
                         </div>
-                        <a href="{{ $cd->name  }}" download="{{ $cd->name }}">
+                        <a href="{{ route('admin.detail-account.download-document', ['account' => $candidate->user_id, 'candidateDocument' => $cd->id])  }}" download target="_blank">
                             @include('_components._sprite-icons', [ 'name' => 'convert', 'size' => 20 ])
                         </a>
                     </div>

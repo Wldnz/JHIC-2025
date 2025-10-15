@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\CandidateDocument;
 use App\Models\CandidatePhase;
 use App\Models\RegistrationDocument;
 use App\Models\User;
@@ -46,6 +47,7 @@ class DatabaseSeeder extends Seeder
         $this->call(CandidateMajorSeeder::class);
         $this->call(CandidateGuardianSeeder::class);
         $this->call(CandidatePhaseSeeder::class);
+        $this->call(CandidateDocumentSeeder::class);
         $this->call(PaymentMethodSeeder::class);
         $this->call(TransactionSeeder::class);
         $this->call(ArticleSeeder::class);
@@ -84,6 +86,7 @@ class DatabaseSeeder extends Seeder
         CandidateMajor::query()->truncate();
         CandidateGuardian::query()->truncate();
         CandidatePhase::query()->truncate();
+        CandidateDocument::query()->truncate();
         PaymentMethod::query()->truncate();
 
         Transaction::query()->delete();

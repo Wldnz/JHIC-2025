@@ -7,6 +7,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 return Application::configure(basePath: dirname(__DIR__))
@@ -24,13 +25,25 @@ return Application::configure(basePath: dirname(__DIR__))
             logger()->error($exception);
             report($exception);
 
-            if ($request->hasSession()) {
+            if (!$request->hasSession()) {
+                return;
+            }
+
+            if ($exception instanceof ValidationException) {
                 AlertDataGenerator::generateAsFlashToSession(
                     AlertType::DANGER,
-                    "Terjadi kesalahan",
-                    $exception->getMessage(),
+                    "Terjadi kesalahan dalam validasi data",
+                    json_encode($exception->errors(), JSON_PRETTY_PRINT),
                     $request->session(),
                 );
+                return;
             }
+
+            AlertDataGenerator::generateAsFlashToSession(
+                AlertType::DANGER,
+                "Terjadi kesalahan",
+                $exception->getMessage(),
+                $request->session(),
+            );
         });
     })->create();

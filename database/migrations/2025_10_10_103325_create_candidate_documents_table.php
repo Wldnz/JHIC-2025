@@ -14,7 +14,9 @@ return new class extends Migration
         Schema::create('candidate_documents', function (Blueprint $table) {
             $table->id();
             $table->string('candidate_nisn', 10);
+            $table->foreignId('user_id')->nullable()->constrained('users')->nullOnDelete();
             $table->string('name', 255);
+            $table->string('mime_types');
             $table->text('file_url');
             $table->boolean('is_valid')->default(false);
             $table->timestamps();

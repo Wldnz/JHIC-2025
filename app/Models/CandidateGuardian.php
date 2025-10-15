@@ -12,6 +12,7 @@ class CandidateGuardian extends Model
 
     protected $fillable = [
         'candidate_nisn',
+        'user_id',
         'guardian_type',
         'full_name',
         'birthplace',
@@ -42,5 +43,13 @@ class CandidateGuardian extends Model
     public function candidate(): BelongsTo
     {
         return $this->belongsTo(Candidate::class, 'candidate_nisn', 'nisn');
+    }
+
+    /**
+     * Get the user that owns the candidate.
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 }

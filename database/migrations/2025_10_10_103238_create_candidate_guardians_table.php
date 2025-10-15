@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('candidate_guardians', function (Blueprint $table) {
             $table->id();
             $table->string('candidate_nisn', 10);
+            $table->foreignId('user_id')->nullable()->constrained('users')->nullOnDelete();
             $table->enum('guardian_type', ['mother', 'father', 'other']);
             $table->string('full_name', 255);
             $table->string('birthplace', 255);
