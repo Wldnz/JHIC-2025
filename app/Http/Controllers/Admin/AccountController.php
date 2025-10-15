@@ -6,6 +6,7 @@ use App\AlertType;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreAccountRequest;
 use App\Http\Requests\Admin\UpdateAccountRequest;
+use App\Models\Article;
 use App\Models\Candidate;
 use App\Models\CandidateDocument;
 use App\Models\Major;
@@ -134,7 +135,8 @@ class AccountController extends Controller
             $sources = RegistrationSource::all(['id', 'name']);
             $documents = RegistrationDocument::all();
         }else if($account->role == 'article_creator'){
-            $articles = null;
+            $articles = Article::all()
+            ->where('writter_user_id', '=', $account->id);
         }
         return view('admin.accounts.detail', compact('account', 'candidate', 'majors', 'phases', 'articles','sources', 'documents'));
     }

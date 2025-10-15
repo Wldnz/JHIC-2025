@@ -52,7 +52,7 @@ class NewsController extends Controller
         }
 
         if($search_status){
-            $articles = $articles->where('role', '=', $search_status);
+            $articles = $articles->where('status', '=', $search_status);
         }
 
         $total = $articles->get()->count();

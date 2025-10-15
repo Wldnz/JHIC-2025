@@ -34,7 +34,7 @@
                         <a href="{{ route("user.majors.game-development") }}">Game Development</a>
                         <a href="{{ route("user.majors.visual-communication-design") }}">Visual Communication Design</a>
                         <a href="{{ route("user.majors.network-engineering") }}">IT Network</a>
-                        <a href="{{ route("user.majors.software-engineering") }}"> Software</a>
+                        <a href="{{ route("user.majors.software-engineering") }}">Software Engineer</a>
                     </div>
                 </div>
                 <div class="expandable-wrapper">
@@ -81,7 +81,7 @@
                 <a href="{{ route("user.majors.game-development") }}">Game Development</a>
                 <a href="{{ route("user.majors.visual-communication-design") }}">Visual Communication Design</a>
                 <a href="{{ route("user.majors.network-engineering") }}">IT Network</a>
-                <a href="{{ route("user.majors.software-engineering") }}"> Software</a>
+                <a href="{{ route("user.majors.software-engineering") }}">Software Engineer</a>
             </div>
             <a class="expandable">PROGRAM <img src="{{ asset("icons/arrow-down.svg") }}" alt=""></a>
             <div class="branch">

@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin;
 use App\Http\Controllers\Candidate;
 use App\Http\Controllers\User;
 use App\Http\Controllers\MidtransController;
+use App\Http\Middleware\isCreator;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\isLogin;
 use App\Http\Middleware\isAdmin;
@@ -98,7 +99,6 @@ Route::name('admin.')->prefix('admin')->middleware([isLogin::class, isAdmin::cla
         Route::post('/logout', [Admin\AuthController::class, 'logout'])->name('logout');
     });
 
-    Route::get('/dashboard', [Admin\Controller::class, 'dashboard'])->name('dashboard');
     Route::get('/settings', [Admin\Controller::class, 'settings'])->name('settings');
     Route::put('/settings', [Admin\Controller::class, 'updateSettings'])->name('update-settings');
 
@@ -132,12 +132,17 @@ Route::name('admin.')->prefix('admin')->middleware([isLogin::class, isAdmin::cla
     Route::put('/students/{student}', [Admin\StudentController::class, 'updateStudent'])->name('update-student');
     Route::delete('/students/{student}', [Admin\StudentController::class, 'deleteStudent'])->name('delete-student');
 
-    Route::get('/news', [Admin\NewsController::class, 'news'])->name('news');
-    Route::get('/news-create', [Admin\NewsController::class, 'createNews'])->name('create-news');
-    Route::post('/news-create', [Admin\NewsController::class, 'storeNews'])->name('store-news');
-    Route::get('/news/{news}', [Admin\NewsController::class, 'detailNews'])->name('detail-news');
-    Route::put('/news/{news}', [Admin\NewsController::class, 'updateNews'])->name('update-news');
-    Route::delete('/news/{news}', [Admin\NewsController::class, 'deleteNews'])->name('delete-news');
+    Route::withoutMiddleware([isAdmin::class])->middleware([isCreator::class])->group(function () {
+        Route::get('/dashboard', [Admin\Controller::class, 'dashboard'])->name('dashboard');
+        Route::get('/accounts/{account}', [Admin\AccountController::class, 'detailAccount'])->name('detail-account');
+        Route::put('/accounts/{account}', [Admin\AccountController::class, 'updateAccount'])->name('update-account');
+        Route::get('/news', [Admin\NewsController::class, 'news'])->name('news');
+        Route::get('/news-create', [Admin\NewsController::class, 'createNews'])->name('create-news');
+        Route::post('/news-create', [Admin\NewsController::class, 'storeNews'])->name('store-news');
+        Route::get('/news/{news}', [Admin\NewsController::class, 'detailNews'])->name('detail-news');
+        Route::put('/news/{news}', [Admin\NewsController::class, 'updateNews'])->name('update-news');
+        Route::delete('/news/{news}', [Admin\NewsController::class, 'deleteNews'])->name('delete-news');
+    });
 
     Route::get('/medias', [Admin\MediaController::class, 'media'])->name('media');
     Route::get('/medias-create', [Admin\MediaController::class, 'createMedia'])->name('create-media');

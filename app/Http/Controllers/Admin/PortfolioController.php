@@ -6,6 +6,7 @@ use App\AlertType;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StorePortfolioRequest;
 use App\Http\Requests\Admin\UpdatePortfolioRequest;
+use App\Models\Major;
 use App\Models\Portfolio;
 use App\Models\PortfolioImage;
 use App\Models\Student;
@@ -26,7 +27,9 @@ class PortfolioController extends Controller
     {
         $search = $request->get('search', '');
         $search_major = $request->get('search_major', '');
+        $search_class = $request->get('search_class', '');
         $page =  $request->get('page', 1);
+        $majors = Major::all();
         $max = $this->maxPage;
 
         $initiliazePortfolios = Portfolio::all();
@@ -50,6 +53,10 @@ class PortfolioController extends Controller
             $portfolios = $portfolios->where('student_major_name', '=', $search_major);
         }
 
+        if ($search_class) {
+            $portfolios = $portfolios->where('student_class', '=', $search_class);
+        }
+
         $total = $portfolios->count();
         $portfolios = $portfolios->limit($this->maxPage)
             ->offset(($page - 1) * $this->maxPage)
@@ -64,7 +71,7 @@ class PortfolioController extends Controller
             }
         ]);
 
-        return view('admin.portfolio.index', compact('portfolios', 'page', 'max', 'total', 'stats'));
+        return view('admin.portfolio.index', compact('portfolios', 'page', 'max', 'total', 'stats', 'majors'));
     }
 
     public function createPortfolio()

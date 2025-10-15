@@ -22,16 +22,6 @@
         </div>
         <div class="find-something">
             <form class="wrapper-filter">
-                <div class="wrapper-select">
-                    <select name="search_status" required>
-                        <option value="">Status: Semuanya</option>
-                        <option value="public">Status: Public</option>
-                        <option value="private">Status: Private</option>
-                    </select>
-                    <div class="wrapper-icon">
-                        @include("_components._sprite-icons", ["name" => "drop-down", "size" => 20])
-                    </div>
-                </div>
             </form>
             <form class="wrapper-search">
                 <input type="text" name="search" placeholder="Cari Fasilitas Disini.."
@@ -89,8 +79,6 @@
     </div>
 </main>
 
-<script defer>
-
-</script>
+@vite('resources/js/handle/delete-media');
 
 @include('_components._footerAdmin')

@@ -388,6 +388,9 @@ img {
 .profile .icon {
   font-size: clamp(0.6rem, 3.5vw, 2rem);
 }
+.profile .icon span {
+  cursor: pointer;
+}
 .profile .main-menu {
   min-width: calc(clamp(0.6rem, 3.5vw, 2rem) * 5.5);
   width: max-content;
@@ -408,12 +411,19 @@ img {
   border-bottom: 1px solid white;
   position: relative;
 }
-.profile .main-menu li a {
+.profile .main-menu li a, .profile .main-menu li button {
   display: flex;
   align-items: center;
   gap: 15px;
   font-weight: 600;
+  color: #273b98;
   cursor: pointer;
+}
+.profile .main-menu li button {
+  width: 100%;
+  outline: none;
+  border: none;
+  background-color: transparent;
 }
 .profile .main-menu li::before {
   content: "";
@@ -565,6 +575,11 @@ img {
 
 .mt-25 {
   margin-top: 25px;
+}
+
+.text-center {
+  width: 100%;
+  text-align: center;
 }
 
 .static {
@@ -1180,9 +1195,10 @@ body .mobile-nav.on {
 body .wrapper-user {
   transition: 0.3s;
   min-height: 80vh;
-  padding: 110px 0 0 0;
+  padding: 80px 0 0 0;
 }
 body .wrapper-user .dashboard {
+  padding: 30px 0 0 0;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -1759,6 +1775,7 @@ body .wrapper-user .majors .main h3 {
   font-weight: 500;
 }
 body .wrapper-user .majors .main h4 {
+  margin-top: 15px;
   text-align: center;
   font-size: clamp(0.6rem, 3.5vw, 2rem);
   font-weight: 400;
@@ -1936,6 +1953,71 @@ body .wrapper-user .majors .portfolio .body-portfolio .other-portfolio .portfoli
   font-weight: 600;
   margin-bottom: 10px;
 }
+body .wrapper-user .majors .prestasi {
+  width: 100%;
+  padding: 0 20px 30px 20px;
+}
+body .wrapper-user .majors .prestasi h3 {
+  font-size: clamp(0.6rem, 6.5vw, 4rem);
+  width: 100%;
+  text-align: center;
+  margin-bottom: 20px;
+}
+body .wrapper-user .majors .prestasi .prestasi-slider {
+  padding: 0 20px;
+  width: 100%;
+  display: flex;
+  gap: 10px;
+  overflow-x: scroll;
+  scroll-snap-type: x mandatory;
+}
+body .wrapper-user .majors .prestasi .prestasi-slider .prestasi-content {
+  scroll-snap-align: start;
+  flex-direction: column;
+  aspect-ratio: 2/3;
+  display: flex;
+  flex: 0 0 70%;
+  gap: 10px;
+}
+body .wrapper-user .majors .prestasi .prestasi-slider .prestasi-content img {
+  height: 80%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+body .wrapper-user .majors .prestasi .prestasi-slider .prestasi-content .info {
+  width: 100%;
+  height: 10%;
+  display: flex;
+  gap: 10px;
+}
+body .wrapper-user .majors .prestasi .prestasi-slider .prestasi-content .info .img-wrapper {
+  aspect-ratio: 1/1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #273b98;
+  border-radius: 999px;
+  padding: 2%;
+}
+body .wrapper-user .majors .prestasi .prestasi-slider .prestasi-content .info .img-wrapper img {
+  aspect-ratio: 1/1;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+}
+body .wrapper-user .majors .prestasi .prestasi-slider .prestasi-content .info .text {
+  width: 70%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+body .wrapper-user .majors .prestasi .prestasi-slider .prestasi-content .info .text h4 {
+  font-size: clamp(0.6rem, 3.5vw, 2rem);
+}
+body .wrapper-user .majors .prestasi .prestasi-slider .prestasi-content .info .text h5 {
+  font-size: clamp(0.6rem, 2vw, 1.5rem);
+}
 body .wrapper-user .majors .alumni {
   display: flex;
   flex-wrap: wrap;
@@ -1966,7 +2048,8 @@ body .wrapper-user .majors .alumni .alumni-tab .img-group {
   width: 100%;
 }
 body .wrapper-user .majors .alumni .alumni-tab .img-group img {
-  border-radius: 8px;
+  border-radius: 999px;
+  scale: 0.7;
   object-fit: cover;
   width: 1px;
   flex: 1;
@@ -1983,9 +2066,253 @@ body .wrapper-user .majors .alumni .alumni-tab h4 {
   margin: 0;
 }
 body .wrapper-user .majors .alumni .alumni-tab p {
-  font-size: calc(clamp(0.6rem, 2vw, 1.5rem) * 1.3);
-  padding: 0 15%;
+  font-size: clamp(0.6rem, 2vw, 1.5rem);
+  padding: 0 10%;
   text-align: center;
+}
+body .wrapper-user .profile {
+  padding: 0 0 30px 0;
+}
+body .wrapper-user .profile .main {
+  width: 100%;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+body .wrapper-user .profile .main .bg {
+  position: absolute;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+}
+body .wrapper-user .profile .main .image {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+body .wrapper-user .profile .main .image img {
+  width: 80%;
+  height: 100%;
+  object-fit: contain;
+  object-position: bottom;
+}
+body .wrapper-user .profile .main .text {
+  width: 100%;
+  padding: 20px;
+}
+body .wrapper-user .profile .main .text h2 {
+  font-size: clamp(0.6rem, 5.5vw, 3.5rem);
+  font-weight: 650;
+  margin-bottom: 20px;
+}
+body .wrapper-user .profile .main .text p {
+  font-size: clamp(0.6rem, 3.5vw, 2rem);
+  margin-bottom: 30px;
+}
+body .wrapper-user .profile .main .text h4 {
+  font-size: clamp(0.6rem, 4.5vw, 3rem);
+  font-weight: 400;
+}
+body .wrapper-user .profile .main .text h3 {
+  font-size: clamp(0.6rem, 4vw, 2.5rem);
+  font-weight: 500;
+}
+body .wrapper-user .profile .department {
+  padding: 0 20px;
+}
+body .wrapper-user .profile .department .image {
+  display: none;
+}
+body .wrapper-user .profile .department h5 {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  align-items: center;
+  font-size: clamp(0.6rem, 4.5vw, 3rem);
+}
+body .wrapper-user .profile .department h5 img {
+  transition: 0.1s;
+  height: 2em;
+  width: auto;
+  filter: brightness(0) saturate(100%) invert(17%) sepia(56%) saturate(3428%) hue-rotate(224deg) brightness(91%) contrast(90%);
+}
+body .wrapper-user .profile .department h5 img.active {
+  rotate: 180deg;
+}
+body .wrapper-user .profile .department .text {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  text-align: center;
+  align-items: center;
+  transition: 0.1s;
+  max-height: 0;
+  overflow-y: hidden;
+}
+body .wrapper-user .profile .department .text h1 {
+  font-size: clamp(0.6rem, 6.5vw, 4rem);
+}
+body .wrapper-user .profile .department .text .image {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+body .wrapper-user .profile .department .text .image img {
+  width: 70%;
+  margin-bottom: 10px;
+  border-radius: 8px;
+}
+body .wrapper-user .profile .department .text .image h2 {
+  font-weight: 500;
+  font-size: clamp(0.6rem, 4.5vw, 3rem);
+}
+body .wrapper-user .profile .department .text .image h3 {
+  font-weight: 650;
+  font-size: clamp(0.6rem, 4vw, 2.5rem);
+}
+body .wrapper-user .profile .department .text p {
+  text-align: justify;
+  font-size: clamp(0.6rem, 3.5vw, 2rem);
+  font-weight: 400;
+}
+body .wrapper-user .profile .department .text.activated {
+  max-height: 1000px;
+}
+body .wrapper-user .profile .detail {
+  padding: 0 20px;
+}
+body .wrapper-user .profile .detail h5 {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  align-items: center;
+  font-size: clamp(0.6rem, 4.5vw, 3rem);
+}
+body .wrapper-user .profile .detail h5 img {
+  transition: 0.1s;
+  height: 2em;
+  width: auto;
+  filter: brightness(0) saturate(100%) invert(17%) sepia(56%) saturate(3428%) hue-rotate(224deg) brightness(91%) contrast(90%);
+}
+body .wrapper-user .profile .detail h5 img.active {
+  rotate: 180deg;
+}
+body .wrapper-user .profile .detail .text {
+  width: 100%;
+  max-height: 0;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+body .wrapper-user .profile .detail .text.activated {
+  max-height: 1000px;
+}
+body .wrapper-user .profile .detail .text .info {
+  display: flex;
+  justify-content: space-between;
+}
+body .wrapper-user .profile .detail .text .info p {
+  font-size: clamp(0.6rem, 4vw, 2.5rem);
+  font-weight: 500;
+  width: 10%;
+  text-align: center;
+  padding: 10px 0;
+  border-bottom: 0.1px solid #eaf7f9;
+}
+body .wrapper-user .profile .detail .text .info p:first-child, body .wrapper-user .profile .detail .text .info p:last-child {
+  text-align: start;
+  width: 45%;
+}
+body .wrapper-user .facility .unity {
+  display: none;
+}
+body .wrapper-user .facility .info-facility {
+  width: 100%;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-bottom: 20px;
+}
+body .wrapper-user .facility .info-facility hr {
+  display: none;
+}
+body .wrapper-user .facility .info-facility p {
+  flex: 1;
+  color: #fff;
+  text-align: center;
+  background-color: #273b98;
+  padding: 10px 0;
+}
+body .wrapper-user .facility .info-facility .rooms {
+  flex: 1;
+  display: flex;
+  gap: 2px;
+}
+body .wrapper-user .facility .info-facility .rooms p {
+  text-align: center;
+  flex: 1;
+  padding: calc(10px + 0.5em) 0;
+}
+body .wrapper-user .facility .gallery {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+  padding: 0 20px;
+  width: 100%;
+  gap: 20px;
+}
+body .wrapper-user .facility .gallery h1 {
+  font-size: clamp(0.6rem, 6.5vw, 4rem);
+  width: 100%;
+}
+body .wrapper-user .facility .gallery .gallery-images {
+  gap: 10px;
+  justify-content: center;
+  display: flex;
+  flex-wrap: wrap;
+}
+body .wrapper-user .facility .gallery .gallery-images span {
+  width: calc(50% - 5px);
+  aspect-ratio: 16/9;
+  border-radius: 8px;
+  position: relative;
+  display: flex;
+}
+body .wrapper-user .facility .gallery .gallery-images span img {
+  border-radius: 8px;
+  position: absolute;
+  height: 100%;
+  top: 0;
+  left: 0;
+  width: 100%;
+  object-fit: cover;
+  z-index: -1;
+}
+body .wrapper-user .facility .gallery .gallery-images span p {
+  font-size: clamp(0.6rem, 2vw, 1.5rem);
+  background-color: #273b98;
+  border-radius: 8px 0 8px 0;
+  width: max-content;
+  height: max-content;
+  padding: 5px;
+  color: #fff;
+  font-weight: 500;
+}
+body .wrapper-user .facility .gallery .gallery-images span a {
+  background-color: #273b98;
+  border-radius: 8px;
+  font-size: clamp(0.6rem, 4vw, 2.5rem);
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-weight: 550;
+  color: #fff;
+  display: flex;
+  height: 100%;
+  width: 100%;
 }
 
 footer {
@@ -2242,6 +2569,12 @@ footer .copyright p {
   body .wrapper-user .majors .portfolio .body-portfolio .other-portfolio .portfolios h5 {
     font-size: calc(clamp(0.6rem, 2vw, 1.5rem) * 1.2);
   }
+  body .wrapper-user .majors .prestasi {
+    padding: 0 15vw;
+  }
+  body .wrapper-user .majors .prestasi h3 {
+    font-size: clamp(0.6rem, 5.5vw, 3.5rem);
+  }
   body .wrapper-user .majors .alumni h2 {
     font-size: clamp(0.6rem, 3.5vw, 2rem);
     width: 100%;
@@ -2266,6 +2599,45 @@ footer .copyright p {
     font-size: clamp(0.4rem, 1.25vw, 1rem);
     font-weight: 500;
     color: #4a4a4a;
+  }
+  body .wrapper-user .profile .main .text h2 {
+    font-size: clamp(0.6rem, 4vw, 2.5rem);
+  }
+  body .wrapper-user .profile .main .text p {
+    font-size: calc(clamp(0.6rem, 2vw, 1.5rem) * 1.3);
+  }
+  body .wrapper-user .profile .main .text h4 {
+    font-size: clamp(0.6rem, 3.5vw, 2rem);
+  }
+  body .wrapper-user .profile .main .text h3 {
+    font-size: calc(clamp(0.6rem, 2vw, 1.5rem) * 1.3);
+  }
+  body .wrapper-user .profile .department h5 {
+    font-size: calc(clamp(0.6rem, 2vw, 1.5rem) * 1.3);
+  }
+  body .wrapper-user .profile .department .text {
+    padding: 0 80px;
+  }
+  body .wrapper-user .profile .department .text h1 {
+    font-size: clamp(0.6rem, 3.5vw, 2rem);
+  }
+  body .wrapper-user .profile .department .text p {
+    font-size: clamp(0.6rem, 2vw, 1.5rem);
+  }
+  body .wrapper-user .profile .department .text .image img {
+    width: 50%;
+  }
+  body .wrapper-user .profile .department .text .image h2 {
+    font-size: clamp(0.6rem, 2vw, 1.5rem);
+  }
+  body .wrapper-user .profile .department .text .image h3 {
+    font-size: clamp(0.6rem, 2vw, 1.5rem);
+  }
+  body .wrapper-user .profile .detail h5 {
+    font-size: calc(clamp(0.6rem, 2vw, 1.5rem) * 1.3);
+  }
+  body .wrapper-user .profile .detail .text .info p {
+    font-size: clamp(0.6rem, 2vw, 1.5rem);
   }
   footer .sosmed {
     flex-direction: row;
@@ -2481,8 +2853,9 @@ footer .copyright p {
     flex-direction: row;
     flex-wrap: wrap;
     align-items: stretch;
-    gap: 0;
     height: fit-content;
+    margin-bottom: 60px;
+    gap: 0;
   }
   body .wrapper-user .majors .portfolio h3 {
     font-size: clamp(0.6rem, 4vw, 2.5rem);
@@ -2490,14 +2863,16 @@ footer .copyright p {
   }
   body .wrapper-user .majors .portfolio .body-portfolio {
     display: flex;
-    height: auto;
+    height: 70vh;
+    overflow: hidden;
+    align-items: start;
     padding: 0;
   }
   body .wrapper-user .majors .portfolio .body-portfolio .main-portfolio {
-    flex: 7;
+    width: 70%;
+    height: fit-content;
     margin: 0;
     padding: 20px 10vw;
-    height: 80vh;
   }
   body .wrapper-user .majors .portfolio .body-portfolio .main-portfolio h3 {
     font-size: clamp(0.6rem, 2vw, 1.5rem);
@@ -2510,8 +2885,7 @@ footer .copyright p {
     font-size: clamp(0.4rem, 1.25vw, 1rem);
   }
   body .wrapper-user .majors .portfolio .body-portfolio .other-portfolio {
-    height: 80vh;
-    flex: 3;
+    width: 30%;
     margin: 20px 0;
     padding: 0;
     overflow-y: scroll;
@@ -2520,6 +2894,7 @@ footer .copyright p {
     align-items: center;
     padding: 0 30px;
     scrollbar-width: thin;
+    max-height: 100%;
   }
   body .wrapper-user .majors .portfolio .body-portfolio .other-portfolio .portfolios img {
     width: 100%;
@@ -2527,7 +2902,20 @@ footer .copyright p {
   body .wrapper-user .majors .portfolio .body-portfolio .other-portfolio .portfolios h5 {
     font-size: clamp(0.4rem, 1.25vw, 1rem);
   }
+  body .wrapper-user .majors .prestasi h3 {
+    font-size: clamp(0.6rem, 4vw, 2.5rem);
+  }
+  body .wrapper-user .majors .prestasi .prestasi-slider .prestasi-content {
+    flex: 0 0 calc(70% - 25vw);
+  }
+  body .wrapper-user .majors .prestasi .prestasi-slider .prestasi-content .info .text h4 {
+    font-size: clamp(0.4rem, 1.25vw, 1rem);
+  }
+  body .wrapper-user .majors .prestasi .prestasi-slider .prestasi-content .info .text h5 {
+    font-size: clamp(0.2rem, 1vw, 0.85rem);
+  }
   body .wrapper-user .majors .alumni .alumni-tab {
+    max-width: 40%;
     width: auto;
     flex: 1;
   }
@@ -2539,6 +2927,77 @@ footer .copyright p {
   }
   body .wrapper-user .majors .alumni .alumni-tab p {
     font-size: clamp(0.2rem, 1vw, 0.85rem);
+  }
+  body .wrapper-user .profile .main {
+    flex-direction: row;
+  }
+  body .wrapper-user .profile .main .text h2 {
+    font-size: clamp(0.6rem, 3.5vw, 2rem);
+  }
+  body .wrapper-user .profile .main .text p {
+    font-size: clamp(0.6rem, 2vw, 1.5rem);
+  }
+  body .wrapper-user .profile .main .text h4 {
+    font-size: clamp(0.6rem, 2vw, 1.5rem);
+  }
+  body .wrapper-user .profile .main .text h3 {
+    font-size: clamp(0.4rem, 1.25vw, 1rem);
+  }
+  body .wrapper-user .profile .department {
+    margin-top: 30px;
+    display: flex;
+  }
+  body .wrapper-user .profile .department:nth-child(2n) {
+    flex-direction: row-reverse;
+  }
+  body .wrapper-user .profile .department .image {
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    text-align: center;
+  }
+  body .wrapper-user .profile .department .image img {
+    width: 60%;
+    border-radius: 8px;
+    margin-bottom: 20px;
+  }
+  body .wrapper-user .profile .department .image h2 {
+    font-size: calc(clamp(0.4rem, 1.25vw, 1rem) * 1.3);
+  }
+  body .wrapper-user .profile .department .image h3 {
+    font-size: clamp(0.4rem, 1.25vw, 1rem);
+  }
+  body .wrapper-user .profile .department h5 {
+    display: none;
+  }
+  body .wrapper-user .profile .department .text {
+    align-items: start;
+    width: 70%;
+    max-height: 1000px;
+    padding: 0 20px;
+  }
+  body .wrapper-user .profile .department .text .image {
+    display: none;
+  }
+  body .wrapper-user .profile .department .text h1 {
+    text-align: start;
+    font-size: calc(clamp(0.6rem, 2vw, 1.5rem) * 1.3);
+  }
+  body .wrapper-user .profile .department .text p {
+    font-size: calc(clamp(0.4rem, 1.25vw, 1rem) * 1.2);
+    font-weight: 450;
+  }
+  body .wrapper-user .profile .detail h5 img {
+    display: none;
+  }
+  body .wrapper-user .profile .detail .text {
+    max-height: 1000px;
+  }
+  body .wrapper-user .profile .detail .text .info p {
+    font-size: clamp(0.4rem, 1.25vw, 1rem);
   }
   footer .sosmed {
     flex-direction: row;

@@ -37,3 +37,12 @@
         @endif
     @endforeach
 </form>
+
+<script defer>
+    const wrapper_filter = document.querySelector('.wrapper-filter');
+    document.querySelectorAll('.wrapper-select').forEach(w => {
+        w.querySelectorAll('select').forEach(select => {
+            select.addEventListener('change', () => wrapper_filter.submit());
+        });
+    })
+</script>

@@ -20,10 +20,22 @@
         <div class="find-something">
             <form class="wrapper-filter">
                 <div class="wrapper-select">
-                    <select name="search_status" required>
-                        <option value="">Status: Semuanya</option>
-                        <option value="public">Status: Public</option>
-                        <option value="private">Status: Private</option>
+                    <select name="search_major" required>
+                        <option value="">Semuanya</option>
+                        @foreach ($majors as $major)
+                            <option value="{{ $major->long_name }}" @selected(app('request')->get('search_major') == $major->long_name)>{{ $major->long_name }}</option>
+                        @endforeach
+                    </select>
+                    <div class="wrapper-icon">
+                        @include("_components._sprite-icons", ["name" => "drop-down", "size" => 20])
+                    </div>
+                </div>
+                <div class="wrapper-select">
+                    <select name="search_class" required>
+                        <option value="">Semuanya</option>
+                        <option value="X" @selected(app('request')->get('search_class') == 'X')>Kelas 10</option>
+                        <option value="XI" @selected(app('request')->get('search_class') == 'XI')>Kelas 12</option>
+                        <option value="XII" @selected(app('request')->get('search_class') == 'XII')>Kelas 12</option>
                     </select>
                     <div class="wrapper-icon">
                         @include("_components._sprite-icons", ["name" => "drop-down", "size" => 20])
@@ -39,10 +51,10 @@
         </div>
         <div class="wrapper-content-media items-start">
             @foreach ($portfolios as $key=>$portfolio)
-               <a class="wrapper-card-media"
+               <div class="wrapper-card-media"
                 href="{{ route('admin.detail-portfolio', ['portfolio' => $portfolio->id]) }}"
             >
-                <div class="card-media">
+                <a class="card-media">
                     <div class="wrapper-image">
                         <img src="{{  $portfolio->portfolioImages[0]['url'] ?? asset('images/default.png') }}" alt="wrapper-iamge">
                     </div>
@@ -62,8 +74,23 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </a> 
+                </a>
+                <form class="floating-action"
+                    action="{{ route('admin.delete-portfolio', ['portfolio' => $portfolio->id]) }}"
+                    method="POST"
+                    id="media-floating-icon"
+                >
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="action">
+                        @include('_components._sprite-icons', [
+                            'name' => 'trash',
+                            'size' => 20,
+                        ])
+                        <span>Delete Portfolio</span>
+                    </button>
+                </form>
+            </div> 
             @endforeach
         </div>
         @include('_components._pagination-media', [
@@ -73,5 +100,7 @@
         ])
     </div>
 </main>
+
+@vite('resources/js/handle/delete-media');
 
 @include('_components._footerAdmin')

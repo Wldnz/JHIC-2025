@@ -96,14 +96,14 @@
     </div>
     <div class="wrapper-content">
         @includeWhen($account->role == 'candidate' && $candidate, 'admin.accounts.components.details.index')
-        @includeWhen($account->role == 'article_creator' && $articles, 'admin.accounts.components.details.index')
+        @includeWhen($account->role == 'article_creator' && $articles, 'admin.accounts.components.details.articles')
         @if($account->role == 'candidate' && !$candidate)
             <div class="form-data-profile" id="candidate-document-form">
                 <div class="wrapper-form">
                     <div class="container container-1">
                         <div class="wrapper-document">
                             <div class="wrapper-thumbnail">
-                                <h4>Calon Peserta Didik Belum Mengisi Formulir</h4>
+                                <h4 class="text-center">Calon Peserta Didik Belum Mengisi Formulir</h4>
                             </div>
                         </div>
                     </div>
@@ -125,7 +125,7 @@
     </div>
     <div class="wrapper-button">
         <button class="btn" type="submit">Simpan Perubahan</button>
-        <button class="btn btn-back" type="button" id="reset-password-btn">Reset Password</button>
+        <!-- <button class="btn btn-back" type="button" id="reset-password-btn">Reset Password</button> -->
     </div>
 </form>
 
@@ -152,7 +152,7 @@
     //     .then(e => e.json())
     //     .then(e => console.log(e));
     // };
-    document.getElementById('reset-password-btn').addEventListener('click', handlerResetPassword)
+    // document.getElementById('reset-password-btn').addEventListener('click', handlerResetPassword)
 </script>
 
 @include('_components._footerAdmin')

@@ -1,4 +1,4 @@
-@include('_components._headerAdmin', ['title' => 'Facilities Management'])
+@include('_components._headerAdmin', ['title' => 'Detail Achievement'])
 @php
     $currentPath = explode('/admin/', url()->current())[1];
     logger('as', [$achievement])
