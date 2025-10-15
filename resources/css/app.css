@@ -71,6 +71,23 @@ img {
     min-width: 100px;
   }
 }
+@keyframes openSidebarCandidate {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 100%;
+  }
+}
+@keyframes closeSidebarCandidate {
+  0% {
+    width: 100%;
+  }
+  100% {
+    width: 0;
+    display: none;
+  }
+}
 @keyframes line-break {
   100% {
     width: 100%;
@@ -79,6 +96,11 @@ img {
 @keyframes rotate-y-360 {
   100% {
     rotate: 360deg;
+  }
+}
+@media screen and (min-width: 98px) {
+  .navigation-side {
+    width: inherit !important;
   }
 }
 body {
@@ -368,6 +390,23 @@ img {
     min-width: 100px;
   }
 }
+@keyframes openSidebarCandidate {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 100%;
+  }
+}
+@keyframes closeSidebarCandidate {
+  0% {
+    width: 100%;
+  }
+  100% {
+    width: 0;
+    display: none;
+  }
+}
 @keyframes line-break {
   100% {
     width: 100%;
@@ -376,6 +415,11 @@ img {
 @keyframes rotate-y-360 {
   100% {
     rotate: 360deg;
+  }
+}
+@media screen and (min-width: 98px) {
+  .navigation-side {
+    width: inherit !important;
   }
 }
 .profile:hover > ul {
@@ -520,6 +564,14 @@ img {
 
 .close-sidebar {
   animation: closeSidebar 200ms forwards;
+}
+
+.open-sidebar-candidate {
+  animation: openSidebarcCandidate 800ms forwards;
+}
+
+.close-sidebar-candidate {
+  animation: closeSidebarCandidate 800ms forwards;
 }
 
 .button-submit-form {
