@@ -2,6 +2,53 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+body {
+  font-family: "Montserrat", "sans-serif";
+  background-color: #fff;
+  font-size: clamp(0.6rem, 2vw, 1.5rem);
+  color: #273b98;
+}
+
+::selection {
+  background-color: transparent;
+  color: rgb(0, 0, 156);
+  filter: none;
+}
+::selection:hover {
+  filter: none;
+}
+
+.selector {
+  user-select: none;
+  -webkit-user-drag: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  transition: opacity 0.4s;
+}
+*::-webkit-scrollbar {
+  display: none;
+}
+
+img {
+  object-fit: fill;
+  object-position: center;
+}
+
 body {
   font-family: "Montserrat", "sans-serif";
   background-color: #fff;
@@ -851,7 +898,6 @@ a {
 
 .content {
   width: inherit;
-  padding: 15px;
   display: flex;
   flex-direction: column;
   gap: 25px;
@@ -899,6 +945,253 @@ a {
 }
 .content .accessoris .stars img:nth-child(2) {
   align-self: flex-end;
+}
+.content .stages {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.content .stages .hero {
+  min-height: 250px;
+  background-color: #273b98;
+  color: #fff;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  text-align: center;
+  font-size: calc(clamp(0.6rem, 4.5vw, 3rem) - 0.8vw);
+  gap: 10px;
+}
+.content .stages .hero img {
+  width: 50%;
+  height: 50%;
+  border-radius: 8px;
+}
+.content .stages .hero .description {
+  font-size: clamp(0.6rem, 3.5vw, 2rem);
+}
+.content .stages .hero .description p {
+  font-size: calc(clamp(0.6rem, 4.5vw, 3rem) - 1.6vw);
+}
+.content .stages .form-stage {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+.content .stages .form-stage .fields {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.content .stages .form-stage .fields .wrapper-input,
+.content .stages .form-stage .fields .wrapper-input-multiple {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.content .stages .form-stage .fields .wrapper-input label,
+.content .stages .form-stage .fields .wrapper-input-multiple label {
+  font-size: calc(clamp(0.6rem, 4.5vw, 3rem) - 0.9vw);
+  font-weight: 600;
+  padding: 2px;
+}
+.content .stages .form-stage .fields .wrapper-input input,
+.content .stages .form-stage .fields .wrapper-input select,
+.content .stages .form-stage .fields .wrapper-input textarea,
+.content .stages .form-stage .fields .wrapper-input-multiple input,
+.content .stages .form-stage .fields .wrapper-input-multiple select,
+.content .stages .form-stage .fields .wrapper-input-multiple textarea {
+  width: 100%;
+  height: 10vw;
+  min-height: 40px;
+  max-height: 80px;
+  padding: 5px 10px;
+  font-size: clamp(0.6rem, 2vw, 1.5rem);
+  border: 2px solid #273b98;
+  border-radius: 8px;
+  outline: none;
+}
+.content .stages .form-stage .fields .wrapper-input textarea,
+.content .stages .form-stage .fields .wrapper-input-multiple textarea {
+  resize: vertical;
+  max-height: 120px;
+}
+.content .stages .form-stage .fields .wrapper-input-multiple {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+.content .stages .form-stage .fields .wrapper-input-multiple-1 {
+  grid-template-columns: 1fr !important;
+}
+.content .stages .form-stage .fields .wrapper-option-button {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+.content .stages .form-stage .fields .wrapper-option-button .btn-major {
+  min-width: 80px;
+  min-height: 25px;
+  padding: 10px;
+  background-color: #fff;
+  color: #273b98;
+  border: 1.5px solid #273b98;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.content .stages .form-stage .fields .wrapper-option-button .btn-major-selected {
+  background-color: #273b98;
+  color: #fff;
+}
+.content .stages .form-stage .fields .wrapper-option-button .btn-major:hover {
+  background-color: #273b98;
+  color: #fff;
+}
+.content .stages .form-stage .s-submit {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.content .stages .form-stage .s-submit p {
+  text-align: center;
+}
+.content .stages .form-stage .s-submit .w-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.content .stages .form-stage .s-submit .w-buttons button {
+  width: 100%;
+  min-height: 40px;
+  max-height: 60px;
+  padding: 5px;
+  border: 1.5px solid #273b98;
+  border-radius: 6px;
+  border-color: #273b98;
+  color: #fff;
+  background-color: #273b98;
+  font-weight: 600;
+  cursor: pointer;
+}
+.content .stages .form-stage .s-submit .w-buttons .pages {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 5px;
+}
+.content .stages .form-stage .s-submit .w-buttons .pages .pagination-action {
+  background-color: #fff;
+  border: 1px solid #273b98;
+  color: #273b98;
+}
+@media screen and (min-width: 1000px) {
+  .content .stages img {
+    display: none;
+  }
+  .content .stages .form-stage {
+    padding: 40px;
+  }
+  .content .stages .form-stage h2 {
+    font-size: clamp(0.6rem, 2vw, 1.5rem);
+  }
+  .content .stages .form-stage .fields {
+    gap: 20px;
+  }
+  .content .stages .form-stage .fields .wrapper-input label,
+  .content .stages .form-stage .fields .wrapper-input-multiple label {
+    font-size: clamp(0.6rem, 2vw, 1.5rem);
+  }
+  .content .stages .form-stage .fields .wrapper-input input,
+  .content .stages .form-stage .fields .wrapper-input-multiple input {
+    height: 70px;
+  }
+  .content .stages .form-stage .fields .wrapper-input input[type=date],
+  .content .stages .form-stage .fields .wrapper-input select,
+  .content .stages .form-stage .fields .wrapper-input-multiple input[type=date],
+  .content .stages .form-stage .fields .wrapper-input-multiple select {
+    height: 60px;
+  }
+  .content .stages .form-stage .fields .wrapper-input-1,
+  .content .stages .form-stage .fields .wrapper-input-multiple-1 {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  .content .stages .form-stage .fields .wrapper-input-multiple {
+    gap: 20px;
+  }
+  .content .stages .form-stage .s-submit .w-buttons button {
+    height: 65px;
+  }
+  .content .stages .form-stage .s-submit .w-buttons .pages {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 5px;
+  }
+  .content .stages .form-stage .s-submit .w-buttons .pages .pagination-action {
+    background-color: #fff;
+    border: 1px solid #273b98;
+    color: #273b98;
+  }
+}
+@media screen and (min-width: 768px) and (max-width: 1000px) {
+  .content .stages img {
+    display: none;
+  }
+  .content .stages .form-stage h2 {
+    font-size: clamp(0.6rem, 2vw, 1.5rem);
+  }
+  .content .stages .form-stage .fields .wrapper-input,
+  .content .stages .form-stage .fields .wrapper-input-multiple {
+    gap: 5px;
+  }
+  .content .stages .form-stage .fields .wrapper-input label,
+  .content .stages .form-stage .fields .wrapper-input-multiple label {
+    font-size: clamp(0.6rem, 2vw, 1.5rem);
+  }
+  .content .stages .form-stage .fields .wrapper-input input,
+  .content .stages .form-stage .fields .wrapper-input select,
+  .content .stages .form-stage .fields .wrapper-input textarea,
+  .content .stages .form-stage .fields .wrapper-input-multiple input,
+  .content .stages .form-stage .fields .wrapper-input-multiple select,
+  .content .stages .form-stage .fields .wrapper-input-multiple textarea {
+    width: 100%;
+  }
+  .content .stages .form-stage .fields .wrapper-input input,
+  .content .stages .form-stage .fields .wrapper-input-multiple input {
+    height: 60px;
+  }
+  .content .stages .form-stage .fields .wrapper-input input[type=date],
+  .content .stages .form-stage .fields .wrapper-input select,
+  .content .stages .form-stage .fields .wrapper-input-multiple input[type=date],
+  .content .stages .form-stage .fields .wrapper-input-multiple select {
+    height: 50px;
+  }
+  .content .stages .form-stage .fields .wrapper-input-1,
+  .content .stages .form-stage .fields .wrapper-input-multiple-1 {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+@media screen and (min-width: 425px) and (max-width: 768px) {
+  .content .stages .form-stage {
+    gap: 25px;
+  }
+  .content .stages .form-stage h2 {
+    font-size: calc(clamp(0.6rem, 3.5vw, 2rem) - 0.9vw);
+  }
+  .content .stages .form-stage .fields .wrapper-input label,
+  .content .stages .form-stage .fields .wrapper-input-multiple label {
+    font-size: clamp(0.6rem, 2vw, 1.5rem);
+  }
+  .content .stages .form-stage .fields .wrapper-input input[type=date],
+  .content .stages .form-stage .fields .wrapper-input select,
+  .content .stages .form-stage .fields .wrapper-input-multiple input[type=date],
+  .content .stages .form-stage .fields .wrapper-input-multiple select {
+    max-height: 40px;
+  }
 }
 
 /*# sourceMappingURL=candidate.css.map */

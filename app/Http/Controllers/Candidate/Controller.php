@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Candidate;
 
 use App\Models\Candidate;
-use Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class Controller extends \App\Http\Controllers\Controller
 {
