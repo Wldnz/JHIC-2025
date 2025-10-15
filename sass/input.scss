@@ -4,6 +4,32 @@
 @import "user/programs/progsil";
 @import "user/programs/bichen";
 
+$font-size-s: clamp(0.2rem, 1vw, 0.85rem);
+$font-size-m: clamp(0.4rem, 1.25vw, 1rem);
+$font-size-l: clamp(0.6rem, 2vw, 1.5rem);
+$font-size-xl: clamp(0.6rem, 3.5vw, 2rem);
+$font-size-2xl: clamp(0.6rem, 4vw, 2.5rem);
+$font-size-3xl: clamp(0.6rem, 4.5vw, 3rem);
+$font-size-4xl: clamp(0.6rem, 5.5vw, 3.5rem);
+$font-size-5xl: clamp(0.6rem, 6.5vw, 4rem);
+$font-size-6xl: clamp(0.6rem, 7.5vw, 4.5rem);
+$font-size-7xl: clamp(0.6rem, 8.5vw, 5rem);
+
+$color-primary: #fff;
+$color-secondary: #eaf7f9;
+$color-accent: #273b98;
+$color-accent-gradient: linear-gradient(#485bb1 0%, #273b98 100%);
+$color-bi-gradient: linear-gradient(
+    135deg,
+    #0fcbbc 0%,
+    #5f77f7 41%,
+    #8780fc 62%,
+    #a387ff 100%
+);
+$color-secondary-background: rgba(95, 119, 247, 0.6);
+$border-radius: 8px;
+
+
 body {
     .button {
         cursor: pointer;
@@ -132,7 +158,7 @@ body {
                 }
 
                 .branch {
-                    top: calc(1em + 30px);
+                    top: calc(60px);
                     width: max-content;
                     max-height: 0;
                     overflow: hidden;
@@ -142,7 +168,7 @@ body {
                     position: absolute;
                     display: flex;
                     flex-direction: column;
-                    border-radius: 0 0 $border-radius $border-radius;
+                    border-radius: $border-radius;
                     transition: 0.4s;
 
                     a {
@@ -158,7 +184,7 @@ body {
                     }
 
                     &.active {
-                        padding: 0 0 20px 0;
+                        padding:  20px 0;
                         max-height: 1000px;
                     }
                 }
@@ -1504,6 +1530,49 @@ body {
             }
         }
 
+        .vimi
+        {
+            padding: 0 0 30px 0;
+            display: flex;
+            flex-direction: column;
+
+            .wrapper
+            {
+                width: 100%;
+                color: #fff;
+                display: flex;
+                flex-direction: column;
+                position: relative;
+
+                .bg
+                {
+                    position: absolute;
+                    z-index: -1;
+                    width: 100%;
+                    height: 100%;
+
+                }
+
+                .image{
+                    display: none;
+                }
+
+                .text
+                {
+                    width: 100%;
+                    padding: 20px;
+                    h1{font-size: $font-size-4xl; font-weight: 650; margin-bottom: 20px;}
+                    p{font-size: $font-size-xl; margin-bottom: 30px;}
+                }
+
+                &.w2
+                {
+                    color: $color-accent;
+                }
+            }
+
+        }
+
         .facility
         {
 
@@ -1546,6 +1615,11 @@ body {
                         flex: 1;
                         padding: calc(10px + .5em) 0;
                     }
+
+                    &.pc
+                    {
+                        display: none;
+                    }
                 }
             }
 
@@ -1559,6 +1633,7 @@ body {
                 gap: 20px;
                 
                 h1{
+                    text-align: center;
                     font-size: $font-size-5xl;
                     width: 100%;
                 }
@@ -1576,7 +1651,8 @@ body {
                         aspect-ratio: 16/9;
                         border-radius: $border-radius;
                         position: relative;
-                        display: flex;
+                        cursor: pointer;
+                        display: none;
                         
                         img
                         {
@@ -1615,10 +1691,384 @@ body {
                             height: 100%;
                             width: 100%;
                         }
+
+                        &.show
+                        {
+                            display: flex;
+                        }
+                    }
+
+                    .gallery-full
+                    {
+                        display: none;
+                        gap: 20px;
+                        position: fixed;
+                        background-color: #00000079;
+                        inset: 0;
+                        z-index: 9999;
+                        flex-direction: column;
+                        align-items: center;
+                        justify-content: center;
+                        padding: 0 20px;
+
+                        .button-wrapper
+                        {
+                            height: max-content;
+                            width: 100%;
+                            display: flex;
+                            padding: 10px;
+                            border-radius: $border-radius;
+                            background-color: $color-accent;
+                            align-items: center;
+                            justify-content: space-between;
+
+                            p
+                            {
+                                color: #fff;
+                                font-size: $font-size-3xl;
+                            }
+                            
+                            img
+                            {
+                                width: auto;
+                                height: 100%;
+                                filter: brightness(0) saturate(100%) invert(100%) sepia(6%) saturate(7500%) hue-rotate(161deg) brightness(112%) contrast(102%);
+                                aspect-ratio: 1/1;
+                                transform: rotate(45deg);
+                                cursor: pointer;
+                            }
+                        }
+
+                        img
+                        {
+                            aspect-ratio: 16/9;
+                            width: 100%;
+                            object-fit: cover;
+                            border-radius: $border-radius;
+                        }
+
+                        .other-images
+                        {
+                            background-color: $color-primary;
+                            border-radius: $border-radius;
+                            overflow-x: scroll;
+                            display: flex;
+                            padding: 15px;
+                            width: 100%;
+                            height: 20%;
+                            gap: 20px;
+
+                            img
+                            {
+                                border-radius: $border-radius;
+                                cursor: pointer;
+                                aspect-ratio: 1/1;
+                                height: 100%;
+                                width: auto;
+                            }
+                        }
+
+                        &.active
+                        {
+                            display: flex;
+                        }
+                    }
+                }
+            }
+
+            .location
+            {
+                display: flex;
+                flex-direction: column;
+                padding: 20px;
+                gap: 10px;
+
+                h1{font-size: $font-size-5xl; text-align: center;}
+
+                .location-body
+                {
+                    display: flex;
+                    flex-direction: column-reverse;
+                    gap: 10px;
+
+                    img
+                    {
+                        width: 100%; 
+                        aspect-ratio: 16/7; 
+                        object-fit: cover; 
+                        border-radius: $border-radius;
+                        display: block;
+                    }
+                    
+                    .right
+                    {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 10px;
+                        
+
+                        p
+                        {
+                            font-size: $font-size-l;
+                            background-color: $color-accent;
+                            font-weight: 500;
+                            color: #fff;
+                            width: 100%;
+                            padding: 10px;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            border-radius: $border-radius;
+                        }
+                        
+                    }
+
+                    .left
+                    {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 10px;
+                    }
+
+                    .map
+                    {
+                        position: relative;
+                        cursor: pointer;
+
+                        .full
+                        {
+                            display: none;
+                            position: fixed;
+                            inset: 0;
+                            height: 100dvh;
+                            width: 100vw;
+                            gap: 20px;
+                            align-items: center;
+                            justify-content: center;
+                            flex-direction: column;
+                            background-color: #000000c4;
+                            padding: 20px;
+                            z-index: 9999;
+                            cursor: default;
+
+                            .img-wrapper
+                            {
+                                display: flex;
+                                background-color: #fff;
+                                width: 40px;
+                                border-radius: $border-radius;
+                                aspect-ratio: 1/1;
+                                align-self: end;
+                                cursor: pointer;
+                                
+                                img
+                                {
+                                    transform: rotate(45deg);
+                                    filter: brightness(0) saturate(100%) invert(17%) sepia(56%) saturate(3428%) hue-rotate(224deg) brightness(91%) contrast(90%);
+                                }
+                            }
+
+
+                            iframe
+                            {
+                                width: 100%;
+                                border-radius: $border-radius;
+                                aspect-ratio: 1/1;
+                            }
+
+                            &.active
+                            {
+                                display: flex;
+                            }
+                        }
+
+                        &::after
+                        {
+                            content: "Click to Open\AGoogle Map View";
+                            white-space: pre;
+                            background-color: #000000b1;
+                            border-radius: $border-radius;
+                            transition: 1s;
+                            position: absolute;
+                            display: flex;
+                            color: #fff;
+                            align-items: center;
+                            justify-content: center;
+                            font-size: $font-size-5xl;
+                            text-align: center;
+                            padding: 0 10%;
+                            box-sizing: border-box;
+                            font-weight: 600;
+                            inset: 0;
+                            pointer-events: none;
+                        }
+
+                        &:hover
+                        {
+                            &::after
+                            {
+                                background-color: #000000d2;
+                            }
+                        }
                     }
                 }
             }
         }
+
+        .galleries
+            {
+                display: flex;
+                flex-direction: column;
+                margin-bottom: 20px;
+                padding: 0 20px;
+                width: 100%;
+                gap: 20px;
+                
+                h1{
+                    text-align: center;
+                    font-size: $font-size-5xl;
+                    width: 100%;
+                }
+
+                .gallery-images
+                {
+                    gap: 10px;
+                    justify-content: center;
+                    display: flex;
+                    flex-wrap: wrap;
+
+                    span
+                    {
+                        width: calc(50% - 5px);
+                        aspect-ratio: 16/9;
+                        border-radius: $border-radius;
+                        position: relative;
+                        cursor: pointer;
+                        display: none;
+                        
+                        img
+                        {
+                            border-radius: $border-radius;
+                            position: absolute;
+                            height: 100%;
+                            top: 0;
+                            left: 0;
+                            width: 100%;
+                            object-fit: cover;
+                            z-index: -1;
+                        }
+                        
+                        p
+                        {
+                            font-size: $font-size-l;
+                            background-color: $color-accent;
+                            border-radius: $border-radius 0 $border-radius 0;
+                            width: max-content;
+                            height: max-content;
+                            padding: 5px;
+                            color: #fff;
+                            font-weight: 500;
+                        }
+                        a
+                        {
+                            background-color: $color-accent;
+                            border-radius: $border-radius;
+                            font-size: $font-size-2xl;
+                            justify-content: center;
+                            align-items: center;
+                            text-align: center;
+                            font-weight: 550;
+                            color: #fff;
+                            display: flex;
+                            height: 100%;
+                            width: 100%;
+                        }
+
+                        &.show
+                        {
+                            display: flex;
+                        }
+                    }
+
+                    .gallery-full
+                    {
+                        display: none;
+                        gap: 20px;
+                        position: fixed;
+                        background-color: #00000079;
+                        inset: 0;
+                        z-index: 9999;
+                        flex-direction: column;
+                        align-items: center;
+                        justify-content: center;
+                        padding: 0 20px;
+
+                        .button-wrapper
+                        {
+                            height: max-content;
+                            width: 100%;
+                            display: flex;
+                            padding: 10px;
+                            border-radius: $border-radius;
+                            background-color: $color-accent;
+                            align-items: center;
+                            justify-content: space-between;
+
+                            p
+                            {
+                                color: #fff;
+                                font-size: $font-size-3xl;
+                            }
+                            
+                            img
+                            {
+                                width: auto;
+                                height: 100%;
+                                filter: brightness(0) saturate(100%) invert(100%) sepia(6%) saturate(7500%) hue-rotate(161deg) brightness(112%) contrast(102%);
+                                aspect-ratio: 1/1;
+                                transform: rotate(45deg);
+                                cursor: pointer;
+                            }
+                        }
+
+                        img
+                        {
+                            aspect-ratio: 16/9;
+                            width: 100%;
+                            object-fit: cover;
+                            border-radius: $border-radius;
+                        }
+
+                        .other-images
+                        {
+                            background-color: $color-primary;
+                            border-radius: $border-radius;
+                            overflow-x: scroll;
+                            display: flex;
+                            padding: 15px;
+                            width: 100%;
+                            height: 20%;
+                            gap: 20px;
+
+                            img
+                            {
+                                border-radius: $border-radius;
+                                aspect-ratio: 1/1;
+                                height: 100%;
+                                cursor: pointer;
+                                width: auto;
+                            }
+                        }
+
+                        &.active
+                        {
+                            display: flex;
+                        }
+                    }
+                }
+            }
+
+
     }
 }
 
@@ -1693,18 +2143,23 @@ footer {
         width: 100%;
         height: max-content;
         flex-direction: column;
-        gap: 10px;
+        gap: 50px;
         padding: 20px 0;
         background: $color-bi-gradient;
+        align-items: center;
 
         .logo {
             img {
-                height: 30px;
+                width: 90vw;
             }
+
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 2px;
+            background-color: #fff;
+            width: max-content;
+            border-radius: $border-radius;
         }
 
         p {
@@ -2041,6 +2496,205 @@ footer {
                         }
                     }
                 }
+            }
+
+            .vimi
+            {
+                .wrapper
+                {
+                    min-height: 50dvh;
+                    padding: 0 30px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+
+
+                    .text
+                    {
+                        h1{font-size: $font-size-xl;}
+                        p{font-size: $font-size-l;}
+                    }
+
+                }
+            }
+
+            .facility
+            {
+                .info-facility
+                {
+                    p
+                    {
+                        font-weight: 550;
+                    }
+                }
+
+                .gallery
+                {
+                    h1{font-size: $font-size-3xl;}
+
+                    padding: 0;
+
+                    .gallery-images
+                    {
+
+                        span
+                        {
+                            display: flex;
+                            width: calc(33% - 20px);
+
+                            &.more
+                            {
+                                width: max-content;
+                                height: max-content;
+
+                                a{font-size: $font-size-l; height: max-content; padding: 10px 20px;}
+                            }
+                        }
+
+                        .gallery-full
+                        {
+                            padding: 0 20vw;
+
+                            .button-wrapper
+                            {
+                                height: 10%;
+                                padding: 0 20px;
+
+                                p{font-size: $font-size-xl;}
+
+                                img
+                                {
+                                    padding: 0;
+                                    height: 100%;
+                                    aspect-ratio: 1/1;
+                                }
+                            }
+
+                            img-wrapper
+                            {
+                                height: 50%;
+                            }
+                        }
+                    }
+                }
+                
+
+                .location
+                {
+                    display: flex;
+                    padding: 0 10vw 40px;
+                    width: 100%;
+                    aspect-ratio: 2/1;
+
+                    h1{font-size: $font-size-3xl;}
+
+                    .location-body
+                    {
+                        width: 100%;
+                        height: 100%;
+                        height: auto;
+                        flex-direction: row;
+
+                        img{aspect-ratio: unset; height: 100%; width: 100%;}
+
+                        .left
+                        {
+                            height: 100%;
+                            display: flex;
+                            flex-direction: column;
+
+                            .lobby
+                            {
+                                height: 40%;
+                            }
+                            .lab
+                            {
+                                height: 60%;
+                            }
+                        }
+
+                        .right
+                        {
+                            p
+                            {height: 10%; font-size: $font-size-m; padding: 10px 20px; text-align: justify;}
+                            .gmap
+                            {height: 40%;}
+                            .kelas
+                            {height: 50%;}
+                        }
+
+                        .map
+                        {
+                            img-wrapper
+                            {
+                                height: 10%;
+                                width: auto;
+                            }
+                            .full
+                            {
+                                padding: 20px 20vw;
+                                iframe{width: 100%; height: 90%;}
+                            }
+
+                            &::after
+                            {
+                                font-size: $font-size-xl;
+                            }
+                            
+                        }
+                    }
+                }
+
+            }
+
+            .galleries
+            {
+                    h1{font-size: $font-size-3xl;}
+
+                    padding: 0;
+
+                    .gallery-images
+                    {
+
+                        span
+                        {
+                            display: flex;
+                            width: calc(33% - 20px);
+
+                            &.more
+                            {
+                                width: max-content;
+                                height: max-content;
+
+                                a{font-size: $font-size-l; height: max-content; padding: 10px 20px;}
+                            }
+                        }
+
+                        .gallery-full
+                        {
+                            padding: 0 20vw;
+
+                            .button-wrapper
+                            {
+                                height: 10%;
+                                padding: 0 20px;
+
+                                p{font-size: $font-size-xl;}
+
+                                img
+                                {
+                                    padding: 0;
+                                    height: 100%;
+                                    aspect-ratio: 1/1;
+                                }
+                            }
+
+                            img-wrapper
+                            {
+                                height: 50%;
+                            }
+                        }
+                    }
             }
         }
     }
@@ -2488,6 +3142,206 @@ footer {
                         max-height: 1000px;
 
                         .info{p{font-size: $font-size-m;}}
+                    }
+                }
+            }
+            .vimi
+            {
+                gap: 20px;
+                padding: 0;
+
+
+                .wrapper
+                {
+                    flex-direction: row;
+                    .image
+                    {
+                        display: flex;
+                        width: 50%;
+                        aspect-ratio: 1/1;
+
+                        img{width: 100%; object-fit: contain;}
+                    }
+                    .text
+                    {
+                        width: 50%;
+                    }
+                }
+            }
+
+            .facility
+            {
+                .unity
+                {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 20px;
+                    padding: 40px 5vw;
+                    
+                    h1{font-size: $font-size-2xl;}
+
+                    .frame
+                    {
+                        border-radius: $border-radius;
+                        position: relative;
+                        background-color: #f1f1f1;
+                        width: 100%;
+                        aspect-ratio: 16/6;
+
+                        &::after
+                        {
+                            content: "Click to start Simulation";
+                            position: absolute;
+                            background-color: #0000009d;
+                            border-radius: $border-radius;
+                            cursor: pointer;
+                            font-size: $font-size-2xl;
+                            color: #fff;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            font-weight: 600;
+                            inset: 0;
+                        }
+                    }
+                }
+
+                .info-facility
+                {
+                    flex-direction: row;
+
+                    .fill
+                    {
+                        width: 5vw;
+                        background-color: $color-accent;
+                    }
+
+
+                    p{
+                        padding: 20px 0;
+                        font-weight: 600;
+                    }
+                    
+                    .rooms
+                    {
+                        display: none;
+                        flex-direction: column;
+                        gap: 0;
+                        p{padding: 20px 0;}
+
+
+                        &.pc
+                        {
+                            display: flex;
+                        }
+                    }
+                }
+
+                .gallery
+                {
+                    .gallery-images
+                    {
+                        gap: 20px;
+
+                        span
+                        {
+                            p
+                            {
+                                font-size: calc($font-size-m * 1.3);
+                                padding: 5px 20px;
+                            }
+                        }
+
+                        .gallery-full
+                        {
+                            padding: 10px 15vw;
+                            justify-content: space-between;
+
+                            .button-wrapper
+                            {
+                                width: 100%;
+                                padding: 10px 20px;
+                                height: max-content;
+                                
+                                p{font-size: $font-size-l;}
+                                img{height: 2em;}
+                            }
+
+                            .img-wrapper
+                            {
+                                height: 100%;
+                                width: 80%;
+                                display: flex;
+
+                                img
+                                {
+                                    height: 100%;
+                                    aspect-ratio: 16/9;
+                                }
+
+                            }
+
+                            .other-images
+                            {
+                                width: 80%;
+                                height: 40%;
+                            }
+
+                        }
+                    }
+                }
+            }
+
+            .galleries
+            {
+                .gallery-images
+                {
+                    gap: 20px;
+
+                    span
+                    {
+                        p
+                        {
+                            font-size: calc($font-size-m * 1.3);
+                            padding: 5px 20px;
+                        }
+                    }
+
+                    .gallery-full
+                    {
+                        padding: 10px 15vw;
+                        justify-content: space-between;
+
+                        .button-wrapper
+                        {
+                            width: 100%;
+                            padding: 10px 20px;
+                            height: max-content;
+                            
+                            p{font-size: $font-size-l;}
+                            img{height: 2em;}
+                        }
+
+                        .img-wrapper
+                        {
+                            height: 100%;
+                            width: 80%;
+                            display: flex;
+
+                            img
+                            {
+                                height: 100%;
+                                aspect-ratio: 16/9;
+                            }
+
+                        }
+
+                        .other-images
+                        {
+                            width: 80%;
+                            height: 40%;
+                        }
+
                     }
                 }
             }

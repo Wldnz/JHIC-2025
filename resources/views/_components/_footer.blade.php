@@ -46,13 +46,10 @@
     </div>
 
     <div class="copyright">
-        <div class="logo">
-            <img src="{{ $placeholder }}" alt="">
-            <img src="{{ $placeholder }}" alt="">
-            <img src="{{ $placeholder }}" alt="">
-            <img src="{{ $placeholder }}" alt="">
-        </div>
         <p>Copyright Fazbear Entertainment 2025. All&nbsp;Rights&nbsp;Reserved</p>
+        <div class="logo">
+            <img src="{{ asset("icons/logo-sponsor.png") }}" alt="">
+        </div>
     </div>
 
 </footer>

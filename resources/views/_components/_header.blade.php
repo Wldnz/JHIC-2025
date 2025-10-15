@@ -21,9 +21,9 @@
                     <a class="expandable-pc">ABOUT</a>
                     <div class="branch">
                         <a href="{{ route("user.profile") }}">Profile</a>
-                        <a href="{{ route("user.about") }}">About Us</a>
                         <a href="{{ route("user.visi-misi") }}">Vision and Mission</a>
                         <a href="{{ route("user.facilities") }}">Facility</a>
+                        <a href="{{ route("user.galleries") }}">Gallery</a>
                     </div>
                 </div>
                 <div class="expandable-wrapper">
@@ -70,9 +70,9 @@
             <a class="expandable">PROFILE <img src="{{ asset("icons/arrow-down.svg") }}" alt=""></a>
             <div class="branch">
                 <a href="{{ route("user.profile") }}">Profile</a>
-                <a href="{{ route("user.about") }}">About Us</a>
                 <a href="{{ route("user.visi-misi") }}">Vision and Mission</a>
                 <a href="{{ route("user.facilities") }}">Facility</a>
+                <a href="{{ route("user.galleries") }}">Gallery</a>
             </div>
             <a class="expandable">MAJOR <img src="{{ asset("icons/arrow-down.svg") }}" alt=""></a>
             <div class="branch">
