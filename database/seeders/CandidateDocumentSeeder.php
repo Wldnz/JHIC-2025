@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Candidate;
 use App\Models\CandidateDocument;
+use App\Utilities\StorageUtils;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Crypt;
@@ -75,20 +76,12 @@ class CandidateDocumentSeeder extends Seeder
 
         foreach ($candidates as $candidate) {
             foreach ($requiredDocuments as $documentData) {
-                $gdrivePath = "candidate-documents/{$candidate->nisn} - {$documentData['name']}.pdf";
-                $encryptedFileContent = Crypt::encrypt(File::get($documentData['file_path']));
-                Storage::disk('google')->put(
-                    $gdrivePath,
-                    $encryptedFileContent
+                $candidateDocument = StorageUtils::uploadNewCandidateDocument(
+                    $candidate,
+                    $documentData['name'],
+                    $documentData['mime_types'],
+                    File::get($documentData['file_path'])
                 );
-
-                $candidateDocument = CandidateDocument::create([
-                    'candidate_nisn' => $candidate->nisn,
-                    'user_id' => $candidate->user_id,
-                    'name' => $documentData['name'],
-                    'mime_types' => $documentData['mime_types'],
-                    'file_url' => Gdrive::getFileInfo($gdrivePath)->path,
-                ]);
 
                 echo "Candidate NISN: {$candidate->nisn},\tDocument: {$candidateDocument->name},\tFile URL: {$candidateDocument->file_url}\n";
             }
