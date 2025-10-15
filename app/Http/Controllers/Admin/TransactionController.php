@@ -23,25 +23,35 @@ class TransactionController extends Controller
         $search_status = $request->get('search_status', '');
         $page =  $request->get('page', 1);
 
-        $initiliazeTrasanctions = Transaction::all();
-        $transactions = Transaction::select();
+        $transactionStats = Transaction::query()
+            ->selectRaw("COUNT(*) AS total")
+            ->selectRaw("COUNT(CASE WHEN status = 'settlement' THEN 1 END) AS success")
+            ->selectRaw("COUNT(CASE WHEN status = 'refund' THEN 1 END) AS refund")
+            ->selectRaw("COUNT(CASE WHEN status = 'cancel' THEN 1 END) AS canceled")
+            ->selectRaw("COUNT(CASE WHEN status = 'expired' THEN 1 END) AS expired")
+            ->first();
+
+        $transactions = Transaction::query();
         $stats = [
-            'total' => $initiliazeTrasanctions->count(),
-            'success' => $initiliazeTrasanctions->where('status', '=', 'settlement'),
-            'refund' => $initiliazeTrasanctions->where('status', '=', 'refund'),
-            'canceled' => $initiliazeTrasanctions->where('status', '=', 'canceled'),
-            'expired' => $initiliazeTrasanctions->where('status', '=', 'expired')
+            'total' => $transactionStats->total,
+            'success' => $transactionStats->success,
+            'refund' => $transactionStats->refund,
+            'canceled' => $transactionStats->canceled,
+            'expired' => $transactionStats->expired,
         ];
         if($search){
-            $transactions = $transactions->where('candidate_full_name', '=', $search)
-                ->orWhere('candidate_full_name', 'like', '%'.$search.'%');
+            $transactions = $transactions
+                ->where('candidate_nisn', 'like', '%'.$search.'%')
+                ->orWhere('candidate_full_name', 'like', '%'.$search.'%')
+                ->orWhere('payment_method_display_name', 'like', '%'.$search.'%');
         }
         if($search_status){
             $transactions = $transactions->where('status', '=', $search_status);
         }
-        $total = $transactions->get()->count();
-        $transactions = $transactions->limit($this->maxPage)
-        ->offset(($page - 1) * $this->maxPage)
+        $total = $search || $search_status ? $transactions->count() : $stats['total'];
+        $transactions = $transactions
+            ->limit($this->maxPage)
+            ->offset(($page - 1) * $this->maxPage)
             ->get();
         return view('admin.transactions.index', compact('transactions', 'stats','search', 'search_status', 'page', 'total'));
     }
@@ -127,7 +137,7 @@ class TransactionController extends Controller
             AlertDataGenerator::generateAsFlashToSession(
                 AlertType::SUCCESS,
                 "Berhasil menghapus transaksi",
-                "Transaksi oleh calon siswa ber-NISN {$transaction->candidate_nisn} berhasil dihapus",
+                "Transaksi oleh calon siswa ber-NISN {$transaction->candidate_nisn} berhasil ditandai sebagai \"Terhapus\"",
                 $request->session(),
             );
         } else {

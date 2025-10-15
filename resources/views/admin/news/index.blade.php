@@ -43,12 +43,12 @@
                 <a class="wrapper-card-news" href="{{ route('admin.detail-news', ['news' => $article->id]) }}">
                     <div class="card-media">
                         <div class="wrapper-image">
-                            <img src="{{ $article->thumbnail_url }}" alt="thumbnail-image-article">
+                            <img src="{{ $article->thumbnail_url }}" alt="thumbnail-image-article" loading="lazy">
                         </div>
                         <div class="detail-media">
                             <div class="information">
                                 <h3 class="title">{{ $article->title }}</h3>
-                                <!-- <p class="description"></i> -->
+                                <p class="description">{{ $article->description }}</i>
                                 <p class="title">Author: {{ $article->written_by }}</p>
                             </div>
                             <div class="bottom">
@@ -101,5 +101,5 @@
         ])
     </div>
 </main>
-@vite('resources/js/handle/delete-media');
+@vite('resources/js/handle/delete-media.js');
 @include('_components._footerAdmin')

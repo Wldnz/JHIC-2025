@@ -121,6 +121,8 @@ class UpdateAccountRequest extends FormRequest
         ];
         $candidateDocumentsRules = [
             'documents.*.file' => ['nullable', 'file', 'max:10240'],
+            'documents.*.is_valid' => ['required', 'boolean'],
+            'documents.added_*.mime_types' => ['required', 'max:255'],
         ];
 
         if ($this->input('role') != 'candidate') {

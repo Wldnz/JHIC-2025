@@ -32,13 +32,19 @@ class PortfolioController extends Controller
         $majors = Major::all();
         $max = $this->maxPage;
 
-        $initiliazePortfolios = Portfolio::all();
+        $portfolioStats = Portfolio::query()
+            ->selectRaw("COUNT(*) AS total")
+            ->selectRaw("COUNT(CASE WHEN student_class = 'X' THEN 1 END) AS xth")
+            ->selectRaw("COUNT(CASE WHEN student_class = 'XI' THEN 1 END) AS xith")
+            ->selectRaw("COUNT(CASE WHEN student_class = 'XII' THEN 1 END) AS xiith")
+            ->first();
         $portfolios = Portfolio::query();
+
         $stats = [
-            'total' => $initiliazePortfolios->count(),
-            '10th' => $initiliazePortfolios->where('student_class', '=', 'X')->count(),
-            '11th' => $initiliazePortfolios->where('student_class', '=', 'XI')->count(),
-            '12th' => $initiliazePortfolios->where('student_class', '=', 'XII')->count(),
+            'total' => $portfolioStats->total,
+            '10th' => $portfolioStats->xth,
+            '11th' => $portfolioStats->xith,
+            '12th' => $portfolioStats->xiith,
         ];
 
         if ($search) {

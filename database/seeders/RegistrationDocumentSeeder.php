@@ -47,7 +47,7 @@ class RegistrationDocumentSeeder extends Seeder
                 'updated_at' => $dateNow,
             ],
             [
-                'name' => 'Akta Kelahiran',
+                'name' => 'Akte Kelahiran',
                 'mime_types' => 'image/*,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document',
                 'is_required' => true,
                 'download_file_url' => null,

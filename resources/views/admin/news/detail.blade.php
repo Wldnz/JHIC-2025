@@ -48,25 +48,25 @@
                     </div>
                     <div class="wrapper-input">
                         <label for="date">Dibuat Pada</label>
-                        <input type="date" name="numeric" id="date" 
+                        <input type="date" name="numeric" id="date"
                             aria-describedby="dibuat-pada"
                             value="{{ substr($article->created_at, 0,10) }}"
-                            disabled 
+                            disabled
                         >
                     </div>
                      <div class="wrapper-input">
                         <label for="date">Terakhir Diubah Pada</label>
-                        <input type="date" name="numeric" id="date" 
+                        <input type="date" name="numeric" id="date"
                             aria-describedby="dibuat-pada"
                             value="{{ substr($article->updated_at, 0,10) }}"
-                            disabled 
+                            disabled
                         >
                     </div>
                     <div class="wrapper-input">
                         <label for="visible">Visible<span>*</span></label>
                         <select name="visible" id="visible" required>
                             @foreach ($availableStatus as $statusName => $status)
-                                <option value="{{ $status }}" @selected(old('visible', '') == $status)>{{ $statusName }}</option>
+                                <option value="{{ $status }}" @selected(old('visible', $article->status) == $status)>{{ $statusName }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -90,9 +90,20 @@
     const image = document.getElementById('thumbnail');
     let prev_filelist = null;
 
-    let defaultContent = "{{ old('content', '') }}";
+    let defaultContent = @js(old('content', ''));
     let keywords = @json(old('tags', $article->keywords));
-    const defaultImage = "{{ $article->thumbnail_url ?? asset('images/default.png') }}";
+    const defaultImage = @js($article->thumbnail_url ?? asset('images/default.png'));
+
+    if (!defaultContent) {
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', @js(route('user.news-content', ['article' => $article])), true);
+        xhr.onload = function () {
+            if (xhr.status === 200) {
+                defaultContent = xhr.responseText;
+            }
+        };
+        xhr.send();
+    }
 </script>
 
 @vite(['resources/js/handle/create-news.js'])

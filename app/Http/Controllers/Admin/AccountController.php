@@ -15,6 +15,7 @@ use App\Models\RegistrationPhase;
 use App\Models\RegistrationSource;
 use App\Models\User;
 use App\Utilities\AlertDataGenerator;
+use App\Utilities\FileUploadUtils;
 use App\Utilities\StorageUtils;
 use DB;
 use Exception;
@@ -36,18 +37,23 @@ class AccountController extends Controller
         $search_role = $request->get('search_role', 'candidate');
         $page =  $request->get('page', 1);
 
-        $initiliazeAccounts = User::all();
+        $accountStats = User::query()
+            ->selectRaw("COUNT(*) AS total")
+            ->selectRaw("COUNT(CASE WHEN role = 'candidate' THEN 1 END) AS candidate")
+            ->selectRaw("COUNT(CASE WHEN role = 'article_creator' THEN 1 END) AS article_creator")
+            ->selectRaw("COUNT(CASE WHEN role = 'admin' THEN 1 END) AS admin")
+            ->selectRaw("COUNT(CASE WHEN role = 'super_admin' THEN 1 END) AS super_admin")
+            ->first();
 
         $stats = [
-            'total' => $initiliazeAccounts->count(),
-            'candidate' => $initiliazeAccounts->where('role', '=','candidate')->count(),
-            'article Creator' => $initiliazeAccounts->where('role', '=','article_creator')->count(),
-            'admin' => $initiliazeAccounts->where('role', '=','admin')->count(),
-            'owner' => $initiliazeAccounts->where('role', '=','super_admin')->count(),
+            'total' => $accountStats->total,
+            'candidate' => $accountStats->candidate,
+            'article Creator' => $accountStats->article_creator,
+            'admin' => $accountStats->admin,
+            'owner' => $accountStats->super_admin,
         ];
 
-        $accounts = User::query()
-            ->select(['id', 'fullname', 'email', 'phone', 'role', 'created_at']);
+        $accounts = User::query();
 
         if ($search) {
             $accounts = $accounts
@@ -60,10 +66,10 @@ class AccountController extends Controller
             $accounts = $accounts->where('role', '=', $search_role);
         }
 
-        $total = $accounts->get()->count();
+        $total = $accounts->count();
         $accounts = $accounts->limit($this->maxPage)
-        ->offset(($page - 1) * $this->maxPage)
-            ->get();
+            ->offset(($page - 1) * $this->maxPage)
+            ->get(['id', 'fullname', 'email', 'phone', 'role', 'created_at']);
 
         return view('admin.accounts.index', compact('accounts','stats', 'search', 'search_role', 'page', 'total'));
     }
@@ -258,19 +264,39 @@ class AccountController extends Controller
                 throw new Exception("Gagal mengupdate data pilihan gelombang calon siswa");
             }
 
+            $splittedDocumentsData = FileUploadUtils::splitFileUploads($request, 'documents');
+
             $candidateDocuments = CandidateDocument::query()
                 ->where('candidate_nisn', $validated['candidate_nisn'])
-                ->whereIn('id', array_keys($validated['documents']))
                 ->get();
 
             foreach ($candidateDocuments as $candidateDocument) {
                 $documentData = $request->validate([
-                    "documents.{$candidateDocument->id}.file" => ["mimetypes:{$candidateDocument->mime_types}"]
+                    "documents.{$candidateDocument->id}.file" => ["mimetypes:{$candidateDocument->mime_types}"],
                 ]);
-                StorageUtils::uploadCandidateDocument(
-                    $candidateDocument,
-                    $documentData['documents'][$candidateDocument->id]['file']->get()
+                if ($documentData) {
+                    StorageUtils::uploadCandidateDocument(
+                        $candidateDocument,
+                        $documentData['documents'][$candidateDocument->id]['file']->get()
+                    );
+                }
+                $candidateDocument->update([
+                    'is_valid' => $validated['documents'][$candidateDocument->id]['is_valid']
+                ]);
+            }
+
+            foreach ($splittedDocumentsData->addedFilesData as $newDocumentData) {
+                $candidateDocument = StorageUtils::uploadNewCandidateDocument(
+                    $candidate,
+                    $newDocumentData['name'],
+                    $newDocumentData['mime_types'],
+                    $newDocumentData['file']->get(),
+                    $newDocumentData['is_valid'],
                 );
+
+                if (!$candidateDocument) {
+                    throw new Exception("Gagal mengupload dokumen ke cloud");
+                }
             }
 
             DB::commit();

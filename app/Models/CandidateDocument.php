@@ -16,6 +16,7 @@ class CandidateDocument extends Model
         'name',
         'mime_types',
         'file_url',
+        'is_valid',
     ];
 
     /**

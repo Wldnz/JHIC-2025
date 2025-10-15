@@ -27,8 +27,8 @@ class UpdateArticleRequest extends FormRequest
             'title' => ['required', 'string', 'min:1', 'max:255'],
             'visible' => ['required', 'in:draft,published,archived'],
             'tags.*' => ['required', 'string'],
-            'thumbnail' => ['required', 'image', 'mimes:jpg,jpeg,png', 'max:2500'],
-            'isUpdated' => ['nullable', 'image', 'boolean'],
+            'thumbnail' => ['required_if:isUpdated,true', 'image', 'mimes:jpg,jpeg,png', 'max:2500'],
+            'isUpdated' => ['nullable', 'boolean'],
             'content' => ['required', 'string', 'min:1'],
         ];
     }

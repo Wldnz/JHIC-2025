@@ -1,20 +1,19 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Admin;
 
+use App\Utilities\RoleLevelChecker;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
 class UpdateSettingsRequest extends FormRequest
 {
-    private $authorizedRoles = ['admin', 'superAdmin'];
-
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return Auth::check() && in_array(Auth::user()->role, $this->authorizedRoles);
+        return Auth::check() && RoleLevelChecker::checkMinimumByRoleName(Auth::user(), 'admin');
     }
 
     /**
@@ -25,7 +24,7 @@ class UpdateSettingsRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'payment_methods.*' => ['nullable', 'accepted'],
+            'payment_methods.*' => ['required', 'accepted'],
         ];
     }
 }

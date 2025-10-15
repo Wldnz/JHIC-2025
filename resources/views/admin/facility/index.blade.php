@@ -79,6 +79,6 @@
     </div>
 </main>
 
-@vite('resources/js/handle/delete-media');
+@vite('resources/js/handle/delete-media.js');
 
 @include('_components._footerAdmin')

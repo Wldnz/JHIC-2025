@@ -11,6 +11,7 @@ use App\Models\Major;
 use App\Models\Portfolio;
 use App\Models\Student;
 use App\Utilities\AlertDataGenerator;
+use DB;
 use Illuminate\Http\Request;
 
 class StudentController extends Controller
@@ -27,15 +28,19 @@ class StudentController extends Controller
         $page =  $request->get('page', 1);
         $max = $this->maxPage;
 
-        $initiliazeStudents = Student::all();
-        $initiliazePortfolios = Portfolio::all();
-        $initiliazeAchievements = Achievement::all();
-        $students = Student::select();
+        $resultStats = DB::table(DB::raw("DUAL"))
+            ->select([
+                DB::raw("(SELECT COUNT(*) FROM students) AS students"),
+                DB::raw("(SELECT COUNT(*) FROM portfolios) AS portfolios"),
+                DB::raw("(SELECT COUNT(*) FROM achievements) AS achievements"),
+            ])
+            ->first();
+        $students = Student::query();
 
         $stats = [
-            'total' => $initiliazeStudents->count(),
-            'total Portofolio' => $initiliazePortfolios->count(),
-            'total Prestasi' => $initiliazeAchievements->count()
+            'total' => $resultStats->students,
+            'total Portofolio' => $resultStats->portfolios,
+            'total Prestasi' => $resultStats->achievements,
         ];
 
         if($search){
@@ -52,9 +57,9 @@ class StudentController extends Controller
             $students = $students->where('class', '=', $search_class);
         }
 
-        $total = $students->get()->count();
+        $total = $search || $search_major || $search_class ? $students->count() : $stats['total'];
         $students = $students->limit($this->maxPage)
-        ->offset(($page - 1) * $this->maxPage)
+            ->offset(($page - 1) * $this->maxPage)
             ->get();
 
         return view('admin.student.index', compact('students', 'stats','page', 'max', 'total'));

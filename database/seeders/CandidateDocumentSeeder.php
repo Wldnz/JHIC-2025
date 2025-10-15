@@ -27,7 +27,7 @@ class CandidateDocumentSeeder extends Seeder
                 'mime_types' => 'image/*,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document',
             ],
             [
-                'name' => 'FC Ijazah SLTP - MTs di Legalisir',
+                'name' => 'FC Ijazah SLTP/MTs di Legalisir',
                 'file_path' => Storage::disk('local')->path("$placeholderDirectory/FC Ijazah SLTP - MTs di Legalisir.pdf"),
                 'mime_types' => 'image/*,application/pdf',
             ],
@@ -37,7 +37,7 @@ class CandidateDocumentSeeder extends Seeder
                 'mime_types' => 'image/*,application/pdf',
             ],
             [
-                'name' => 'FC SKHUN SLTP - MTs di Legalisir',
+                'name' => 'FC SKHUN SLTP/MTs di Legalisir',
                 'file_path' => Storage::disk('local')->path("$placeholderDirectory/FC SKHUN SLTP - MTs di Legalisir.pdf"),
                 'mime_types' => 'image/*,application/pdf',
             ],
@@ -57,12 +57,12 @@ class CandidateDocumentSeeder extends Seeder
                 'mime_types' => 'application/pdf',
             ],
             [
-                'name' => 'Surat Keterangan Sehat - Dokter',
+                'name' => 'Surat Keterangan Sehat / Dokter',
                 'file_path' => Storage::disk('local')->path("$placeholderDirectory/Surat Keterangan Sehat - Dokter.pdf"),
                 'mime_types' => 'application/pdf',
             ],
             [
-                'name' => 'Surat Orang Tua - Wali Peserta Didik',
+                'name' => 'Surat Orang Tua / Wali Peserta Didik',
                 'file_path' => Storage::disk('local')->path("$placeholderDirectory/Surat Orang Tua - Wali Peserta Didik.pdf"),
                 'mime_types' => 'application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document',
             ],
@@ -75,7 +75,8 @@ class CandidateDocumentSeeder extends Seeder
         $candidates = Candidate::query()->inRandomOrder()->limit(10)->get();
 
         foreach ($candidates as $candidate) {
-            foreach ($requiredDocuments as $documentData) {
+            $randomRequiredDocuments = fake()->randomElements($requiredDocuments, fake()->numberBetween(1, count($requiredDocuments)));
+            foreach ($randomRequiredDocuments as $documentData) {
                 $candidateDocument = StorageUtils::uploadNewCandidateDocument(
                     $candidate,
                     $documentData['name'],

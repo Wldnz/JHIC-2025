@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\CandidateDocument;
 use App\Models\CandidatePhase;
+use App\Models\Keyword;
 use App\Models\RegistrationDocument;
 use App\Models\User;
 use DB;
@@ -51,6 +52,7 @@ class DatabaseSeeder extends Seeder
         $this->call(PaymentMethodSeeder::class);
         $this->call(TransactionSeeder::class);
         $this->call(ArticleSeeder::class);
+        $this->call(KeywordSeeder::class);
     }
 
     /**
@@ -93,6 +95,7 @@ class DatabaseSeeder extends Seeder
         DB::statement("ALTER TABLE " . (new Transaction())->getTable() . " AUTO_INCREMENT = 1");
 
         Article::query()->truncate();
+        Keyword::query()->truncate();
 
         DB::statement('SET FOREIGN_KEY_CHECKS = 1');
     }

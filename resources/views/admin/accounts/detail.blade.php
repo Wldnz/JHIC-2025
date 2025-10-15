@@ -32,7 +32,7 @@
             <div class="container">
                 @if ($account->role == 'candidate' && $candidate)
                     <div class="wrapper-input wrapper-input-full">
-                        <label for="candidate_nisn">Nomor Induk Nasional</label>
+                        <label for="candidate_nisn">Nomor Induk Siswa Nasional</label>
                         <input type="text" name="candidate_nisn" id="candidate_nisn" placeholder="Nisn Calon Peserta Didik"
                             value="{{ old('candidate_nisn', $candidate->nisn) }}" aria-describedby="nisn" required>
                     </div>
@@ -85,9 +85,8 @@
                         <option @selected(old('role', $account->role) == 'article_creator') value="article_creator">
                             Pembuat Artikel</option>
                         @if ($account->role == 'super_admin')
-                            <option @selected(old('role', $account->role) == 'administrasi') value="admin">Administrasi
+                            <option @selected(old('role', $account->role) == 'admin') value="admin">Administrasi
                             </option>
-                            <option @selected(old('role', $account->role) == 'owner') value="owner">Owner</option>
                         @endif
                     </select>
                 </div>

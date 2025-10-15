@@ -15,10 +15,11 @@ class StorageUtils
     public static $registrationDocumentsDir = 'registration-documents';
     public static $candidateDocumentsDir = 'candidate-documents';
 
-    public static function uploadNewCandidateDocument(Candidate $candidate, string $fileName, string $fileMimetypes, string $fileContent)
+    public static function uploadNewCandidateDocument(Candidate $candidate, string $fileName, string $fileMimetypes, string $fileContent, bool $isValid = false)
     {
         try {
-            $gdrivePath = self::$candidateDocumentsDir . "/{$candidate->nisn} - {$fileName}.pdf";
+            $currentTimestamps = microtime(false);
+            $gdrivePath = self::$candidateDocumentsDir . "/{$candidate->nisn} - {$currentTimestamps}.pdf";
             $encryptedFileContent = Crypt::encrypt($fileContent);
 
             Storage::disk('google')->put(
@@ -31,7 +32,8 @@ class StorageUtils
                 'user_id' => $candidate->user_id,
                 'name' => $fileName,
                 'mime_types' => $fileMimetypes,
-                'file_url' => $gdrivePath
+                'file_url' => $gdrivePath,
+                'is_valid' => $isValid,
             ]);
         } catch (Throwable $e) {
             logger()->error($e);

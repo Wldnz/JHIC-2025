@@ -144,13 +144,6 @@ Route::name('admin.')->prefix('admin')->middleware([isLogin::class, isAdmin::cla
         Route::delete('/news/{news}', [Admin\NewsController::class, 'deleteNews'])->name('delete-news');
     });
 
-    Route::get('/medias', [Admin\MediaController::class, 'media'])->name('media');
-    Route::get('/medias-create', [Admin\MediaController::class, 'createMedia'])->name('create-media');
-    Route::post('/medias-create', [Admin\MediaController::class, 'storeMedia'])->name('store-media');
-    Route::get('/medias/{media}', [Admin\MediaController::class, 'detailMedia'])->name('detail-media');
-    Route::put('/medias/{media}', [Admin\MediaController::class, 'updateMedia'])->name('update-media');
-    Route::delete('/medias/{media}', [Admin\MediaController::class, 'deleteMedia'])->name('delete-media');
-
     Route::get('/achievements', [Admin\AchievementController::class, 'achievement'])->name('achievement');
     Route::get('/achievements-create', [Admin\AchievementController::class, 'createAchievement'])->name('create-achievement');
     Route::post('/achievements-create', [Admin\AchievementController::class, 'storeAchievement'])->name('store-achievement');

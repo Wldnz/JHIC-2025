@@ -27,7 +27,7 @@ class FacilityController extends Controller
             ->select(['id', 'url', 'name', 'description', 'gallery_type_name']);
 
         $stats = [
-            "total" => $facilities->get()->count(),
+            "total" => $facilities->count(),
         ];
 
         if ($search) {
@@ -37,7 +37,7 @@ class FacilityController extends Controller
                 ->orWhere('description', 'like', "%$search%");
         }
 
-        $total = $facilities->count();
+        $total = $search ? $facilities->count() : $stats['total'];
         $facilities = $facilities
             ->limit($this->maxPage)
             ->offset(($page - 1) * $this->maxPage)

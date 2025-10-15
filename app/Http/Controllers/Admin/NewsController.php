@@ -36,14 +36,19 @@ class NewsController extends Controller
         $page =  $request->get('page', 1);
         $max = $this->maxPage;
 
-        $articles = Article::select();
-        $initiliazeArticles = Article::all();
+        $articles = Article::with('keywords');
+        $articleStats = Article::query()
+            ->selectRaw("COUNT(*) AS total")
+            ->selectRaw("COUNT(CASE WHEN status = 'published' THEN 1 END) AS publish")
+            ->selectRaw("COUNT(CASE WHEN status = 'archived' THEN 1 END) AS archive")
+            ->selectRaw("COUNT(CASE WHEN status = 'draft' THEN 1 END) AS draft")
+            ->first();
 
         $stats = [
-            'total' => $initiliazeArticles->count(),
-            'publish' => $initiliazeArticles->where('status', '=', 'published')->count(),
-            'archive' => $initiliazeArticles->where('status', '=', 'archived')->count(),
-            'draft' => $initiliazeArticles->where('status', '=', 'draft')->count(),
+            'total' => $articleStats->total,
+            'publish' => $articleStats->publish,
+            'archive' => $articleStats->archive,
+            'draft' => $articleStats->draft,
         ];
 
         if($search){
@@ -55,7 +60,7 @@ class NewsController extends Controller
             $articles = $articles->where('status', '=', $search_status);
         }
 
-        $total = $articles->get()->count();
+        $total = $search || $search_status ? $articles->count() : $stats['total'];
         $articles = $articles->limit($this->maxPage)
         ->offset(($page - 1) * $this->maxPage)
             ->get();
@@ -144,6 +149,7 @@ class NewsController extends Controller
     {
         $article = $news->load('keywords');
         $availableStatus = $this->availableStatus;
+
         return view('admin.news.detail', compact('article', 'availableStatus'));
     }
 
@@ -210,7 +216,7 @@ class NewsController extends Controller
                 "Artikel berhasil diupdate dengan judul \"{$validated['title']}\"",
                 $request->session()
             );
-            redirect()->route('admin.news');
+            return redirect()->route('admin.news');
 
         } catch (Throwable $th) {
             DB::rollBack();

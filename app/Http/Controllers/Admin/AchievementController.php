@@ -25,10 +25,10 @@ class AchievementController extends Controller
         $search_class = $request->query('search_class', null);
         $page = $request->query('page', 1);
         $max = $this->maxPage;
-        $achievements = Achievement::select();
+        $achievements = Achievement::query();
 
         $stats = [
-            'total' => $achievements->get()->count(),
+            'total' => $achievements->count(),
         ];
 
         $majors = Major::all();
@@ -37,7 +37,8 @@ class AchievementController extends Controller
             ->orderBy('id', 'asc')
             ->when($search, function ($query, $search) {
                 return $query
-                    ->where('student_name', 'like', "%{$search}%")
+                    ->where('competition_name', 'like', "%{$search}%")
+                    ->orWhere('student_name', 'like', "%{$search}%")
                     ->orWhere('student_class', 'like', "%{$search}%")
                     ->orWhere('student_major_name', 'like', "%{$search}%");
             })
@@ -47,11 +48,12 @@ class AchievementController extends Controller
             ->when($search_class, function ($query, $search_class) {
                 return $query->where('student_class', "=", $search_class);
             });
-            $totalPage =  $achievements->get()->count();
-            $achievements= $achievements
+
+        $totalPage =  $search || $search_major || $search_class ? $achievements->count() : $stats['total'];
+        $achievements= $achievements
             ->limit($this->maxPage)
             ->offset(($page - 1) * $this->maxPage)
-            ->get();
+            ->get(['id', 'student_name', 'competition_position', 'competition_name', 'thumbnail_url']);
 
         return view('admin.achievement.index', compact('achievements', 'stats', 'page', 'totalPage', 'max', 'majors'));
     }

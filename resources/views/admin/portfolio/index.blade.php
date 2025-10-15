@@ -65,7 +65,7 @@
                             <div class="tag-name">
                                 <h5>{{ $portfolio->student_name }}</h5>
                             </div>
-                          
+
                         </div>
                         <div class="profile">
                             <div class="tag-name">
@@ -90,7 +90,7 @@
                         <span>Delete Portfolio</span>
                     </button>
                 </form>
-            </div> 
+            </div>
             @endforeach
         </div>
         @include('_components._pagination-media', [
@@ -101,6 +101,6 @@
     </div>
 </main>
 
-@vite('resources/js/handle/delete-media');
+@vite('resources/js/handle/delete-media.js');
 
 @include('_components._footerAdmin')
