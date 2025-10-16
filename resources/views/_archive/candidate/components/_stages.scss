@@ -54,11 +54,8 @@
                 flex-direction: column;
                 gap: 10px;
 
-                &-document{
-                    gap: 30px;
-                }
-
-                .wrapper-input{
+                .wrapper-input,
+                .wrapper-input-multiple {
                     display: flex;
                     flex-direction: column;
                     gap: 5px;
@@ -88,6 +85,15 @@
                     textarea {
                         resize: vertical;
                         max-height: 120px;
+                    }
+                }
+
+                .wrapper-input-multiple {
+                    display: grid;
+                    grid-template-columns: repeat(2, 1fr);
+
+                    &-1 {
+                        grid-template-columns: 1fr !important;
                     }
                 }
 
@@ -197,67 +203,6 @@
                         height: 40px;
                     }
                 }
-
-                .wrapper-document{
-                    display: flex;
-                    flex-direction: column;
-                    gap: 5px;
-
-                    font-size: $font-size-xl;
-
-                    .wrapper-file{
-                        
-                        min-height: 50px;
-                        position: relative;
-
-                        background-color: transparent;
-                        border: 3px solid $color-accent;
-                        border-radius: $border-radius;
-                        
-
-                        input[type=file]{
-                            width: 100%;
-                            height: 100%;
-                            opacity: 0;
-                        }
-
-                        .floating-title{
-                            position: absolute;
-                            top: -14px;
-                            left: 5px;
-                            
-                            padding: 2px;
-                            font-weight: bold;
-
-                            background-color: $color-primary;
-                        }
-
-                        .description{
-                            position: absolute;
-                            top: 0;
-                            left: 0;
-
-                            width: 100%;
-                            height: 100%;
-
-                            display: flex;
-                            justify-content: start;
-                            align-items: center;
-                            padding: 10px;
-
-                            z-index: -1;
-                        }
-                    }
-                    .download{
-                        display: flex;
-                        align-items: center;
-                        flex-wrap: wrap;
-                        gap: 5px;
-                    }
-
-                }
-
-
             }
 
             .s-submit {
@@ -324,7 +269,7 @@
         }
 
         .form-stage {
-            padding: 60px;
+            padding: 40px;
 
             h2 {
                 font-size: $font-size-l;
@@ -333,11 +278,8 @@
             .fields {
                 gap: 20px;
 
-                &-document{
-                    gap: 60px;
-                }
-
-                .wrapper-input{
+                .wrapper-input,
+                .wrapper-input-multiple {
 
                     label {
                         font-size: $font-size-l;
@@ -355,6 +297,10 @@
                     &-1 {
                         grid-template-columns: repeat(2, 1fr) !important;
                     }
+                }
+
+                .wrapper-input-multiple {
+                    gap: 20px;
                 }
 
                 .wrapper-option-button {
@@ -378,28 +324,13 @@
                         font-size: $font-size-m;
                     }
                 }
-
-
-                .wrapper-document{
-                    input[type=file]{
-                        min-height: 90px;
-                    }
-
-                    .wrapper-file{
-                        font-size: $font-size-l;
-
-                    }
-                    .download{
-                        font-size: $font-size-l;
-                    }
-                }
             }
 
             .s-submit {
                 .w-buttons {
                     button {
                         font-size: $font-size-l;
-                        min-height: 75px;
+                        min-height: 65px;
                     }
 
                     .pages {
@@ -419,19 +350,13 @@
         }
 
         .form-stage {
-            padding: 30px;
             h2 {
                 font-size: $font-size-l;
             }
 
             .fields {
-
-                
-                &-document{
-                    gap: 40px;
-                }
-
-                .wrapper-input{
+                .wrapper-input,
+                .wrapper-input-multiple {
                     gap: 5px;
 
                     label {
@@ -463,20 +388,6 @@
                         height: 50px;
                     }
                 }
-
-                .wrapper-document{
-                    input[type=file]{
-                        min-height: 80px;
-                    }
-
-                    .wrapper-file{
-                        font-size: $font-size-l;
-
-                    }
-                    .download{
-                        font-size: $font-size-l;
-                    }
-                }
             }
         }
     }
@@ -490,13 +401,9 @@
             }
 
             .fields {
-                padding: 20px;
 
-                 &-document{
-                    gap: 30px;
-                }
-
-                .wrapper-input{
+                .wrapper-input,
+                .wrapper-input-multiple {
                     label {
                         font-size: $font-size-l;
                     }
@@ -505,20 +412,7 @@
                     select {
                         max-height: 40px;
                     }
-                }
 
-                .wrapper-document{
-                    input[type=file]{
-                        min-height: 60px;
-                    }
-
-                    .wrapper-file{
-                        font-size: $font-size-l;
-
-                    }
-                    .download{
-                        font-size: $font-size-l;
-                    }
                 }
             }
         }

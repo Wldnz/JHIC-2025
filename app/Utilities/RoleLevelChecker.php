@@ -9,7 +9,7 @@ class RoleLevelChecker
         'super_admin' => 0,
         'admin' => 1,
         'article_creator' => 2,
-        'user' => 3,
+        'candidate' => 3,
     ];
 
     /**

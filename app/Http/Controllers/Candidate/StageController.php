@@ -22,20 +22,15 @@ class StageController extends Controller
     protected $candidate = null;
 
     public function __construct(){
-        if(Auth::check() && Auth::user()->role == 'candidate'){
-            $candidate = Candidate::where('user_id', '=', Auth::user()->id)
-                ->get();
-        }
+        // if(Auth::check() && Auth::user()->role == 'candidate'){
+        //     $this->candidate = Candidate::where('user_id', '=', Auth::user()->id)
+        //         ->get();
+        // }
     }
     public function stage1()
     {
-        $candidate = $this->candidate;
         $payments = PaymentMethod::where('is_enabled', '=', '1')->get();
-        $transactions = Candidate::where('user_id', '=', Auth::user()->id)
-        ->get();
-
-        dd($transactions);
-        return view('candidate.stage.stage-1', compact('candidate', 'payments'));
+        return view('candidate.stage.stage-1', compact( 'payments'));
     }
 
     public function saveStage1(Request $request)
@@ -45,25 +40,19 @@ class StageController extends Controller
 
     public function stage2()
     {   $candidate = $this->candidate;
-        $transactions = Transaction::where('status', '=', 'success')
-            ->orWhere('status', '=', 'settlement')
-            // ->where('type', '=', 'form')
-            ->get();
-
-        dd($transactions);
-        $isPaid = $transactions->isNotEmpty();
-        return view('candidate.stage.stage-2', compact('candidate', 'isPaid'));
+        return view('candidate.stage.stage-2', compact('candidate'));
     }
 
     public function saveStage2(Request $request)
-    {    dd($request);
-        return view('candidate.stage.stage-2-saved', compact('candidate'));
+    {
+        return view('candidate.stage.stage-2-saved');
     }
 
     public function stage3()
     {   $candidate = $this->candidate;
-        $payments = PaymentMethod::where('is_enabled', '=', '1')->get();
-        return view('candidate.stage.stage-3', compact('candidate', 'payments'));
+        $phases = RegistrationPhase::all();
+        $sources = RegistrationSource::all();
+        return view('candidate.stage.stage-3', compact('candidate', 'phases', 'sources'));
     }
 
     public function startTransaction()
@@ -78,17 +67,19 @@ class StageController extends Controller
 
     public function stage4()
     {    $candidate = $this->candidate;
-        return view('candidate.stage.stage-4', compact('candidate'));
+        $payments = PaymentMethod::where('is_enabled', '=', '1')->get();
+        return view('candidate.stage.stage-4', compact('candidate', 'payments'));
     }
 
     public function saveStage4()
-    {    $candidate = $this->candidate;
+    {   $candidate = $this->candidate;
         return view('candidate.stage.stage-4-saved', compact('candidate'));
     }
 
     public function stage5()
-    {    $candidate = $this->candidate;
-        return view('candidate.stage.stage-5', compact('candidate'));
+    {   $documents = RegistrationDocument::all();
+        $candidate = $this->candidate;
+        return view('candidate.stage.stage-5', compact('candidate', 'documents'));
     }
 
     public function document(RegistrationDocument $registrationDocument)
