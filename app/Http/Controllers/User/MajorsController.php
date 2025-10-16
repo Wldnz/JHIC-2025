@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\Achievement;
+use App\Models\Major;
 use App\Models\Portfolio;
 use Illuminate\Http\Request;
 
@@ -19,11 +20,13 @@ class MajorsController extends Controller
 
     public function animation()
     {
+        $major = Major::query()->where('short_name', '=', 'ANM')->first();
         $achievements = $this->initiliazeAchievements
         ->where('student_major_name', '=', 'Animasi');
         $portfolios = $this->initiliazePortfolios->where('student_major_name', '=', 'Animasi')
             ->get();
-        return view('user.majors.animation', compact('achievements', 'portfolios') );
+        $alumni = $major->alumni()->limit(3)->get();
+        return view('user.majors.animation', compact('achievements', 'portfolios', 'alumni'));
     }
 
     public function broadcasting()

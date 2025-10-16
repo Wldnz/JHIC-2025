@@ -34,7 +34,7 @@
                         <option value=""></option>
                         <option @selected(old('role', '') == 'article_creator') value="article_creator">Pembuat Artikel</option>
                         @if (auth()->user()->role == 'super_admin')
-                            <option @selected(old('role', '') == 'administrasi') value="admin">Administrasi</option>
+                            <option @selected(old('role', '') == 'admin') value="admin">Administrasi</option>
                         @endif
                     </select>
                 </div>

@@ -133,7 +133,7 @@
     </div>
     <div class="wrapper-button">
         <button class="btn" type="submit">Simpan Perubahan</button>
-        <!-- <button class="btn btn-back" type="button" id="reset-password-btn">Reset Password</button> -->
+        <button class="btn btn-back" type="button" id="reset-password-btn">Reset Password</button>
     </div>
 </form>
 
@@ -147,20 +147,30 @@
     });
 
     let resetPassword = true;
-    // const handlerResetPassword = (e) => {
-    //     fetch("", {
-    //         headers : {
-    //             'Content-Type': 'application/json',
-    //         },
-    //         method : 'PATCH',
-    //         body : JSON.stringify( {
-    //             _token : csrfToken
-    //         })
-    //     })
-    //     .then(e => e.json())
-    //     .then(e => console.log(e));
-    // };
-    // document.getElementById('reset-password-btn').addEventListener('click', handlerResetPassword)
+    const handlerResetPassword = (e) => {
+        fetch(@js(route('admin.reset-password-account', ['account' => $account])), {
+            headers : {
+                'Content-Type': 'application/json',
+            },
+            method : 'PATCH',
+            body : JSON.stringify( {
+                _token : csrfToken
+            })
+        })
+        .then(response => {
+            if (!(response.status >= 300 && response.status < 400)) {
+                window.location.reload();
+                return;
+            }
+
+            const redirectUrl = response.headers.location;
+            if (redirectUrl) {
+                window.location.href = redirectUrl;
+            }
+        })
+        .catch(error => console.error(error));
+    };
+    document.getElementById('reset-password-btn').addEventListener('click', handlerResetPassword)
 </script>
 
 @include('_components._footerAdmin')

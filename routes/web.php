@@ -14,7 +14,7 @@ use App\Http\Middleware\isAdmin;
 Route::name('user.')->group(function () {
     Route::get('/', [User\Controller::class, 'index'])->name('index');
     Route::get('/profile', [User\Controller::class, 'profile'])->name('profile');
-    Route::get('/about', [User\Controller::class, 'about'])->name('about');
+    Route::get('/uniforms', [User\Controller::class, 'uniforms'])->name('uniforms');
     Route::get('/visi-misi', [User\Controller::class, 'visiMisi'])->name('visi-misi');
     Route::get('/galleries', [User\Controller::class, 'galleries'])->name('galleries');
     Route::get('/facilities', [User\Controller::class, 'facilities'])->name('facilities');
@@ -36,21 +36,10 @@ Route::name('user.')->group(function () {
         Route::get('/program-silang', 'programSilang')->name('program-silang');
         Route::get('/baca-tulis-quran', 'bacaTulisQuran')->name('baca-tulis-quran');
         Route::get('/bimbingan-konseling', 'bimbinganKonseling')->name('bimbingan-konseling');
+        Route::get('/extracurriculars', 'extracurriculars')->name('extracurriculars');
         Route::get('/program-kecakapan-hidup', 'programKecakapanHidup')->name('program-kecakapan-hidup');
         Route::get('/project-works', 'projectWorks')->name('project-works');
         Route::get('/bi-channel', 'biChannel')->name('bi-channel');
-
-        Route::controller(User\ExtracurricularsController::class)->prefix('extracurriculars')->name('extracurriculars.')->group(function () {
-            Route::get('/', 'index')->name('index');
-            Route::get('/merpati-putih', 'merpatiPutih')->name('merpati-putih');
-            Route::get('/futsal', 'futsal')->name('futsal');
-            Route::get('/basketball', 'basketball')->name('basketball');
-            Route::get('/paduan-suara', 'paduanSuara')->name('paduan-suara');
-            Route::get('/bicoustic', 'bicoustic')->name('bicoustic');
-            Route::get('/tari-tradisional', 'tariTradisional')->name('tari-tradisional');
-            Route::get('/english-club', 'englishClub')->name('english-club');
-            Route::get('/paskibra', 'paskibra')->name('paskibra');
-        });
     });
 
 });
@@ -117,7 +106,7 @@ Route::name('admin.')->prefix('admin')->middleware([isLogin::class, isAdmin::cla
     Route::get('/accounts/{account}/documents/{candidateDocument}', [Admin\AccountController::class, 'downloadDocument'])->name('detail-account.download-document');
     Route::put('/accounts/{account}', [Admin\AccountController::class, 'updateAccount'])->name('update-account');
     Route::delete('/accounts/{account}', [Admin\AccountController::class, 'deleteAccount'])->name('delete-account');
-    Route::patch('/account/reset-password/{account}', [Admin\AccountController::class, 'resetPassword'])->name('reset-password-account');
+    Route::patch('/accounts/{account}/reset-password', [Admin\AccountController::class, 'resetPassword'])->name('reset-password-account');
 
     Route::get('/students', [Admin\AccountController::class, 'student'])->name('students');
     Route::get('/students-create', [Admin\AccountController::class, 'createStudent'])->name('create-student');
