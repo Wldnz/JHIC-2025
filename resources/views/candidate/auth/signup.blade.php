@@ -39,17 +39,18 @@
             </div>
                 <div class="wrapper-input">
                 <label for="password">Password</label>
-                <input type="password" name="password" id="password" placeholder="admin123" 
-                minlength="8" value="{{ old('password') }}"
-                required
-            >
+                <div class="password">
+                    <input type="password" name="password" id="password" placeholder="admin123" minlength="8" value="{{ old('password') }}" required>
+                    <img src="{{ asset("icons/Show.svg") }}" class="show">
+                    <img src="{{ asset("icons/Hide.svg") }}" class="hide">
+                </div>
             </div>
             
             <div class="buttons">
                 <button type="submit" class="btn btn-submit w-full">
                     SIGN UP
                 </button>
-                <a href="#" target="_blank"><img src="{{ asset("icons/google.svg") }}">Sign Up with Goolgle</a>
+                <a href="#" target="_blank"><img src="{{ asset("icons/google.svg") }}"><p>Sign Up with Google</p></a>
             </div>
             <div class="footers">
                 <div class="link">
@@ -64,6 +65,28 @@
 </main>
 
 @includeWhen(session()->has('alert'), '_components._alert-message', ['data' => session()->get('alert'), 'icon_name' => 'product'])
+
+
+<script>
+
+let pwinput = document.querySelector("#password")
+let hidebtn = document.querySelector(".hide")
+let showbtn = document.querySelector(".show")
+
+showbtn.addEventListener("click", () => {
+    pwinput.type = "text"
+    showbtn.style.display = "none"
+    hidebtn.style.display = "flex"
+})
+
+hidebtn.addEventListener("click", () => {
+    pwinput.type = "password"
+    showbtn.style.display = "flex"
+    hidebtn.style.display = "none"
+})
+
+
+</script>
 
 
 </body>

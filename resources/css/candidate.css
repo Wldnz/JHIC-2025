@@ -591,6 +591,25 @@ img {
 .wrapper-login .login .wrapper-field .wrapper-input input:focus {
   outline: none;
 }
+.wrapper-login .login .wrapper-field .wrapper-input .password {
+  display: flex;
+  border: 1px solid #273b98;
+  border-radius: 8px;
+  align-items: center;
+}
+.wrapper-login .login .wrapper-field .wrapper-input .password input {
+  border: none;
+  width: 90%;
+}
+.wrapper-login .login .wrapper-field .wrapper-input .password img {
+  width: 10%;
+  padding: 7px;
+  cursor: pointer;
+  filter: brightness(0) saturate(100%) invert(17%) sepia(56%) saturate(3428%) hue-rotate(224deg) brightness(91%) contrast(90%);
+}
+.wrapper-login .login .wrapper-field .wrapper-input .password .hide {
+  display: none;
+}
 .wrapper-login .login .wrapper-field .buttons {
   margin-top: 20px;
   width: 100%;
@@ -606,15 +625,19 @@ img {
   display: flex;
   border-radius: 8px;
   background-color: #181818;
-  font-size: clamp(0.6rem, 3.5vw, 2rem);
   padding: 10px 20px;
   align-items: center;
+}
+.wrapper-login .login .wrapper-field .buttons a p {
+  font-size: clamp(0.6rem, 3.5vw, 2rem);
   font-weight: 400;
   color: #fff;
-  justify-content: space-around;
+  text-align: center;
+  width: 100%;
 }
 .wrapper-login .login .wrapper-field .buttons a img {
   height: 1.5em;
+  width: max-content;
 }
 .wrapper-login .login .wrapper-field .footers .link {
   text-align: center;
@@ -692,7 +715,7 @@ img {
   .wrapper-login .login .wrapper-field .buttons button {
     font-size: clamp(0.6rem, 2vw, 1.5rem);
   }
-  .wrapper-login .login .wrapper-field .buttons a {
+  .wrapper-login .login .wrapper-field .buttons a p {
     font-size: clamp(0.6rem, 2vw, 1.5rem);
   }
   .wrapper-login .login .wrapper-field .footers .link a {
@@ -769,7 +792,7 @@ img {
   .wrapper-login .login .wrapper-field .buttons button {
     font-size: clamp(0.4rem, 1.25vw, 1rem);
   }
-  .wrapper-login .login .wrapper-field .buttons a {
+  .wrapper-login .login .wrapper-field .buttons a p {
     font-size: clamp(0.4rem, 1.25vw, 1rem);
   }
   .wrapper-login .login .wrapper-field .footers .link a {

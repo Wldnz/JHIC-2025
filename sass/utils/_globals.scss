@@ -79,6 +79,25 @@ img{
                         outline: none;
                     }
                 }
+
+                .password
+                {
+                    
+                    display: flex;
+                    border: 1px solid $color-accent;
+                    border-radius: $border-radius;
+                    align-items: center;
+                    
+                    input
+                    {
+                        border: none;
+                        width: 90%;
+                    }
+
+                    img{width: 10%; padding:7px; cursor: pointer; filter: brightness(0) saturate(100%) invert(17%) sepia(56%) saturate(3428%) hue-rotate(224deg) brightness(91%) contrast(90%);}
+
+                    .hide{display: none;}
+                }
             }
     
             .buttons
@@ -100,14 +119,23 @@ img{
                     display: flex;
                     border-radius: $border-radius;
                     background-color: #181818;
-                    font-size: $font-size-xl;
                     padding: 10px 20px;
                     align-items: center;
-                    font-weight: 400;
-                    color: #fff;
-                    justify-content: space-around;
+                    
+                    p
+                    {
+                        font-size: $font-size-xl;
+                        font-weight: 400;
+                        color: #fff;
+                        text-align: center;
+                        width: 100%;
+                    }
 
-                    img{height: 1.5em;}
+                    img
+                    {
+                        height: 1.5em; 
+                        width: max-content;
+                    }
                 }
             }
     
@@ -223,7 +251,7 @@ img{
                 .buttons
                 {
                     button{font-size: $font-size-l;}
-                    a{font-size: $font-size-l;}
+                    a{p{font-size: $font-size-l;}}
                 }
                 .footers
                 {
@@ -335,7 +363,7 @@ img{
                 .buttons
                 {
                     button{font-size: $font-size-m;}
-                    a{font-size: $font-size-m;}
+                    a{p{font-size: $font-size-m;}}
                 }
                 .footers
                 {
