@@ -4,6 +4,7 @@
 @import "admin/index";
 
 .wrapper-candidate {
+    min-width: 300px;
     width: 100vw;
     height: max-content;
     min-height: 100dvh;
@@ -15,7 +16,7 @@
     color: $color-accent;
 
     .bar-top {
-        width: inherit;
+        width: 100%;
         height: 10vw;
         max-height: 80px;
         padding: 10px 15px;
@@ -107,71 +108,71 @@
             }
         }
     }
-}
 
-.content {
-    width: inherit;
-
-    display: flex;
-    flex-direction: column;
-    gap: 25px;
-
-    position: relative;
-
-    .accessoris {
-        content: "";
-        width: inherit;
-        height: 100dvh;
-        position: fixed;
-        top: 0;
-        left: 0;
-        z-index: -1;
-
+    .content {
+        width: 100%;
+    
         display: flex;
-        justify-content: space-between;
-        align-items: center;
-
-        .rounded {
-            width: 300px;
-            height: 300px;
-
-            border-radius: 50%;
-            background: $color-bi-gradient;
-
-            padding: 23px;
-
+        flex-direction: column;
+        gap: 25px;
+    
+        position: relative;
+    
+        .accessoris {
+            content: "";
+            width: inherit;
+            height: 100dvh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
+    
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
-
-            .round {
-                width: 100%;
-                height: 100%;
-                background: $color-primary;
-
-                border-radius: inherit;
+    
+            .rounded {
+                width: 300px;
+                height: 300px;
+    
+                border-radius: 50%;
+                background: $color-bi-gradient;
+    
+                padding: 23px;
+    
+                display: flex;
+                justify-content: center;
+                align-items: center;
+    
+                .round {
+                    width: 100%;
+                    height: 100%;
+                    background: $color-primary;
+    
+                    border-radius: inherit;
+                }
             }
-        }
-
-        .stars {
-            width: 100px;
-            height: 100px;
-
-            align-self: flex-start;
-
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-
-            img {
-                width: 50px;
-                height: 50px;
-
-                &:nth-child(2) {
-                    align-self: flex-end;
+    
+            .stars {
+                width: 100px;
+                height: 100px;
+    
+                align-self: flex-start;
+    
+                display: flex;
+                flex-direction: column;
+                gap: 5px;
+    
+                img {
+                    width: 50px;
+                    height: 50px;
+    
+                    &:nth-child(2) {
+                        align-self: flex-end;
+                    }
                 }
             }
         }
+        @include stage.stages;
     }
-    @include stage.stages;
 }

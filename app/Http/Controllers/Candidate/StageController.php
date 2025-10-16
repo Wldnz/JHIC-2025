@@ -6,7 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Candidate\StoreDocumentRequest;
 use App\Models\Candidate;
 use App\Models\Major;
+use App\Models\PaymentMethod;
 use App\Models\RegistrationDocument;
+use App\Models\RegistrationPhase;
+use App\Models\RegistrationSource;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,28 +30,40 @@ class StageController extends Controller
     public function stage1()
     {
         $candidate = $this->candidate;
-        $majors = Major::all();
-        return view('candidate.stage.stage-1', compact('candidate', 'majors'));
+        $payments = PaymentMethod::where('is_enabled', '=', '1')->get();
+        $transactions = Candidate::where('user_id', '=', Auth::user()->id)
+        ->get();
+
+        dd($transactions);
+        return view('candidate.stage.stage-1', compact('candidate', 'payments'));
     }
 
-    public function saveStage1()
-    {    $candidate = $this->candidate;
+    public function saveStage1(Request $request)
+    {    dd($request);
         return view('candidate.stage.stage-1-saved', compact('candidate'));
     }
 
     public function stage2()
-    {    $candidate = $this->candidate;
-        return view('candidate.stage.stage-2', compact('candidate'));
+    {   $candidate = $this->candidate;
+        $transactions = Transaction::where('status', '=', 'success')
+            ->orWhere('status', '=', 'settlement')
+            // ->where('type', '=', 'form')
+            ->get();
+
+        dd($transactions);
+        $isPaid = $transactions->isNotEmpty();
+        return view('candidate.stage.stage-2', compact('candidate', 'isPaid'));
     }
 
-    public function saveStage2()
-    {    $candidate = $this->candidate;
+    public function saveStage2(Request $request)
+    {    dd($request);
         return view('candidate.stage.stage-2-saved', compact('candidate'));
     }
 
     public function stage3()
-    {    $candidate = $this->candidate;
-        return view('candidate.stage.stage-3', compact('candidate'));
+    {   $candidate = $this->candidate;
+        $payments = PaymentMethod::where('is_enabled', '=', '1')->get();
+        return view('candidate.stage.stage-3', compact('candidate', 'payments'));
     }
 
     public function startTransaction()

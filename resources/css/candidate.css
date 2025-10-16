@@ -814,6 +814,7 @@ a {
 }
 
 .wrapper-candidate {
+  min-width: 300px;
   width: 100vw;
   height: max-content;
   min-height: 100dvh;
@@ -823,7 +824,7 @@ a {
   color: #273b98;
 }
 .wrapper-candidate .bar-top {
-  width: inherit;
+  width: 100%;
   height: 10vw;
   max-height: 80px;
   padding: 10px 15px;
@@ -895,15 +896,14 @@ a {
   padding-bottom: 20px;
   display: flex;
 }
-
-.content {
-  width: inherit;
+.wrapper-candidate .content {
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 25px;
   position: relative;
 }
-.content .accessoris {
+.wrapper-candidate .content .accessoris {
   content: "";
   width: inherit;
   height: 100dvh;
@@ -915,7 +915,7 @@ a {
   justify-content: space-between;
   align-items: center;
 }
-.content .accessoris .rounded {
+.wrapper-candidate .content .accessoris .rounded {
   width: 300px;
   height: 300px;
   border-radius: 50%;
@@ -925,13 +925,13 @@ a {
   justify-content: center;
   align-items: center;
 }
-.content .accessoris .rounded .round {
+.wrapper-candidate .content .accessoris .rounded .round {
   width: 100%;
   height: 100%;
   background: #fff;
   border-radius: inherit;
 }
-.content .accessoris .stars {
+.wrapper-candidate .content .accessoris .stars {
   width: 100px;
   height: 100px;
   align-self: flex-start;
@@ -939,20 +939,20 @@ a {
   flex-direction: column;
   gap: 5px;
 }
-.content .accessoris .stars img {
+.wrapper-candidate .content .accessoris .stars img {
   width: 50px;
   height: 50px;
 }
-.content .accessoris .stars img:nth-child(2) {
+.wrapper-candidate .content .accessoris .stars img:nth-child(2) {
   align-self: flex-end;
 }
-.content .stages {
+.wrapper-candidate .content .stages {
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
-.content .stages .hero {
+.wrapper-candidate .content .stages .hero {
   min-height: 250px;
   background-color: #273b98;
   color: #fff;
@@ -965,48 +965,48 @@ a {
   font-size: calc(clamp(0.6rem, 4.5vw, 3rem) - 0.8vw);
   gap: 10px;
 }
-.content .stages .hero img {
+.wrapper-candidate .content .stages .hero img {
   width: 50%;
   height: 50%;
   border-radius: 8px;
 }
-.content .stages .hero .description {
+.wrapper-candidate .content .stages .hero .description {
   font-size: clamp(0.6rem, 3.5vw, 2rem);
 }
-.content .stages .hero .description p {
+.wrapper-candidate .content .stages .hero .description p {
   font-size: calc(clamp(0.6rem, 4.5vw, 3rem) - 1.6vw);
 }
-.content .stages .form-stage {
+.wrapper-candidate .content .stages .form-stage {
   padding: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 20px;
 }
-.content .stages .form-stage .fields {
+.wrapper-candidate .content .stages .form-stage .fields {
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
-.content .stages .form-stage .fields .wrapper-input,
-.content .stages .form-stage .fields .wrapper-input-multiple {
+.wrapper-candidate .content .stages .form-stage .fields .wrapper-input,
+.wrapper-candidate .content .stages .form-stage .fields .wrapper-input-multiple {
   display: flex;
   flex-direction: column;
   gap: 5px;
 }
-.content .stages .form-stage .fields .wrapper-input label,
-.content .stages .form-stage .fields .wrapper-input-multiple label {
+.wrapper-candidate .content .stages .form-stage .fields .wrapper-input label,
+.wrapper-candidate .content .stages .form-stage .fields .wrapper-input-multiple label {
   font-size: calc(clamp(0.6rem, 4.5vw, 3rem) - 0.9vw);
   font-weight: 600;
   padding: 2px;
 }
-.content .stages .form-stage .fields .wrapper-input input,
-.content .stages .form-stage .fields .wrapper-input select,
-.content .stages .form-stage .fields .wrapper-input textarea,
-.content .stages .form-stage .fields .wrapper-input-multiple input,
-.content .stages .form-stage .fields .wrapper-input-multiple select,
-.content .stages .form-stage .fields .wrapper-input-multiple textarea {
+.wrapper-candidate .content .stages .form-stage .fields .wrapper-input input,
+.wrapper-candidate .content .stages .form-stage .fields .wrapper-input select,
+.wrapper-candidate .content .stages .form-stage .fields .wrapper-input textarea,
+.wrapper-candidate .content .stages .form-stage .fields .wrapper-input-multiple input,
+.wrapper-candidate .content .stages .form-stage .fields .wrapper-input-multiple select,
+.wrapper-candidate .content .stages .form-stage .fields .wrapper-input-multiple textarea {
   width: 100%;
   height: 10vw;
   min-height: 40px;
@@ -1017,25 +1017,33 @@ a {
   border-radius: 8px;
   outline: none;
 }
-.content .stages .form-stage .fields .wrapper-input textarea,
-.content .stages .form-stage .fields .wrapper-input-multiple textarea {
+.wrapper-candidate .content .stages .form-stage .fields .wrapper-input textarea,
+.wrapper-candidate .content .stages .form-stage .fields .wrapper-input-multiple textarea {
   resize: vertical;
   max-height: 120px;
 }
-.content .stages .form-stage .fields .wrapper-input-multiple {
+.wrapper-candidate .content .stages .form-stage .fields .wrapper-input-multiple {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
 }
-.content .stages .form-stage .fields .wrapper-input-multiple-1 {
+.wrapper-candidate .content .stages .form-stage .fields .wrapper-input-multiple-1 {
   grid-template-columns: 1fr !important;
 }
-.content .stages .form-stage .fields .wrapper-option-button {
+.wrapper-candidate .content .stages .form-stage .fields .wrapper-option-button {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 10px;
 }
-.content .stages .form-stage .fields .wrapper-option-button .btn-major {
+.wrapper-candidate .content .stages .form-stage .fields .wrapper-option-button-1 {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+.wrapper-candidate .content .stages .form-stage .fields .wrapper-option-button-1 button {
+  text-align: start;
+}
+.wrapper-candidate .content .stages .form-stage .fields .wrapper-option-button .btn-major,
+.wrapper-candidate .content .stages .form-stage .fields .wrapper-option-button .btn-phase {
   min-width: 80px;
   min-height: 25px;
   padding: 10px;
@@ -1045,28 +1053,84 @@ a {
   border-radius: 6px;
   cursor: pointer;
 }
-.content .stages .form-stage .fields .wrapper-option-button .btn-major-selected {
+.wrapper-candidate .content .stages .form-stage .fields .wrapper-option-button .btn-major-selected,
+.wrapper-candidate .content .stages .form-stage .fields .wrapper-option-button .btn-phase-selected {
   background-color: #273b98;
   color: #fff;
 }
-.content .stages .form-stage .fields .wrapper-option-button .btn-major:hover {
+.wrapper-candidate .content .stages .form-stage .fields .wrapper-option-button .btn-major:hover,
+.wrapper-candidate .content .stages .form-stage .fields .wrapper-option-button .btn-phase:hover {
   background-color: #273b98;
   color: #fff;
 }
-.content .stages .form-stage .s-submit {
+.wrapper-candidate .content .stages .form-stage .fields .wrapper-option-button .btn-phase {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.wrapper-candidate .content .stages .form-stage .fields .wrapper-option-button .btn-phase span:first-child {
+  align-self: center;
+}
+.wrapper-candidate .content .stages .form-stage .fields .wrapper-option-button .btn-phase .date {
+  font-size: clamp(0.4rem, 1.25vw, 1rem);
+}
+.wrapper-candidate .content .stages .form-stage .fields .wrapper-select {
+  position: relative;
+}
+.wrapper-candidate .content .stages .form-stage .fields .wrapper-select select {
+  background-color: transparent;
+  appearance: none;
+}
+.wrapper-candidate .content .stages .form-stage .fields .wrapper-select svg {
+  height: 100%;
+  position: absolute;
+  top: 0;
+  right: 10px;
+  z-index: -1;
+}
+.wrapper-candidate .content .stages .form-stage .fields .wrapper-information {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-radius: 8px;
+  border: 3px solid #273b98;
+}
+.wrapper-candidate .content .stages .form-stage .fields .wrapper-information label, .wrapper-candidate .content .stages .form-stage .fields .wrapper-information span {
+  color: #fff;
+  font-size: calc(clamp(0.6rem, 3.5vw, 2rem) - 0.8vw) !important;
+  background-color: #273b98;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+}
+.wrapper-candidate .content .stages .form-stage .fields .wrapper-information span {
+  background-color: transparent;
+  border: none;
+  color: #273b98;
+  justify-content: start;
+}
+.wrapper-candidate .content .stages .form-stage .fields .wrapper-information select {
+  border: none;
+  border-radius: none;
+  height: 40px;
+}
+.wrapper-candidate .content .stages .form-stage .s-submit {
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 15px;
+  margin-top: 30px;
 }
-.content .stages .form-stage .s-submit p {
+.wrapper-candidate .content .stages .form-stage .s-submit p {
   text-align: center;
 }
-.content .stages .form-stage .s-submit .w-buttons {
+.wrapper-candidate .content .stages .form-stage .s-submit .w-buttons {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 10px;
 }
-.content .stages .form-stage .s-submit .w-buttons button {
+.wrapper-candidate .content .stages .form-stage .s-submit .w-buttons button {
   width: 100%;
   min-height: 40px;
   max-height: 60px;
@@ -1079,117 +1143,132 @@ a {
   font-weight: 600;
   cursor: pointer;
 }
-.content .stages .form-stage .s-submit .w-buttons .pages {
+.wrapper-candidate .content .stages .form-stage .s-submit .w-buttons .pages {
+  width: 100%;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 5px;
 }
-.content .stages .form-stage .s-submit .w-buttons .pages .pagination-action {
+.wrapper-candidate .content .stages .form-stage .s-submit .w-buttons .pages .pagination-action {
+  width: 100%;
   background-color: #fff;
   border: 1px solid #273b98;
   color: #273b98;
 }
 @media screen and (min-width: 1000px) {
-  .content .stages img {
+  .wrapper-candidate .content .stages img {
     display: none;
   }
-  .content .stages .form-stage {
+  .wrapper-candidate .content .stages .form-stage {
     padding: 40px;
   }
-  .content .stages .form-stage h2 {
+  .wrapper-candidate .content .stages .form-stage h2 {
     font-size: clamp(0.6rem, 2vw, 1.5rem);
   }
-  .content .stages .form-stage .fields {
+  .wrapper-candidate .content .stages .form-stage .fields {
     gap: 20px;
   }
-  .content .stages .form-stage .fields .wrapper-input label,
-  .content .stages .form-stage .fields .wrapper-input-multiple label {
+  .wrapper-candidate .content .stages .form-stage .fields .wrapper-input label,
+  .wrapper-candidate .content .stages .form-stage .fields .wrapper-input-multiple label {
     font-size: clamp(0.6rem, 2vw, 1.5rem);
   }
-  .content .stages .form-stage .fields .wrapper-input input,
-  .content .stages .form-stage .fields .wrapper-input-multiple input {
+  .wrapper-candidate .content .stages .form-stage .fields .wrapper-input input,
+  .wrapper-candidate .content .stages .form-stage .fields .wrapper-input-multiple input {
     height: 70px;
   }
-  .content .stages .form-stage .fields .wrapper-input input[type=date],
-  .content .stages .form-stage .fields .wrapper-input select,
-  .content .stages .form-stage .fields .wrapper-input-multiple input[type=date],
-  .content .stages .form-stage .fields .wrapper-input-multiple select {
+  .wrapper-candidate .content .stages .form-stage .fields .wrapper-input input[type=date],
+  .wrapper-candidate .content .stages .form-stage .fields .wrapper-input select,
+  .wrapper-candidate .content .stages .form-stage .fields .wrapper-input-multiple input[type=date],
+  .wrapper-candidate .content .stages .form-stage .fields .wrapper-input-multiple select {
     height: 60px;
   }
-  .content .stages .form-stage .fields .wrapper-input-1,
-  .content .stages .form-stage .fields .wrapper-input-multiple-1 {
+  .wrapper-candidate .content .stages .form-stage .fields .wrapper-input-1,
+  .wrapper-candidate .content .stages .form-stage .fields .wrapper-input-multiple-1 {
     grid-template-columns: repeat(2, 1fr) !important;
   }
-  .content .stages .form-stage .fields .wrapper-input-multiple {
+  .wrapper-candidate .content .stages .form-stage .fields .wrapper-input-multiple {
     gap: 20px;
   }
-  .content .stages .form-stage .s-submit .w-buttons button {
-    height: 65px;
+  .wrapper-candidate .content .stages .form-stage .fields .wrapper-option-button .btn-phase {
+    height: 60px;
+    min-height: 60px;
   }
-  .content .stages .form-stage .s-submit .w-buttons .pages {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 5px;
+  .wrapper-candidate .content .stages .form-stage .fields .wrapper-option-button .btn-major {
+    font-size: calc(clamp(0.6rem, 2vw, 1.5rem) - 0.2vw);
   }
-  .content .stages .form-stage .s-submit .w-buttons .pages .pagination-action {
-    background-color: #fff;
-    border: 1px solid #273b98;
-    color: #273b98;
+  .wrapper-candidate .content .stages .form-stage .fields .wrapper-information label {
+    justify-content: start;
+  }
+  .wrapper-candidate .content .stages .form-stage .fields .wrapper-information span {
+    min-height: 60px;
+  }
+  .wrapper-candidate .content .stages .form-stage .fields .wrapper-information select {
+    font-size: clamp(0.4rem, 1.25vw, 1rem);
+  }
+  .wrapper-candidate .content .stages .form-stage .s-submit .w-buttons button {
+    font-size: clamp(0.6rem, 2vw, 1.5rem);
+    min-height: 65px;
+  }
+  .wrapper-candidate .content .stages .form-stage .s-submit .w-buttons .pages .pagination-action {
+    height: 40px;
   }
 }
 @media screen and (min-width: 768px) and (max-width: 1000px) {
-  .content .stages img {
+  .wrapper-candidate .content .stages img {
     display: none;
   }
-  .content .stages .form-stage h2 {
+  .wrapper-candidate .content .stages .form-stage h2 {
     font-size: clamp(0.6rem, 2vw, 1.5rem);
   }
-  .content .stages .form-stage .fields .wrapper-input,
-  .content .stages .form-stage .fields .wrapper-input-multiple {
+  .wrapper-candidate .content .stages .form-stage .fields .wrapper-input,
+  .wrapper-candidate .content .stages .form-stage .fields .wrapper-input-multiple {
     gap: 5px;
   }
-  .content .stages .form-stage .fields .wrapper-input label,
-  .content .stages .form-stage .fields .wrapper-input-multiple label {
+  .wrapper-candidate .content .stages .form-stage .fields .wrapper-input label,
+  .wrapper-candidate .content .stages .form-stage .fields .wrapper-input-multiple label {
     font-size: clamp(0.6rem, 2vw, 1.5rem);
   }
-  .content .stages .form-stage .fields .wrapper-input input,
-  .content .stages .form-stage .fields .wrapper-input select,
-  .content .stages .form-stage .fields .wrapper-input textarea,
-  .content .stages .form-stage .fields .wrapper-input-multiple input,
-  .content .stages .form-stage .fields .wrapper-input-multiple select,
-  .content .stages .form-stage .fields .wrapper-input-multiple textarea {
+  .wrapper-candidate .content .stages .form-stage .fields .wrapper-input input,
+  .wrapper-candidate .content .stages .form-stage .fields .wrapper-input select,
+  .wrapper-candidate .content .stages .form-stage .fields .wrapper-input textarea,
+  .wrapper-candidate .content .stages .form-stage .fields .wrapper-input-multiple input,
+  .wrapper-candidate .content .stages .form-stage .fields .wrapper-input-multiple select,
+  .wrapper-candidate .content .stages .form-stage .fields .wrapper-input-multiple textarea {
     width: 100%;
   }
-  .content .stages .form-stage .fields .wrapper-input input,
-  .content .stages .form-stage .fields .wrapper-input-multiple input {
+  .wrapper-candidate .content .stages .form-stage .fields .wrapper-input input,
+  .wrapper-candidate .content .stages .form-stage .fields .wrapper-input-multiple input {
     height: 60px;
   }
-  .content .stages .form-stage .fields .wrapper-input input[type=date],
-  .content .stages .form-stage .fields .wrapper-input select,
-  .content .stages .form-stage .fields .wrapper-input-multiple input[type=date],
-  .content .stages .form-stage .fields .wrapper-input-multiple select {
+  .wrapper-candidate .content .stages .form-stage .fields .wrapper-input input[type=date],
+  .wrapper-candidate .content .stages .form-stage .fields .wrapper-input select,
+  .wrapper-candidate .content .stages .form-stage .fields .wrapper-input-multiple input[type=date],
+  .wrapper-candidate .content .stages .form-stage .fields .wrapper-input-multiple select {
     height: 50px;
   }
-  .content .stages .form-stage .fields .wrapper-input-1,
-  .content .stages .form-stage .fields .wrapper-input-multiple-1 {
+  .wrapper-candidate .content .stages .form-stage .fields .wrapper-input-1,
+  .wrapper-candidate .content .stages .form-stage .fields .wrapper-input-multiple-1 {
     grid-template-columns: repeat(2, 1fr) !important;
+  }
+  .wrapper-candidate .content .stages .form-stage .fields .wrapper-option-button .btn-phase {
+    height: 50px;
   }
 }
 @media screen and (min-width: 425px) and (max-width: 768px) {
-  .content .stages .form-stage {
+  .wrapper-candidate .content .stages .form-stage {
     gap: 25px;
   }
-  .content .stages .form-stage h2 {
+  .wrapper-candidate .content .stages .form-stage h2 {
     font-size: calc(clamp(0.6rem, 3.5vw, 2rem) - 0.9vw);
   }
-  .content .stages .form-stage .fields .wrapper-input label,
-  .content .stages .form-stage .fields .wrapper-input-multiple label {
+  .wrapper-candidate .content .stages .form-stage .fields .wrapper-input label,
+  .wrapper-candidate .content .stages .form-stage .fields .wrapper-input-multiple label {
     font-size: clamp(0.6rem, 2vw, 1.5rem);
   }
-  .content .stages .form-stage .fields .wrapper-input input[type=date],
-  .content .stages .form-stage .fields .wrapper-input select,
-  .content .stages .form-stage .fields .wrapper-input-multiple input[type=date],
-  .content .stages .form-stage .fields .wrapper-input-multiple select {
+  .wrapper-candidate .content .stages .form-stage .fields .wrapper-input input[type=date],
+  .wrapper-candidate .content .stages .form-stage .fields .wrapper-input select,
+  .wrapper-candidate .content .stages .form-stage .fields .wrapper-input-multiple input[type=date],
+  .wrapper-candidate .content .stages .form-stage .fields .wrapper-input-multiple select {
     max-height: 40px;
   }
 }
