@@ -12,6 +12,7 @@ class CandidateMajor extends Model
 
     protected $fillable = [
         'candidate_nisn',
+        'user_id',
         'major_id',
         'major_long_name',
         'major_short_name',
@@ -23,6 +24,14 @@ class CandidateMajor extends Model
     public function candidate(): BelongsTo
     {
         return $this->belongsTo(Candidate::class, 'candidate_nisn', 'nisn');
+    }
+
+    /**
+     * Get the user that owns the candidate.
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 
     /**

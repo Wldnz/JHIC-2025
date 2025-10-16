@@ -23,26 +23,26 @@
 
             "icons" => 
             [
-            asset("icons/major/anim/app-icons/icon1.png"),
-            asset("icons/major/anim/app-icons/icon2.png"),
-            asset("icons/major/anim/app-icons/icon3.png"),
-            asset("icons/major/anim/app-icons/icon4.png"),
-            asset("icons/major/anim/app-icons/icon5.png"),
+            asset("icons/major/bc/app-icons/icon1.png"),
+            asset("icons/major/bc/app-icons/icon2.png"),
+            asset("icons/major/bc/app-icons/icon3.png"),
+            asset("icons/major/bc/app-icons/icon4.png"),
+            asset("icons/major/bc/app-icons/icon5.png"),
             ],
 
             "portfolio" => (object)
             [
-            "portfolio1" => ["Dalang Pelo","Animasi Hybrid 2D dan 3D bertema persahabatan melawan kejahatan yang sering memberi kutukan kepada hewan hewan dan tanaman di dunia ini dengan sihirnya ","Wildan Izhar Al-Haqq",asset("images/major/anim/portfolio/portfolio1.png")],
-            "portfolio2" => ["Palang Delo","Animasi Hybrid 2D dan 3D bertema persahabatan melawan kejahatan yang sering memberi kutukan kepada hewan hewan dan tanaman di dunia ini dengan sihirnya ","Wildan Izhar Al-Haqq",asset("images/major/anim/portfolio/portfolio1.png")],
-            "portfolio3" => ["Palang Pelo","Animasi Hybrid 2D dan 3D bertema persahabatan melawan kejahatan yang sering memberi kutukan kepada hewan hewan dan tanaman di dunia ini dengan sihirnya ","Wildan Izhar Al-Haqq",asset("images/major/anim/portfolio/portfolio1.png")],
-            "portfolio4" => ["Dalang Delo","Animasi Hybrid 2D dan 3D bertema persahabatan melawan kejahatan yang sering memberi kutukan kepada hewan hewan dan tanaman di dunia ini dengan sihirnya ","Wildan Izhar Al-Haqq",asset("images/major/anim/portfolio/portfolio1.png")],
+            "portfolio1" => ["Dalang Pelo","Animasi Hybrid 2D dan 3D bertema persahabatan melawan kejahatan yang sering memberi kutukan kepada hewan hewan dan tanaman di dunia ini dengan sihirnya ","Wildan Izhar Al-Haqq",asset("images/major/bc/portfolio/portfolio1.png")],
+            "portfolio2" => ["Palang Delo","Animasi Hybrid 2D dan 3D bertema persahabatan melawan kejahatan yang sering memberi kutukan kepada hewan hewan dan tanaman di dunia ini dengan sihirnya ","Wildan Izhar Al-Haqq",asset("images/major/bc/portfolio/portfolio1.png")],
+            "portfolio3" => ["Palang Pelo","Animasi Hybrid 2D dan 3D bertema persahabatan melawan kejahatan yang sering memberi kutukan kepada hewan hewan dan tanaman di dunia ini dengan sihirnya ","Wildan Izhar Al-Haqq",asset("images/major/bc/portfolio/portfolio1.png")],
+            "portfolio4" => ["Dalang Delo","Animasi Hybrid 2D dan 3D bertema persahabatan melawan kejahatan yang sering memberi kutukan kepada hewan hewan dan tanaman di dunia ini dengan sihirnya ","Wildan Izhar Al-Haqq",asset("images/major/bc/portfolio/portfolio1.png")],
             ],
 
             "alumni" => (object)
             [
-            "alumni1" => ["Wildan Izhar Al-Haqq","CEO Growtopia","pesan yang panjang karena sekolah ini hebat banget oh my god", asset("images/major/anim/alumni/alumni1/person.png"), asset("images/major/anim/alumni/alumni1/company.png")],
-            "alumni2" => ["Rizky Sugiharto","Pembuat Python","pesan yang panjang karena sekolah ini hebat banget oh my god", asset("images/major/anim/alumni/alumni2/person.png"), asset("images/major/anim/alumni/alumni2/company.png")],
-            "alumni3" => ["Raditya Putra Hidayat","CEO SEGA","pesan yang panjang karena sekolah ini hebat banget oh my god", asset("images/major/anim/alumni/alumni3/person.png"), asset("images/major/anim/alumni/alumni3/company.png")],
+            "alumni1" => ["Nabila Nadazera","Alumni BI","Saat sekolah disini mental kebentuk, skill juga dan berguna di kuliah ku sih, lebih unggul dri temen temen lainnya, emang capek, tapi ada kok hasilnya", asset("images/major/bc/alumni/alumni1.png")],
+            "alumni2" => ["Deni Maulana Dipraja","Alumni BI","Saya tertarik akan bidang Audio Visual, dan memutuskan untuk masuk ke jurusan Broadcasting Tv & Film. Dengan ilmu serta pengalaman yang di dapat, alhamdulillah mengantarkan saya ke tingkat Nasional dalam lomba Short Movie dan magang di Kominfo.", asset("images/major/bc/alumni/alumni2.png")],
+            "alumni3" => ["Rahmalia Dhamayanti","Alumni BI","Gue bangga sih jadi alumni SMK Bina Informatika, dari thn 2011-2014 sekolah udh rasa ngampus banget!!! Gimana gak bangga, pas kuliah temen2 baru tau tehnik2 Multimedia/broadcast gue udh biasa sama hal2 itu di SMK", asset("images/major/bc/alumni/alumni3.png")],
             ]
         ]
 @endphp
@@ -82,34 +82,57 @@
         <h4>AND MUCH MORE!!</h4>
     </div>
 
+  @if ($portfolios->count() > 0)
     <div class="portfolio">
-        <h3>{{ $major->name }} Portfolio</h3>
-        <div class="body-portfolio">
-
-          <div class="main-portfolio">
-            <img src="{{ $major->portfolio->portfolio1[3] }}" alt="">
-            <h3>{{ $major->portfolio->portfolio1[0] }}</h3>
-            <p>{{ $major->portfolio->portfolio1[1] }}</p>
-            <h4>{{ $major->portfolio->portfolio1[2] }}</h4>
-          </div>
-          <div class="other-portfolio">
-            @foreach ($major->portfolio as $portfolio )
-            <div class="portfolios {{ $loop->first ? 'selected' : '' }}">
-              <img src="{{ $portfolio[3] }}" alt="">
-              <h5>{{ $portfolio[0] }}</h5>
-            </div>
-            @endforeach
-          </div>
+      <h3>{{ $major->name }} Portfolio</h3>
+      <div class="body-portfolio">
+        <div class="main-portfolio">
+          <img src="{{ $portfolios[0]->portfolioImages[0]->url }}" alt="">
+          <h3>{{ $portfolios[0]->title }}</h3>
+          <p>{{ $portfolios[0]->description }}</p>
+          <h4>{{ $portfolios[0]->student_name }}</h4>
         </div>
+        <div class="other-portfolio">
+          @foreach ($portfolios as $portfolio)
+            <div class="portfolios {{ $loop->first ? 'selected' : '' }}">
+              <img src="{{ $portfolio->portfolioImages[0]['url'] }}" alt="{{ $portfolio->title }}">
+              <h5>{{ $portfolio->title }}</h5>
+            </div>
+          @endforeach
+        </div>
+      </div>
     </div>
+  @endif
+
+  @if ($achievements->count() > 0)
+    <div class="prestasi">
+      <h3>Prestasi Murid {{ $major->name }}</h3>
+      <div class="prestasi-slider">
+        @foreach($achievements as $achievement)
+          <div class="prestasi-content">
+            <img src="{{ $achievement->thumbnail_url }}" alt="{{ $achievement->competition_name }}">
+            <div class="info">
+              <div class="img-wrapper">
+                <!-- <img src="{{ asset("icons/medal.svg") }}" alt=""> -->
+                @include('_components._sprite-icons', ['name' => 'rank-' . explode('_', $achievement->competition_position)[1] . '', 'size' => 50])
+              </div>
+              <div class="text">
+                <h4>{{ $achievement->student_name }}</h4>
+                <h5>{{ $achievement->competition_name }}</h5>
+              </div>
+            </div>
+          </div>
+        @endforeach
+      </div>
+    </div>
+  @endif
 
     <div class="alumni">
-        <h2>Alumni Success Story</h2>
+        <h2>Alumni's Story</h2>
         @foreach ($major->alumni as $alumni)
         <div class="alumni-tab">
             <div class="img-group">
                 <img src="{{ $alumni[3] }}" alt="">
-                <img src="{{ $alumni[4] }}" alt="">
             </div>
             <h2>{{ $alumni[0] }}</h2>
             <h4>{{ $alumni[1] }}</h4>

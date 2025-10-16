@@ -1,4 +1,4 @@
-@include('_components._headerAdmin', ['title' => 'Detail Account'])
+@include('_components._headerAdmin', ['title' => 'Detail Student'])
 @php
     $currentPath = explode('/admin/', url()->current())[1];
     logger('x', [$student])
@@ -17,7 +17,7 @@
                 <div class="wrapper-input wrapper-input-full">
                     <label for="nis">Nomor Induk Siswa</label>
                     <input type="text" name="nis" id="nis" placeholder="Nis Peserta Didik"
-                        value="{{ old('nis', $student->nis) }}" aria-describedby="nis" required>
+                        value="{{ old('nis', $student->nis) }}" aria-describedby="nis" disabled>
                 </div>
                 <div class="wrapper-input">
                     <label for="name">Nama Lengkap</label>
@@ -32,20 +32,20 @@
                         required>
                 </div>
                 <div class="wrapper-input">
-                    <label for="gender">Kelas</label>
+                    <label for="gender">Jenis Kelamin</label>
                     <select name="gender" id="gender" required>
                         <option value=""></option>
-                        <option @selected(old('gender', $student->gender) == 'male') value="gender">Laki - Laki</option>
-                        <option @selected(old('gender', $student->gender) == 'female') value="gender">Perempuan</option>
+                        <option @selected(old('gender', $student->gender) == 'male') value="male">Laki - Laki</option>
+                        <option @selected(old('gender', $student->gender) == 'female') value="female">Perempuan</option>
                     </select>
                 </div>
                 <div class="wrapper-input">
                     <label for="class">Kelas</label>
                     <select name="class" id="class" required>
                         <option value=""></option>
-                        <option @selected(old('class', $student->class) == 'X') value="class">Kelas 10</option>
-                        <option @selected(old('class', $student->class) == 'XI') value="class">Kelas 11</option>
-                        <option @selected(old('class', $student->class) == 'XII') value="class">Kelas 12</option>
+                        <option @selected(old('class', $student->class) == 'X') value="X">Kelas 10</option>
+                        <option @selected(old('class', $student->class) == 'XI') value="XI">Kelas 11</option>
+                        <option @selected(old('class', $student->class) == 'XII') value="XII">Kelas 12</option>
                     </select>
                 </div>
                 <div class="wrapper-input">
@@ -53,23 +53,8 @@
                     <select name="major_id" id="major_id" required>
                         <option value=""></option>
                         @foreach ($majors as $major)
-                            <option @selected(old('major_id', $major->id) == $student->major_id) value="major">{{ $major->long_name }}</option>
+                            <option @selected(old('major_id', $major->id) == $student->major_id) value="{{ $major->id }}">{{ $major->long_name }}</option>
                         @endforeach
-                    </select>
-                </div>
-                <div class="wrapper-input">
-                    <label for="role">Role</label>
-                    <select name="role" id="role" required>
-                        <option @selected(old('role') == 'candidate') value="candidate">Calon Peserta
-                            Didik</option>
-                        <option @selected(old('role', 'student') == 'student') value="student">Siswa</option>
-                        <option @selected(old('role'))value="article_creator">
-                            Pembuat Artikel</option>
-                        @if (Auth::user()->role == 'super_admin')
-                            <option @selected(old('role' )) value="admin">Administrasi
-                            </option>
-                            <option @selected(old('role' )) value="owner">Owner</option>
-                        @endif
                     </select>
                 </div>
             </div>
@@ -80,9 +65,6 @@
     </div>
 </form>
 <script defer>
-    document.getElementById('role').addEventListener('change', (e) => {
-        document.getElementById('role-preview').textContent = e.target.value;
-    });
     document.getElementById('name').addEventListener('input', (e) => {
         document.getElementById('name-preview').textContent = e.target.value;
     });

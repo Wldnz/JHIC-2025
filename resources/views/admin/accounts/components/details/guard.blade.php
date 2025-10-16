@@ -22,7 +22,7 @@
             </div>
             <div class="wrapper-input">
                 <label for="candidate_guardian_birthplace">Tempat Lahir Wali <span>*</span></label>
-                <input type="text" name="candidate_guardian_    birthplace" id="candidate_guardian_birthplace" minlength="1"
+                <input type="text" name="candidate_guardian_birthplace" id="candidate_guardian_birthplace" minlength="1"
                     aria-describedby="candidate_guardian_birthplace"
                     value="{{ old('candidate_guardian_birthplace', $candidate_guardian->birthplace ?? '') }}" required>
             </div>

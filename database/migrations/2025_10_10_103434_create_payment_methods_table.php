@@ -18,6 +18,8 @@ return new class extends Migration
             $table->text('icon_url');
             $table->boolean('is_enabled')->default(false);
             $table->timestamps();
+
+            $table->index('code_name');
         });
     }
 

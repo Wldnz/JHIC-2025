@@ -1,4 +1,4 @@
-@include('_components._headerAdmin', ['title' => 'Portfolio Management'])
+@include('_components._headerAdmin', ['title' => 'Articles/Blogs/News Management'])
 @php
     $currentPath = explode('/admin/', url()->current())[1];
     logger('x', [$articles])
@@ -18,12 +18,13 @@
             </a>
         </div>
         <div class="find-something">
-            <form class="wrapper-filter">
+            <form class="wrapper-filter" id="wrapper-filter">
                 <div class="wrapper-select">
                     <select name="search_status" required>
                         <option value="">Status: Semuanya</option>
-                        <option value="public">Status: Public</option>
-                        <option value="private">Status: Private</option>
+                        <option value="published" @selected(app('request')->get('search_status') == 'published')>Status: Publish</option>
+                        <option value="archived" @selected(app('request')->get('search_status') == 'archived')>Status: Archive</option>
+                        <option value="draft" @selected(app('request')->get('search_status') == 'draft')>Status: Draft</option>
                     </select>
                     <div class="wrapper-icon">
                         @include("_components._sprite-icons", ["name" => "drop-down", "size" => 20])
@@ -42,12 +43,12 @@
                 <a class="wrapper-card-news" href="{{ route('admin.detail-news', ['news' => $article->id]) }}">
                     <div class="card-media">
                         <div class="wrapper-image">
-                            <img src="{{ $article->thumbnail_url }}" alt="thumbnail-image-article">
+                            <img src="{{ $article->thumbnail_url }}" alt="thumbnail-image-article" loading="lazy">
                         </div>
                         <div class="detail-media">
                             <div class="information">
                                 <h3 class="title">{{ $article->title }}</h3>
-                                <!-- <p class="description"></i> -->
+                                <p class="description">{{ $article->description }}</i>
                                 <p class="title">Author: {{ $article->written_by }}</p>
                             </div>
                             <div class="bottom">
@@ -76,6 +77,21 @@
                         </div>
                     </div>
                 </a>
+                <form class="floating-action"
+                    action="{{ route('admin.delete-news', ['news' => $article->id]) }}"
+                    method="POST"
+                    id="media-floating-icon"
+                >
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="action">
+                        @include('_components._sprite-icons', [
+                            'name' => 'trash',
+                            'size' => 20,
+                        ])
+                        <span>Delete Article</span>
+                    </button>
+                </form>
             @endforeach
         </div>
          @include('_components._pagination-media', [
@@ -85,5 +101,5 @@
         ])
     </div>
 </main>
-
+@vite('resources/js/handle/delete-media.js');
 @include('_components._footerAdmin')

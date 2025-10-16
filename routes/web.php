@@ -4,6 +4,8 @@ use App\Http\Controllers\Admin;
 use App\Http\Controllers\Candidate;
 use App\Http\Controllers\User;
 use App\Http\Controllers\MidtransController;
+use App\Http\Middleware\isCandidate;
+use App\Http\Middleware\isCreator;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\isLogin;
 use App\Http\Middleware\isAdmin;
@@ -54,8 +56,8 @@ Route::name('user.')->group(function () {
 });
 
 // Candidate-side
-Route::name('candidate.')->prefix('candidate')->middleware([isLogin::class])->group(function () {
-    Route::withoutMiddleware([isLogin::class])->group(function () {
+Route::name('candidate.')->prefix('candidate')->middleware([isLogin::class, isCandidate::class])->group(function () {
+    Route::withoutMiddleware([isLogin::class, isCandidate::class])->group(function () {
         Route::get('/', [Candidate\Controller::class, 'index'])->name('index');
 
         Route::get('/signup', [Candidate\AuthController::class, 'signupPage'])->name('signup-page');
@@ -70,7 +72,7 @@ Route::name('candidate.')->prefix('candidate')->middleware([isLogin::class])->gr
     Route::get('/contact', [Candidate\Controller::class, 'contact'])->name('contact');
     Route::get('/learning-materials', [Candidate\Controller::class, 'learningMaterials'])->name('learning-materials');
 
-    Route::controller(Candidate\StageController::class)->prefix('stage')->name('satge.')->group(function () {
+    Route::controller(Candidate\StageController::class)->prefix('stage')->name('stage.')->group(function () {
         Route::get('/stage-1', 'stage1')->name('stage1');
         Route::put('/stage-1', 'saveStage1')->name('save-stage1');
 
@@ -85,6 +87,7 @@ Route::name('candidate.')->prefix('candidate')->middleware([isLogin::class])->gr
         Route::put('/stage-4', 'saveStage4')->name('save-stage4');
 
         Route::get('/stage-5', 'stage5')->name('stage5');
+        Route::get('/stage-5/documents/{registrationDocument}', 'document')->name('stage5.document');
         Route::put('/stage-5', 'saveStage5')->name('save-stage5');
     });
 });
@@ -97,7 +100,6 @@ Route::name('admin.')->prefix('admin')->middleware([isLogin::class, isAdmin::cla
         Route::post('/logout', [Admin\AuthController::class, 'logout'])->name('logout');
     });
 
-    Route::get('/dashboard', [Admin\Controller::class, 'dashboard'])->name('dashboard');
     Route::get('/settings', [Admin\Controller::class, 'settings'])->name('settings');
     Route::put('/settings', [Admin\Controller::class, 'updateSettings'])->name('update-settings');
 
@@ -112,10 +114,11 @@ Route::name('admin.')->prefix('admin')->middleware([isLogin::class, isAdmin::cla
     Route::get('/accounts-create', [Admin\AccountController::class, 'createAccount'])->name('create-account');
     Route::post('/accounts-create', [Admin\AccountController::class, 'storeAccount'])->name('store-account');
     Route::get('/accounts/{account}', [Admin\AccountController::class, 'detailAccount'])->name('detail-account');
+    Route::get('/accounts/{account}/documents/{candidateDocument}', [Admin\AccountController::class, 'downloadDocument'])->name('detail-account.download-document');
     Route::put('/accounts/{account}', [Admin\AccountController::class, 'updateAccount'])->name('update-account');
     Route::delete('/accounts/{account}', [Admin\AccountController::class, 'deleteAccount'])->name('delete-account');
     Route::patch('/account/reset-password/{account}', [Admin\AccountController::class, 'resetPassword'])->name('reset-password-account');
-    
+
     Route::get('/students', [Admin\AccountController::class, 'student'])->name('students');
     Route::get('/students-create', [Admin\AccountController::class, 'createStudent'])->name('create-student');
     Route::post('/students-create', [Admin\AccountController::class, 'storeStudent'])->name('store-student');
@@ -130,19 +133,17 @@ Route::name('admin.')->prefix('admin')->middleware([isLogin::class, isAdmin::cla
     Route::put('/students/{student}', [Admin\StudentController::class, 'updateStudent'])->name('update-student');
     Route::delete('/students/{student}', [Admin\StudentController::class, 'deleteStudent'])->name('delete-student');
 
-    Route::get('/news', [Admin\NewsController::class, 'news'])->name('news');
-    Route::get('/news-create', [Admin\NewsController::class, 'createNews'])->name('create-news');
-    Route::post('/news-create', [Admin\NewsController::class, 'storeNews'])->name('store-news');
-    Route::get('/news/{news}', [Admin\NewsController::class, 'detailNews'])->name('detail-news');
-    Route::put('/news/{news}', [Admin\NewsController::class, 'updateNews'])->name('update-news');
-    Route::delete('/news/{news}', [Admin\NewsController::class, 'deleteNews'])->name('delete-news');
-
-    Route::get('/medias', [Admin\MediaController::class, 'media'])->name('media');
-    Route::get('/medias-create', [Admin\MediaController::class, 'createMedia'])->name('create-media');
-    Route::post('/medias-create', [Admin\MediaController::class, 'storeMedia'])->name('store-media');
-    Route::get('/medias/{media}', [Admin\MediaController::class, 'detailMedia'])->name('detail-media');
-    Route::put('/medias/{media}', [Admin\MediaController::class, 'updateMedia'])->name('update-media');
-    Route::delete('/medias/{media}', [Admin\MediaController::class, 'deleteMedia'])->name('delete-media');
+    Route::withoutMiddleware([isAdmin::class])->middleware([isCreator::class])->group(function () {
+        Route::get('/dashboard', [Admin\Controller::class, 'dashboard'])->name('dashboard');
+        Route::get('/accounts/{account}', [Admin\AccountController::class, 'detailAccount'])->name('detail-account');
+        Route::put('/accounts/{account}', [Admin\AccountController::class, 'updateAccount'])->name('update-account');
+        Route::get('/news', [Admin\NewsController::class, 'news'])->name('news');
+        Route::get('/news-create', [Admin\NewsController::class, 'createNews'])->name('create-news');
+        Route::post('/news-create', [Admin\NewsController::class, 'storeNews'])->name('store-news');
+        Route::get('/news/{news}', [Admin\NewsController::class, 'detailNews'])->name('detail-news');
+        Route::put('/news/{news}', [Admin\NewsController::class, 'updateNews'])->name('update-news');
+        Route::delete('/news/{news}', [Admin\NewsController::class, 'deleteNews'])->name('delete-news');
+    });
 
     Route::get('/achievements', [Admin\AchievementController::class, 'achievement'])->name('achievement');
     Route::get('/achievements-create', [Admin\AchievementController::class, 'createAchievement'])->name('create-achievement');

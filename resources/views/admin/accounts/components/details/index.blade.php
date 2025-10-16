@@ -53,7 +53,7 @@
                     if(element.children[0].innerText === m.major_long_name){
                         element.classList.add('choose-card-selected')
                         for(const key in m){
-                            stringElement += `<input type="hidden" name="majors[][${key}]" value="${m[key]}" readonly>`;
+                            stringElement += `<input type="hidden" name="majors[${m.id}][${key}]" value="${m[key]}" readonly>`;
                         }
                     }
                 });
@@ -84,7 +84,7 @@
                 if(phase.selected['name'] == element.children[0].innerText){
                     element.classList.add('phase-card-selected')
                     for(const key in phase.selected){
-                        stringElement += `<input type="hidden" name="phase[][${key}]" value="${phase.selected[key]}" readonly>`;
+                        stringElement += `<input type="hidden" name="phase[${key}]" value="${phase.selected[key]}" readonly>`;
                     }
                }
             });
@@ -108,7 +108,7 @@
             });
         });
     }
-    
+
     function clearSections(){
         Array.from(document.getElementById('selection').children).forEach(menu => menu.classList.remove('menu-selected'));
         sections.sections.forEach(section => {

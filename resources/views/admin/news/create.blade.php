@@ -1,4 +1,4 @@
-@include('_components._headerAdmin', ['title' => 'Tambahkan Artikel/Blog'])
+@include('_components._headerAdmin', ['title' => 'Adding Articles/Blogs/News'])
 @php
     $currentPath = explode('/admin/', url()->current())[1];
 @endphp
@@ -9,13 +9,13 @@
         <div class="wrapper-container-media form-news">
             <div class="wrapper-title">
                 <input type="text" name="title" id="title" placeholder="Pengenalan Apa Itu Shooting Video"
-                    minlength="10" maxlength="180" {{ old('title') != null ? 'value="' . old('title') . '"' : ''  }}
+                    minlength="10" maxlength="180" {{ old('title') != null ? 'value=' . old('title') . '' : ''  }}
                     required>
             </div>
 
             <div class="wrapper-thumbnail">
                 <img class="thumbnail" id="thumbnail" src="" alt="thumbnail-image">
-                <input type="file" accept="image/jpeg, image/png" id="thumbnail_image" name="thumbnail_image" required>
+                <input type="file" accept="image/jpeg, image/png" id="thumbnail_image" name="thumbnail" required>
                 <input type="hidden" id="isUpdated" name="isUpdated" value="0" required>
             </div>
 

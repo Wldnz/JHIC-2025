@@ -109,7 +109,7 @@
                 <textarea type="enrolling_reason" name="enrolling_reason" id="enrolling_reason"
                     placeholder="Saya ingin menjadi orang yang hebat & disiplin" minlength="10"
                     aria-describedby="enrolling_reason"
-                    required>{{ old('enrolling_reason', $candidate->candidatePhases->enrolling_reason ?? '') }}</textarea>
+                    required>{{ old('enrolling_reason', $candidate->candidatePhase->enrolling_reason ?? '') }}</textarea>
             </div>
         </div>
     </div>
@@ -119,12 +119,10 @@
         <div class="container">
             <div class="wrapper-choose">
                 @foreach ($majors as $major)
-                    @foreach ($candidate->candidateMajors as $selected_major)
-                        <div class="choose-card {{ $selected_major->major_short_name == $major->short_name ? 'choose-card-selected' : '' }}"
-                            id="major-card">
-                            <span>{{ $major->long_name }}</span>
-                        </div>
-                    @endforeach
+                    <div class="choose-card {{ $candidate->candidateMajors->contains('major_short_name', $major->short_name) ? 'choose-card-selected' : '' }}"
+                        id="major-card">
+                        <span>{{ $major->long_name }}</span>
+                    </div>
                 @endforeach
             </div>
             <div class="choosen-major" id="choosen-majors" style="display:none">
@@ -162,6 +160,6 @@
             <div class="choosen-phase" id="choosen-phase" style="display:none">
             </div>
         </div>
-    </div>    
+    </div>
 
 </div>

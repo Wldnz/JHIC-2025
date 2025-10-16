@@ -64,7 +64,7 @@
                         </a>
                     </li>
 
-                @else
+                @elseif(Auth::user()->role == 'article_creator')
                     <li class="menu multiple" id="menu-public" data-open=false>
                         <a class="display-menu">
                             @include('_components._sprite-icons', ['name' => 'eye', "color" => $currentPath == 'public' ? '#273B98' : 'black', 'size' => 23])
@@ -90,82 +90,9 @@
 </aside>
 
 <script defer>
-    const asideleft = document.querySelector('.left');
-    const wp_image = asideleft.querySelector('.wrapper-image');
-    const menu_chidrens = Array.from(document.querySelector('.wrapper-navigation').children[1]?.children ?? []);
-    const button_close = document.querySelector('.wrapper-action').children[0];
-    const button_open = document.querySelector('.wrapper-action').children[1];
-
-    function handleMultipleMenu() {
-        menu_chidrens.forEach(menu => {
-            if (menu.classList.contains('multiple')) {
-                menu.addEventListener('click', (e) => {
-                    if (asideleft.children[0].dataset.open.includes('false')) {
-                        openSideBar({ target: button_open })
-                    };
-                    handleSubMenu(menu);
-                });
-            }
-        });
-    }
-
-    function handleSubMenu(menuElement, isInitialize = false) {
-        if (isInitialize) return;
-        const open = menuElement.dataset.open.includes('true');
-        Array.from(menuElement.children)
-            .filter((s, index) => s.classList.contains('sub-menu'))
-            .forEach(sub => {
-                sub.style.display = open ? 'none' : 'flex';
-                sub.style.justifyContent = 'start';
-                sub.children[0].style.display = open ? 'none' : 'flex';
-            });
-        menuElement.dataset.open = !open;
-    }
-
-    function openSideBar({ target }) {
-        menu_chidrens.forEach(element => {
-            element.children[0].children[1].style.display = 'block';
-            element.children[0].style.justifyContent = 'start';
-        });
-
-        asideleft.classList.remove('close-sidebar');
-        asideleft.classList.add('open-sidebar');
-
-        button_close.style.display = 'block';
-        button_open.style.display = 'none';
-
-        // display the logo
-        wp_image.children[0].style.display = 'block';
-        wp_image.children[1].style.display = 'none';
-        asideleft.children[0].dataset.open = true;
-    }
-
-    function closeSideBar() {
-        menu_chidrens.forEach(element => {
-            element.children[0].children[1].style.display = 'none';
-            element.children[0].style.justifyContent = 'center';
-            if (element.classList.contains('multiple')) {
-                element.dataset.open = true;
-                handleSubMenu(element);
-            }
-        });
-
-        asideleft.classList.remove('open-sidebar');
-        asideleft.classList.add('close-sidebar');
-
-        button_close.style.display = 'none';
-        button_open.style.display = 'block';
-
-        // display the logo
-        wp_image.children[0].style.display = 'none';
-        wp_image.children[1].style.display = 'block';
-        asideleft.children[0].dataset.open = false;
-    }
-
-    // handle active and non active main-menu
-    function handleActiveAndNonActiveMainMenu() {
-        const pathname = (location.pathname).split('/admin/')[1];
-        const locations = {
+    const setupNeededData = {
+        locations = {
+            pathname : 'admin',
             "inventory": [
                 "products",
                 "transactions",
@@ -189,29 +116,6 @@
                 "students"
             ]
         };
-        menu_chidrens.forEach(menu => {
-            const name = menu.id.split('-')[1];
-            const isMultiple = menu.classList.contains('multiple');
-            const display_name = menu.children[0];
-            if (isMultiple) {
-                const isCurrentLocation = locations[name].includes(pathname);
-                if (isCurrentLocation) {
-                    display_name.classList.add('active');
-                    Array.from(menu.children)
-                        .find(sub => sub.id == pathname)
-                        ?.classList.add('active');
-                    handleSubMenu(menu, true);
-                }
-            } else if (name == pathname) {
-                display_name.classList.add('active');
-            }
-        });
     }
-
-
-    button_open.addEventListener('click', openSideBar);
-
-    button_close.addEventListener('click', closeSideBar);
-    handleActiveAndNonActiveMainMenu();
-    handleMultipleMenu();
 </script>
+@vite('resources/js/handle/navigation-side.js')

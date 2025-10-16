@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('candidate_majors', function (Blueprint $table) {
             $table->id();
             $table->string('candidate_nisn', 10);
+            $table->foreignId('user_id')->nullable()->constrained('users')->nullOnDelete();
             $table->foreignId('major_id')->nullable()->constrained('majors')->nullOnDelete();
             $table->string('major_long_name', 255);
             $table->string('major_short_name', 100);

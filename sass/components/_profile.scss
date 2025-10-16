@@ -9,6 +9,9 @@
 
     .icon {
         font-size: $font-size-xl;
+        span{
+            cursor: pointer;
+        }
     }
 
     .main-menu {
@@ -32,13 +35,20 @@
         li {
             font-size: $font-size-s;
 
-            a {
+            a,button{
                 display: flex;
                 align-items: center;
                 gap: 15px;
                 font-weight: 600;
-
+                color: $color-accent;
                 cursor: pointer;
+            }
+
+            button{
+                width: 100%;
+                outline: none;
+                border: none;
+                background-color: transparent;
             }
 
             padding: 5px;

@@ -19,7 +19,7 @@
             'candidate_full_name' => 'Nama Lengkap',
             'payment_method_display_name' => 'Jenis Pembayaran',
             'total_cost' => 'Total Biaya',
-            'status' => 'Status',  
+            'status' => 'Status',
             'created_at' => 'Dibuat Pada'
         ],
         'findDataWith' => [
@@ -27,7 +27,7 @@
                 'search_status' => [
                     'options' => [
                         '' => 'Semuanya',
-                        'capture' => 'Terbayar',
+                        'success' => 'Terbayar',
                         'canceled' => 'Dibatalkan',
                         'refund' => 'Dikembalikan',
                         'expire' => 'Kadaluarsa'
@@ -62,7 +62,7 @@
 </main>
 
 <script defer>
-    setActionDelete(true, {
+    setActionDelete(false, {
         title : 'Transaksi Dengan ID'
     });
 </script>

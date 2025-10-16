@@ -112,6 +112,14 @@ img{
     animation: closeSidebar 200ms forwards;
 }
 
+.open-sidebar-candidate {
+    animation: openSidebarCandidate 800ms forwards;
+}
+
+.close-sidebar-candidate {
+    animation: closeSidebarCandidate 800ms forwards;
+}
+
 .button-submit-form {
     display: flex;
     padding: 10px;
@@ -174,6 +182,11 @@ img{
 // margin
 .mt-25{
     margin-top: 25px;
+}
+
+.text-center{
+    width: 100%;
+    text-align: center;
 }
 
 .static {

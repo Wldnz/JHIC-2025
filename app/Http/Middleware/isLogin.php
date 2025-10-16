@@ -17,8 +17,12 @@ class isLogin
      */
     public function handle(Request $request, Closure $next): Response
     {
+        $route_name = 'admin.login-page';
         if(!Auth::check()){
-            return redirect()->route('admin.login-page', ['redirect_uri' => $request->getUri()]);
+           if(str_contains($request->getUri(),'/candidate/')){
+                $route_name = 'candidate.login-page';
+           } 
+            return redirect()->route($route_name, ['redirect_uri' => $request->getUri()]);
         }
         return $next($request);
     }

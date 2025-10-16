@@ -20,7 +20,6 @@ class FacilityController extends Controller
     public function facility(Request $request)
     {
         $search = $request->get('search', '');
-        $search_status = $request->get('search_status', '');
         $page =  $request->get('page', 1);
 
         $max = $this->maxPage;
@@ -28,7 +27,7 @@ class FacilityController extends Controller
             ->select(['id', 'url', 'name', 'description', 'gallery_type_name']);
 
         $stats = [
-            "total" => $facilities->get()->count(),
+            "total" => $facilities->count(),
         ];
 
         if ($search) {
@@ -38,18 +37,13 @@ class FacilityController extends Controller
                 ->orWhere('description', 'like', "%$search%");
         }
 
-        if ($search_status) {
-            $facilities = $facilities
-                ->where('status', '=', $search_status);
-        }
-
-        $total = $facilities->count();
+        $total = $search ? $facilities->count() : $stats['total'];
         $facilities = $facilities
             ->limit($this->maxPage)
             ->offset(($page - 1) * $this->maxPage)
             ->get();
 
-        return view('admin.facility.index',compact('facilities', 'search', 'search_status', 'page', 'total', 'stats', 'max'));
+        return view('admin.facility.index',compact('facilities', 'search', 'page', 'total', 'stats', 'max'));
     }
 
     public function createFacility()

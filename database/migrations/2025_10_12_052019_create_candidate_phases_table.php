@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('candidate_phases', function (Blueprint $table) {
             $table->id();
             $table->string('candidate_nisn', 10);
+            $table->foreignId('user_id')->nullable()->constrained('users')->nullOnDelete();
             $table->foreignId('selected_phase_id')->nullable()->constrained('registration_phases')->nullOnDelete();
             $table->string('selected_phase_name', 255)->nullable();
             $table->foreignId('registration_source_id')->nullable()->constrained('registration_sources')->nullOnDelete();

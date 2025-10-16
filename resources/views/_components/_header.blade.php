@@ -21,9 +21,9 @@
                     <a class="expandable-pc">ABOUT</a>
                     <div class="branch">
                         <a href="{{ route("user.profile") }}">Profile</a>
-                        <a href="{{ route("user.about") }}">About Us</a>
                         <a href="{{ route("user.visi-misi") }}">Vision and Mission</a>
                         <a href="{{ route("user.facilities") }}">Facility</a>
+                        <a href="{{ route("user.galleries") }}">Gallery</a>
                     </div>
                 </div>
                 <div class="expandable-wrapper">
@@ -34,7 +34,7 @@
                         <a href="{{ route("user.majors.game-development") }}">Game Development</a>
                         <a href="{{ route("user.majors.visual-communication-design") }}">Visual Communication Design</a>
                         <a href="{{ route("user.majors.network-engineering") }}">IT Network</a>
-                        <a href="{{ route("user.majors.software-engineering") }}"> Software</a>
+                        <a href="{{ route("user.majors.software-engineering") }}">Software Engineer</a>
                     </div>
                 </div>
                 <div class="expandable-wrapper">
@@ -70,9 +70,9 @@
             <a class="expandable">PROFILE <img src="{{ asset("icons/arrow-down.svg") }}" alt=""></a>
             <div class="branch">
                 <a href="{{ route("user.profile") }}">Profile</a>
-                <a href="{{ route("user.about") }}">About Us</a>
                 <a href="{{ route("user.visi-misi") }}">Vision and Mission</a>
                 <a href="{{ route("user.facilities") }}">Facility</a>
+                <a href="{{ route("user.galleries") }}">Gallery</a>
             </div>
             <a class="expandable">MAJOR <img src="{{ asset("icons/arrow-down.svg") }}" alt=""></a>
             <div class="branch">
@@ -81,7 +81,7 @@
                 <a href="{{ route("user.majors.game-development") }}">Game Development</a>
                 <a href="{{ route("user.majors.visual-communication-design") }}">Visual Communication Design</a>
                 <a href="{{ route("user.majors.network-engineering") }}">IT Network</a>
-                <a href="{{ route("user.majors.software-engineering") }}"> Software</a>
+                <a href="{{ route("user.majors.software-engineering") }}">Software Engineer</a>
             </div>
             <a class="expandable">PROGRAM <img src="{{ asset("icons/arrow-down.svg") }}" alt=""></a>
             <div class="branch">

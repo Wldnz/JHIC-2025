@@ -7,14 +7,14 @@
     @method('PUT')
     @csrf
     <div class="container">
-        <details class="container-details">
+        <details class="container-details" open>
             <summary>
                 Metode Pembayaran
             </summary>
             <div class="inside-container">
                 @foreach ($payments as $payment)
                     <div class="wrapper-input wrapper-payment-methode">
-                        <input type="checkbox" name="payment_methods[{{ $payment->code_name }}]" id="{{ $payment->code_name }}" {{ $payment->is_enable ? "checked" : '' }}>
+                        <input type="checkbox" name="payment_methods[{{ $payment->code_name }}]" id="{{ $payment->code_name }}" {{ $payment->is_enabled ? "checked" : '' }}>
                         <div class="wrapper-detail-payment">
                             <img src="{{ $payment->icon_url }}" alt="{{ $payment->display_name }}">
                             <label for="{{ $payment->code_name }}">{{ $payment->display_name }}</label>
@@ -25,7 +25,7 @@
         </details>
         <div class="inside-container">
             <div class="wrapper-input">
-                
+
             </div>
         </div>
     </div>

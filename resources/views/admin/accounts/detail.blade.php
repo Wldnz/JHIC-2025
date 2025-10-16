@@ -32,7 +32,7 @@
             <div class="container">
                 @if ($account->role == 'candidate' && $candidate)
                     <div class="wrapper-input wrapper-input-full">
-                        <label for="candidate_nisn">Nomor Induk Nasional</label>
+                        <label for="candidate_nisn">Nomor Induk Siswa Nasional</label>
                         <input type="text" name="candidate_nisn" id="candidate_nisn" placeholder="Nisn Calon Peserta Didik"
                             value="{{ old('candidate_nisn', $candidate->nisn) }}" aria-describedby="nisn" required>
                     </div>
@@ -85,9 +85,8 @@
                         <option @selected(old('role', $account->role) == 'article_creator') value="article_creator">
                             Pembuat Artikel</option>
                         @if ($account->role == 'super_admin')
-                            <option @selected(old('role', $account->role) == 'administrasi') value="admin">Administrasi
+                            <option @selected(old('role', $account->role) == 'admin') value="admin">Administrasi
                             </option>
-                            <option @selected(old('role', $account->role) == 'owner') value="owner">Owner</option>
                         @endif
                     </select>
                 </div>
@@ -96,14 +95,14 @@
     </div>
     <div class="wrapper-content">
         @includeWhen($account->role == 'candidate' && $candidate, 'admin.accounts.components.details.index')
-        @includeWhen($account->role == 'article_creator' && $articles, 'admin.accounts.components.details.index')
+        @includeWhen($account->role == 'article_creator' && $articles, 'admin.accounts.components.details.articles')
         @if($account->role == 'candidate' && !$candidate)
             <div class="form-data-profile" id="candidate-document-form">
                 <div class="wrapper-form">
                     <div class="container container-1">
                         <div class="wrapper-document">
                             <div class="wrapper-thumbnail">
-                                <h4>Calon Peserta Didik Belum Mengisi Formulir</h4>
+                                <h4 class="text-center">Calon Peserta Didik Belum Mengisi Formulir</h4>
                             </div>
                         </div>
                     </div>
@@ -125,7 +124,7 @@
     </div>
     <div class="wrapper-button">
         <button class="btn" type="submit">Simpan Perubahan</button>
-        <button class="btn btn-back" type="button" id="reset-password-btn">Reset Password</button>
+        <!-- <button class="btn btn-back" type="button" id="reset-password-btn">Reset Password</button> -->
     </div>
 </form>
 
@@ -152,7 +151,7 @@
     //     .then(e => e.json())
     //     .then(e => console.log(e));
     // };
-    document.getElementById('reset-password-btn').addEventListener('click', handlerResetPassword)
+    // document.getElementById('reset-password-btn').addEventListener('click', handlerResetPassword)
 </script>
 
 @include('_components._footerAdmin')

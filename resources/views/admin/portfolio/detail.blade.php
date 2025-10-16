@@ -1,4 +1,4 @@
-@include('_components._headerAdmin', ['title' => 'Portfolio Management'])
+@include('_components._headerAdmin', ['title' => 'Detail Portfolio'])
 @php
     $currentPath = explode('/admin/', url()->current())[1];
     logger('as', [$portfolio, $students])

@@ -24,6 +24,7 @@ class CandidatePhaseSeeder extends Seeder
 
             CandidatePhase::create([
                 'candidate_nisn' => $candidate->nisn,
+                'user_id' => $candidate->user_id,
                 'selected_phase_id' => $registrationPhase->id,
                 'selected_phase_name' => $registrationPhase->name,
                 'registration_source_id' => $registrationSource->id,

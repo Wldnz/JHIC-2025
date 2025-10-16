@@ -1,0 +1,177 @@
+@use "candidate/components/stages" as stage;
+@import "utils/variables";
+@import "utils/globals";
+@import "admin/index";
+
+.wrapper-candidate {
+    width: 100vw;
+    height: max-content;
+    min-height: 100dvh;
+
+    display: flex;
+    flex-direction: column;
+    position: relative;
+
+    color: $color-accent;
+
+    .bar-top {
+        width: inherit;
+        height: 10vw;
+        max-height: 80px;
+        padding: 10px 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: $color-primary;
+        border-bottom: solid 1px #dfdfdf;
+
+        position: sticky;
+        top: 0;
+        left: 0;
+        z-index: 2;
+
+        .main-menu {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 25px;
+
+            width: 100%;
+            height: 100vh;
+
+            padding: 10px;
+
+            background-color: $color-primary;
+
+            position: fixed;
+            left: 0;
+            bottom: 0;
+
+            z-index: 4;
+
+            .logo {
+                margin-top: 20px;
+            }
+
+            .menus {
+                width: 100%;
+                height: inherit;
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+
+                .menu {
+                    width: 100%;
+                    padding: 20px;
+
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+
+                    border-radius: $border-radius;
+                    background-color: $color-primary;
+                    color: black;
+                    font-size: calc($font-size-3xl - 1vw);
+
+                    a {
+                        display: flex;
+                        align-items: center;
+                        gap: 5PX;
+                    }
+
+                    &-selected {
+                        color: $color-primary;
+                        background-color: rgba(39, 42, 56, .7);
+                        font-weight: bold;
+                    }
+
+                    &:hover {
+                        color: $color-primary;
+                        background-color: rgba(39, 42, 56, .7);
+                        font-weight: bold;
+
+                        svg {
+                            path {
+                                fill: white;
+                                stroke: white;
+                            }
+                        }
+                    }
+                }
+
+            }
+
+            .actions {
+                padding-bottom: 20px;
+                display: flex;
+            }
+        }
+    }
+}
+
+.content {
+    width: inherit;
+
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+
+    position: relative;
+
+    .accessoris {
+        content: "";
+        width: inherit;
+        height: 100dvh;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: -1;
+
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .rounded {
+            width: 300px;
+            height: 300px;
+
+            border-radius: 50%;
+            background: $color-bi-gradient;
+
+            padding: 23px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            .round {
+                width: 100%;
+                height: 100%;
+                background: $color-primary;
+
+                border-radius: inherit;
+            }
+        }
+
+        .stars {
+            width: 100px;
+            height: 100px;
+
+            align-self: flex-start;
+
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+
+            img {
+                width: 50px;
+                height: 50px;
+
+                &:nth-child(2) {
+                    align-self: flex-end;
+                }
+            }
+        }
+    }
+    @include stage.stages;
+}

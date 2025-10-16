@@ -6,6 +6,7 @@ use App\AlertType;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StorePortfolioRequest;
 use App\Http\Requests\Admin\UpdatePortfolioRequest;
+use App\Models\Major;
 use App\Models\Portfolio;
 use App\Models\PortfolioImage;
 use App\Models\Student;
@@ -26,16 +27,24 @@ class PortfolioController extends Controller
     {
         $search = $request->get('search', '');
         $search_major = $request->get('search_major', '');
+        $search_class = $request->get('search_class', '');
         $page =  $request->get('page', 1);
+        $majors = Major::all();
         $max = $this->maxPage;
 
-        $initiliazePortfolios = Portfolio::all();
+        $portfolioStats = Portfolio::query()
+            ->selectRaw("COUNT(*) AS total")
+            ->selectRaw("COUNT(CASE WHEN student_class = 'X' THEN 1 END) AS xth")
+            ->selectRaw("COUNT(CASE WHEN student_class = 'XI' THEN 1 END) AS xith")
+            ->selectRaw("COUNT(CASE WHEN student_class = 'XII' THEN 1 END) AS xiith")
+            ->first();
         $portfolios = Portfolio::query();
+
         $stats = [
-            'total' => $initiliazePortfolios->count(),
-            '10th' => $initiliazePortfolios->where('student_class', '=', 'X')->count(),
-            '11th' => $initiliazePortfolios->where('student_class', '=', 'XI')->count(),
-            '12th' => $initiliazePortfolios->where('student_class', '=', 'XII')->count(),
+            'total' => $portfolioStats->total,
+            '10th' => $portfolioStats->xth,
+            '11th' => $portfolioStats->xith,
+            '12th' => $portfolioStats->xiith,
         ];
 
         if ($search) {
@@ -48,6 +57,10 @@ class PortfolioController extends Controller
 
         if ($search_major) {
             $portfolios = $portfolios->where('student_major_name', '=', $search_major);
+        }
+
+        if ($search_class) {
+            $portfolios = $portfolios->where('student_class', '=', $search_class);
         }
 
         $total = $portfolios->count();
@@ -64,7 +77,7 @@ class PortfolioController extends Controller
             }
         ]);
 
-        return view('admin.portfolio.index', compact('portfolios', 'page', 'max', 'total', 'stats'));
+        return view('admin.portfolio.index', compact('portfolios', 'page', 'max', 'total', 'stats', 'majors'));
     }
 
     public function createPortfolio()

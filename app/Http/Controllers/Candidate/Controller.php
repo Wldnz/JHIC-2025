@@ -2,10 +2,22 @@
 
 namespace App\Http\Controllers\Candidate;
 
+use App\Models\Candidate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class Controller extends \App\Http\Controllers\Controller
 {
+
+    protected $candidate = null;
+
+    public function __construct(){
+        if(Auth::check() && Auth::user()->role == 'candidate'){
+            $candidate = Candidate::where('user_id', '=', Auth::user()->id)
+                ->get();
+        }
+    }
+
     public function index()
     {
         return view('candidate.index');
@@ -13,21 +25,25 @@ class Controller extends \App\Http\Controllers\Controller
 
     public function dashboard()
     {
-        return view('candidate.dashboard');
+        $candidate = $this->candidate;
+        return view('candidate.dashboard', compact('candidate'));
     }
 
     public function schedule()
     {
-        return view('candidate.schedule');
+        $candidate = $this->candidate;
+        return view('candidate.schedule', compact('candidate'));
     }
 
     public function contact()
     {
-        return view('candidate.contact');
+        $candidate = $this->candidate;
+        return view('candidate.contact', compact('candidate'));
     }
 
     public function learningMaterials()
     {
-        return view('candidate.learning-materials');
+        $candidate = $this->candidate;
+        return view('candidate.learning-materials', compact('candidate'));
     }
 }

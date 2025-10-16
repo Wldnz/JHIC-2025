@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 
 class Candidate extends Model
 {
@@ -54,17 +55,17 @@ class Candidate extends Model
     /**
      * Get the registration phase that the candidate belongs to.
      */
-    public function registrationPhase(): BelongsTo
+    public function registrationPhase(): HasOneThrough
     {
-        return $this->belongsTo(CandidatePhase::class, 'candidate_nisn', 'nisn', 'selected_phase_id');
+        return $this->hasOneThrough(RegistrationPhase::class, CandidatePhase::class, 'candidate_nisn', 'id', 'nisn', 'selected_phase_id');
     }
 
     /**
      * Get the registration source that the candidate belongs to.
      */
-    public function registrationSource(): BelongsTo
+    public function registrationSource(): HasOneThrough
     {
-        return $this->belongsTo(CandidatePhase::class, 'candidate_nisn', 'nisn', 'registration_source_id');
+        return $this->hasOneThrough(RegistrationSource::class, CandidatePhase::class, 'candidate_nisn', 'id', 'nisn', 'registration_source_id');
     }
 
     /**

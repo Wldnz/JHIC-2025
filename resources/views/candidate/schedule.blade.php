@@ -1,3 +1,7 @@
-<div>
-    <!-- The only way to do great work is to love what you do. - Steve Jobs -->
-</div>
+@include('_components._headerCandidate',[
+    'title' => 'Jadwal Ujian Saringan Masuk'   
+])
+<main class="content">
+    
+</main>
+@include('_components._footerCandidate')    
