@@ -10,67 +10,180 @@ use Illuminate\Http\Request;
 
 class MajorsController extends Controller
 {
-    protected $initiliazeAchievements = null;
-    protected $initiliazePortfolios = null;
-
-    public function __construct(){
-        $this->initiliazeAchievements = Achievement::all();
-        $this->initiliazePortfolios = Portfolio::with('portfolioImages');
-    }
+    private $visibleAchievementColumns = [
+        'id',
+        'student_name',
+        'competition_position',
+        'competition_name',
+        'thumbnail_url',
+    ];
+    private $visiblePortfolioColumns = [
+        'id',
+        'student_name',
+        'title',
+        'description',
+    ];
+    private $visiblePortfolioImageColumns = [
+        'id',
+        'portfolio_id',
+        'url',
+    ];
+    private $visibleAlumnusColumns = [
+        'id',
+        'image_url',
+        'name',
+        'message',
+        'current_company',
+        'current_company_position',
+    ];
 
     public function animation()
     {
         $major = Major::query()->where('short_name', '=', 'ANM')->first();
-        $achievements = $this->initiliazeAchievements
-        ->where('student_major_name', '=', 'Animasi');
-        $portfolios = $this->initiliazePortfolios->where('student_major_name', '=', 'Animasi')
-            ->get();
-        $alumni = $major->alumni()->limit(3)->get();
+        $achievements = $major->achievements()
+            ->limit(15)
+            ->orderBy('competition_position', 'asc')
+            ->get($this->visibleAchievementColumns);
+        $portfolios = $major->portfolios()
+            ->with([
+                'portfolioImages' => function ($query) {
+                    $query
+                        ->select($this->visiblePortfolioImageColumns)
+                        ->where('is_thumbnail', '=', true)
+                        ->limit(1);
+                }
+            ])
+            ->limit(15)
+            ->get($this->visiblePortfolioColumns);
+        $alumni = $major->alumni()
+            ->limit(3)
+            ->get($this->visibleAlumnusColumns);
+
         return view('user.majors.animation', compact('achievements', 'portfolios', 'alumni'));
     }
 
     public function broadcasting()
     {
-        $achievements = $this->initiliazeAchievements
-        ->where('student_major_name', '=', 'Broadcasting');
-        $portfolios = $this->initiliazePortfolios->where('student_major_name', '=', 'Broadcasting')
-            ->get();
-        return view('user.majors.broadcasting', compact('achievements', 'portfolios'));
+        $major = Major::query()->where('short_name', '=', 'BC')->first();
+        $achievements = $major->achievements()
+            ->limit(15)
+            ->orderBy('competition_position', 'asc')
+            ->get($this->visibleAchievementColumns);
+        $portfolios = $major->portfolios()
+            ->with([
+                'portfolioImages' => function ($query) {
+                    $query
+                        ->select($this->visiblePortfolioImageColumns)
+                        ->where('is_thumbnail', '=', true)
+                        ->limit(1);
+                }
+            ])
+            ->limit(15)
+            ->get($this->visiblePortfolioColumns);
+        $alumni = $major->alumni()
+            ->limit(3)
+            ->get($this->visibleAlumnusColumns);
+
+        return view('user.majors.broadcasting', compact('achievements', 'portfolios', 'alumni'));
     }
 
     public function visualCommunicationDesign()
     {
-        $achievements = $this->initiliazeAchievements
-        ->where('student_major_name', '=', 'Desain Komunikasi Visual');
-        $portfolios = $this->initiliazePortfolios->where('student_major_name', '=', 'Desain Komunikasi Visual')
-            ->get();
-        return view('user.majors.visual-communication-design', compact('achievements', 'portfolios'));
+        $major = Major::query()->where('short_name', '=', 'DKV')->first();
+        $achievements = $major->achievements()
+            ->limit(15)
+            ->orderBy('competition_position', 'asc')
+            ->get($this->visibleAchievementColumns);
+        $portfolios = $major->portfolios()
+            ->with([
+                'portfolioImages' => function ($query) {
+                    $query
+                        ->select($this->visiblePortfolioImageColumns)
+                        ->where('is_thumbnail', '=', true)
+                        ->limit(1);
+                }
+            ])
+            ->limit(15)
+            ->get($this->visiblePortfolioColumns);
+        $alumni = $major->alumni()
+            ->limit(3)
+            ->get($this->visibleAlumnusColumns);
+
+        return view('user.majors.visual-communication-design', compact('achievements', 'portfolios', 'alumni'));
     }
 
     public function softwareEngineering()
     {
-        $achievements = $this->initiliazeAchievements
-        ->where('student_major_name', '=', 'Rekayasa Perangkat Lunak');
-        $portfolios = $this->initiliazePortfolios->where('student_major_name', '=', 'Rekayasa Perangkat Lunak')
-            ->get();
-        return view('user.majors.software-engineering', compact('achievements', 'portfolios'));
+        $major = Major::query()->where('short_name', '=', 'RPL')->first();
+        $achievements = $major->achievements()
+            ->limit(15)
+            ->orderBy('competition_position', 'asc')
+            ->get($this->visibleAchievementColumns);
+        $portfolios = $major->portfolios()
+            ->with([
+                'portfolioImages' => function ($query) {
+                    $query
+                        ->select($this->visiblePortfolioImageColumns)
+                        ->where('is_thumbnail', '=', true)
+                        ->limit(1);
+                }
+            ])
+            ->limit(15)
+            ->get($this->visiblePortfolioColumns);
+        $alumni = $major->alumni()
+            ->limit(3)
+            ->get($this->visibleAlumnusColumns);
+
+        return view('user.majors.software-engineering', compact('achievements', 'portfolios', 'alumni'));
     }
 
     public function networkEngineering()
     {
-        $achievements = $this->initiliazeAchievements
-        ->where('student_major_name', '=', 'Teknik Jaringan Komputer');
-        $portfolios = $this->initiliazePortfolios->where('student_major_name', '=', 'Teknik Jaringan Komputer')
-            ->get();
-        return view('user.majors.network-engineering', compact('achievements', 'portfolios'));
+        $major = Major::query()->where('short_name', '=', 'TKJ')->first();
+        $achievements = $major->achievements()
+            ->limit(15)
+            ->orderBy('competition_position', 'asc')
+            ->get($this->visibleAchievementColumns);
+        $portfolios = $major->portfolios()
+            ->with([
+                'portfolioImages' => function ($query) {
+                    $query
+                        ->select($this->visiblePortfolioImageColumns)
+                        ->where('is_thumbnail', '=', true)
+                        ->limit(1);
+                }
+            ])
+            ->limit(15)
+            ->get($this->visiblePortfolioColumns);
+        $alumni = $major->alumni()
+            ->limit(3)
+            ->get($this->visibleAlumnusColumns);
+
+        return view('user.majors.network-engineering', compact('achievements', 'portfolios', 'alumni'));
     }
 
     public function gameDevelopment()
     {
-        $achievements = $this->initiliazeAchievements
-        ->where('student_major_name', '=', 'Game Development');
-        $portfolios = $this->initiliazePortfolios->where('student_major_name', '=', 'Game Development')
-            ->get();
-        return view('user.majors.game-development', compact('achievements', 'portfolios'));
+        $major = Major::query()->where('short_name', '=', 'GAMEDEV')->first();
+        $achievements = $major->achievements()
+            ->limit(15)
+            ->orderBy('competition_position', 'asc')
+            ->get($this->visibleAchievementColumns);
+        $portfolios = $major->portfolios()
+            ->with([
+                'portfolioImages' => function ($query) {
+                    $query
+                        ->select($this->visiblePortfolioImageColumns)
+                        ->where('is_thumbnail', '=', true)
+                        ->limit(1);
+                }
+            ])
+            ->limit(15)
+            ->get($this->visiblePortfolioColumns);
+        $alumni = $major->alumni()
+            ->limit(3)
+            ->get($this->visibleAlumnusColumns);
+
+        return view('user.majors.game-development', compact('achievements', 'portfolios', 'alumni'));
     }
 }
