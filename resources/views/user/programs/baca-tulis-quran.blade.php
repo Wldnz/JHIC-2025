@@ -17,7 +17,7 @@
     <div class="btq-content">
         <div class="btq-kotak"><img src="{{ asset('images/btq/btq-placeholder.jpg') }}"></div>
         <div class="btq-kotak"><img src="{{ asset('images/btq/btq-document.jpg') }}"></div>
-        <div class="btq-kotak"><img src="{{ asset('images/btq/btq-placeholder.jpg') }}"></div>
+        <div class="btq-kotak"><img src="{{ asset('images/btq/btq-document1.png') }}"></div>
         <div class="btq-kotak"><img src="{{ asset('images/btq/btq-placeholder.jpg') }}"></div>
     </div>
 
