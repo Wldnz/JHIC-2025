@@ -2,10 +2,12 @@
 
 namespace App\Http\Middleware;
 
+use App\Utilities\RoleLevelChecker;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class isAdmin
 {
@@ -16,10 +18,9 @@ class isAdmin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $roles = ['dummyMummySecretRandom','admin', 'super_admin'];
-        if(!array_search(Auth::user()->role, $roles, true)){
-            return redirect()->route('user.index');
+        if (RoleLevelChecker::checkMinimumByRoleName(Auth::user(), 'admin')) {
+            return $next($request);
         }
-        return $next($request);
+        throw new NotFoundHttpException('Not Found');
     }
 }

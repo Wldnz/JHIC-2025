@@ -6,8 +6,12 @@
     <div class="wrapper no-fade">
         <img src="{{asset("images/profile/bg.png")}}" alt="" class="bg no-fade">
         <div class="text">
-            <h1>Misi SMK&nbsp;Bina&nbsp;Informatika</h1>
-            <p>Mencetak generasi berkarakter yang perofesional di bidang Teknologi Informasi dan Komunikasi berstandar Nasional dan Internasional pada tahun <span id="year"></span>.</p>
+            <h1>Visi SMK&nbsp;Bina&nbsp;Informatika</h1>
+            <p>1. Membudayakan program sekolah yang berkaitan dengan keunggulan budi pekerti akhlak mulia dan keunggulan prestasi  
+            <br><br>
+            2. Meningkatkan kualitas pendidikan dan kuantitas kelulusan yang relevan dengan kebutuhan dunia usaha dan industri.  
+            <br><br>
+            3. Membimbing generasi yang mampu menguasai ilmu pengetahuan dan teknologi dalam memenuhi pasar global.</p>
         </div>
         <div class="image">
             <img src="{{ asset("images/profile/bu sinta.png") }}" alt="">
@@ -19,12 +23,8 @@
             <img src="{{ asset("images/profile/pa budi.png") }}" alt="">
         </div>
         <div class="text">
-            <h1>Visi SMK&nbsp;Bina&nbsp;Informatika</h1>
-            <p>1. Membudayakan program sekolah yang berkaitan dengan keunggulan budi pekerti akhlak mulia dan keunggulan prestasi  
-            <br><br>
-            2. Meningkatkan kualitas pendidikan dan kuantitas kelulusan yang relevan dengan kebutuhan dunia usaha dan industri.  
-            <br><br>
-            3. Membimbing generasi yang mampu menguasai ilmu pengetahuan dan teknologi dalam memenuhi pasar global.</p>
+            <h1>Misi SMK&nbsp;Bina&nbsp;Informatika</h1>
+            <p>Mencetak generasi berkarakter yang perofesional di bidang Teknologi Informasi dan Komunikasi berstandar Nasional dan Internasional pada tahun <span id="year"></span>.</p>
         </div>
     </div>
 
