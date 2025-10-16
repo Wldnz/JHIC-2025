@@ -44,65 +44,46 @@ class Candidate extends Model
         'birthdate' => 'date',
     ];
 
-    /**
-     * Get the user that owns the candidate.
-     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    /**
-     * Get the registration phase that the candidate belongs to.
-     */
     public function registrationPhase(): HasOneThrough
     {
         return $this->hasOneThrough(RegistrationPhase::class, CandidatePhase::class, 'candidate_nisn', 'id', 'nisn', 'selected_phase_id');
     }
 
-    /**
-     * Get the registration source that the candidate belongs to.
-     */
     public function registrationSource(): HasOneThrough
     {
         return $this->hasOneThrough(RegistrationSource::class, CandidatePhase::class, 'candidate_nisn', 'id', 'nisn', 'registration_source_id');
     }
 
-    /**
-     * Get the candidate majors for the candidate.
-     */
     public function candidateMajors(): HasMany
     {
         return $this->hasMany(CandidateMajor::class, 'candidate_nisn', 'nisn');
     }
 
-    /**
-     * Get the candidate guardian for the candidate.
-     */
     public function candidateGuardian(): HasOne
     {
         return $this->hasOne(CandidateGuardian::class, 'candidate_nisn', 'nisn');
     }
 
-    /**
-     * Get the candidate documents for the candidate.
-     */
     public function candidateDocuments(): HasMany
     {
         return $this->hasMany(CandidateDocument::class, 'candidate_nisn', 'nisn');
     }
 
-    /**
-     * Get the candidate guardian for the candidate.
-     */
     public function candidatePhase(): HasOne
     {
         return $this->hasOne(CandidatePhase::class, 'candidate_nisn', 'nisn');
     }
 
-    /**
-     * Get the transactions for the candidate.
-     */
+    public function candidateUSMResult(): HasOne
+    {
+        return $this->hasOne(CandidateUSMResult::class, 'candidate_nisn', 'nisn');
+    }
+
     public function transactions(): HasMany
     {
         return $this->hasMany(Transaction::class, 'candidate_nisn', 'nisn');

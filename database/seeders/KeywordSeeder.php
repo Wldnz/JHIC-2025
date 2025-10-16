@@ -16,12 +16,13 @@ class KeywordSeeder extends Seeder
     {
         $limit = fake()->numberBetween(1, Article::query()->count());
         $articles = Article::query()->inRandomOrder()->limit($limit)->get();
+        $words = fake()->words(10);
 
-        $keywordCount = fake()->numberBetween(1, 10);
+        $keywordCount = fake()->numberBetween(3, 10);
         $keywords = [];
         for ($i = 0; $i < $keywordCount; $i++) {
             $keywords[] = Keyword::create([
-                'name' => fake()->word(),
+                'name' => $words[$i],
             ]);
         }
 

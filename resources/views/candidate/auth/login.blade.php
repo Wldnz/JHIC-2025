@@ -1,20 +1,22 @@
-@vite(["resources/css/app.css", "resources/js/app.js"])
-<main class="wrapper-user">
-    <div class="dashboard no-fade">
-        <div class="banner">
-            <div class="trinkets star-group star-group-1 no-fade">
-                <img src="{{ asset("images/trinkets/star.svg") }}" alt="">
-                <img src="{{ asset("images/trinkets/star.svg") }}" alt="">
-            </div>
-            <span class="trinkets circle circle-auth no-fade"></span>
-        </div>
-        <form class="login self-center"
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login PSB</title>
+</head>
+<body>
+    
+@vite(["resources/css/candidate.css", "resources/js/app.js"])
+<main class="wrapper-login">
+        <form class="login"
             method="POST"
             action="{{ route('admin.login') }}"
         >
             @csrf
             <div class="title">
-                <h4>Welcome Back, Let’s Have A Look About Your Jounery!</h4>
+                <h4>Welcome Back,</h4>
+                <p>Let’s Have A Look About Your Jounery!</p>
             </div>
             <div class="wrapper-field">
                 <div class="wrapper-input">
@@ -33,13 +35,12 @@
                 </div>
                 <div class="buttons">
                     <button type="submit" class="btn btn-submit w-full">
-                        LOGIN NOW! 
+                        LOGIN
                     </button>
                 </div>
                 <div class="footers">
                     <div class="link">
-                        <p>Belum Punya Akun?</p>
-                        <a href="#">Register Disini</a>
+                        <a href="#">Belum Punya Akun? Register Disini</a>
                     </div>
                     <div class="link">
                         <a href="#">Ada Kendala & Butuh Bantuan</a>
@@ -51,3 +52,7 @@
 </main>
 
 @includeWhen(session()->has('alert'), '_components._alert-message', ['data' => session()->get('alert'), 'icon_name' => 'product'])
+
+
+</body>
+</html>

@@ -19,9 +19,9 @@ class isLogin
     {
         $route_name = 'admin.login-page';
         if(!Auth::check()){
-           if(str_contains($request->getUri(),'/candidate/')){
+            if (str_contains($request->getUri(),'/candidate/')){
                 $route_name = 'candidate.login-page';
-           } 
+            }
             return redirect()->route($route_name, ['redirect_uri' => $request->getUri()]);
         }
         return $next($request);

@@ -27,17 +27,16 @@ class Transaction extends Model
         'expired_at' => 'datetime',
     ];
 
-    /**
-     * Get the candidate that owns the transaction.
-     */
     public function candidate(): BelongsTo
     {
         return $this->belongsTo(Candidate::class, 'candidate_nisn', 'nisn');
     }
 
-    /**
-     * Get the payment method that owns the transaction.
-     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function paymentMethod(): BelongsTo
     {
         return $this->belongsTo(PaymentMethod::class);

@@ -11,11 +11,15 @@ class Controller extends \App\Http\Controllers\Controller
     public function index()
     {
         $articles = Article::with('keywords')
-        ->limit('3')
-        ->orderByDesc('created_at')
-        ->get();
+            ->where('status', '=', 'published')
+            ->limit(3)
+            ->orderByDesc('updated_at')
+            ->get(['id', 'title', 'description', 'file_content_url', 'thumbnail_url']);
 
-        $galleries = Gallery::limit(6)->get();
+        $galleries = Gallery::query()
+            ->inRandomOrder()
+            ->limit(6)
+            ->get(['id', 'name', 'url']);
 
         return view('user.index', compact('articles', 'galleries'));
     }
@@ -25,9 +29,9 @@ class Controller extends \App\Http\Controllers\Controller
         return view('user.profile');
     }
 
-    public function about()
+    public function uniforms()
     {
-        return view('user.about');
+        return view('user.uniforms');
     }
 
     public function visiMisi()
@@ -37,13 +41,17 @@ class Controller extends \App\Http\Controllers\Controller
 
     public function galleries()
     {
-        $galleries = Gallery::all();
+        $galleries = Gallery::query()
+            ->limit(200)
+            ->get(['id', 'name', 'url', 'description', 'gallery_type_name']);
         return view('user.galleries', compact('galleries'));
     }
 
     public function facilities()
     {
-        $facilities = Gallery::all();
+        $facilities = Gallery::query()
+            ->limit(200)
+            ->get(['id', 'name', 'url', 'description', 'gallery_type_name']);
         return view('user.facilities', compact('facilities'));
     }
 }

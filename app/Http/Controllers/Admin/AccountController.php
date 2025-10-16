@@ -6,6 +6,8 @@ use App\AlertType;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreAccountRequest;
 use App\Http\Requests\Admin\UpdateAccountRequest;
+use App\Mail\SendAccountResetPassword;
+use App\Mail\SendNewAccountPassword;
 use App\Models\Article;
 use App\Models\Candidate;
 use App\Models\CandidateDocument;
@@ -16,12 +18,15 @@ use App\Models\RegistrationSource;
 use App\Models\User;
 use App\Utilities\AlertDataGenerator;
 use App\Utilities\FileUploadUtils;
+use App\Utilities\RoleLevelChecker;
 use App\Utilities\StorageUtils;
 use DB;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Throwable;
@@ -86,37 +91,76 @@ class AccountController extends Controller
     public function storeAccount(StoreAccountRequest $request)
     {
         $validated = $request->validated();
-        $password = fake()->password(8, 20);
-        $account = User::create([
-            'fullname' => $validated['fullname'],
-            'email' => $validated['email'],
-            'phone' => $validated['phone'],
-            'role' => $validated['role'],
-            'password' => Hash::make($password),
-            'remember_token' => Str::random(10),
-        ]);
+        DB::beginTransaction();
 
-        if ($account) {
+        try {
+            $account = User::create([
+                'fullname' => $validated['fullname'],
+                'email' => $validated['email'],
+                'phone' => $validated['phone'],
+                'role' => $validated['role'],
+            ]);
+            if (!$account) {
+                throw new Exception("Gagal membuat akun dengan nama lengkap \"{$validated['fullname']}\" dan email \"{$validated['email']}\"");
+            }
+
+            $password = fake()->password(24, 32);
+
+            $account->email_verified_at = now();
+            $account->password = Hash::make($password);
+            $account->remember_token = Str::random(10);
+
+            $isUpdated = $account->save();
+            if (!$isUpdated) {
+                throw new Exception("Gagal membuat akun dengan nama lengkap \"{$validated['fullname']}\" dan email \"{$validated['email']}\" (Gagal saat update data)");
+            }
+
+            DB::commit();
+
             AlertDataGenerator::generateAsFlashToSession(
                 AlertType::SUCCESS,
                 "Berhasil membuat akun",
-                "Berhasil membuat akun dengan nama lengkap {$validated['fullname']} dan email {$validated['email']}",
+                "Berhasil membuat akun dengan nama lengkap \"{$validated['fullname']}\" dan email \"{$validated['email']}\"",
                 $request->session()
             );
+
+            Mail::to($account)
+                ->queue(new SendNewAccountPassword(
+                    $account,
+                    $password
+                ));
+
             return redirect()->route('admin.accounts');
-        } else {
+
+        } catch (Throwable $th) {
+            DB::rollBack();
+
+            logger()->error($th);
+            report($th);
+
             AlertDataGenerator::generateAsFlashToSession(
                 AlertType::DANGER,
                 "Gagal membuat akun",
-                "Gagal membuat akun dengan nama lengkap {$validated['fullname']} dan email {$validated['email']}",
+                $th->getMessage(),
                 $request->session()
             );
+
             return back()->withInput($validated);
         }
     }
 
     public function detailAccount(User $account)
     {
+        if (
+            $account->id != Auth::user()->id &&
+            (
+                !RoleLevelChecker::checkMinimumByRoleName(Auth::user(), 'admin') ||
+                $account->role == 'super_admin'
+            )
+        ) {
+            return redirect()->route(Auth::user()->role == 'article_creator' ? 'admin.dashboard' : 'admin.accounts');
+        }
+
         $candidate = null;
         $majors = null;
         $phases = null;
@@ -168,12 +212,14 @@ class AccountController extends Controller
         DB::beginTransaction();
 
         try {
-            $isUpdated = $account->update([
+            $validated['role'] ??= null;
+            $updatedData = [
                 'fullname' => $validated['fullname'],
                 'email' => $validated['email'],
                 'phone' => $validated['phone'],
-                'role' => $validated['role'],
-            ]);
+                'role' => $validated['role'] ?? Auth::user()->role,
+            ];
+            $isUpdated = $account->update($updatedData);
 
             if (!$isUpdated) {
                 throw new Exception("Gagal mengupdate akun dengan nama lengkap \"{$account->fullname}\" dan email \"{$account->email}\"");
@@ -188,10 +234,14 @@ class AccountController extends Controller
                     "Berhasil mengupdate akun dengan nama lengkap \"{$account->fullname}\" dan email \"{$account->email}\"",
                     $request->session()
                 );
-                return redirect()->route('admin.accounts');
+                return Auth::user()->id == $account->id ?
+                    back() :
+                    redirect()->route('admin.accounts');
             }
 
             $validated['role'] = 'candidate';
+            $validated['candidate_nisn'] ??= null;
+
             $candidate = Candidate::find($validated['candidate_nisn']);
 
             if (!$candidate) {
@@ -349,7 +399,37 @@ class AccountController extends Controller
         return back();
     }
 
-    public function resetPassword(User $account){
+    public function resetPassword(Request $request, User $account)
+    {
+        $password = fake()->password(24, 32);
+
+        $account->password = Hash::make($password);
+        $account->remember_token = Str::random(10);
+
+        $isUpdated = $account->save();
+        if (!$isUpdated) {
+            AlertDataGenerator::generateAsFlashToSession(
+                AlertType::DANGER,
+                "Gagal mereset password",
+                "Gagal mengupdate password dari akun",
+                $request->session(),
+            );
+            return back();
+        }
+
+        Mail::to($account->email)
+            ->queue(new SendAccountResetPassword(
+                $account,
+                $password
+            ));
+
+        AlertDataGenerator::generateAsFlashToSession(
+            AlertType::SUCCESS,
+            "Berhasil mereset password",
+            "Berhasil mereset password akun dan password telah dikirimkan ke email \"{$account->email}\"",
+            $request->session(),
+        );
+
         return back();
     }
 }
