@@ -22,8 +22,16 @@
             ],
             'destination' => route('candidate.stage.stage3')
         ],
-        
-    ]
+    ];
+
+    $currentStage = null;
+
+    foreach($stages as $stage){
+        $isNotPass = array_search(null, $stage['sub-requirements']);
+        $currentStage = $stage['destination'];
+        break;
+    }
+
 @endphp
 
 <div class="bar-top">
@@ -46,7 +54,7 @@
                     </a>
                 </li>
                  <li class="menu">
-                    <a href="">
+                    <a href="{{ $currentStage }}">
                         @include('_components._sprite-icons', [ 'name' => 'form-time','color' => $currentPath == 'usm' ? 'white' : 'black' ,'size' => 25 ])
                         Ujian Saringan Masuk
                     </a>

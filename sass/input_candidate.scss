@@ -1,3 +1,4 @@
+@use "candidate/components/stages" as stage;
 @import "utils/variables";
 @import "utils/globals";
 @import "admin/index";
@@ -109,7 +110,6 @@
 
 .content {
     width: inherit;
-    padding: 15px;
 
     display: flex;
     flex-direction: column;
@@ -171,6 +171,6 @@
                 }
             }
         }
-
     }
+    @include stage.stages;
 }
