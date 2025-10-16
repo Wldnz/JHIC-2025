@@ -74,18 +74,18 @@ img {
 }
 @keyframes openSidebarCandidate {
   0% {
-    width: 0;
+    height: 0;
   }
   100% {
-    width: 100%;
+    height: 100%;
   }
 }
 @keyframes closeSidebarCandidate {
   0% {
-    width: 100%;
+    height: 100%;
   }
   100% {
-    width: 0;
+    height: 0;
     display: none;
   }
 }
@@ -393,18 +393,18 @@ img {
 }
 @keyframes openSidebarCandidate {
   0% {
-    width: 0;
+    height: 0;
   }
   100% {
-    width: 100%;
+    height: 100%;
   }
 }
 @keyframes closeSidebarCandidate {
   0% {
-    width: 100%;
+    height: 100%;
   }
   100% {
-    width: 0;
+    height: 0;
     display: none;
   }
 }
@@ -568,7 +568,7 @@ img {
 }
 
 .open-sidebar-candidate {
-  animation: openSidebarcCandidate 800ms forwards;
+  animation: openSidebarCandidate 800ms forwards;
 }
 
 .close-sidebar-candidate {
@@ -925,7 +925,7 @@ img {
 .progsil .progsil-art .art {
   min-height: 400px;
   width: 10%;
-  background-color: grey;
+  background-color: whitesmoke;
 }
 .progsil .progsil-art .art.main {
   width: 80%;
@@ -1050,6 +1050,7 @@ img {
   display: flex;
   justify-content: center;
   margin-top: 20px;
+  margin-left: 20px;
 }
 .news .searchbar input {
   width: 200px;
@@ -1073,7 +1074,7 @@ img {
   margin: 0 1px;
   display: flex;
   justify-content: center;
-  background-color: blue;
+  background-color: #273b98;
   padding: 10px;
   border-radius: 100px;
   cursor: pointer;
@@ -1107,6 +1108,7 @@ img {
   display: flex;
   align-items: center;
   height: 20px;
+  margin-bottom: 1em;
 }
 .news .news-group a .news-info .tags {
   position: relative;
@@ -1184,15 +1186,35 @@ img {
   overflow: hidden;
 }
 
-@media only screen and (min-width: 768px) {
-  h2 {
-    font-size: clamp(0.6rem, 8.5vw, 5rem);
+@media screen and (min-width: 768px) {
+  .news h2 {
+    font-size: clamp(0.6rem, 4vw, 2.5rem);
   }
-  .searchbar {
-    justify-content: end !important;
+  .news .searchbar {
+    justify-content: end;
+    margin-right: 20px;
   }
-  .searchbar input {
-    font-size: clamp(0.4rem, 1.25vw, 1rem) !important;
+  .news .searchbar input {
+    font-size: clamp(0.4rem, 1.25vw, 1rem);
+  }
+  .news .news-group a {
+    flex-direction: row;
+    font-size: clamp(0.4rem, 1.25vw, 1rem);
+  }
+  .news .news-group a img {
+    aspect-ratio: 16/7;
+    width: 30%;
+  }
+  .news .news-group a .news-infodetail {
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: space-between;
+  }
+  .news .news-group a .text {
+    margin-bottom: 2em;
+  }
+  .news .news-group a h3 {
+    font-size: clamp(0.6rem, 2vw, 1.5rem);
   }
 }
 body .button {
