@@ -19,6 +19,10 @@ class CandidateDocument extends Model
         'is_valid',
     ];
 
+    protected $casts = [
+        'is_valid' => 'boolean',
+    ];
+
     /**
      * Get the candidate that owns the candidate document.
      */

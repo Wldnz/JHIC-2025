@@ -1,7 +1,7 @@
 @php
         $placeholder = "https://www.svgrepo.com/show/508699/landscape-placeholder.svg";
 
-        $eskuls = 
+        $eskuls =
         [
             "Basket" => ["title" => "Basket", "desc" => "Olahraga tim yang dimainkan oleh dua tim beranggotakan lima orang, yang tujuannya adalah mencetak poin dengan memasukkan bola ke keranjang lawan. Permainan ini dimainkan di lapangan persegi panjang, dan teknik dasarnya meliputi dribbling (memantulkan bola), mengoper, dan menembak. "],
             "Futsal" => ["title" => "Futsal", "desc" => "Permainan sepak bola dalam ruangan yang dimainkan oleh dua tim dengan masing-masing lima pemain. Tujuannya adalah mencetak gol ke gawang lawan, tetapi dimainkan di lapangan yang lebih kecil dengan bola yang lebih padat dan pantulan rendah. Futsal menekankan keterampilan teknis seperti dribbling, passing, dan shooting, dan secara internasional diakui oleh FIFA dan UEFA"],
@@ -30,8 +30,8 @@
             <p>{{ $eskul['desc'] }}</p>
             </div>
         </div>
-    @endforeach   
-    
+    @endforeach
+
 </div>
 
 <script>
@@ -41,8 +41,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const elements = [...document.querySelectorAll(
         "*:not(.no-fade):not(body):not(html):not(main):not(header):not(footer):not(nav):not(.container):not(.wrapper)"
     )]
-    
-    
+
+
     elements.forEach(el => {
     const computed = window.getComputedStyle(el)
     el.dataset.originalOpacity = computed.opacity || 1
@@ -53,7 +53,7 @@ const observer = new IntersectionObserver((entries) => {
         const el = entry.target
         const original = parseFloat(el.dataset.originalOpacity)
         const faded = Math.max(original - 0.5, 0)
-        
+
         if (entry.isIntersecting) {
             el.style.opacity = original
         } else {
@@ -76,7 +76,7 @@ window.addEventListener("scroll", () => {
   if (!ticking) {
     window.requestAnimationFrame(() => {
         const currentScroll = window.scrollY
-        
+
         if (Math.abs(currentScroll - lastScroll) > 50) {
         if (currentScroll > lastScroll && currentScroll > 20) {
           nav.style.top = "-200px"
@@ -85,7 +85,7 @@ window.addEventListener("scroll", () => {
         }
         lastScroll = currentScroll
     }
-    
+
     ticking = false
 })
 

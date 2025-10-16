@@ -27,7 +27,7 @@
         </div>
         <div class="links">
             <h3>Programs</h3>
-                <a href="{{ route("user.programs.extracurriculars.index") }}">Extracurricular </a>
+                <a href="{{ route("user.programs.extracurriculars") }}">Extracurricular </a>
                 <a href="{{ route("user.programs.bi-channel") }}">BI Channel</a>
                 <a href="https://webosis-smkbi.wuaze.com/">OSIS</a>
                 <a href="{{ route("user.programs.program-silang") }}">Progsil</a>

@@ -25,9 +25,9 @@ class Controller extends \App\Http\Controllers\Controller
         return view('user.profile');
     }
 
-    public function about()
+    public function uniforms()
     {
-        return view('user.about');
+        return view('user.uniforms');
     }
 
     public function visiMisi()

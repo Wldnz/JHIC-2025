@@ -22,6 +22,11 @@ class ProgramsController extends Controller
         return view('user.programs.bimbingan-konseling');
     }
 
+    public function extracurriculars()
+    {
+        return view('user.programs.extracurriculars');
+    }
+
     public function biChannel()
     {
         return view('user.programs.bi-channel');

@@ -18,8 +18,8 @@ class StorageUtils
     public static function uploadNewCandidateDocument(Candidate $candidate, string $fileName, string $fileMimetypes, string $fileContent, bool $isValid = false)
     {
         try {
-            $currentTimestamps = microtime(false);
-            $gdrivePath = self::$candidateDocumentsDir . "/{$candidate->nisn} - {$currentTimestamps}.pdf";
+            $currentTimestamps = microtime(true);
+            $gdrivePath = self::$candidateDocumentsDir . "/{$candidate->nisn}/{$currentTimestamps}.pdf";
             $encryptedFileContent = Crypt::encrypt($fileContent);
 
             Storage::disk('google')->put(

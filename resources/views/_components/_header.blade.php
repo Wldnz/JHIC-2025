@@ -40,7 +40,7 @@
                 <div class="expandable-wrapper">
                 <a class="expandable-pc">PROGRAM</a>
                     <div class="branch">
-                        <a href="{{ route("user.programs.extracurriculars.index") }}">Extracurricular </a>
+                        <a href="{{ route("user.programs.extracurriculars") }}">Extracurricular </a>
                         <a href="{{ route("user.programs.bi-channel") }}">BI Channel</a>
                         <a href="https://webosis-smkbi.wuaze.com/" target="blank">OSIS</a>
                         <a href="{{ route("user.programs.program-silang") }}">Progsil</a>
@@ -55,7 +55,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="right">
             <img src="{{asset('icons/burgur.svg')}}" class="burger">
             <a href="https://wa.me/6281280063529" target="_blank" rel="noopener noreferrer"><button class="button button-circle"><img src="{{asset('icons/telp.svg')}}"></button></a>
@@ -85,7 +85,7 @@
             </div>
             <a class="expandable">PROGRAM <img src="{{ asset("icons/arrow-down.svg") }}" alt=""></a>
             <div class="branch">
-                <a href="{{ route("user.programs.extracurriculars.index") }}">Extracurricular </a>
+                <a href="{{ route("user.programs.extracurriculars") }}">Extracurricular </a>
                 <a href="{{ route("user.programs.bi-channel") }}">BI Channel</a>
                 <a href="https://webosis-smkbi.wuaze.com/" target="blank">OSIS</a>
                 <a href="{{ route("user.programs.program-silang") }}">Progsil</a>
@@ -95,7 +95,7 @@
                 <a href="{{ route("user.programs.project-works") }}">Project Work</a>
             </div>
             <a href="{{ route('user.news') }}">NEWS <img src="{{ asset("icons/majors icons/non.png") }}" alt=""></a>
-            
+
         </div>
         <div class="down">
             <a href="https://wa.me/6281280063529" target="_blank" rel="noopener noreferrer"><img src="{{asset('icons/telp.svg')}}"> +62 812-8006-3529</a>
@@ -111,7 +111,7 @@
     document.querySelector(".exit-burger").addEventListener("click", () => {
             document.querySelector(".mobile-nav").classList.remove("on")
         })
-        
+
     document.querySelectorAll(".expandable").forEach(expand => {
         let rotated = false
         expand.addEventListener("click", () => {
