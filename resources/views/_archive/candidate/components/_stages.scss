@@ -54,11 +54,8 @@
                 flex-direction: column;
                 gap: 10px;
 
-                &-document {
-                    gap: 30px;
-                }
-
-                .wrapper-input {
+                .wrapper-input,
+                .wrapper-input-multiple {
                     display: flex;
                     flex-direction: column;
                     gap: 5px;
@@ -88,6 +85,15 @@
                     textarea {
                         resize: vertical;
                         max-height: 120px;
+                    }
+                }
+
+                .wrapper-input-multiple {
+                    display: grid;
+                    grid-template-columns: repeat(2, 1fr);
+
+                    &-1 {
+                        grid-template-columns: 1fr !important;
                     }
                 }
 
@@ -148,18 +154,16 @@
 
                 }
 
-                .wrapper-select {
+                .wrapper-select{
                     position: relative;
-
-                    select {
+                    select{
                         background-color: transparent;
                         appearance: none;
                     }
-
-                    svg {
+                    svg{
                         height: 100%;
 
-
+                        
                         position: absolute;
                         top: 0;
                         right: 10px;
@@ -167,15 +171,14 @@
                     }
                 }
 
-                .wrapper-information {
+                .wrapper-information{
                     display: grid;
                     grid-template-columns: 1fr 1fr;
 
                     border-radius: $border-radius;
                     border: 3px solid $color-accent;
 
-                    label,
-                    span {
+                    label,span{
                         color: $color-primary;
                         font-size: calc($font-size-xl - .8vw) !important;
                         background-color: $color-accent;
@@ -187,81 +190,19 @@
                         padding: 10px;
                     }
 
-                    span {
+                    span{
                         background-color: transparent;
                         border: none;
                         color: $color-accent;
                         justify-content: start;
                     }
 
-                    select {
+                    select{
                         border: none;
                         border-radius: none;
                         height: 40px;
                     }
                 }
-
-                .wrapper-document {
-                    display: flex;
-                    flex-direction: column;
-                    gap: 5px;
-
-                    font-size: $font-size-xl;
-
-                    .wrapper-file {
-
-                        min-height: 50px;
-                        position: relative;
-
-                        background-color: transparent;
-                        border: 3px solid $color-accent;
-                        border-radius: $border-radius;
-
-
-                        input[type=file] {
-                            width: 100%;
-                            height: 100%;
-                            opacity: 0;
-                        }
-
-                        .floating-title {
-                            position: absolute;
-                            top: -14px;
-                            left: 5px;
-
-                            padding: 2px;
-                            font-weight: bold;
-
-                            background-color: $color-primary;
-                        }
-
-                        .description {
-                            position: absolute;
-                            top: 0;
-                            left: 0;
-
-                            width: 100%;
-                            height: 100%;
-
-                            display: flex;
-                            justify-content: start;
-                            align-items: center;
-                            padding: 10px;
-
-                            z-index: -1;
-                        }
-                    }
-
-                    .download {
-                        display: flex;
-                        align-items: center;
-                        flex-wrap: wrap;
-                        gap: 5px;
-                    }
-
-                }
-
-
             }
 
             .s-submit {
@@ -269,7 +210,7 @@
                 display: flex;
                 flex-direction: column;
                 gap: 15px;
-
+                
                 margin-top: 30px;
 
                 p {
@@ -309,40 +250,8 @@
                             border: 1px solid $color-accent;
                             color: $color-accent;
                         }
-
-                        &-1 {
-                            grid-template-columns: 1fr;
-                        }
                     }
 
-                }
-            }
-        }
-
-        &-full-h {
-            min-height: 100dvh;
-            justify-content: center;
-
-            .form-stage {
-                .s-submit {
-                    .w-buttons {
-                        width: 100%;
-
-                        .pages {
-                            gap: 20px;
-                            margin-top: 10px;
-
-                            .pagination-action {
-                                width: 100%;
-                                border: 2px solid $color-accent;
-
-                                &:hover {
-                                    background-color: $color-accent;
-                                    color: $color-primary;
-                                }
-                            }
-                        }
-                    }
                 }
             }
         }
@@ -360,7 +269,7 @@
         }
 
         .form-stage {
-            padding: 60px;
+            padding: 40px;
 
             h2 {
                 font-size: $font-size-l;
@@ -369,11 +278,8 @@
             .fields {
                 gap: 20px;
 
-                &-document {
-                    gap: 60px;
-                }
-
-                .wrapper-input {
+                .wrapper-input,
+                .wrapper-input-multiple {
 
                     label {
                         font-size: $font-size-l;
@@ -393,44 +299,29 @@
                     }
                 }
 
+                .wrapper-input-multiple {
+                    gap: 20px;
+                }
+
                 .wrapper-option-button {
-                    .btn-phase {
+                    .btn-phase
+                     {
                         height: 60px;
                         min-height: 60px;
                     }
-
-                    .btn-major {
+                    .btn-major{
                         font-size: calc($font-size-l - .2vw);
                     }
                 }
-
-                .wrapper-information {
-                    label {
+                .wrapper-information{
+                    label{
                         justify-content: start;
                     }
-
-                    span {
+                    span{
                         min-height: 60px;
                     }
-
-                    select {
+                    select{
                         font-size: $font-size-m;
-                    }
-                }
-
-
-                .wrapper-document {
-                    input[type=file] {
-                        min-height: 90px;
-                    }
-
-                    .wrapper-file {
-                        font-size: $font-size-l;
-
-                    }
-
-                    .download {
-                        font-size: $font-size-l;
                     }
                 }
             }
@@ -439,7 +330,7 @@
                 .w-buttons {
                     button {
                         font-size: $font-size-l;
-                        min-height: 75px;
+                        min-height: 65px;
                     }
 
                     .pages {
@@ -459,20 +350,13 @@
         }
 
         .form-stage {
-            padding: 30px;
-
             h2 {
                 font-size: $font-size-l;
             }
 
             .fields {
-
-
-                &-document {
-                    gap: 40px;
-                }
-
-                .wrapper-input {
+                .wrapper-input,
+                .wrapper-input-multiple {
                     gap: 5px;
 
                     label {
@@ -504,31 +388,7 @@
                         height: 50px;
                     }
                 }
-
-                .wrapper-document {
-                    input[type=file] {
-                        min-height: 80px;
-                    }
-
-                    .wrapper-file {
-                        font-size: $font-size-l;
-
-                    }
-
-                    .download {
-                        font-size: $font-size-l;
-                    }
-                }
             }
-            .s-submit{
-                .w-buttons{
-                    .pages{
-                        .pagination-action{
-                            height: 55px
-                        }
-                    }
-                }
-            };
         }
     }
 
@@ -541,13 +401,9 @@
             }
 
             .fields {
-                padding: 20px;
 
-                &-document {
-                    gap: 30px;
-                }
-
-                .wrapper-input {
+                .wrapper-input,
+                .wrapper-input-multiple {
                     label {
                         font-size: $font-size-l;
                     }
@@ -556,30 +412,7 @@
                     select {
                         max-height: 40px;
                     }
-                }
 
-                .wrapper-document {
-                    input[type=file] {
-                        min-height: 60px;
-                    }
-
-                    .wrapper-file {
-                        font-size: $font-size-l;
-
-                    }
-
-                    .download {
-                        font-size: $font-size-l;
-                    }
-                }
-            }
-            .s-submit{
-                .w-buttons{
-                    .pages{
-                        .pagination-action{
-                            height: 45px;
-                        }
-                    }
                 }
             }
         }

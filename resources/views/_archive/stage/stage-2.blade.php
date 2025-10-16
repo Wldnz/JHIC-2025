@@ -1,10 +1,10 @@
 @include('_components._headerCandidate', [
-    'title' => 'Formulir Tahap Ketiga'
+    'title' => 'Dashboard Calon Peserta Didik'
 ])
 <main class="content">
     <div class="stages">
         <div class="hero">
-            <h2>Tahap Ketiga</h2>
+            <h2>Tahap Kedua</h2>
             <img src="{{ asset('images/usm/dashboard/step2.png') }}" alt="usm_step_1">
             <div class="description">
                 <h4>Memilah Gelombang Ujian Saringan Masuk</h4>
@@ -50,10 +50,8 @@
                 <div class="w-buttons">
                     <button class="submit-form" type="submit">Simpan Data</button>
                     <div class="pages">
-                        @if ($isPaid ?? false)
-                            <button class="pagination-action" type="button">Sebelumnya</button>
-                            <button class="pagination-action" type="button">Selanjutnya</button>
-                        @endif
+                        <!-- <button class="pagination-action" type="button">Sebelumnya</button>
+                        <button class="pagination-action" type="button">Selanjutnya</button> -->
                     </div>
                 </div>
             </div>

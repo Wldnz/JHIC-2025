@@ -40,8 +40,11 @@ class AuthController extends Controller
         return back()->withInput($validated);
     }
 
-    public function logout()
+    public function logout(Request $request)
     {
+         $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        Auth::logout();
         return redirect()->route('candidate.login-page');
     }
 }
