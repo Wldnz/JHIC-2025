@@ -45,7 +45,7 @@
                         <a href="https://webosis-smkbi.wuaze.com/" target="blank">OSIS</a>
                         <a href="{{ route("user.programs.program-silang") }}">Progsil</a>
                         <a href="{{ route("user.programs.baca-tulis-quran") }}">BTQ</a>
-                        <a href="{{ route("candidate.index") }}">USM</a>
+                        <a href="{{ route("candidate.index") }}">PSB</a>
                         <a href="{{ route("user.programs.bimbingan-konseling") }}">Bimbingan Konseling</a>
                         <a href="{{ route("user.programs.project-works") }}">Project Work</a>
                     </div>
@@ -90,7 +90,7 @@
                 <a href="https://webosis-smkbi.wuaze.com/" target="blank">OSIS</a>
                 <a href="{{ route("user.programs.program-silang") }}">Progsil</a>
                 <a href="{{ route("user.programs.baca-tulis-quran") }}">BTQ</a>
-                <a href="{{ route("candidate.index") }}">USM</a>
+                <a href="{{ route("candidate.index") }}">PSB</a>
                 <a href="{{ route("user.programs.bimbingan-konseling") }}">Bimbingan Konseling</a>
                 <a href="{{ route("user.programs.project-works") }}">Project Work</a>
             </div>

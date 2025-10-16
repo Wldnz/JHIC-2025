@@ -8,97 +8,170 @@ img{
     font-size: 14px;
 }
 
-.login{
-    max-width: 800px;
-    min-height: 300px;
-    width: max-content;
-    padding: 20px;
+
+
+.wrapper-login
+{
+    width: 100vw;
+    height: 100dvh;
 
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    gap: 15px;
-
-    border-radius: 10px;
-
-    background-color: $color-primary;
-
-    position: relative;
-
-    box-shadow:
-        -5px 0 5px #0fcbbc,
-        0 -5px  5px #8780fc,
-        0 5px  5px #8780fc,
-        5px 0 5px #5f77f7;
-
-
-    .title{
-        max-width: 400px;
-        width: calc(100% - 200px);
-        min-width: 300px;
-        font-size: calc($font-size-l -  .3rem);
-    }
-
-    .wrapper-field{
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-
-        .wrapper-input{
-            
+    align-items: center;
+    justify-content: center;
+    
+    .login
+    {
+        max-height: 90vh;
+        width: 80%;
+        aspect-ratio: 1/1;
+        max-width: unset;
+        background-color: #fff;
+        align-self: center;
+        padding: 40px;
+        border-radius: calc($border-radius * 2);
+        box-shadow: 0 0 10px $color-accent;
+    
+        .title
+        {
+            h4{font-size: $font-size-3xl;}
+            p{font-size: $font-size-xl;}
+        }
+    
+        .wrapper-field
+        {
+            margin-top: 30px;
             display: flex;
             flex-direction: column;
-            gap: 5px;
-
-            label{
-                font-size: $font-size-m;
-                color:$color-accent;
-
-                font-weight: 600;
+            gap: 40px;
+    
+            .wrapper-input
+            {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+    
+                label{font-size: $font-size-2xl;}
+    
+                input
+                {
+                    padding: 20px 10px; 
+                    font-size: $font-size-xl !important; 
+                    border-radius: $border-radius;
+                    border: 2px solid $color-accent; 
+                    color: $color-accent;
+    
+                    &:focus
+                    {
+                        border: 2px solid $color-accent;
+                        outline: none;
+                    }
+                }
             }
-
-            input{
-                width: 100%;
-                min-width: 200px;
-                height: 45px;
-                padding: 5px;
-                padding-left: 10px;
-
-                border-radius: 4px;
-                outline: none;
-                border: 1px solid $color-accent;
+    
+            .buttons
+            {
+                button
+                {
+                    font-size: $font-size-xl;
+                    font-weight: 400;
+                    padding: 40px;
+                }
             }
-        }
-    }
-
-    .buttons{
-        button{
-            height: $font-size-2xl;
-            border-radius: 4px;
-        }
-    }
-    .footers{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 10px;  
-
-        font-size: $font-size-s;
-
-        .link{
-            display: flex;
-            align-items: center;
-            gap: 5px;
-
-            p{
-                color: black;
-            }
-            a{
-                color: $color-accent;
+    
+            .footers
+            {
+                .link
+                {
+                    a
+                    {
+                        font-size: $font-size-xl;
+                    }
+                }
             }
         }
     }
 }
+
+@media only screen and (min-width: 425px) 
+{
+    .wrapper-login
+    {
+        .login
+        {
+            max-width: 50vw;
+        
+            .title
+            {
+                h4{font-size: $font-size-xl;}
+                p{font-size: $font-size-l;}
+            }
+        
+            .wrapper-field
+            {
+                margin-top: 30px;
+                display: flex;
+                flex-direction: column;
+                gap: 40px;
+        
+                .wrapper-input
+                {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 10px;
+        
+                    label{font-size: $font-size-l;}
+        
+                    input
+                    {
+                        padding: 20px 10px; 
+                        font-size: $font-size-l !important; 
+                        border-radius: $border-radius;
+                        border: 2px solid $color-accent; 
+                        color: $color-accent;
+        
+                        &:focus
+                        {
+                            border: 2px solid $color-accent;
+                            outline: none;
+                        }
+                    }
+                }
+        
+                .buttons
+                {
+                    button
+                    {
+                        font-size: $font-size-xl;
+                        font-weight: 400;
+                        padding: 40px;
+                    }
+                }
+        
+                .footers
+                {
+                    .link
+                    {
+                        a
+                        {
+                            font-size: $font-size-xl;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
 
 .rotate-y-360{
     animation: rotate-y-360 600ms alternate-reverse infinite;
@@ -179,7 +252,6 @@ img{
     }
 }
 
-// margin
 .mt-25{
     margin-top: 25px;
 }
