@@ -1,5 +1,5 @@
 @include('_components._headerCandidate', [
-    'title' => 'Formulir Tahap Pertama'
+    'title' => 'Formulir Tahap Keempat'
 ])
 <main class="content">
     <div class="accessoris">
@@ -13,7 +13,7 @@
     </div>
     <div class="stages">
         <div class="hero">
-            <h2>Tahap Pertama</h2>
+            <h2>Tahap Keempat</h2>
             <img src="{{ asset('images/usm/dashboard/step1.png') }}" alt="usm_step_1">
             <div class="description">
                 <h4>Membeli Formulir Pendaftaran</h4>

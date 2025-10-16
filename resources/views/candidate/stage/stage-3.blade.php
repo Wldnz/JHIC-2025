@@ -1,10 +1,10 @@
 @include('_components._headerCandidate', [
-    'title' => 'Dashboard Calon Peserta Didik'
+    'title' => 'Formulir Tahap Ketiga'
 ])
 <main class="content">
     <div class="stages">
         <div class="hero">
-            <h2>Tahap Kedua</h2>
+            <h2>Tahap Ketiga</h2>
             <img src="{{ asset('images/usm/dashboard/step2.png') }}" alt="usm_step_1">
             <div class="description">
                 <h4>Memilah Gelombang Ujian Saringan Masuk</h4>

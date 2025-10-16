@@ -1,5 +1,5 @@
 @include('_components._headerCandidate', [
-    'title' => 'Formulir Tahap Pertama'
+    'title' => 'Formulir Tahap Kelima'
 ])
 <main class="content">
     <div class="accessoris">

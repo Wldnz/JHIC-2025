@@ -61,14 +61,13 @@
     </div>
     <div class="wrapper-milestone">
         <div class="information">
-
-                           <h3 class="title">Milestone yang harus kamu selesaikan!</h3>
-           <p>Berikut adalah tugas-tugas yang harus kamu lakukan untuk menyelesaikan tahap penerimaan calon peserta didik secara online!</p>
+            <h3 class="title">Milestone yang harus kamu selesaikan!</h3>
+            <p>Berikut adalah tugas-tugas yang harus kamu lakukan untuk menyelesaikan tahap penerimaan calon peserta didik secara online!</p>
         </div>
-     <div class="milestones">
+        <div class="milestones">
             @foreach ($milestones as $milestone)
-                    <div class="milestone">
-                   <div class="milestone-content">
+                <div class="milestone">
+                    <div class="milestone-content">
                         <h4>{{ $milestone['title'] }}</h4>
                         <div class="center">
                             <img src="{{ asset('images/usm/step'. $loop->index + 1 .'.png') }}" alt="step{{ $loop->index }}">
@@ -78,10 +77,10 @@
                             <div class="action">
                                 <h5>Detail Informasi</h5>
                                 @include('_components._sprite-icons', ['name' => 'drop-down', 'size' => 15])
-                             </div>
+                        </div>
                             <p class="hidden" id="description">{{ $milestone['description'] }}</p>
                         </div>
-                   </div>
+                    </div>
                 </div>
             @endforeach
         </div>
