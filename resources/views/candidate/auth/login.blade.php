@@ -22,7 +22,7 @@
         <span class="circle trinkets"></span>
 
 
-    <form class="login" method="POST" action="{{ route('admin.login') }}">
+    <form class="login" method="POST" action="{{ route('candidate.login') }}">
     @csrf
 
         <div class="title">

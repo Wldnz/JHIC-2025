@@ -22,7 +22,7 @@
         <span class="circle trinkets"></span>
 
 
-    <form class="login" method="POST" action="{{ route('admin.login') }}">
+    <form class="login" method="POST" action="{{ route('candidate.signup') }}">
     @csrf
 
         <div class="title">
@@ -37,10 +37,19 @@
                 required
             >
             </div>
-                <div class="wrapper-input">
+            <div class="wrapper-input">
                 <label for="password">Password</label>
                 <div class="password">
                     <input type="password" name="password" id="password" placeholder="admin123" minlength="8" value="{{ old('password') }}" required>
+                    <img src="{{ asset("icons/Show.svg") }}" class="show">
+                    <img src="{{ asset("icons/Hide.svg") }}" class="hide">
+                </div>
+            </div>
+
+            <div class="wrapper-input">
+                <label for="password">Password Confirmation</label>
+                <div class="password">
+                    <input type="password" name="password_confirmation" id="password-confirmation" placeholder="admin123" minlength="8" value="{{ old('password') }}" required>
                     <img src="{{ asset("icons/Show.svg") }}" class="show">
                     <img src="{{ asset("icons/Hide.svg") }}" class="hide">
                 </div>
@@ -69,21 +78,36 @@
 
 <script>
 
-let pwinput = document.querySelector("#password")
-let hidebtn = document.querySelector(".hide")
-let showbtn = document.querySelector(".show")
+let pwInputs = document.querySelectorAll("#password, #password-confirmation");
+let showBtns = document.querySelectorAll(".show");
+let hideBtns = document.querySelectorAll(".hide");
 
-showbtn.addEventListener("click", () => {
-    pwinput.type = "text"
-    showbtn.style.display = "none"
-    hidebtn.style.display = "flex"
-})
+showBtns.forEach((btn, i) => {
+  btn.addEventListener("click", () => {
+    pwInputs[i].type = "text";
+    btn.style.display = "none";
+    hideBtns[i].style.display = "flex";
+  });
+});
 
-hidebtn.addEventListener("click", () => {
-    pwinput.type = "password"
-    showbtn.style.display = "flex"
-    hidebtn.style.display = "none"
-})
+hideBtns.forEach((btn, i) => {
+  btn.addEventListener("click", () => {
+    pwInputs[i].type = "password";
+    btn.style.display = "none";
+    showBtns[i].style.display = "flex";
+  });
+});
+
+let pw = document.querySelector("#password");
+let pwConfirm = document.querySelector("#password-confirmation");
+let form = document.querySelector("form");
+
+form.addEventListener("submit", (e) => {
+  if (pw.value !== pwConfirm.value) {
+    e.preventDefault();
+    alert("Passwords do not match.");
+  }
+});
 
 
 </script>
