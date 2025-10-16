@@ -540,7 +540,6 @@ img {
 .wrapper-login .login {
   max-height: 90vh;
   width: 80%;
-  aspect-ratio: 1/1;
   max-width: unset;
   background-color: #fff;
   align-self: center;
@@ -555,10 +554,9 @@ img {
   font-size: clamp(0.6rem, 3.5vw, 2rem);
 }
 .wrapper-login .login .wrapper-field {
-  margin-top: 30px;
+  margin-top: 20px;
   display: flex;
   flex-direction: column;
-  gap: 40px;
 }
 .wrapper-login .login .wrapper-field .wrapper-input {
   display: flex;
@@ -569,10 +567,10 @@ img {
   font-size: clamp(0.6rem, 4vw, 2.5rem);
 }
 .wrapper-login .login .wrapper-field .wrapper-input input {
-  padding: 20px 10px;
+  padding: 10px;
   font-size: clamp(0.6rem, 3.5vw, 2rem) !important;
   border-radius: 8px;
-  border: 2px solid #273b98;
+  border: 1px solid #273b98;
   color: #273b98;
 }
 .wrapper-login .login .wrapper-field .wrapper-input input:focus {

@@ -23,7 +23,6 @@ img{
     {
         max-height: 90vh;
         width: 80%;
-        aspect-ratio: 1/1;
         max-width: unset;
         background-color: #fff;
         align-self: center;
@@ -39,10 +38,10 @@ img{
     
         .wrapper-field
         {
-            margin-top: 30px;
+            margin-top: 20px;
             display: flex;
             flex-direction: column;
-            gap: 40px;
+            // gap: 40px;
     
             .wrapper-input
             {
@@ -54,10 +53,10 @@ img{
     
                 input
                 {
-                    padding: 20px 10px; 
+                    padding: 10px; 
                     font-size: $font-size-xl !important; 
                     border-radius: $border-radius;
-                    border: 2px solid $color-accent; 
+                    border: 1px solid $color-accent; 
                     color: $color-accent;
     
                     &:focus
