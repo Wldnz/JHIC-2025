@@ -28,7 +28,7 @@ class AuthController extends Controller
         $newUser = new User();
         $newUser->fullname = $validated['fullname'];
         $newUser->email = $validated['email'];
-        $newUser->phone = $validated['phone'];
+        $newUser->phone = $validated['phone'] ?? null;
         $newUser->password = Hash::make($validated['password']);
         $newUser->remember_token = Str::random(10);
         $newUser->role = 'candidate';
@@ -53,7 +53,6 @@ class AuthController extends Controller
         logger(route('candidate.signup-google-callback'));
         return Socialite::driver('google')
             ->redirectUrl(route('candidate.signup-google-callback'))
-            // ->redirectUrl('http://localhost:8000/candidate/signup/google-callback')
             ->redirect();
     }
 
@@ -127,7 +126,6 @@ class AuthController extends Controller
         logger(route('candidate.login-google-callback'));
         return Socialite::driver('google')
             ->redirectUrl(route('candidate.login-google-callback'))
-            // ->redirectUrl('http://localhost:8000/candidate/login/google-callback')
             ->redirect();
     }
     public function loginGoogleCallback(Request $request)
