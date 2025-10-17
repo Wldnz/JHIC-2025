@@ -4,9 +4,9 @@
 
 @include('_components._header', 
 [
-    'title' => 'lorem | SMK Bina Informatika',
-    'description' => '',
-    'keywords' => 'SMK, SMK Bina Informatika, teknologi, informatika, sekolah',
+    'title' => 'Program Silang | SMK Bina Informatika',
+    'description' => 'Halaman website program program silang sekolah SMK Bina Informatika',
+    'keywords' => 'SMK, SMK Bina Informatika, teknologi, informatika, sekolah, cross major',
     ])
 <div class="progsil">
     <h2>PROGRAM SILANG</h2>

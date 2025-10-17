@@ -4,9 +4,9 @@
 
 @include('_components._header', 
 [
-    'title' => 'lorem | SMK Bina Informatika',
-    'description' => '',
-    'keywords' => 'SMK, SMK Bina Informatika, teknologi, informatika, sekolah',
+    'title' => 'BTQ | SMK Bina Informatika',
+    'description' => 'Halaman website program btq sekolah SMK Bina Informatika',
+    'keywords' => 'SMK, SMK Bina Informatika, teknologi, informatika, sekolah, quran, baca tulis quran, arab, islam, muslim',
     ])
 
 <div class="btq">

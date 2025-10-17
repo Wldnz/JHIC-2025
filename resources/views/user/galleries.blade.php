@@ -3,9 +3,9 @@
 @endphp
 @include('_components._header', 
 [
-    'title' => 'lorem | smk bina informatika',
+    'title' => 'Gallery | SMK Bina Informatika',
     'description' => '',
-    'keywords' => 'smk, smk bina informatika, teknologi, informatika, sekolah',
+    'keywords' => 'smk, SMK Bina Informatika, teknologi, informatika, sekolah, gallery, images, facility, gambar fasilitas',
     ])
 
 <div class="galleries no-fade">

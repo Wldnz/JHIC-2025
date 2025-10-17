@@ -14,9 +14,9 @@
 @endphp
 @include('_components._header', 
 [
-    'title' => 'lorem | smk bina informatika',
-    'description' => '',
-    'keywords' => 'smk, smk bina informatika, teknologi, informatika, sekolah',
+    'title' => 'Extracuricullar | SMK Bina Informatika',
+    'description' => 'Halaman website program extracuricullar sekolah SMK Bina Informatika',
+    'keywords' => 'smk, SMK Bina Informatika, teknologi, informatika, sekolah, activity, extracuricullar, after school, football, soccer, basket, basketball, dancing, martial art, english',
     ])
 <div class="extrac no-fade">
     <div class="main">

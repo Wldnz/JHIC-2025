@@ -1444,6 +1444,54 @@ nav .img-wrapper.burger-icon img {
   transform: translate(-4px, -4px);
   background: linear-gradient(135deg, #0fcbbc 0%, #5f77f7 41%, #8780fc 62%, #a387ff 100%);
 }
+.wrapper-candidate .modul {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+.wrapper-candidate .modul .header h1 {
+  font-size: clamp(0.6rem, 5.5vw, 3.5rem);
+  text-align: center;
+}
+.wrapper-candidate .modul .body {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+.wrapper-candidate .modul .body .card {
+  border: 2px solid #273b98;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  width: 250px;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0px;
+}
+.wrapper-candidate .modul .body .card h2 {
+  font-size: clamp(0.6rem, 4.5vw, 3rem);
+  text-align: center;
+  width: 90%;
+  height: 1em;
+}
+.wrapper-candidate .modul .body .card img {
+  width: 70%;
+  aspect-ratio: 1/1;
+  padding: 30px;
+  object-fit: contain;
+  filter: brightness(0) saturate(100%) invert(17%) sepia(56%) saturate(3428%) hue-rotate(224deg) brightness(91%) contrast(90%);
+}
+.wrapper-candidate .modul .body .card a {
+  color: #fff;
+  background-color: #273b98;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: clamp(0.6rem, 3.5vw, 2rem);
+  font-weight: 500;
+}
 .wrapper-candidate .content .stages {
   width: 100%;
   display: flex;
@@ -1934,6 +1982,15 @@ nav .img-wrapper.burger-icon img {
   .wrapper-candidate .dashboard .body .cards-wrapper .card .wrapper-border a {
     font-size: clamp(0.6rem, 2vw, 1.5rem);
   }
+  .wrapper-candidate .modul .header h1 {
+    font-size: clamp(0.6rem, 4vw, 2.5rem);
+  }
+  .wrapper-candidate .modul .body .card h2 {
+    font-size: calc(clamp(0.6rem, 2vw, 1.5rem) * 1.2);
+  }
+  .wrapper-candidate .modul .body .card a {
+    font-size: clamp(0.6rem, 2vw, 1.5rem);
+  }
 }
 @media only screen and (min-width: 768px) {
   nav {
@@ -1998,6 +2055,25 @@ nav .img-wrapper.burger-icon img {
   }
   .wrapper-candidate .dashboard .body .cards-wrapper .card .wrapper-border a {
     font-size: clamp(0.4rem, 1.25vw, 1rem);
+  }
+  .wrapper-candidate .modul {
+    padding: 30px 20px 0 20px;
+  }
+  .wrapper-candidate .modul .header h1 {
+    font-size: clamp(0.6rem, 2vw, 1.5rem);
+    text-align: left;
+  }
+  .wrapper-candidate .modul .body {
+    justify-content: left;
+  }
+  .wrapper-candidate .modul .body .card {
+    background-color: #fff;
+  }
+  .wrapper-candidate .modul .body .card h2 {
+    font-size: clamp(0.4rem, 1.25vw, 1rem);
+  }
+  .wrapper-candidate .modul .body .card a {
+    font-size: clamp(0.2rem, 1vw, 0.85rem);
   }
   .logo-sponsor {
     padding-left: 20%;

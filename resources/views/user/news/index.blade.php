@@ -4,9 +4,9 @@
 
 @include('_components._header', 
 [
-    'title' => 'lorem | SMK Bina Informatika',
+    'title' => 'News | SMK Bina Informatika',
     'description' => '',
-    'keywords' => 'SMK, SMK Bina Informatika, teknologi, informatika, sekolah',
+    'keywords' => 'SMK, SMK Bina Informatika, teknologi, informatika, sekolah, berita, news, article',
     ])
  <div class="news">
         <h2>BI NEWS</h2>

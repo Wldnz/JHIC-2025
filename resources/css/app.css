@@ -127,6 +127,11 @@ img {
     width: inherit !important;
   }
 }
+@keyframes moving-teks {
+  100% {
+    right: 100vw;
+  }
+}
 body {
   font-family: "Montserrat", "sans-serif";
   background-color: #fff;
@@ -468,6 +473,11 @@ img {
 @media screen and (min-width: 98px) {
   .navigation-side {
     width: inherit !important;
+  }
+}
+@keyframes moving-teks {
+  100% {
+    right: 100vw;
   }
 }
 .profile:hover > ul {
@@ -2112,6 +2122,28 @@ body .wrapper-user {
   transition: 0.3s;
   min-height: 80vh;
   padding: 80px 0 0 0;
+}
+body .wrapper-user .wrapper-moving-teks {
+  width: 100%;
+  position: relative;
+  min-height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  gap: 200px;
+  margin-bottom: 24px;
+}
+body .wrapper-user .wrapper-moving-teks .moving-teks {
+  width: max-content;
+  padding: 8px;
+  gap: 10px;
+  position: absolute;
+  top: 0;
+  right: -100vw;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  animation: moving-teks 20s forwards infinite;
 }
 body .wrapper-user .dashboard {
   padding: 30px 0 0 0;

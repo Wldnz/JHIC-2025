@@ -4,7 +4,7 @@
 @include('_components._header', [
     'title' => 'Fasilitas | SMK Bina Informatika',
     'description' => 'SMK BINA INFORMATIKA MEMILIKI BANYAK FASILITAS YANG DAPAT MEMBANTU SERTA MENGEMBANGKAN KEMAMPUSAN SISWA/I',
-    'keywords' => 'Fasilitas, facility, Virtuality, 3D Fasilitas, fasilitas keren-keren'
+    'keywords' => 'Fasilitas, facility, Virtuality, 3D Fasilitas, fasilitas sekolah, 3d, unity, game, javascript unity, gallery, blender, 3d game, unity engine'
 ])
 <div class="facility no-fade">
     <div class="unity">
