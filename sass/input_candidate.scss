@@ -50,7 +50,6 @@ nav
             display: flex;
             justify-content: start;
             padding: 10px;
-            background-color: #0fcbbc;
 
             img
             {
@@ -66,7 +65,6 @@ nav
             display: flex;
             padding: 10px;
             justify-content: end;
-            background-color: #485bb1;
             
             img
             {
@@ -150,6 +148,7 @@ nav
             background-color: $color-primary;
             border-left: 5px solid #fff;
             align-items: center;
+            justify-content: space-between;
 
             &.active{border-left: 5px solid $color-accent; background-color: $color-secondary;}
 
@@ -167,6 +166,87 @@ nav
                     filter: brightness(0) saturate(100%) invert(17%) sepia(56%) saturate(3428%) hue-rotate(224deg) brightness(91%) contrast(90%);
                 }
             }
+
+            img{filter: brightness(0) saturate(100%) invert(17%) sepia(56%) saturate(3428%) hue-rotate(224deg) brightness(91%) contrast(90%);}
+
+        }
+
+        .branch
+        {
+            width: 100%;
+            max-height: 0;
+            overflow-y: hidden;
+            display: flex;
+            flex-direction: column;
+            
+            a
+            {
+                background-color: $color-secondary;
+                width: 100%;
+                display: flex;
+                padding: 15px 5%;
+
+                p{font-size: $font-size-xl; width: 100%; font-weight: 500;}
+                img{height: 1.5em; width: 20%; filter: brightness(0) saturate(100%) invert(17%) sepia(56%) saturate(3428%) hue-rotate(224deg) brightness(91%) contrast(90%);}
+            }
+
+            &.active
+            {
+                max-width: 999px;
+            }
+        }
+    }
+
+    .footer
+    {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        border-top: 1px solid $color-accent;
+        padding: 5px 0 0 0;
+        
+        .nav-menu
+        {
+            display: flex;
+            padding: 10px 20px;
+            width: 100%;
+            background-color: $color-primary;
+            border-left: 5px solid #fff;
+            align-items: center;
+            
+            button
+            {
+                border: none;
+                border-left: 5px solid #fff;
+                width: 100%;
+                height: 100%;
+                padding: 10px 20px;
+                background-color: $color-primary;
+                font-family: montserrat;
+
+            }
+
+            p
+            {
+                display: flex;
+                gap: 10px;
+                align-items: center;
+                font-weight: 500;
+                font-size: $font-size-xl;
+                color: $color-accent;
+
+                img
+                {
+                    height: 1.5em;
+                    aspect-ratio: 1/1;
+                    filter: brightness(0) saturate(100%) invert(17%) sepia(56%) saturate(3428%) hue-rotate(224deg) brightness(91%) contrast(90%);
+                }
+            }
+
+            &.logout{padding: 0; border: none;}
+
+
+
         }
     }
 
@@ -328,6 +408,8 @@ nav
     width: 100%;
 }
 
+// ====================================================================================================================================================================================================================================================
+
 @media only screen and (min-width: 425px) {
 
     .wrapper-candidate
@@ -340,7 +422,28 @@ nav
 
             .header
             {
-                background-color: $color-primary;
+                .img-wrapper
+                {
+                    &.logo
+                    {
+                        width: 80%;
+                        align-items: center;
+
+                        img
+                        {
+                            height: 100%;
+                            width: 100%;
+                            object-fit: contain;
+                            object-position: left;
+                        }
+                    }
+
+                    &.close-icon
+                    {
+                        align-items: center;
+                        justify-content: center;
+                    }
+                }
             }
 
             .body
@@ -393,6 +496,8 @@ nav
         }
     }
 }
+
+// ==================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================
 
 @media only screen and (min-width: 768px) {
 

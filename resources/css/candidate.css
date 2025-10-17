@@ -1090,7 +1090,6 @@ nav .img-wrapper.logo {
   display: flex;
   justify-content: start;
   padding: 10px;
-  background-color: #0fcbbc;
 }
 nav .img-wrapper.logo img {
   width: max-content;
@@ -1102,7 +1101,6 @@ nav .img-wrapper.burger-icon {
   display: flex;
   padding: 10px;
   justify-content: end;
-  background-color: #485bb1;
 }
 nav .img-wrapper.burger-icon img {
   height: 100%;
@@ -1166,6 +1164,7 @@ nav .img-wrapper.burger-icon img {
   background-color: #fff;
   border-left: 5px solid #fff;
   align-items: center;
+  justify-content: space-between;
 }
 .navbar-full .body .nav-menu.active {
   border-left: 5px solid #273b98;
@@ -1181,6 +1180,76 @@ nav .img-wrapper.burger-icon img {
 .navbar-full .body .nav-menu p img {
   height: 1.5em;
   filter: brightness(0) saturate(100%) invert(17%) sepia(56%) saturate(3428%) hue-rotate(224deg) brightness(91%) contrast(90%);
+}
+.navbar-full .body .nav-menu img {
+  filter: brightness(0) saturate(100%) invert(17%) sepia(56%) saturate(3428%) hue-rotate(224deg) brightness(91%) contrast(90%);
+}
+.navbar-full .body .branch {
+  width: 100%;
+  max-height: 0;
+  overflow-y: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.navbar-full .body .branch a {
+  background-color: #eaf7f9;
+  width: 100%;
+  display: flex;
+  padding: 15px 5%;
+}
+.navbar-full .body .branch a p {
+  font-size: clamp(0.6rem, 3.5vw, 2rem);
+  width: 100%;
+  font-weight: 500;
+}
+.navbar-full .body .branch a img {
+  height: 1.5em;
+  width: 20%;
+  filter: brightness(0) saturate(100%) invert(17%) sepia(56%) saturate(3428%) hue-rotate(224deg) brightness(91%) contrast(90%);
+}
+.navbar-full .body .branch.active {
+  max-width: 999px;
+}
+.navbar-full .footer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  border-top: 1px solid #273b98;
+  padding: 5px 0 0 0;
+}
+.navbar-full .footer .nav-menu {
+  display: flex;
+  padding: 10px 20px;
+  width: 100%;
+  background-color: #fff;
+  border-left: 5px solid #fff;
+  align-items: center;
+}
+.navbar-full .footer .nav-menu button {
+  border: none;
+  border-left: 5px solid #fff;
+  width: 100%;
+  height: 100%;
+  padding: 10px 20px;
+  background-color: #fff;
+  font-family: montserrat;
+}
+.navbar-full .footer .nav-menu p {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  font-weight: 500;
+  font-size: clamp(0.6rem, 3.5vw, 2rem);
+  color: #273b98;
+}
+.navbar-full .footer .nav-menu p img {
+  height: 1.5em;
+  aspect-ratio: 1/1;
+  filter: brightness(0) saturate(100%) invert(17%) sepia(56%) saturate(3428%) hue-rotate(224deg) brightness(91%) contrast(90%);
+}
+.navbar-full .footer .nav-menu.logout {
+  padding: 0;
+  border: none;
 }
 .navbar-full.active {
   max-width: 100vw;
@@ -1725,8 +1794,19 @@ nav .img-wrapper.burger-icon img {
   .wrapper-candidate .navbar-full.active {
     padding: 0 40vw 0 0;
   }
-  .wrapper-candidate .navbar-full .header {
-    background-color: #fff;
+  .wrapper-candidate .navbar-full .header .img-wrapper.logo {
+    width: 80%;
+    align-items: center;
+  }
+  .wrapper-candidate .navbar-full .header .img-wrapper.logo img {
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+    object-position: left;
+  }
+  .wrapper-candidate .navbar-full .header .img-wrapper.close-icon {
+    align-items: center;
+    justify-content: center;
   }
   .wrapper-candidate .navbar-full .body {
     height: 100%;
