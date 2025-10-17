@@ -150,6 +150,7 @@ Route::name('admin.')->prefix('admin')->middleware([isLogin::class, isAdmin::cla
     Route::put('/portfolios/{portfolio}', [Admin\PortfolioController::class, 'updatePortfolio'])->name('update-portfolio');
     Route::delete('/portfolios/{portfolio}', [Admin\PortfolioController::class, 'deletePortfolio'])->name('delete-portfolio');
 
+
     Route::get('/facilities', [Admin\FacilityController::class, 'facility'])->name('facility');
     Route::get('/facilities-create', [Admin\FacilityController::class, 'createFacility'])->name('create-facility');
     Route::post('/facilities-create', [Admin\FacilityController::class, 'storeFacility'])->name('store-facility');

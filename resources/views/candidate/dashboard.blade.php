@@ -3,43 +3,51 @@
 
     $milestones = [
         [
-            'title' => 'Mengisi Formulir Data Diri',
+            'title' => 'Melakukan Pembelian Formulir',
             'description' => 'Calon peserta didik diharapkan dapat mengisi formulir dengan sesuai dan benar',
+            'image' => asset('images/candidates/tahap/1.png')
         ],
         [
             
-            'title' => 'Memilih Jadwal Ujian Saringan Masuk',
-            'description' => 'Calon peserta didik memilih jadwal untuk mengikuti kegiatan ujian saringan masuk',
+            'title' => 'Mengisi Formulir Pendaftaran & Melakukan Uploud',
+            'description' => 'Calon peserta didik mengisi formulir pendaftaran',
+            'image' => asset('images/candidates/tahap/2.png')
         ],
         [
             
-            'title' => 'Melakukan Pembayaran Biaya Sandang & Ujian Saringan Masuk',
+            'title' => 'Tentukan Jadwal Kegiatan Ujian Saringan Masuk',
             'description' => 'Calon peserta didik memilih jadwal untuk mengikuti kegiatan ujian saringan masuk',
+            'image' => asset('images/candidates/tahap/3.png')
         ],
         [
             
-            'title' => 'Memilih Jadwal Ujian Saringan Masuk',
-            'description' => 'Calon peserta didik memilih jadwal untuk mengikuti kegiatan ujian saringan masuk',
+            'title' => 'Melakukan Pembyara Biaya Sandang',
+            'description' => 'Calon Peserta Didik Membayar Biaya Sandang Untuk Bisa Mengikuti Kegiatan USM',
+            'image' => asset('images/candidates/tahap/4.png')
         ],
         [
             
-            'title' => 'Memilih Jadwal Ujian Saringan Masuk',
-            'description' => 'Calon peserta didik memilih jadwal untuk mengikuti kegiatan ujian saringan masuk',
+            'title' => 'Mengisi Dokumen-Dokumen Pendukung',
+            'description' => 'Calon Peserta Didik Mengisi Formulir Fomulir Yang Dibutuhkan Untuk Administrasi',
+            'image' => asset('images/candidates/tahap/5.png')
         ],
         [
             
-            'title' => 'Memilih Jadwal Ujian Saringan Masuk',
-            'description' => 'Calon peserta didik memilih jadwal untuk mengikuti kegiatan ujian saringan masuk',
+            'title' => 'Mengakses Modul-Modul Ujian Saringan Masuk',
+            'description' => 'Calon Peserta Didik Membaca & Mempelajari Materi - Materi Untuk Persiapan Kegiatan Ujian Saringan Masuk',
+            'image' => asset('images/candidates/tahap/6.png')
         ],
         [
             
-            'title' => 'Memilih Jadwal Ujian Saringan Masuk',
-            'description' => 'Calon peserta didik memilih jadwal untuk mengikuti kegiatan ujian saringan masuk',
+            'title' => 'Mengikuti Kegiatan Ujian Saringan Masuk',
+            'description' => 'Calon Peserta Didik Mengikuti Kegiatan Ujian Saringan Masuk',
+            'image' => asset('images/candidates/tahap/7.png')
         ],
         [
             
-            'title' => 'Memilih Jadwal Ujian Saringan Masuk',
-            'description' => 'Calon peserta didik memilih jadwal untuk mengikuti kegiatan ujian saringan masuk',
+            'title' => 'Melihat Hasil Ujian Saringan Masuk',
+            'description' => 'Calon Peserta Didik Melihat Hasil Dari Ujian Saringan Masuk',
+            'image' => asset('images/candidates/tahap/8.png')
         ],
         
     ];
@@ -63,7 +71,7 @@
             @foreach ( $milestones as $step)
                 <div class="card {{ $loop->first ? "enabled" : "" }}">
                     <h2>{{$step['title']}}</h2>
-                    <img src="{{ $placeholder }}" alt="">
+                    <img src="{{ $step['image'] ?? $placeholder }}" alt="">
                     <div class="wrapper-border">
                         <a href="">Lakukan Sekarang</a>
 

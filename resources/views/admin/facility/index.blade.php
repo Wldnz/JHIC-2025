@@ -53,28 +53,35 @@
                         </div>
                     </div>
                 </a>
-                <form class="floating-action"
-                    action="{{ route('admin.delete-facility', ['facility' => $facility->id]) }}"
-                    method="POST"
-                    id="media-floating-icon"
-                >
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="action">
-                        @include('_components._sprite-icons', [
-                            'name' => 'trash',
-                            'size' => 20,
-                        ])
-                        <span>Delete Facility</span>
-                    </button>
-                </form>
+                <div class="floating-action">
+                    <a class="action-detail"
+                        href="{{ route('admin.delete-facility', ['facility' => $facility->id]) }}"
+                    >
+                    Detail Facility
+                    </a>
+                    <form class="action-delete"
+                        action="{{ route('admin.delete-facility', ['facility' => $facility->id]) }}"
+                        method="POST"
+                        id="media-floating-icon"
+                    >
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="action">
+                            @include('_components._sprite-icons', [
+                                'name' => 'trash',
+                                'size' => 20,
+                            ])
+                            <span>Delete Facility</span>
+                        </button>
+                    </form>
+                </div>
             </div>
             @endforeach
         </div>
           @include('_components._pagination-media', [
-                'max' => $max,
-                'totalPage' => $total,
-                'page' => $page
+            'max' => $max,
+            'totalPage' => $total,
+            'page' => $page
         ])
     </div>
 </main>
