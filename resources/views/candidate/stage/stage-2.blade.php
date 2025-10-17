@@ -19,19 +19,19 @@
                 <p>Calon peserta didik melakuakan pendaftaran tahap pertama, yakni pendaftaran data diri</p>
             </div>
         </div>
-        <form class="form-stage" action={{ route('candidate.stage.save-stage1') }} method="POST" enctype="multipart/form-data">
+        <form class="form-stage" action={{ route('candidate.stage.save-stage2') }} method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="fields">
                 <div class="wrapper-document">
                     <div class="wrapper-file">
-                        <p class="floating-title">Formulir Biodata Calon Peserta Didik <span>*</span></p>
+                        <p class="floating-title">{{ $formDocument->name }} <span>*</span></p>
                         <p class="description">Belum ada file yang diuploud nih</p>
-                        <input type="file" accept="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" id="biodata_form" name="biodata_form" aria-describeBy="formulir" required>
+                        <input type="file" accept="{{ $formDocument->mime_types }}" id="biodata_form" name="biodata_form" aria-describeBy="formulir" required>
                     </div>
                     <span class="download">
                         Download File : <a class="link"
-                        href="{{ $formData->download_file_url ?? '' }}"
+                        href="{{ $formDocument->download_file_url ?? '' }}"
                         download="formulir Biodata Binfor 2026-2025"
                         >Formulir Biodatau.docs</a>
                     </span>

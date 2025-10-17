@@ -169,6 +169,11 @@ class StageController extends Controller
             return redirect()->route('candidate.stage.stage3');
         }
 
+        $formDocument = RegistrationDocument::query()
+            ->where('type', '=', 'form')
+            ->orderBy('updated_at', 'desc')
+            ->first(['download_file_url', 'mime_types', 'name']);
+
         return view('candidate.stage.stage-2', compact('formDocument'));
     }
 
@@ -257,13 +262,13 @@ class StageController extends Controller
 
     public function stage3()
     {
-        $formTransactionCount = Auth::user()->transactions()
-            ->where('type', '=', 'form')
-            ->where('status', '=', 'settlement')
-            ->count();
         $candidate = Auth::user()->candidate()->first();
+        $formDocument = $candidate->candidateDocuments()
+            ->where('type', '=', 'form')
+            ->orderBy('created_at', 'desc')
+            ->first();
 
-        if ($formTransactionCount <= 0 || !$candidate) {
+        if (!$candidate || !$formDocument) {
             return redirect()->route('candidate.stage.stage2');
         }
 
