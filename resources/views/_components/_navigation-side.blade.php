@@ -91,12 +91,8 @@
 
 <script defer>
     const setupNeededData = {
-        locations = {
-            pathname : 'admin',
-            "inventory": [
-                "products",
-                "transactions",
-            ],
+        pathname : 'admin',
+        locations : {
             "public": [
                 "news-create",
                 "news",
@@ -115,7 +111,7 @@
                 "students-create",
                 "students"
             ]
-        };
+        }
     }
 </script>
 @vite('resources/js/handle/navigation-side.js')

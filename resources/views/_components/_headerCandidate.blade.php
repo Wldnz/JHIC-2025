@@ -42,6 +42,10 @@
                 <a href="#" class="nav-menu">
                     <p><img src="{{ asset("icons/telp.svg") }}">Contact</p>
                 </a>
+                <form action="{{ route('candidate.logout')  }}" method="POST" class="nav-menu">
+                    @csrf
+                    <button class="btn" typee="submit"><img src="{{ asset("icons/telp.svg") }}">Logout</button>
+                </form>
             </div>
         </div>
 

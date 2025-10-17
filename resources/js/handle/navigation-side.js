@@ -115,13 +115,14 @@ function closeSideBar() {
 
 // handle active and non active main-menu
 function handleActiveAndNonActiveMainMenu() {
-    let { locations, pathname: name } = getSetupData();
-    const pathname = (location.pathname).split(`/${name}/`)[1];
+    let { locations, pathname: currentPath } = getSetupData();
+    const pathname = (location.pathname).split(`/${currentPath}/`)[1];
     menu_chidrens.forEach(menu => {
         const name = menu.id.split('-')[1];
         const isMultiple = menu.classList.contains('multiple');
         const display_name = menu.children[0];
-        if (isMultiple) {
+        if (isMultiple && name == pathname) {
+            console.log('ismultipler')
             const isCurrentLocation = locations[name].includes(pathname);
             if (isCurrentLocation) {
                 display_name.classList.add('active');
@@ -131,6 +132,7 @@ function handleActiveAndNonActiveMainMenu() {
                 handleSubMenu(menu, true);
             }
         } else if (name == pathname) {
+            console.log('active')
             display_name.classList.add('active');
         }
     });
