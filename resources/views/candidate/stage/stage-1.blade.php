@@ -20,7 +20,7 @@
             @csrf
             @method('PUT')
             <h2>{{ Auth::user()->fullname }}, Langkah pertama ini kamu diwajibkan untuk mengisi data diri kamu ya!</h2>
-            @if (!$isPaid ?? false)
+            @if (!$isPaid)
                 <h2>Informasi Pembayaran & Rekening Bank</h2>
                 <div class="fields">
                     <div class="wrapper-input wrapper-information">
@@ -50,8 +50,8 @@
                 <p>Selanjutnya, Isi Data Berikut Ini Ya!</p>
                  <div class="wrapper-input">
                     <label for="nisn">Nomor Induk Nasional (NISN) <span>*</span></label>
-                    <input type="text" inputmode="numeric" 
-                    name="nisn" id="nisn" placeholder="Masukkan Nomor Induk Nasional" value="{{ old('nisn', ) }}" aria-describedby="Masukkan Nomor Induk Nasional" 
+                    <input type="text" inputmode="numeric"
+                    name="nisn" id="nisn" placeholder="Masukkan Nomor Induk Nasional" value="{{ old('nisn', ) }}" aria-describedby="Masukkan Nomor Induk Nasional"
                     minlength="10" maxlength="10" @required(!$isPaid)
                     @disabled($isPaid)
                 >
@@ -65,14 +65,14 @@
                    @endforeach
                 </div>
                 <div class="hidden" id="majors-section">
-                    
+
                 </div>
             </div>
             <div class="s-submit">
                 <p>Dengan menekan tombol "Simpan", data yang Anda cantumkan di atas adalah benar dan dapat dipertanggungjawabkan.</p>
                 <div class="w-buttons">
                     <button class="submit-form" type="submit">{{ $isPaid  ? 'Simpan Data' : 'Buat Transaksi' }}</button>
-                    @if ($isPaid ?? false)
+                    @if ($isPaid)
                         <div class="pages pages-1">
                             <button class="pagination-action" type="button" onclikc="location.href='{{ route('candidate.stage.stage2')  }}'">Selanjutnya</button>
                         </div>
