@@ -31,7 +31,7 @@
                     </div>
                     <span class="download">
                         Download File : <a class="link"
-                        href="https://cdn.discordapp.com/attachments/1153188890526621697/1428344759327526972/Formulir_-_Biodata_2026-2027._Pdf.pdf?ex=68f22937&is=68f0d7b7&hm=3dd6d50b90af1b4d34d7da0d76b3fd2aebb6d80e1ed18291004960870749692e&" 
+                        href="{{ $formData->download_file_url ?? '' }}"
                         download="formulir Biodata Binfor 2026-2025"
                         >Formulir Biodatau.docs</a>
                     </span>

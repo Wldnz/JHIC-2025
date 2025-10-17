@@ -481,6 +481,14 @@ img{
     animation: closeSidebarCandidate 800ms forwards;
 }
 
+.open-media-menu{
+    animation: show-the-options-menu 200ms forwards;
+}
+.close-media-menu{
+    animation: close-the-options-menu 800ms forwards;
+}
+
+
 .button-submit-form {
     display: flex;
     padding: 10px;
