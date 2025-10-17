@@ -35,7 +35,7 @@ nav
 {
     z-index: 999;
     width: 100vw;
-    height: 15%;
+    height: 80px;
     top: 0;
     position: fixed;
     padding: 10px;
@@ -50,10 +50,12 @@ nav
             display: flex;
             justify-content: start;
             padding: 10px;
+            background-color: #0fcbbc;
 
             img
             {
-                width: auto;
+                width: max-content;
+                aspect-ratio: auto;
                 height: 100%;
             }
         }
@@ -64,6 +66,7 @@ nav
             display: flex;
             padding: 10px;
             justify-content: end;
+            background-color: #485bb1;
             
             img
             {
@@ -94,7 +97,7 @@ nav
     {
         display: flex;
         padding: 10px;
-        height: 15%;
+        height: 80px;
         width: 100%;
 
         .img-wrapper
@@ -108,7 +111,8 @@ nav
     
                 img
                 {
-                    width: auto;
+                    width: max-content;
+                    aspect-ratio: auto;
                     height: 100%;
                 }
             }
@@ -244,7 +248,12 @@ nav
                         height: 3em;
                     }
 
-                    img{width: 80%;}
+                    img
+                    {
+                        width: 80%;
+                        aspect-ratio: 1/1;
+                        object-fit: contain;
+                    }
 
                     
                     .wrapper-border
@@ -257,6 +266,7 @@ nav
                         border-radius: 6px;
                         height: calc(1em + 40px);
                         pointer-events: none;
+                        cursor: not-allowed;
                         
                         a
                         {
@@ -278,7 +288,9 @@ nav
                     {
                         .wrapper-border
                         {
+                            pointer-events: unset;
                             background: $color-bi-gradient;
+                            cursor: pointer;
                             
                             a
                             {

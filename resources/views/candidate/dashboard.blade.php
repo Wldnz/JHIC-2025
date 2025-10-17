@@ -71,9 +71,9 @@
             @foreach ( $milestones as $step)
                 <div class="card {{ $loop->first ? "enabled" : "" }}">
                     <h2>{{$step['title']}}</h2>
-                    <img src="{{ $step['image'] ?? $placeholder }}" alt="">
+                    <img src="{{ asset('images/candidates/tahap/'. $loop->index + 1 .'.png') ?? $placeholder }}" alt="">
                     <div class="wrapper-border">
-                        <a href="">Lakukan Sekarang</a>
+                        <a href="{{ route('candidate.stage.stage'. 1) }}">{{ $step['action'] ?? 'Lakukan Sekarang' }}</a>
 
                     </div>
                 </div>
