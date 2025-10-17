@@ -44,20 +44,37 @@ class StageController extends Controller
             ->where('status', '=', 'settlement')
             ->count();
 
-        if ($formTransactionCount > 0) {
-            return redirect()->route('candidate.stage.stage-2');
-        }
-
         $payments = PaymentMethod::query()
             ->where('is_enabled', '=', true)
             ->get();
 
-        return view('candidate.stage.stage-1', compact( 'payments'));
+        $candidate = Candidate::with('candidateMajors')
+            ->where('user_id', '=', Auth::user()->id)
+            ->first();
+
+        $majors = Major::all();
+
+        $isPaid = $formTransactionCount > 0;
+        if ($isPaid) {
+            return redirect()->route('candidate.stage.stage2');
+        }
+
+        return view('candidate.stage.stage-1', compact( 'payments', 'majors', 'isPaid', 'candidate'));
     }
 
     public function saveStage1(SaveStage1Request $request)
     {
         $validated = $request->validated();
+
+        $formTransactionCount = Auth::user()->transactions()
+            ->where('type', '=', 'form')
+            ->where('status', '=', 'settlement')
+            ->count();
+
+        if ($formTransactionCount > 0) {
+            return redirect()->route('candidate.stage.stage2');
+        }
+
         DB::beginTransaction();
 
         try {
@@ -181,45 +198,57 @@ class StageController extends Controller
     {
         $validated = $request->validated();
         $user = Auth::user();
+        $candidate = $user->candidate()->first();
 
         DB::beginTransaction();
 
         try {
-            $candidate = Candidate::factory()->create([
-                'nisn' => $validated['nisn'],
-                'user_id' => $user->id,
-                'full_name' => $user->fullname,
-            ]);
+            if (!$candidate) {
+                $candidate = Candidate::factory()->create([
+                    'nisn' => $validated['nisn'],
+                    'user_id' => $user->id,
+                    'full_name' => $user->fullname,
+                ]);
+            }
 
             if (!$candidate) {
                 throw new Exception("Gagal membuat data calon siswa");
             }
 
+            $majors = Major::find($validated['majors']);
+            $candidateMajors = $candidate->candidateMajors()->get();
+            $existingCandidateMajorIds = [];
+
             foreach ($validated['majors'] as $majorId) {
-                $major = Major::find($majorId);
+                $major = $majors->find($majorId);
                 if (!$major) {
                     throw new Exception("Major dengan ID \"{$majorId}\" tidak ditemukan");
                 }
 
-                $candidateMajor = CandidateMajor::create([
-                    'candidate_nisn' => $candidate->nisn,
-                    'user_id' => $user->id,
-                    'major_id' => $major->id,
-                    'major_long_name' => $major->long_name,
-                    'major_short_name' => $major->short_name,
-                ]);
+                $candidateMajor = $candidateMajors
+                    ->where('major_id', '=', $majorId)
+                    ->first();
+
+                if (!$candidateMajor) {
+                    $candidateMajor = CandidateMajor::create([
+                        'candidate_nisn' => $candidate->nisn,
+                        'user_id' => $user->id,
+                        'major_id' => $major->id,
+                        'major_long_name' => $major->long_name,
+                        'major_short_name' => $major->short_name,
+                    ]);
+                } else {
+                    $existingCandidateMajorIds[] = $candidateMajor->id;
+                }
+
                 if (!$candidateMajor) {
                     throw new Exception("Gagal membuat data jurusan pilihan calon siswa");
                 }
             }
 
-            $oldestRegistrationPhase = RegistrationPhase::query()
-                ->orderBy('ended_at', 'desc')
-                ->first();
-
-            if (!$oldestRegistrationPhase) {
-                throw new Exception("Tidak ada gelombang pendaftaran yang tersedia");
-            }
+            $candidate->candidateMajors()
+                ->whereNotIn('id', $existingCandidateMajorIds)
+                ->delete();
 
             $formDocument = StorageUtils::uploadNewCandidateDocument(
                 $candidate,
@@ -235,6 +264,8 @@ class StageController extends Controller
             }
 
             DB::commit();
+
+            return redirect()->route('candidate.stage.stage2-saved');
 
         } catch (Throwable $th) {
             DB::rollback();
@@ -252,8 +283,6 @@ class StageController extends Controller
             return back()->withInput($validated);
 
         }
-
-        return redirect()->route('candidate.stage.stage3');
     }
 
     public function stage2Saved(Request $request)
@@ -281,7 +310,9 @@ class StageController extends Controller
 
         $phases = RegistrationPhase::all();
         $sources = RegistrationSource::all();
-        return view('candidate.stage.stage-3', compact( 'phases', 'sources'));
+        $isSelectedPhase = $candidatePhase;
+
+        return view('candidate.stage.stage-3', compact( 'phases', 'sources', 'isSelectedPhase'));
     }
 
     public function saveStage3(SaveStage3Request $request)
@@ -321,9 +352,10 @@ class StageController extends Controller
             return back()->withInput($validated);
         }
 
-        $candidatePhase = CandidatePhase::create([
+        $candidatePhase = CandidatePhase::updateOrCreate([
             'candidate_nisn' => $candidate->nisn,
             'user_id' => Auth::user()->id,
+        ], [
             'selected_phase_id' => $registrationPhase->id,
             'selected_phase_name' => $registrationPhase->name,
             'registration_source_id' =>$registrationSource->id,
@@ -367,17 +399,28 @@ class StageController extends Controller
             ->where('status', '=', 'settlement')
             ->count();
 
-        if ($usmTransactionCount > 0) {
+        $isPaid = $usmTransactionCount > 0;
+
+        if ($isPaid > 0) {
             return redirect()->route('candidate.stage.stage5');
         }
 
         $payments = PaymentMethod::where('is_enabled', '=', '1')->get();
-        return view('candidate.stage.stage-4', compact( 'payments'));
+        return view('candidate.stage.stage-4', compact( 'payments','isPaid'));
     }
 
     public function saveStage4(SaveStage4Request $request)
     {
         $validated = $request->validated();
+        $usmTransactionCount = Auth::user()->transactions()
+            ->where('type', '=', 'usm')
+            ->where('status', '=', 'settlement')
+            ->count();
+
+        if ($usmTransactionCount > 0) {
+            return redirect()->route('candidate.stage.stage5');
+        }
+
         DB::beginTransaction();
 
         try {
@@ -487,16 +530,17 @@ class StageController extends Controller
             ->toArray();
         $registrationDocuments = RegistrationDocument::all();
 
+        $isAllUplouds = true;
+
         foreach ($registrationDocuments as $registrationDocument) {
             if (in_array($registrationDocument->name, $candidateDocuments)) {
                 continue;
             }
-
-            $documents = $registrationDocuments;
-            return view('candidate.stage.stage-5', compact( 'documents'));
+            $isAllUplouds = false;
         }
 
-        return redirect()->route('candidate.stage.stage5-saved');
+        $documents = $registrationDocuments;
+        return view('candidate.stage.stage-5', compact( 'documents', 'isAllUplouds'));
     }
 
     public function saveStage5(SaveStage5Request $request)
@@ -529,11 +573,26 @@ class StageController extends Controller
             $candidate,
             $candidateDocumentPaths,
         ) {
+            $candidateDocumentIdsToResetValid = [];
+
             foreach ($registrationDocuments as $registrationDocument) {
                 $candidateDocument = CandidateDocument::query()
                     ->where('candidate_nisn', '=', $candidate->nisn)
                     ->where('name', '=', $registrationDocument->name)
                     ->first();
+
+                if ($candidateDocument) {
+                    $isUpdated = StorageUtils::uploadCandidateDocument(
+                        $candidateDocument,
+                        Storage::disk('local')->get($candidateDocumentPaths[$registrationDocument->id])
+                    );
+                    if (!$isUpdated) {
+                        throw new Exception("Gagal menyimpan data file \"{$registrationDocument->name}\"");
+                    }
+
+                    $candidateDocumentIdsToResetValid[] = $candidateDocument->id;
+                    continue;
+                }
 
                 if (!$candidateDocument) {
                     $candidateDocument = StorageUtils::uploadNewCandidateDocument(
@@ -556,6 +615,11 @@ class StageController extends Controller
                     throw new Exception("Gagal menyimpan data file \"{$registrationDocument->name}\"");
                 }
             }
+
+            CandidateDocument::query()
+                ->where('candidate_nisn', '=', $candidate->nisn)
+                ->whereIn('id', $candidateDocumentIdsToResetValid)
+                ->update(['is_valid' => false]);
 
             Storage::disk('local')->deleteDirectory("uploads/candidate-documents/{$candidate->nisn}");
         }));

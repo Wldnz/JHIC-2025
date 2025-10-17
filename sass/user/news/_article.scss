@@ -20,11 +20,12 @@
     .searchbar {
         display: flex;
         justify-content: center;
+        align-items: center;
         margin-top: 20px;
         margin-left: 20px;
 
         input {
-            width: 200px;
+            width: 250px;
             height: 40px;
             border: 3px solid #485bb1;
             border-radius: 50px;
@@ -38,7 +39,20 @@
         }
 
         .search-icon {
-            display: flex;
+            margin-left: 5px;
+
+            button{
+                width: 40px;
+                height: 40px;
+                background-color: $color-accent;
+                border-radius: 50%;
+                border: none;
+
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+            }
         }
 
         a {
@@ -62,6 +76,7 @@
                 saturate(0%) hue-rotate(161deg) brightness(103%) contrast(102%);
         }
     }
+
 
     .news-group {
         width: 100%;
@@ -229,6 +244,4 @@
     }
 }
 @media screen and (min-width: 425px) and (max-width: 768px) {
-    .searchbar {
-    }
 }

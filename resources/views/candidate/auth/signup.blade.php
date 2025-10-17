@@ -34,9 +34,9 @@
             </div>
             <div class="wrapper-field">
                 <div class="wrapper-input">
-                    <label for="email">Fullname</label>
-                    <input type="email" name="email" id="email" placeholder="Raihan Rizky Sugiharto" minlength="8"
-                        value="{{ old('email') }}" required>
+                    <label for="fullname">Fullname</label>
+                    <input type="fullname" name="fullname" id="fullname" placeholder="Raihan Rizky Sugiharto" minlength="8"
+                        value="{{ old('fullname') }}" required>
                 </div>
                 <div class="wrapper-input">
                     <label for="email">Email</label>

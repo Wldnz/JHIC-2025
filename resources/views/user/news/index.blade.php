@@ -4,21 +4,25 @@
 
 @include('_components._header', 
 [
-    'title' => 'lorem | SMK Bina Informatika',
+    'title' => 'News | SMK Bina Informatika',
     'description' => '',
-    'keywords' => 'SMK, SMK Bina Informatika, teknologi, informatika, sekolah',
+    'keywords' => 'SMK, SMK Bina Informatika, teknologi, informatika, sekolah, berita, news, article',
     ])
  <div class="news">
         <h2>BI NEWS</h2>
 
-        <div class="searchbar">
-            <input type="text" id="input-search" placeholder="Cari Berita..." value="{{ request('search', '') }}">
+        <form class="searchbar">
+            <input type="text" id="input-search" name="search" placeholder="Cari Berita..." value="{{ request('search') }}">
             <div class="search-icon">
-                <a href="{{ route('user.news', ['search' => request('search', '')]) }}" id="button-search">
-                    <img src="{{ asset("icons/search-icon.svg") }}" alt="">
-                </a>
+                <button
+                    type="submit" 
+                    class="button-search"
+                >
+                <img src="{{ asset('icons/search-icon.svg') }}" alt="Search">
+                </button>
             </div>
-        </div>
+        </form>
+        
         <div class="news-group">
             @foreach ($articles as $article)
             <a href="{{ route('user.news-detail', ['article' => $article]) }}">
