@@ -23,20 +23,31 @@
 
         h1
         {
-            font-size: 10vw;
-            color: dimgray;
+            font-size: 5vw;
+            filter: brightness(0) saturate(100%) invert(17%) sepia(56%) saturate(3428%) hue-rotate(224deg) brightness(91%) contrast(90%);
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
         }
         
         p
         {
             color: dimgray;
-
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
         }
         
         .icon
         {
             width: 10vw;
+            filter: brightness(0) saturate(100%) invert(17%) sepia(56%) saturate(3428%) hue-rotate(224deg) brightness(91%) contrast(90%);
         }
+
+        div
+        {
+           display: flex;
+           flex-direction: column;
+           align-items: center; 
+
+        }
+
     </style>
 </head>
 <body>

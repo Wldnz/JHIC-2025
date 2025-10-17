@@ -4,6 +4,7 @@
 
 // element
 
+
 img{
     font-size: 14px;
 }
@@ -13,12 +14,12 @@ img{
 .wrapper-login
 {
     width: 100vw;
-    height: 100dvh;
-    overflow: hidden;
+    height: 110dvh;
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
+    padding: 50px 0 0 0;
     
     .login
     {
@@ -87,6 +88,7 @@ img{
                     border: 1px solid $color-accent;
                     border-radius: $border-radius;
                     align-items: center;
+                    padding: 0 5px 0 0;
                     
                     input
                     {
@@ -94,7 +96,7 @@ img{
                         width: 90%;
                     }
 
-                    img{width: 10%; padding:7px; cursor: pointer; filter: brightness(0) saturate(100%) invert(17%) sepia(56%) saturate(3428%) hue-rotate(224deg) brightness(91%) contrast(90%);}
+                    img{cursor: pointer; filter: brightness(0) saturate(100%) invert(17%) sepia(56%) saturate(3428%) hue-rotate(224deg) brightness(91%) contrast(90%);}
 
                     .hide{display: none;}
                 }
@@ -223,6 +225,26 @@ img{
                 }
             }
         }
+    }
+}
+
+.navi-login
+{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    height: 30px;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    
+    img
+    {
+        height: 100%;
+        width: auto;
+        object-fit: contain;
     }
 }
 
