@@ -46,8 +46,13 @@
             ]
         ]
 @endphp
-@include('_components._header', ['title' => 'product'])
-<div class="majors no-fade">
+@include('_components._header', 
+[
+    'title' => 'Broadcast | SMK Bina Informatika',
+    'description' => 'SMK Bina informatika | Jurusan broadcasting (penyiaran) mempelajari proses produksi dan penyiaran konten melalui berbagai media seperti radio, televisi, dan platform digital. Mahasiswa akan belajar keterampilan teknis dan kreatif, mulai dari perencanaan, pengambilan gambar, penulisan naskah, hingga pengeditan dan penyiaran. Lulusannya bisa bekerja sebagai penyiar, produser, editor video, atau konten kreator di berbagai industri media.',
+    'keywords' => 'jurusan BC, Broadcasting, SMK Bina Informatika Bintaro, jurusan penyiaran, media, podcast, produksi video, editing, videografi, perfilman, jurnalisme, komunikasi massa, sekolah broadcasting Bintaro',
+    ])
+    <div class="majors no-fade">
       <div class="main">
         <img src="{{ $major->banner }}" alt="">
         <h1>{{ $major->name }}</h1>

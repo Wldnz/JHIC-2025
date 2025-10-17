@@ -16,6 +16,8 @@ body {
 
 ::selection {
   background: linear-gradient(135deg, #0fcbbc 0%, #5f77f7 41%, #8780fc 62%, #a387ff 100%);
+  background: dimgrey;
+  color: #fff;
   filter: none;
 }
 ::selection:hover {
@@ -99,6 +101,27 @@ img {
     rotate: 360deg;
   }
 }
+@keyframes show-the-options-menu {
+  0% {
+    min-height: 180px;
+    overflow: hidden;
+  }
+  100% {
+    min-height: 120px;
+    overflow: initial;
+  }
+}
+@keyframes close-the-options-menu {
+  100% {
+    min-height: 120px;
+    overflow: hidden;
+  }
+  100% {
+    height: 0;
+    opacity: 0.4;
+    overflow: initial;
+  }
+}
 @media screen and (min-width: 98px) {
   .navigation-side {
     width: inherit !important;
@@ -113,6 +136,8 @@ body {
 
 ::selection {
   background: linear-gradient(135deg, #0fcbbc 0%, #5f77f7 41%, #8780fc 62%, #a387ff 100%);
+  background: dimgrey;
+  color: #fff;
   filter: none;
 }
 
@@ -160,6 +185,8 @@ body {
 
 ::selection {
   background: linear-gradient(135deg, #0fcbbc 0%, #5f77f7 41%, #8780fc 62%, #a387ff 100%);
+  background: dimgrey;
+  color: #fff;
   filter: none;
 }
 ::selection:hover {
@@ -332,6 +359,8 @@ body {
 
 ::selection {
   background: linear-gradient(135deg, #0fcbbc 0%, #5f77f7 41%, #8780fc 62%, #a387ff 100%);
+  background: dimgrey;
+  color: #fff;
   filter: none;
 }
 ::selection:hover {
@@ -413,6 +442,27 @@ img {
 @keyframes rotate-y-360 {
   100% {
     rotate: 360deg;
+  }
+}
+@keyframes show-the-options-menu {
+  0% {
+    min-height: 180px;
+    overflow: hidden;
+  }
+  100% {
+    min-height: 120px;
+    overflow: initial;
+  }
+}
+@keyframes close-the-options-menu {
+  100% {
+    min-height: 120px;
+    overflow: hidden;
+  }
+  100% {
+    height: 0;
+    opacity: 0.4;
+    overflow: initial;
   }
 }
 @media screen and (min-width: 98px) {
@@ -824,6 +874,14 @@ img {
   animation: closeSidebarCandidate 800ms forwards;
 }
 
+.open-media-menu {
+  animation: show-the-options-menu 200ms forwards;
+}
+
+.close-media-menu {
+  animation: close-the-options-menu 800ms forwards;
+}
+
 .button-submit-form {
   display: flex;
   padding: 10px;
@@ -967,6 +1025,8 @@ body {
 
 ::selection {
   background: linear-gradient(135deg, #0fcbbc 0%, #5f77f7 41%, #8780fc 62%, #a387ff 100%);
+  background: dimgrey;
+  color: #fff;
   filter: none;
 }
 ::selection:hover {
@@ -1101,6 +1161,8 @@ body {
 
 ::selection {
   background: linear-gradient(135deg, #0fcbbc 0%, #5f77f7 41%, #8780fc 62%, #a387ff 100%);
+  background: dimgrey;
+  color: #fff;
   filter: none;
 }
 ::selection:hover {
@@ -1192,6 +1254,8 @@ body {
 
 ::selection {
   background: linear-gradient(135deg, #0fcbbc 0%, #5f77f7 41%, #8780fc 62%, #a387ff 100%);
+  background: dimgrey;
+  color: #fff;
   filter: none;
 }
 ::selection:hover {
@@ -1244,6 +1308,8 @@ body {
 
 ::selection {
   background: linear-gradient(135deg, #0fcbbc 0%, #5f77f7 41%, #8780fc 62%, #a387ff 100%);
+  background: dimgrey;
+  color: #fff;
   filter: none;
 }
 ::selection:hover {
@@ -1475,8 +1541,9 @@ body {
 }
 
 ::selection {
-  background-color: transparent;
-  color: rgb(0, 0, 156);
+  background: linear-gradient(135deg, #0fcbbc 0%, #5f77f7 41%, #8780fc 62%, #a387ff 100%);
+  background: dimgrey;
+  color: #fff;
   filter: none;
 }
 ::selection:hover {
@@ -2072,7 +2139,6 @@ body .wrapper-user .dashboard .banner .center .sliding-banner {
   gap: 10px;
 }
 body .wrapper-user .dashboard .banner .center .sliding-banner .banner-content {
-  background-color: #000;
   scroll-snap-align: start;
   color: #fff;
   object-fit: contain;
@@ -2080,9 +2146,6 @@ body .wrapper-user .dashboard .banner .center .sliding-banner .banner-content {
   width: 100%;
   height: 100%;
   position: relative;
-}
-body .wrapper-user .dashboard .banner .center .sliding-banner .banner-content:nth-child(1) {
-  background-color: transparent;
 }
 body .wrapper-user .dashboard .banner .center .sliding-banner .banner-content .img {
   position: absolute;

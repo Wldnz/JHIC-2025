@@ -4,49 +4,49 @@
     $newscontent =
         [
             [
-                asset("images/banner1/bg.png"),
-                asset("images/banner1/asset1.png"),
-                asset("images/banner1/asset2.png"),
-                asset("images/banner1/asset3.png"),
-                asset("images/banner1/asset4.png"),
-                asset("images/banner1/asset5.png"),
-                asset("images/banner1/asset6.png")
+                asset("images/dashboard/banner1/bg.png"),
+                asset("images/dashboard/banner1/asset1.png"),
+                asset("images/dashboard/banner1/asset2.png"),
+                asset("images/dashboard/banner1/asset3.png"),
+                asset("images/dashboard/banner1/asset4.png"),
+                asset("images/dashboard/banner1/asset5.png"),
+                asset("images/dashboard/banner1/asset6.png")
             ],
             [
-                asset("images/banner2/bg.png"),
-                asset("images/banner2/asset1.png"),
-                asset("images/banner2/asset2.png"),
-                asset("images/banner2/asset3.png"),
-                asset("images/banner2/asset4.png"),
-                asset("images/banner2/asset5.png"),
-                asset("images/banner2/asset6.png")
+                asset("images/dashboard/banner2/bg.png"),
+                asset("images/dashboard/banner2/asset1.png"),
+                asset("images/dashboard/banner2/asset2.png"),
+                asset("images/dashboard/banner2/asset3.png"),
+                asset("images/dashboard/banner2/asset4.png"),
+                asset("images/dashboard/banner2/asset5.png"),
+                asset("images/dashboard/banner2/asset6.png")
             ],
             [
-                asset("images/banner2/bg.png"),
-                asset("images/banner2/asset1.png"),
-                asset("images/banner2/asset2.png"),
-                asset("images/banner2/asset3.png"),
-                asset("images/banner2/asset4.png"),
-                asset("images/banner2/asset5.png"),
-                asset("images/banner2/asset6.png")
+                asset("images/dashboard/banner3/bg.png"),
+                asset("images/dashboard/banner3/asset1.png"),
+                asset("images/dashboard/banner3/asset2.png"),
+                asset("images/dashboard/banner3/asset3.png"),
+                asset("images/dashboard/banner3/asset4.png"),
+                asset("images/dashboard/banner3/asset5.png"),
+                asset("images/dashboard/banner3/asset6.png")
             ],
             [
-                asset("images/banner2/bg.png"),
-                asset("images/banner2/asset1.png"),
-                asset("images/banner2/asset2.png"),
-                asset("images/banner2/asset3.png"),
-                asset("images/banner2/asset4.png"),
-                asset("images/banner2/asset5.png"),
-                asset("images/banner2/asset6.png")
+                asset("images/dashboard/banner4/bg.png"),
+                asset("images/dashboard/banner4/asset1.png"),
+                asset("images/dashboard/banner4/asset2.png"),
+                asset("images/dashboard/banner4/asset3.png"),
+                asset("images/dashboard/banner4/asset4.png"),
+                asset("images/dashboard/banner4/asset5.png"),
+                asset("images/dashboard/banner4/asset6.png")
             ],
             [
-                asset("images/banner2/bg.png"),
-                asset("images/banner2/asset1.png"),
-                asset("images/banner2/asset2.png"),
-                asset("images/banner2/asset3.png"),
-                asset("images/banner2/asset4.png"),
-                asset("images/banner2/asset5.png"),
-                asset("images/banner2/asset6.png")
+                asset("images/dashboard/banner5/bg.png"),
+                asset("images/dashboard/banner5/asset1.png"),
+                asset("images/dashboard/banner5/asset2.png"),
+                asset("images/dashboard/banner5/asset3.png"),
+                asset("images/dashboard/banner5/asset4.png"),
+                asset("images/dashboard/banner5/asset5.png"),
+                asset("images/dashboard/banner5/asset6.png")
             ],
         ];
 
@@ -118,7 +118,13 @@
             'Ruangan B1' => asset("images/kelas king/b1.svg"),
         ];
 @endphp
-@include('_components._header', ['title' => 'product'])
+@include('_components._header', 
+[
+    'title' => 'SMK Bina Informatika',
+    'description' => 'SMK Bina informatika | website sekolah smk bina informatika bintaro',
+    'keywords' => 'SMK, SMK Bina Informatika, SMK Bina Informatika Bintaro, sekolah kejuruan, sekolah teknologi, sekolah informatika, pendidikan vokasi, sekolah IT, jurusan RPL, Rekayasa Perangkat Lunak, jurusan TKJ, Teknik Komputer dan Jaringan, jurusan BC, Broadcasting, jurusan GMDV, Graphic Media Design and Visual, jurusan DKV, Desain Komunikasi Visual, jurusan Anim, Animasi, sekolah desain, sekolah animasi, sekolah grafis, sekolah multimedia, sekolah terbaik di Bintaro, SMK IT Bintaro, SMK desain Bintaro, SMK animasi Bintaro'
+    ])
+
 <div class="dashboard no-fade">
     <div class="banner">
         <div class="trinkets star-group star-group-1 no-fade">

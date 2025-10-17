@@ -47,7 +47,12 @@
       ]
   ]
 @endphp
-@include('_components._header', ['title' => 'product'])
+@include('_components._header', 
+[
+    'title' => 'IT Network | SMK Bina Informatika',
+    'description' => 'SMK Bina informatika | Jurusan TKJ adalah singkatan dari Teknik Komputer dan Jaringan, sebuah program keahlian di Sekolah Menengah Kejuruan (SMK) yang berfokus pada bidang Teknologi Informasi dan Komunikasi (TIK). Siswa mempelajari cara merakit, mengelola, dan memperbaiki komputer, serta merancang, membangun, mengamankan, dan mengadministrasikan jaringan komputer (seperti LAN, WAN, dan Wi-Fi). ',
+    'keywords' => 'jurusan TKJ, Teknik Komputer dan Jaringan, SMK Bina Informatika Bintaro, jaringan komputer, server, mikrotik, komputer, perakitan PC, administrator jaringan, SMK teknik komputer, SMK IT Bintaro, jurusan jaringan terbaik',
+    ])
 <div class="majors no-fade">
   <div class="main">
     <img src="{{ $major->banner }}" alt="">

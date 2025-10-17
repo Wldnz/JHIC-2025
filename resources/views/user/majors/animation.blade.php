@@ -45,8 +45,13 @@
       ]
   ]
 @endphp
-@include('_components._header', ['title' => 'product'])
-<div class="majors no-fade">
+@include('_components._header', 
+[
+    'title' => 'Animation | SMK Bina Informatika',
+    'description' => 'SMK Bina informatika | Jurusan animasi adalah bidang studi yang mempelajari cara membuat gambar bergerak, baik dalam bentuk 2D maupun 3D, untuk berbagai media seperti film, gim, dan iklan. Mahasiswa akan mempelajari dasar menggambar, pembuatan storyboard, penulisan skenario, teknik animasi digital, hingga aspek audio seperti efek suara dan pengisian suara. Beberapa universitas memiliki jurusan ini secara mandiri, sementara yang lain masih tergabung dalam program studi Desain Komunikasi Visual (DKV).  ',
+    'keywords' => 'jurusan Animasi, Anim, SMK Bina Informatika Bintaro, animasi 2D, animasi 3D, sekolah animasi, digital art, motion graphics, ilustrasi animasi, multimedia, animator, SMK animasi terbaik, sekolah animasi Bintaro',
+    ])
+    <div class="majors no-fade">
   <div class="main">
     <img src="{{ $major->banner }}" alt="">
     <h1>{{ $major->name }}</h1>
