@@ -36,8 +36,10 @@
         <img src="{{ $article->thumbnail_url }}" alt="thumbnail-image">
     </div>
 
+    <div class="news-content" id="loading-viewer">
+        <span>Sedang Menarik Data...</span>
+    </div>
     <div class="news-content" id="viewer">
-        <p>Please wait....</p>
     </div>
 </div>
 
