@@ -190,6 +190,7 @@ class StageController extends Controller
 
         try {
             $candidate = Candidate::factory()->create([
+                'nisn' => $validated['nisn'],
                 'user_id' => $user->id,
                 'full_name' => $user->fullname,
             ]);

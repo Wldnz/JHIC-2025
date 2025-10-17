@@ -602,12 +602,11 @@ img {
   align-items: center;
 }
 .wrapper-login .login .wrapper-field .wrapper-input .password input {
+  background-color: #181818;
   border: none;
-  width: 90%;
+  width: 70%;
 }
 .wrapper-login .login .wrapper-field .wrapper-input .password img {
-  width: 10%;
-  padding: 7px;
   cursor: pointer;
   filter: brightness(0) saturate(100%) invert(17%) sepia(56%) saturate(3428%) hue-rotate(224deg) brightness(91%) contrast(90%);
 }
