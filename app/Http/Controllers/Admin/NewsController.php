@@ -159,7 +159,7 @@ class NewsController extends Controller
     {
         $validated = $request->validated();
         DB::beginTransaction();
-        dd($request);
+
         try {
             $thumbnailUrl = $news->thumbnail_url;
 
