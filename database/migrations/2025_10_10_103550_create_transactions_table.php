@@ -17,6 +17,8 @@ return new class extends Migration
             $table->foreignId('user_id')->nullable()->constrained('users')->nullOnDelete();
             $table->string('candidate_full_name', 255);
             $table->string('user_email', 255);
+            $table->text('snap_id')->nullable();
+            $table->text('snap_url')->nullable();
             $table->foreignId('payment_method_id')->nullable()->constrained('payment_methods')->nullOnDelete();
             $table->string('payment_method_display_name', 100);
             $table->integer('total_cost');

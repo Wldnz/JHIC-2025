@@ -25,6 +25,7 @@ return new class extends Migration
             $table->timestamps();
 
             $table->fullText('title');
+            $table->fullText('description');
             $table->fullText('written_by');
         });
     }

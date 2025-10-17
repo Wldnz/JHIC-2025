@@ -50,16 +50,16 @@ class TransactionSeeder extends Seeder
                 $transaction = Transaction::create([
                     'candidate_nisn' => $candidate->nisn,
                     'user_id' => $candidate->user_id,
-                    'user_email' => $candidate->user->email,
                     'candidate_full_name' => $candidate->full_name,
+                    'user_email' => $candidate->user->email,
                     'payment_method_id' => $paymentMethod->id,
                     'payment_method_display_name' => $paymentMethod->display_name,
                     'total_cost' => 5_787_900,
-                    'type' => fake()->randomElement(['usm','form']),
                     'expired_at' => now()->addHours(rand(12, 24)),
                     'status' => $haveSuccessTransaction ?
                         fake()->randomElement($this->availableStatusesWithoutSuccess) :
                         fake()->randomElement($this->availableStatuses),
+                    'type' => fake()->randomElement(['form', 'usm']),
                 ]);
 
                 if (!$haveSuccessTransaction && $transaction->status == 'settlement') {

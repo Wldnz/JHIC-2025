@@ -72,7 +72,7 @@ class CandidateDocumentSeeder extends Seeder
                 'mime_types' => 'application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document',
             ],
         ];
-        $candidates = Candidate::query()->inRandomOrder()->limit(10)->get();
+        $candidates = Candidate::query()->with('registrationPhase')->inRandomOrder()->limit(10)->get();
 
         foreach ($candidates as $candidate) {
             $randomRequiredDocuments = fake()->randomElements($requiredDocuments, fake()->numberBetween(1, count($requiredDocuments)));

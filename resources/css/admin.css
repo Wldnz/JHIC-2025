@@ -184,6 +184,23 @@ img {
     display: none;
   }
 }
+@keyframes openSidebarCandidate {
+  0% {
+    height: 0;
+  }
+  100% {
+    height: 100%;
+  }
+}
+@keyframes closeSidebarCandidate {
+  0% {
+    height: 100%;
+  }
+  100% {
+    height: 0;
+    display: none;
+  }
+}
 @keyframes line-break {
   100% {
     width: 100%;
@@ -192,6 +209,11 @@ img {
 @keyframes rotate-y-360 {
   100% {
     rotate: 360deg;
+  }
+}
+@media screen and (min-width: 98px) {
+  .navigation-side {
+    width: inherit !important;
   }
 }
 @media screen and (min-width: 98px) {
@@ -466,6 +488,23 @@ img {
     display: none;
   }
 }
+@keyframes openSidebarCandidate {
+  0% {
+    height: 0;
+  }
+  100% {
+    height: 100%;
+  }
+}
+@keyframes closeSidebarCandidate {
+  0% {
+    height: 100%;
+  }
+  100% {
+    height: 0;
+    display: none;
+  }
+}
 @keyframes line-break {
   100% {
     width: 100%;
@@ -474,6 +513,11 @@ img {
 @keyframes rotate-y-360 {
   100% {
     rotate: 360deg;
+  }
+}
+@media screen and (min-width: 98px) {
+  .navigation-side {
+    width: inherit !important;
   }
 }
 @media screen and (min-width: 98px) {
@@ -785,6 +829,23 @@ img {
     display: none;
   }
 }
+@keyframes openSidebarCandidate {
+  0% {
+    height: 0;
+  }
+  100% {
+    height: 100%;
+  }
+}
+@keyframes closeSidebarCandidate {
+  0% {
+    height: 100%;
+  }
+  100% {
+    height: 0;
+    display: none;
+  }
+}
 @keyframes line-break {
   100% {
     width: 100%;
@@ -793,6 +854,11 @@ img {
 @keyframes rotate-y-360 {
   100% {
     rotate: 360deg;
+  }
+}
+@media screen and (min-width: 98px) {
+  .navigation-side {
+    width: inherit !important;
   }
 }
 @media screen and (min-width: 98px) {
@@ -867,8 +933,19 @@ img {
 .wrapper-login {
   width: 100vw;
   height: 100dvh;
+.wrapper-login {
+  width: 100vw;
+  height: 100dvh;
   overflow: hidden;
   display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.wrapper-login .login {
+  max-height: 90vh;
+  width: 80%;
+  aspect-ratio: 1/1;
+  max-width: unset;
   align-items: center;
   justify-content: center;
   position: relative;
@@ -877,6 +954,16 @@ img {
   width: 80%;
   max-width: unset;
   background-color: #fff;
+  align-self: center;
+  padding: 40px;
+  border-radius: 16px;
+  box-shadow: 0 0 10px #273b98;
+}
+.wrapper-login .login .title h4 {
+  font-size: clamp(0.6rem, 4.5vw, 3rem);
+}
+.wrapper-login .login .title p {
+  font-size: clamp(0.6rem, 3.5vw, 2rem);
   align-self: center;
   padding: 20px;
   border-radius: 16px;
@@ -902,16 +989,28 @@ img {
   font-size: clamp(0.6rem, 3.5vw, 2rem);
 }
 .wrapper-login .login .wrapper-field {
+  margin-top: 30px;
+.wrapper-login .login .wrapper-field {
   margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  gap: 10px;
+}
+.wrapper-login .login .wrapper-field .wrapper-input {
+.wrapper-login .login .wrapper-field .wrapper-input {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
-.wrapper-login .login .wrapper-field .wrapper-input {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
+.wrapper-login .login .wrapper-field .wrapper-input label {
+  font-size: clamp(0.6rem, 4vw, 2.5rem);
 }
+.wrapper-login .login .wrapper-field .wrapper-input input {
+  padding: 20px 10px;
+  font-size: clamp(0.6rem, 3.5vw, 2rem) !important;
+  border-radius: 8px;
+  border: 2px solid #273b98;
 .wrapper-login .login .wrapper-field .wrapper-input label {
   font-size: clamp(0.6rem, 4vw, 2.5rem);
 }
@@ -923,13 +1022,69 @@ img {
   color: #273b98;
 }
 .wrapper-login .login .wrapper-field .wrapper-input input:focus {
+  border: 2px solid #273b98;
+}
+.wrapper-login .login .wrapper-field .wrapper-input input:focus {
   outline: none;
+}
+.wrapper-login .login .wrapper-field .buttons button {
+  font-size: clamp(0.6rem, 3.5vw, 2rem);
+  font-weight: 400;
+  padding: 40px;
 }
 .wrapper-login .login .wrapper-field .wrapper-input .password {
   display: flex;
   border: 1px solid #273b98;
   border-radius: 8px;
   align-items: center;
+}
+.wrapper-login .login .wrapper-field .footers .link a {
+  font-size: clamp(0.6rem, 3.5vw, 2rem);
+}
+
+@media only screen and (min-width: 425px) {
+  .wrapper-login .login {
+    max-width: 50vw;
+  }
+  .wrapper-login .login .title h4 {
+    font-size: clamp(0.6rem, 3.5vw, 2rem);
+  }
+  .wrapper-login .login .title p {
+    font-size: clamp(0.6rem, 2vw, 1.5rem);
+  }
+  .wrapper-login .login .wrapper-field {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+  .wrapper-login .login .wrapper-field .wrapper-input {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .wrapper-login .login .wrapper-field .wrapper-input label {
+    font-size: clamp(0.6rem, 2vw, 1.5rem);
+  }
+  .wrapper-login .login .wrapper-field .wrapper-input input {
+    padding: 20px 10px;
+    font-size: clamp(0.6rem, 2vw, 1.5rem) !important;
+    border-radius: 8px;
+    border: 2px solid #273b98;
+    color: #273b98;
+  }
+  .wrapper-login .login .wrapper-field .wrapper-input input:focus {
+    border: 2px solid #273b98;
+    outline: none;
+  }
+  .wrapper-login .login .wrapper-field .buttons button {
+    font-size: clamp(0.6rem, 3.5vw, 2rem);
+    font-weight: 400;
+    padding: 40px;
+  }
+  .wrapper-login .login .wrapper-field .footers .link a {
+    font-size: clamp(0.6rem, 3.5vw, 2rem);
+  }
 }
 .wrapper-login .login .wrapper-field .wrapper-input .password input {
   border: none;
@@ -1194,6 +1349,14 @@ img {
 
 .close-sidebar {
   animation: closeSidebar 200ms forwards;
+}
+
+.open-sidebar-candidate {
+  animation: openSidebarCandidate 800ms forwards;
+}
+
+.close-sidebar-candidate {
+  animation: closeSidebarCandidate 800ms forwards;
 }
 
 .open-sidebar-candidate {

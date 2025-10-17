@@ -21,6 +21,8 @@ return new class extends Migration
             $table->string('registration_source', 255);
             $table->text('enrolling_reason');
             $table->timestamps();
+
+            $table->foreign('candidate_nisn')->references('nisn')->on('candidates')->cascadeOnDelete();
         });
     }
 
