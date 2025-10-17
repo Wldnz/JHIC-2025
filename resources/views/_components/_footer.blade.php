@@ -46,7 +46,7 @@
     </div>
 
     <div class="copyright">
-        <p>Copyright Fazbear Entertainment 2025. All&nbsp;Rights&nbsp;Reserved</p>
+        <p>Copyright SMK Bina Informatika 2025. All&nbsp;Rights&nbsp;Reserved</p>
         <div class="logo">
             <img src="{{ asset("icons/logo-sponsor.png") }}" alt="">
         </div>
