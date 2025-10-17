@@ -26,6 +26,7 @@
 
             <div class="wrapper-content wrapper-content-action">
                 <div id="editor"></div>
+                <span id="loading-editor">Sedang Menarik Isi Konten Artikel..</span>
             </div>
         </div>
     </div>
@@ -89,16 +90,25 @@
     let keywords = @json(old('tags', $article->keywords ?? []));
     const defaultImage = @js($article->thumbnail_url ?? asset('images/default.png'));
     
-    if (!defaultContent) {
-        const xhr = new XMLHttpRequest();
-        xhr.open('GET', @js(route('user.news-content', ['article' => $article])), true);
-        xhr.onload = function () {
-            if (xhr.status === 200) {
-                defaultContent = xhr.responseText;
-            }
-        };
-        xhr.send();
-    }
+    const setDefaultContent = (editor) => {
+        const editorWrapper = document.getElementById('editor');
+        const loadingEditor = document.getElementById('loading-editor');
+        editorWrapper.style.display = 'none';
+        if(defaultContent){
+            editor.setMarkdown(defaultContent);
+            return;
+        }
+        fetch("{{ route('user.news-content', ['article' => $article]) }}")
+        .then(e => e.text())
+        .then(text => {
+            editor.setMarkdown(text);
+        })
+        .finally(() => {
+            editorWrapper.style.display = 'block';
+            loadingEditor.style.display = 'none';
+        })
+        .catch(error => console.error(error));
+    };
 </script>
 
 @include('_components._footerAdmin')
