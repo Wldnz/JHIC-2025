@@ -11,8 +11,9 @@ body {
 }
 
 ::selection {
-  background-color: transparent;
-  color: rgb(0, 0, 156);
+  background: linear-gradient(135deg, #0fcbbc 0%, #5f77f7 41%, #8780fc 62%, #a387ff 100%);
+  background: dimgrey;
+  color: #fff;
   filter: none;
 }
 ::selection:hover {
@@ -57,8 +58,9 @@ body {
 }
 
 ::selection {
-  background-color: transparent;
-  color: rgb(0, 0, 156);
+  background: linear-gradient(135deg, #0fcbbc 0%, #5f77f7 41%, #8780fc 62%, #a387ff 100%);
+  background: dimgrey;
+  color: #fff;
   filter: none;
 }
 ::selection:hover {
@@ -155,8 +157,9 @@ body {
 }
 
 ::selection {
-  background-color: transparent;
-  color: rgb(0, 0, 156);
+  background: linear-gradient(135deg, #0fcbbc 0%, #5f77f7 41%, #8780fc 62%, #a387ff 100%);
+  background: dimgrey;
+  color: #fff;
   filter: none;
 }
 
@@ -203,8 +206,9 @@ body {
 }
 
 ::selection {
-  background-color: transparent;
-  color: rgb(0, 0, 156);
+  background: linear-gradient(135deg, #0fcbbc 0%, #5f77f7 41%, #8780fc 62%, #a387ff 100%);
+  background: dimgrey;
+  color: #fff;
   filter: none;
 }
 ::selection:hover {
@@ -376,8 +380,9 @@ body {
 }
 
 ::selection {
-  background-color: transparent;
-  color: rgb(0, 0, 156);
+  background: linear-gradient(135deg, #0fcbbc 0%, #5f77f7 41%, #8780fc 62%, #a387ff 100%);
+  background: dimgrey;
+  color: #fff;
   filter: none;
 }
 ::selection:hover {
@@ -1073,7 +1078,7 @@ a {
 nav {
   z-index: 999;
   width: 100vw;
-  height: 15%;
+  height: 80px;
   top: 0;
   position: fixed;
   padding: 10px;
@@ -1085,9 +1090,11 @@ nav .img-wrapper.logo {
   display: flex;
   justify-content: start;
   padding: 10px;
+  background-color: #0fcbbc;
 }
 nav .img-wrapper.logo img {
-  width: auto;
+  width: max-content;
+  aspect-ratio: auto;
   height: 100%;
 }
 nav .img-wrapper.burger-icon {
@@ -1095,6 +1102,7 @@ nav .img-wrapper.burger-icon {
   display: flex;
   padding: 10px;
   justify-content: end;
+  background-color: #485bb1;
 }
 nav .img-wrapper.burger-icon img {
   height: 100%;
@@ -1119,7 +1127,7 @@ nav .img-wrapper.burger-icon img {
 .navbar-full .header {
   display: flex;
   padding: 10px;
-  height: 15%;
+  height: 80px;
   width: 100%;
 }
 .navbar-full .header .img-wrapper.logo {
@@ -1129,7 +1137,8 @@ nav .img-wrapper.burger-icon img {
   padding: 10px;
 }
 .navbar-full .header .img-wrapper.logo img {
-  width: auto;
+  width: max-content;
+  aspect-ratio: auto;
   height: 100%;
 }
 .navbar-full .header .img-wrapper.close-icon {
@@ -1245,6 +1254,8 @@ nav .img-wrapper.burger-icon img {
 }
 .wrapper-candidate .dashboard .body .cards-wrapper .card img {
   width: 80%;
+  aspect-ratio: 1/1;
+  object-fit: contain;
 }
 .wrapper-candidate .dashboard .body .cards-wrapper .card .wrapper-border {
   width: 100%;
@@ -1255,6 +1266,7 @@ nav .img-wrapper.burger-icon img {
   border-radius: 6px;
   height: calc(1em + 40px);
   pointer-events: none;
+  cursor: not-allowed;
 }
 .wrapper-candidate .dashboard .body .cards-wrapper .card .wrapper-border a {
   background-color: #767676;
@@ -1270,7 +1282,9 @@ nav .img-wrapper.burger-icon img {
   position: relative;
 }
 .wrapper-candidate .dashboard .body .cards-wrapper .card.enabled .wrapper-border {
+  pointer-events: unset;
   background: linear-gradient(135deg, #0fcbbc 0%, #5f77f7 41%, #8780fc 62%, #a387ff 100%);
+  cursor: pointer;
 }
 .wrapper-candidate .dashboard .body .cards-wrapper .card.enabled .wrapper-border a {
   background-color: #fff;

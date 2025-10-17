@@ -75,21 +75,36 @@
                         </div>
                     </div>
                 </a>
-                <form class="floating-action"
-                    action="{{ route('admin.delete-portfolio', ['portfolio' => $portfolio->id]) }}"
-                    method="POST"
-                    id="media-floating-icon"
-                >
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="action">
-                        @include('_components._sprite-icons', [
-                            'name' => 'trash',
-                            'size' => 20,
-                        ])
-                        <span>Delete Portfolio</span>
-                    </button>
-                </form>
+                <div class="floating-action">
+                    <a class="action action-detail btn-action"
+                        href="{{ route('admin.detail-portfolio', ['portfolio' => $portfolio->id]) }}"
+                    >
+                       <button class="btn-action" type="button">
+                            @include('_components._sprite-icons', [
+                                'name' => 'eye',
+                                'color' => 'white',
+                                'size' => 20,
+                            ])
+                            <span>Detail Portfolio</span>
+                       </button>
+                    </a>
+                    <form class="action"
+                        action="{{ route('admin.delete-portfolio', ['portfolio' => $portfolio->id]) }}"
+                        method="POST"
+                        id="action-delete"
+                    >
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn-action">
+                            @include('_components._sprite-icons', [
+                                'name' => 'trash',
+                                'color' => 'white',
+                                'size' => 20,
+                            ])
+                            <span>Delete Portfolio</span>
+                        </button>
+                    </form>
+                </div>
             </div>
             @endforeach
         </div>

@@ -43,8 +43,7 @@
                 <div class="card-content">
                     <div class="wrapper-tags">
                         <label for="keyword">Kata Kunci <span>*</span></label>
-                        <div class="tags" id="tags-tag">
-                        </div>
+                        <div class="tags" id="tags-tag"></div>
                     </div>
                     <div class="wrapper-input">
                         <label for="date">Dibuat Pada</label>
@@ -70,10 +69,7 @@
                             @endforeach
                         </select>
                     </div>
-
-                    <div class="wrapper-hidden" id="tags_sender">
-
-                    </div>
+                    <div class="wrapper-hidden" id="tags_sender"></div>
                 </div>
                 <button type="button" class="btn btn-media" id="btn-submit-news">
                     Tambahkan Artikel
@@ -83,17 +79,16 @@
     </div>
 </form>
 
-@vite(['resources/js/handle/save-media.js', 'resources/js/handle/article.js'])
 
 <script defer>
     const thumbnail = document.getElementById('thumbnail_image');
     const image = document.getElementById('thumbnail');
     let prev_filelist = null;
-
+    
     let defaultContent = @js(old('content', ''));
-    let keywords = @json(old('tags', $article->keywords));
+    let keywords = @json(old('tags', $article->keywords ?? []));
     const defaultImage = @js($article->thumbnail_url ?? asset('images/default.png'));
-
+    
     if (!defaultContent) {
         const xhr = new XMLHttpRequest();
         xhr.open('GET', @js(route('user.news-content', ['article' => $article])), true);
@@ -106,5 +101,7 @@
     }
 </script>
 
-@vite(['resources/js/handle/create-news.js'])
 @include('_components._footerAdmin')
+
+@vite(['resources/js/handle/create-news.js'])
+@vite(['resources/js/handle/save-media.js', 'resources/js/handle/article.js'])
