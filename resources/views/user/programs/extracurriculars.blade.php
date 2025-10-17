@@ -12,7 +12,12 @@
             "English Club" => ["title" => "English Club", "desc" => "bertujuan untuk meningkatkan kemampuan berbahasa Inggris melalui berbagai kegiatan interaktif seperti diskusi, presentasi, debat, dan permainan. Kegiatan ini menjadi wadah bagi siswa untuk berlatih, mengasah kemampuan berbicara, memperluas kosakata, dan meningkatkan kepercayaan diri dalam berbahasa Inggris, sekaligus memperdalam wawasan tentang budaya lain."],
         ]
 @endphp
-@include('_components._header', ['title' => 'product'])
+@include('_components._header', 
+[
+    'title' => 'lorem | smk bina informatika',
+    'description' => '',
+    'keywords' => 'smk, smk bina informatika, teknologi, informatika, sekolah',
+    ])
 <div class="extrac no-fade">
     <div class="main">
         <h1>EXTRACURRICULARS</h1>

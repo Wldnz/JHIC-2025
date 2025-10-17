@@ -2,7 +2,12 @@
     $placeholder = '';
 @endphp
 
-@include('_components._header')
+@include('_components._header', 
+[
+    'title' => $article->title . ' | SMK Bina Informatika',
+    'description' => 'SMK Bina Informatika | ' . $article->description,
+    'keywords' => 'smk, SMK Bina Informatika, teknologi, informatika, sekolah, berita, news, article, important, school',
+    ])
 
 <div class="detail-news">
     <h2>BI NEWS</h2>

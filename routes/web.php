@@ -10,6 +10,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\isLogin;
 use App\Http\Middleware\isAdmin;
 
+Route::get("/404", function () {
+    return view("exceptions.page-404");
+});
+
 // User-side
 Route::name('user.')->group(function () {
     Route::get('/', [User\Controller::class, 'index'])->name('index');

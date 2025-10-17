@@ -2160,7 +2160,6 @@ body .wrapper-user .dashboard .banner .center .sliding-banner {
   gap: 10px;
 }
 body .wrapper-user .dashboard .banner .center .sliding-banner .banner-content {
-  background-color: #000;
   scroll-snap-align: start;
   color: #fff;
   object-fit: contain;
@@ -2168,9 +2167,6 @@ body .wrapper-user .dashboard .banner .center .sliding-banner .banner-content {
   width: 100%;
   height: 100%;
   position: relative;
-}
-body .wrapper-user .dashboard .banner .center .sliding-banner .banner-content:nth-child(1) {
-  background-color: transparent;
 }
 body .wrapper-user .dashboard .banner .center .sliding-banner .banner-content .img {
   position: absolute;

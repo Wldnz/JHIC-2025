@@ -1,7 +1,12 @@
 @php
         $placeholder = "https://www.svgrepo.com/show/508699/landscape-placeholder.svg";
 @endphp
-@include('_components._header', ['title' => 'product'])
+@include('_components._header', 
+[
+    'title' => 'lorem | smk bina informatika',
+    'description' => '',
+    'keywords' => 'smk, smk bina informatika, teknologi, informatika, sekolah',
+    ])
 <div class="vimi no-fade">
     <div class="wrapper no-fade">
         <img src="{{asset("images/profile/bg.png")}}" alt="" class="bg no-fade">

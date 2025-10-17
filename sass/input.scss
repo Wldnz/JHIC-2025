@@ -469,7 +469,6 @@ body {
                         gap: 10px;
 
                         .banner-content {
-                            background-color: #000;
                             scroll-snap-align: start;
                             color: $color-primary;
                             object-fit: contain;
@@ -478,9 +477,6 @@ body {
                             height: 100%;
                             position: relative;
 
-                            &:nth-child(1) {
-                                background-color: transparent;
-                            }
 
                             .img {
                                 position: absolute;
