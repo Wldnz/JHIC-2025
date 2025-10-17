@@ -1364,11 +1364,12 @@ img {
 .news .searchbar {
   display: flex;
   justify-content: center;
+  align-items: center;
   margin-top: 20px;
   margin-left: 20px;
 }
 .news .searchbar input {
-  width: 200px;
+  width: 250px;
   height: 40px;
   border: 3px solid #485bb1;
   border-radius: 50px;
@@ -1380,7 +1381,17 @@ img {
   border: 2px solid #273b98;
 }
 .news .searchbar .search-icon {
+  margin-left: 5px;
+}
+.news .searchbar .search-icon button {
+  width: 40px;
+  height: 40px;
+  background-color: #273b98;
+  border-radius: 50%;
+  border: none;
   display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .news .searchbar a {
   box-sizing: border-box;
@@ -1598,6 +1609,7 @@ img {
 .detail-news .searchbar {
   display: flex;
   justify-content: center;
+  align-items: center;
   margin-top: 20px;
   margin-left: 20px;
 }
@@ -1614,8 +1626,17 @@ img {
   border: 2px solid #273b98;
 }
 .detail-news .searchbar .search-icon {
-  display: flex;
   margin-left: 5px;
+}
+.detail-news .searchbar .search-icon button {
+  width: 40px;
+  height: 40px;
+  background-color: #273b98;
+  border-radius: 50%;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .detail-news .searchbar a {
   box-sizing: border-box;

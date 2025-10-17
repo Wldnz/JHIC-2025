@@ -48,12 +48,12 @@
                 <p>Dengan menekan tombol "Simpan", data yang Anda cantumkan di atas adalah benar dan dapat dipertanggungjawabkan.</p>
                 <div class="w-buttons">
                     <button class="submit-form" type="submit">Simpan Data</button>
-                    <div class="pages">
-                        @if ($isPaid ?? false)
-                            <button class="pagination-action" type="button">Sebelumnya</button>
-                            <button class="pagination-action" type="button">Selanjutnya</button>
-                        @endif
-                    </div>
+                    @if ($isSelectedPhase)
+                        <div class="pages">
+                            <button class="pagination-action" type="button" onclick="location.href='{{ route('candidate.stage2') }}'">Sebelumnya</button>
+                            <button class="pagination-action" type="button" onclick="location.href='{{ route('candidate.stage4') }}'">Selanjutnya</button>
+                        </div>
+                    @endif
                 </div>
             </div>
         </form>

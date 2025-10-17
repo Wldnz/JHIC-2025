@@ -3,6 +3,7 @@ import "@toast-ui/editor/toastui-editor.css";
 
 function getDefaultContent() {
     try {
+        setDefaultContent(editor);
         return defaultContent;
     } catch (error) {
         return "";
@@ -16,7 +17,7 @@ const editor = new Editor({
     initialEditType: "wysiwyg",
     initialValue: getDefaultContent(),
 });
-
+getDefaultContent(editor);
 const form_article = document.getElementById("management-form-news");
 
 form_article
@@ -36,4 +37,4 @@ document
         } else {
             alert("Harap Pastikan Isi Artikel terisi");
         }
-    });
+});
