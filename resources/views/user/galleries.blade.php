@@ -1,7 +1,12 @@
 @php
     $placeholder = "https://www.svgrepo.com/show/508699/landscape-placeholder.svg";
 @endphp
-@include('_components._header', ['title' => 'product'])
+@include('_components._header', 
+[
+    'title' => 'lorem | smk bina informatika',
+    'description' => '',
+    'keywords' => 'smk, smk bina informatika, teknologi, informatika, sekolah',
+    ])
 
 <div class="galleries no-fade">
     <h1>Gallery</h1>

@@ -1214,11 +1214,9 @@ nav .img-wrapper.burger-icon img {
   background-color: #fff;
   border-left: 5px solid #fff;
   align-items: center;
+  cursor: pointer;
   justify-content: space-between;
-}
-.navbar-full .body .nav-menu.active {
-  border-left: 5px solid #273b98;
-  background-color: #eaf7f9;
+  transform: 0.1s;
 }
 .navbar-full .body .nav-menu p {
   display: flex;
@@ -1234,17 +1232,26 @@ nav .img-wrapper.burger-icon img {
 .navbar-full .body .nav-menu img {
   filter: brightness(0) saturate(100%) invert(17%) sepia(56%) saturate(3428%) hue-rotate(224deg) brightness(91%) contrast(90%);
 }
+.navbar-full .body .nav-menu img.active {
+  rotate: 180deg;
+}
+.navbar-full .body .nav-menu.active {
+  border-left: 5px solid #273b98;
+  background-color: #eaf7f9;
+}
 .navbar-full .body .branch {
   width: 100%;
   max-height: 0;
   overflow-y: hidden;
   display: flex;
   flex-direction: column;
+  transition: 0.1s;
 }
 .navbar-full .body .branch a {
   background-color: #eaf7f9;
   width: 100%;
   display: flex;
+  align-items: center;
   padding: 15px 5%;
 }
 .navbar-full .body .branch a p {
@@ -1258,7 +1265,7 @@ nav .img-wrapper.burger-icon img {
   filter: brightness(0) saturate(100%) invert(17%) sepia(56%) saturate(3428%) hue-rotate(224deg) brightness(91%) contrast(90%);
 }
 .navbar-full .body .branch.active {
-  max-width: 999px;
+  max-height: 500px;
 }
 .navbar-full .footer {
   display: flex;
@@ -1844,6 +1851,9 @@ nav .img-wrapper.burger-icon img {
   .wrapper-candidate .navbar-full.active {
     padding: 0 40vw 0 0;
   }
+  .wrapper-candidate .navbar-full .header {
+    background-color: #fff;
+  }
   .wrapper-candidate .navbar-full .header .img-wrapper.logo {
     width: 80%;
     align-items: center;
@@ -1866,6 +1876,18 @@ nav .img-wrapper.burger-icon img {
     font-size: clamp(0.6rem, 2vw, 1.5rem);
     gap: 30px;
   }
+  .wrapper-candidate .navbar-full .body .branch a p {
+    font-size: clamp(0.6rem, 2vw, 1.5rem);
+  }
+  .wrapper-candidate .navbar-full .footer {
+    background-color: #fff;
+  }
+  .wrapper-candidate .navbar-full .footer .nav-menu p {
+    font-size: clamp(0.6rem, 2vw, 1.5rem);
+  }
+  .wrapper-candidate .navbar-full .footer .nav-menu button p {
+    font-size: clamp(0.6rem, 2vw, 1.5rem);
+  }
   .wrapper-candidate .dashboard .header h1 {
     font-size: clamp(0.6rem, 4.5vw, 3rem);
   }
@@ -1886,10 +1908,12 @@ nav .img-wrapper.burger-icon img {
   }
   .wrapper-candidate .dashboard .body .cards-wrapper .card {
     width: auto;
+    text-align: center;
     flex: 0 0 calc(40% - 20px);
   }
   .wrapper-candidate .dashboard .body .cards-wrapper .card h2 {
     font-size: clamp(0.6rem, 2vw, 1.5rem);
+    height: 4em;
   }
   .wrapper-candidate .dashboard .body .cards-wrapper .card .wrapper-border a {
     font-size: clamp(0.6rem, 2vw, 1.5rem);
@@ -1905,9 +1929,8 @@ nav .img-wrapper.burger-icon img {
   }
   .wrapper-candidate .navbar-full {
     max-width: 100vw;
-    border-right: 1px solid #eaf7f9;
+    border-right: 1px solid #273b98;
     width: 20%;
-    gap: 30px;
     background-color: #fff;
   }
   .wrapper-candidate .navbar-full .header .img-wrapper.logo {
@@ -1919,6 +1942,15 @@ nav .img-wrapper.burger-icon img {
   .wrapper-candidate .navbar-full .body .nav-menu p {
     font-size: calc(clamp(0.2rem, 1vw, 0.85rem) * 1.1);
     gap: 15px;
+  }
+  .wrapper-candidate .navbar-full .body .branch a p {
+    font-size: clamp(0.2rem, 1vw, 0.85rem);
+  }
+  .wrapper-candidate .navbar-full .footer .nav-menu p {
+    font-size: clamp(0.2rem, 1vw, 0.85rem);
+  }
+  .wrapper-candidate .navbar-full .footer .nav-menu button p {
+    font-size: clamp(0.2rem, 1vw, 0.85rem);
   }
   .wrapper-candidate .navbar-filler {
     width: 20%;

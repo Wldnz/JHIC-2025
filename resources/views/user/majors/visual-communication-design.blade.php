@@ -47,7 +47,12 @@
             ]
         ]
 @endphp
-@include('_components._header', ['title' => 'product'])
+@include('_components._header', 
+[
+    'title' => 'Design Communication Visual | SMK Bina Informatika',
+    'description' => 'SMK Bina informatika | Jurusan DKV adalah singkatan dari Desain Komunikasi Visual, sebuah program studi yang fokus pada penyampaian pesan melalui elemen visual seperti gambar, warna, tipografi, dan animasi. Jurusan ini mempelajari cara mengolah ide menjadi visual yang efektif, informatif, dan komunikatif untuk berbagai media, baik cetak maupun digital. Lulusannya memiliki peluang karier yang luas di industri kreatif, seperti menjadi desainer grafis, animator, ilustrator, atau desainer UI/UX.',
+    'keywords' => 'jurusan DKV, Desain Komunikasi Visual, SMK Bina Informatika Bintaro, desain grafis, komunikasi visual, periklanan, branding, visual identity, desain kreatif, seni digital, sekolah DKV Bintaro, jurusan desain terbaik',
+    ])
 <div class="majors no-fade">
       <div class="main">
         <img src="{{ $major->banner }}" alt="">

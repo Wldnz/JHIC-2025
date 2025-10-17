@@ -45,7 +45,12 @@
       ]
   ]
 @endphp
-@include('_components._header', ['title' => 'product'])
+@include('_components._header', 
+[
+    'title' => 'Software Engineer | SMK Bina Informatika',
+    'description' => 'SMK Bina informatika | Jurusan RPL adalah Rekayasa Perangkat Lunak, yaitu jurusan di SMK yang berfokus pada pengembangan, perancangan, dan pembuatan perangkat lunak seperti aplikasi, software, dan game. Siswa akan mempelajari coding, desain, dan algoritma, serta konsep pemrograman seperti Java, Python, C++, HTML, dan CSS. Lulusannya memiliki prospek karier luas di bidang teknologi informasi, seperti software engineer, web developer, dan mobile app developer.',
+    'keywords' => 'jurusan RPL, Rekayasa Perangkat Lunak, SMK Bina Informatika Bintaro, sekolah coding, sekolah IT, sekolah pemrograman, software development, web developer, aplikasi mobile, jurusan teknologi, SMK IT terbaik, RPL Bintaro',
+    ])
 <div class="majors no-fade">
   <div class="main">
     <img src="{{ $major->banner }}" alt="">
