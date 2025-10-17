@@ -31,8 +31,12 @@ class NewsController extends Controller
         return view('user.news.index', compact('articles'));
     }
 
-    public function newsDetail(Article $article)
-    {
+    public function newsDetail(Request $request, Article $article)
+    {   
+        $searchQuery = $request->query('search');
+        if($searchQuery){
+            return redirect()->route('user.news')->withInput(['search' => $searchQuery]);
+        }
         return view('user.news.detail', compact('article'));
     }
 

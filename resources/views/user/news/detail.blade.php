@@ -7,14 +7,17 @@
 <div class="detail-news">
     <h2>BI NEWS</h2>
 
-    <div class="searchbar">
-        <input type="text" id="input-search" placeholder="Cari Berita..." value="{{ request('search') }}">
+    <form class="searchbar">
+        <input type="text" id="input-search" name="search" placeholder="Cari Berita..." value="{{ request('search') }}">
         <div class="search-icon">
-            <a class="button-search">
+            <button
+                type="submit" 
+                class="button-search"
+            >
                 <img src="{{ asset('icons/search-icon.svg') }}" alt="Search">
-            </a>
+            </button>
         </div>
-    </div>
+    </form>
 
     <div class="detail-content">
         <h3>{{ $article->title }}</h3>
@@ -47,20 +50,6 @@
 
 <script defer>
     const articleContentUrl = @js(route('user.news-content', ['article' => $article]))
-
-    const url = new URL(location.href);
-    const inputSearch = document.getElementById('input-search');
-    const buttonSearch = document.getElementById('button-search');
-
-    inputSearch.addEventListener('input', (e) => {
-        url.searchParams.set('search', inputSearch.value);
-        buttonSearch.href = url.href;
-    });
-    inputSearch.addEventListener('keydown', (e) => {
-        if (e.key == 'Enter') {
-            location.href = url.href;
-        }
-    });
 </script>
 
 @vite(['resources/js/handle/detail-news.js'])
