@@ -30,10 +30,10 @@ const urls = [
 // Konfigurasi test
 export const options = {
     stages: [
-        { duration: '30s', target: 100 },   // Warm up ke 10 user
-        { duration: '1m', target: 1000 },    // Naik ke 50 user aktif
-        { duration: '2m', target: 1000 },    // Tahan beban 50 user
-        { duration: '30s', target: 0 },    // Turun ke 0 user
+        { duration: '30s', target: 100 },
+        { duration: '1m', target: 1000 },
+        { duration: '2m', target: 1000 },
+        { duration: '30s', target: 0 },
     ],
     thresholds: {
         http_req_failed: ['rate<0.01'],    // <1% error
@@ -83,4 +83,24 @@ export default function () {
     }
 
     sleep(2);
+}
+
+/**
+ * helper: konversi string timeout seperti "2s", "500ms", "1m" -> milliseconds (number)
+ * mendukung ms, s, m (menit)
+ */
+function parseTimeoutToMs(t) {
+    if (!t || typeof t !== 'string') return 0;
+    const v = t.trim().toLowerCase();
+
+    if (v.endsWith('ms')) {
+        return Number(v.slice(0, -2)) || 0;
+    } else if (v.endsWith('s')) {
+        return (Number(v.slice(0, -1)) || 0) * 1000;
+    } else if (v.endsWith('m')) {
+        return (Number(v.slice(0, -1)) || 0) * 60 * 1000;
+    } else {
+        // asumsi ms kalau cuma angka
+        return Number(v) || 0;
+    }
 }
