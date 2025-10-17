@@ -15,12 +15,17 @@ class Transaction extends Model
 
     protected $fillable = [
         'candidate_nisn',
+        'user_id',
         'candidate_full_name',
+        'user_email',
+        'snap_id',
+        'snap_url',
         'payment_method_id',
         'payment_method_display_name',
         'total_cost',
         'expired_at',
         'status',
+        'type',
     ];
 
     protected $casts = [

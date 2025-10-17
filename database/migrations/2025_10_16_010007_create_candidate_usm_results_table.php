@@ -23,8 +23,8 @@ return new class extends Migration
             $table->string('registration_phase_name');
             $table->string('selected_major_long_name');
 
-            $table->unsignedTinyInteger('min_value')->default(75);
-            $table->unsignedTinyInteger('average_value');
+            $table->decimal('min_value', 3, 1)->unsigned()->default(75);
+            $table->decimal('average_value', 3, 1)->unsigned();
             $table->boolean('is_passed');
 
             $table->date('signed_at');

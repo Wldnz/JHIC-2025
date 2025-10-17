@@ -11,10 +11,12 @@ use App\Mail\SendNewAccountPassword;
 use App\Models\Article;
 use App\Models\Candidate;
 use App\Models\CandidateDocument;
+use App\Models\CandidateMajor;
 use App\Models\Major;
 use App\Models\RegistrationDocument;
 use App\Models\RegistrationPhase;
 use App\Models\RegistrationSource;
+use App\Models\Transaction;
 use App\Models\User;
 use App\Utilities\AlertDataGenerator;
 use App\Utilities\FileUploadUtils;
@@ -167,6 +169,8 @@ class AccountController extends Controller
         $articles = null;
         $sources = null;
         $documents = null;
+        $isFormPaid = false;
+        $isPhasePaid = false;
         if($account->role == 'candidate'){
             $candidate = Candidate::query()
             ->with([
@@ -184,11 +188,15 @@ class AccountController extends Controller
             $phases = RegistrationPhase::all();
             $sources = RegistrationSource::all(['id', 'name']);
             $documents = RegistrationDocument::all();
+            $isFormPaid = Transaction::where('user_id', '=', $account->id)
+                ->where('status', '=', 'settlement')
+                ->orWhere('status', '=', 'success')
+                ->where('type', 'form')->count() > 0;
         }else if($account->role == 'article_creator'){
             $articles = Article::all()
             ->where('writter_user_id', '=', $account->id);
         }
-        return view('admin.accounts.detail', compact('account', 'candidate', 'majors', 'phases', 'articles','sources', 'documents'));
+        return view('admin.accounts.detail', compact('account', 'candidate', 'majors', 'phases', 'articles','sources', 'documents', 'isFormPaid', 'isPhasePaid'));
     }
 
     public function downloadDocument(User $account, CandidateDocument $candidateDocument)
@@ -243,6 +251,12 @@ class AccountController extends Controller
             $validated['candidate_nisn'] ??= null;
 
             $candidate = Candidate::find($validated['candidate_nisn']);
+            $candidate->load([
+                'registrationPhase',
+                'candidatePhase',
+                'candidateMajors',
+                'candidateGuardian',
+            ]);
 
             if (!$candidate) {
                 throw new Exception("Calon siswa dengan NISN \"{$validated['candidate_nisn']}\" tidak ditemukan");
@@ -348,6 +362,38 @@ class AccountController extends Controller
                     throw new Exception("Gagal mengupload dokumen ke cloud");
                 }
             }
+
+            $keepedCandidateMajorsId = [];
+            logger($validated['majors']);
+            foreach ($validated['majors'] as $majorData) {
+                if (str_starts_with($majorData['id'], 'added_')) {
+                    logger($majorData);
+                    $major = Major::find($majorData['major_id']);
+                    if (!$major) {
+                        throw new Exception("Jurusan dengan id \"{$majorData['major_id']}\" tidak ditemukan");
+                    }
+
+                    $candidateMajor = CandidateMajor::create([
+                        'candidate_nisn' => $candidate->nisn,
+                        'user_id' => $candidate->user_id,
+                        'major_id' => $major->id,
+                        'major_long_name' => $major->long_name,
+                        'major_short_name' => $major->short_name,
+                    ]);
+                    if (!$candidateMajor) {
+                        throw new Exception("Gagal membuat data jurusan calon siswa");
+                    }
+
+                    $keepedCandidateMajorsId[] = $candidateMajor->id;
+                    continue;
+                }
+
+                $keepedCandidateMajorsId[] = $majorData['id'];
+            }
+
+            $candidate->candidateMajors()
+                ->whereNotIn('id', $keepedCandidateMajorsId)
+                ->delete();
 
             DB::commit();
 

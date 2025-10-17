@@ -1,152 +1,47 @@
-<div>
-    <!-- You must be the change you wish to see in the world. - Mahatma Gandhi -->
-</div>
-a@include('_components._headerCandidate', [
-    'title' => 'Dashboard Calon Peserta Didik'
+@include('_components._headerCandidate', [
+    'title' => 'Formulir Tahap Ketiga'
 ])
 <main class="content">
-    {{-- <div class="accessoris">
-        <div class="rounded">
-            <div class="round"></div>
-        </div>
-        <div class="stars">
-            <img src="{{ asset('images/trinkets/star.svg') }}" alt="star">
-            <img src="{{ asset('images/trinkets/star.svg') }}" alt="star">
-        </div> --}}
-    </div>
     <div class="stages">
         <div class="hero">
-            <h2>Tahap Pertama</h2>
-            <img src="{{ asset('images/usm/dashboard/step1.png') }}" alt="usm_step_1">
+            <h2>Tahap Ketiga</h2>
             <div class="description">
-                <h4>Mengisi Data Diri & Asal Sekolah</h4>
-                <p>Calon peserta didik melakuakan pendaftaran tahap pertama, yakni pendaftaran data diri</p>
+                <h4>Memilah Gelombang Ujian Saringan Masuk</h4>
+                <p>Calon Pesertadidik dapat mendaftar sebelum tanggal / termin yang telah ditetapkan dan selama kuota masih mencukupi. 30 Pesertadidik untuk masing – masing Jurusan.</p>
             </div>
         </div>
-        <form class="form-stage" action={{ route('candidate.stage.save-stage1') }} method="POST" enctype="multipart/form-data">
+        <form class="form-stage" action={{ route('candidate.stage.save-stage3') }} method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
-            <h2>{{ Auth::user()->fullname }}, Langkah pertama ini kamu diwajibkan untuk mengisi data diri kamu ya!</h2>
+            <h2>Untuk Lanjut Ke Tahap Selanjutnya, Kamu Diwajibkan Memilih Gelombang USM Yang Tersedia</h2>
+            <div class="fields">
+                <p>Pilih Gelombang Ujian Saringan Masuk (min, max1) <span>*</span></p>
+                <div class="wrapper-option-button wrapper-option-button-1">
+                    @foreach($phases as $phase)
+                        <button class="btn-major btn-phase" type="button" name="btn_{{ $phase->name }}" value="{{ $phase->id }}">
+                            <span>{{ $phase->name}}</span>
+                            <sup class="date">{{ substr($phase->started_at, 0,10) . ' - ' . substr($phase->ended_at, 0,10) }}</sup>
+                        </button>
+                    @endforeach
+                </div>
+                <div class="hidden" id="phase-section"></div>
+            </div>
             <div class="fields">
                 <div class="wrapper-input">
-                    <label for="nisn">Nomor Induk Nasional (NISN) <span>*</span></label>
-                    <input type="text" inputmode="numeric" name="nisn" id="nisn" placeholder="Masukkan Nomor Induk Nasional" value="{{ old('nisn') }}" aria-describedby="Masukkan Nomor Induk Nasional" minlength="10" maxlength="10" required>
-                </div>
-                  <div class="wrapper-input">
-                    <label for="fullname">Nama Lengkap  <span>*</span></label>
-                    <input type="text" name="fullname" id="fullname" placeholder="Masukkan Nama Lengkap" value="{{ old('fullname') }}" aria-describedby="Masukkan Nama Lengkap" minlength="3" required>
-                </div>
-                  <div class="wrapper-input">
-                    <label for="short_name">Nama Panggilan</label>
-                    <input type="text" name="short_name" id="short_name" placeholder="Masukkan Panggilan" value="{{ old('short_name') }}" aria-describedby="Masukkan Nama Panggilan" minlength="3" required>
-                </div>
-                <div class="wrapper-input">
-                    <label for="birthplace">Tempat Lahir <span>*</span></label>
-                    <input type="text" name="birthplace" id="birthplace" placeholder="Masukkan Tempat Lahir" value="{{ old('birthplace') }}" aria-describedby="Masukkan Tempat Lahir" minlength="3" required>
-                </div>
-                <div class="wrapper-input-multiple">
-                    <div class="wrapper-input">
-                        <label for="birthdate">Tanggal Lahir <span>*</span></label>
-                        <input type="date" inputmode="numeric" name="birthdate" id="birthdate" placeholder="Masukkan Tanggal Lahir" value="{{ old('birthdate') }}" aria-describedby="Masukkan Tanggal Lahir" required>
-                    </div>
-                    <div class="wrapper-input">
-                        <label for="gender">Jenis Kelamin <span>*</span></label>
-                        <div class="wrapper-select">
-                            <select name="gender" id="gender" aria-describedby="Jenis Kelamin" required>
-                                <option value=""></option>
-                                <option value="male" @selected(old('gender', '') == 'male')>Laki - Laki</option>
-                                <option value="female" @selected(old('gender', '') == 'female')>Perempuan</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="wrapper-input">
-                        <label for="religion">Agama <span>*</span></label>
-                        <div class="wrapper-select">
-                            <select name="religion" id="religion" aria-describedby="Agama" required>
-                                <option value=""></option>
-                                <option value="islam" @selected(old('religion', '') == 'islam')>Islam</option>
-                                <option value="catholic" @selected(old('religion', '') == 'catholic')>Katolik</option>
-                                <option value="protestant" @selected(old('religion', '') == 'protestant')>Protestan</option>
-                                <option value="hindu" @selected(old('religion', '') == 'hindu')>Hindu</option>
-                                <option value="buddha" @selected(old('religion', '') == 'buddha')>Buddha</option>
-                                <option value="confucian" @selected(old('religion', '') == 'confucian')>Konghucu</option>
-                                <option value="other" @selected(old('religion', '') == 'other')>Other</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="wrapper-input">
-                        <label for="citizenship">Kewarganegaraan <span>*</span></label>
-                        <div class="wrapper-select">
-                            <select name="citizenship" id="citizenship" aria-describedby="citizenship" required>
-                                <option value=""></option>
-                                <option value="indonesia" @selected(old('citizenship', '') == 'indonesia')>Indonesia</option>
-                                <option value="other" @selected(old('citizenship', '') == 'other')>Lainnya</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="wrapper-input">
-                    <label for="address">Alamat Rumah <span>*</span></label>
-                    <textarea name="address" id="address" placeholder="Masukkan alamat rumah" required aria-describedby="alamat rumah">{{ old('address') }}</textarea>
-                </div>
-                <div class="wrapper-input">
-                    <label for="status_family">Status Dalam Keluarga<span>*</span></label>
-                   <div class="wrapper-select">
-                        <select name="status_family" id="status_family" aria-describedby="Status Dalam Keluarga" required>
+                    <label for="registration_source">Sumber Informasi Pendaftaran <span>*</span></label>
+                    <div class="wrapper-select">
+                        <select name="registration_source" id="registration_source" aria-describedby="registration_source" required>
                             <option value=""></option>
-                            <option value="biological_child" @selected(old('status_family', '') == 'biological_child')>Anak Kandung</option>
-                            <option value="adpted_child" @selected(old('status_family', '') == 'adpted_child')>Anak Angkat</option>
-                            <option value="step_child" @selected(old('status_family', '') == 'step_child')>Anak Tiri</option>
-                            <option value="foster_child" @selected(old('status_family', '') == 'foster_child')>Anak Asuh</option>
+                            @foreach ($sources as $source)
+                                <option value="{{ $source->id }}" @selected(old('registration_source', '') == $source->id)>{{ $source->name }}</option>
+                            @endforeach
                         </select>
-                    </div>
-                </div>
-                <div class="wrapper-input-multiple wrapper-input-multiple-1">
-                    <div class="wrapper-input">
-                        <label for="order_familly">Anak Ke<span>*</span></label>
-                        <input type="text" inputmode="numeric" name="order_familly" id="order_familly" placeholder="Anak Ke" value="{{ old('order_familly') }}" aria-describedby="Anak Ke" minlength="1" required>
-                    </div>
-                     <div class="wrapper-input">
-                        <label for="sum_siblings">Jumlah Saudara Kandung<span>*</span></label>
-                        <input type="text" inputmode="numeric" name="sum_siblings" id="sum_siblings" placeholder="Jumlah Saudara Kandung" value="{{ old('sum_siblings') }}" aria-describedby="Jumlah Saudara Kandung" minlength="1" required>
-                    </div>
-                      <div class="wrapper-input">
-                        <label for="sum_half_siblings">Jumlah Saudara Tiri<span>*</span></label>
-                        <input type="text" inputmode="numeric" name="sum_half_siblings" id="sum_half_siblings" placeholder="Jumlah Saudara Tiri" value="{{ old('sum_half_siblings') }}" aria-describedby="Jumlah Saudara Tiri" minlength="1" required>
-                    </div>
-                      <div class="wrapper-input">
-                        <label for="sum_adopted_siblings">Jumlah Saudara Angkat<span>*</span></label>
-                        <input type="text" inputmode="numeric" name="sum_adopted_siblings" id="sum_adopted_siblings" placeholder="Jumlah Saudara Angkat" value="{{ old('sum_adopted_siblings') }}" aria-describedby="Jumlah Saudara Angkat" minlength="1" required>
+                        @include('_components._sprite-icons', [ 'name' => 'drop-down', 'size' => 25 ])
                     </div>
                 </div>
                 <div class="wrapper-input">
-                    <label for="phone">Nomor Telepon (WhastApp)<span>*</span></label>
-                    <input type="text" name="phone" id="phone" placeholder="Masukkan Nomor Telepon" value="{{ old('phone') }}" aria-describedby="Masukkan Nomor Telepon" minlength="11" maxlength="12" required>
-                </div>
-            </div>
-            <div class="form-stage">
-                <h2>Tahap Selanjutnya nih!, Beri tahu kami kamu dari sekolah mana dan alasannya kenapa kamu memilih kami ya!</h2>
-                <div class="fields">
-                     <div class="wrapper-input">
-                        <label for="origin_school">Asal Sekolah<span>*</span></label>
-                        <input type="text" name="origin_school" id="origin_school" placeholder="Asal Sekolah" value="{{ old('origin_school') }}" aria-describedby="Asal Sekolah" minlength="6" required>
-                    </div>
-                    <div class="wrapper-input">
-                        <label for="origin_school_address">Alamat Asal Sekolah<span>*</span></label>
-                        <input type="text" name="origin_school_address" id="origin_school_address" placeholder="Alamat Asal Sekolah" value="{{ old('origin_school_address') }}" aria-describedby="Alamat Asal Sekolah" minlength="6" required>
-                    </div>
-                </div>
-                <p>Tahap Selanjutnya nih!, Beri tahu kami kamu dari sekolah mana dan alasannya kenapa kamu memilih kami ya!</p>
-                 <div class="fields">
-                    <p>Minat Jurusan (min, 1 - max 2) <span>*</span></p>
-                    <div class="wrapper-option-button">
-                       @foreach($majors as $major)
-                            <button class="btn-major" type="button" name="btn_{{ $major->long_name }}" value="{{ $major->id }}">{{ $major->long_name }}</button>
-                       @endforeach
-                    </div>
-                    <div class="hidden" id="majors-section">
-                        
-                    </div>
+                    <label for="enrolling_reason">Alasan Masuk Sebagai Calon Peserta Didik<span>*</span></label>
+                    <input type="text" name="enrolling_reason" id="enrolling_reason" placeholder="Alasan Masuk" value="{{ old('enrolling_reason') }}" aria-describedby="Alasan Masuk" minlength="6" required>
                 </div>
             </div>
             <div class="s-submit">
@@ -154,8 +49,10 @@ a@include('_components._headerCandidate', [
                 <div class="w-buttons">
                     <button class="submit-form" type="submit">Simpan Data</button>
                     <div class="pages">
-                        <button class="pagination-action" type="button">Sebelumnya</button>
-                        <button class="pagination-action" type="button">Selanjutnya</button>
+                        @if ($isPaid ?? false)
+                            <button class="pagination-action" type="button">Sebelumnya</button>
+                            <button class="pagination-action" type="button">Selanjutnya</button>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -164,57 +61,55 @@ a@include('_components._headerCandidate', [
 </main>
 
 <script defer>
-    let currentMajors = [];
-    const majors = @json($majors ?? []);
+    let currentPhase = @json($candidate->RegistrationPhase ?? []);
+    const phases = @json($phases ?? []);
 
-    function selectMajor(element){
-        if(currentMajors.length > 1){
-            currentMajors.shift();
+    function selectPhase(element){
+        const currentStamps = new Date().getTime();
+        const phase = phases.find(p => p.name == element.children[0].innerText);
+        console.log(phase);
+
+        if(phase && new Date(phase.ended_at).getTime() < currentStamps){
+            return alert('Gelombang Sudah Tidak Tersedia!, Silahkan Pilih Gelombang Lain!');
+        }else if(phase && phase.quota < 1){
+            return alert(`Kuota Gelombang Pada ${phase.name} Sudah Habis!`);
         }
-        const { id, long_name, short_name } = majors.find(m => m.long_name == element.textContent);
-        if(!id) return;
-        currentMajors.push({
-            id : `updated_major_${new Date().getTime()}`,
-            major_id : id,
-            major_long_name : long_name,
-            major_short_name : short_name
-        });
+
+        currentPhase = {
+            ...currentPhase,
+            ...{
+                selected_phase_id : phase.id,
+                selected_phase_name : phase.name,
+                selected_phase_id : phase.id
+            }
+        }
     }
 
-    function deleteMajor(element){
-        if(currentMajors.length <= 1) return;
-        const { id, long_name } = majors.find(m => m.long_name == element.textContent);
-        if(!id) return;
-        currentMajors = currentMajors.filter(cm => cm.major_long_name != long_name);
-    }
-
-    function loadSelectedMajor(){
+    function loadSelectedPhase(){
         let stringHtml = '';
-        document.querySelectorAll('.btn-major').forEach(m => m.classList.remove('btn-major-selected'));
-        document.querySelectorAll('.btn-major').forEach(m => {
-            const isFound = currentMajors.find(cm => cm.major_long_name == m.textContent);
+        document.querySelectorAll('.btn-phase').forEach(m => m.classList.remove('btn-phase-selected'));
+        document.querySelectorAll('.btn-phase').forEach(element => {
+            const isFound = currentPhase.selected_phase_name == element.children[0].textContent;
             if(isFound){
-                m.classList.add('btn-major-selected');
-                stringHtml += makeObject(isFound);
+                element.classList.add('btn-phase-selected');
+                stringHtml += makeObject(currentPhase);
             }
         });
-        document.getElementById('majors-section').innerHTML = stringHtml;
+        document.getElementById('phase-section').innerHTML = stringHtml;
     }
 
-    function makeObject(major){
-        if(!major) return;
-        return `<input type="hidden" name="majors[${major.id}]" value="${major.id}" readonly>
-        <input type="hidden" name="majors[${major.id}]" value="${major.major_short_name}" readonly>
-        <input type="hidden" name="majors[${major.id}]" value="${major.major_long_name}" readonly>
-        `
+    function makeObject(phase){
+        if(!phase) return;
+        return `<input type="hidden" name="phase_id" value="${phase.selected_phase_id}" readonly>
+        <input type="hidden" name="phase_name" value="${phase.selected_phase_name}" readonly>
+        `;
     }
 
-    document.querySelectorAll('.btn-major').forEach(element => {
+    document.querySelectorAll('.btn-phase').forEach(element => {
         element.addEventListener('click', (e) => {
-            selectMajor(element);
-            loadSelectedMajor();
+            selectPhase(element);
+            loadSelectedPhase();
         });
-        element.addEventListener('dblclick', (e) => deleteMajor(element));
     });
 
 </script>

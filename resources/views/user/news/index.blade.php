@@ -7,38 +7,54 @@
         <h2>BI NEWS</h2>
 
         <div class="searchbar">
-            <input type="text" placeholder="Cari Berita..." value="{{ $placeholder }}">
+            <input type="text" id="input-search" placeholder="Cari Berita..." value="{{ request('search', '') }}">
             <div class="search-icon">
-            <a href="">
-                <img src="{{ asset("icons/search-icon.svg") }}" alt="">
-            </a>
+                <a href="{{ route('user.news', ['search' => request('search', '')]) }}" id="button-search">
+                    <img src="{{ asset("icons/search-icon.svg") }}" alt="">
+                </a>
             </div>
         </div>
         <div class="news-group">
-            @for ($i = 0; $i < 3; $i++)
+            @foreach ($articles as $article)
             <a href="">
-                <img src="{{ asset("images/news/mamah aku menang.png") }}" alt="">
+                <img src="{{ $article->thumbnail_url }}" alt="article-thumbnail-{{ $article->id }}" loading="lazy">
                 <div class="news-infodetail">
                     <div class="news-info">
                         <div class="tags">
                             <div class="tags-slider">
-                                <p class="tag1">Info Sekolah</p>
-                                <p class="tag2">Info PSB</p>
-                                <p class="tag3">JHIC 2025</p>
+                                @foreach ($article->keywords as $i => $keyword)
+                                    <p class="tag{{ $i % 3 + 1 }}">{{ $keyword->name }}</p>
+                                @endforeach
                             </div>
                         </div>
                         <div class="date">
-                            <p>03/12/2008</p>
+                            <p>{{ date_format($article->updated_at, "d/m/Y") }}</p>
                         </div>
                     </div>
-                    
+
                     <div class="text">
-                        <h3>SEKOLAH SWASTA MENOLAK SEKOLAH GRATIS BLA BLA BLA AKU CINTA JHIC SELAMANYA TEST TEST TEST</h3>
-                        <h4>really long description of the news, one might say it's a paragraph of some sort i don't even know like bro wtf i'm just writing this for testing but wtf</h4>
+                        <h3>{{ $article->title }}</h3>
+                        <h4>{{ $article->description }}</h4>
                     </div>
                 </div>
             </a>
-            @endfor
+            @endforeach
         </div>
     </div>
 @include("_components._footer")
+
+<script defer>
+    const url = new URL(location.href);
+    const inputSearch = document.getElementById('input-search');
+    const buttonSearch = document.getElementById('button-search');
+
+    inputSearch.addEventListener('input', (e) => {
+        url.searchParams.set('search', inputSearch.value);
+        buttonSearch.href = url.href;
+    });
+    inputSearch.addEventListener('keydown', (e) => {
+        if (e.key == 'Enter') {
+            location.href = url.href;
+        }
+    })
+</script>

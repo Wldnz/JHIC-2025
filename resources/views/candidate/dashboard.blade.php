@@ -1,100 +1,96 @@
 @php
+    $placeholder = "https://www.svgrepo.com/show/508699/landscape-placeholder.svg";
+
     $milestones = [
         [
-            'title' => 'Mengisi Formulir Data Diri',
+            'title' => 'Melakukan Pembelian Formulir',
             'description' => 'Calon peserta didik diharapkan dapat mengisi formulir dengan sesuai dan benar',
+            'image' => asset('images/candidates/tahap/1.png')
         ],
         [
             
-            'title' => 'Memilih Jadwal Ujian Saringan Masuk',
-            'description' => 'Calon peserta didik memilih jadwal untuk mengikuti kegiatan ujian saringan masuk',
+            'title' => 'Mengisi Formulir Pendaftaran & Melakukan Uploud',
+            'description' => 'Calon peserta didik mengisi formulir pendaftaran',
+            'image' => asset('images/candidates/tahap/2.png')
         ],
         [
             
-            'title' => 'Melakukan Pembayaran Biaya Sandang & Ujian Saringan Masuk',
+            'title' => 'Tentukan Jadwal Kegiatan Ujian Saringan Masuk',
             'description' => 'Calon peserta didik memilih jadwal untuk mengikuti kegiatan ujian saringan masuk',
+            'image' => asset('images/candidates/tahap/3.png')
         ],
         [
             
-            'title' => 'Memilih Jadwal Ujian Saringan Masuk',
-            'description' => 'Calon peserta didik memilih jadwal untuk mengikuti kegiatan ujian saringan masuk',
+            'title' => 'Melakukan Pembyara Biaya Sandang',
+            'description' => 'Calon Peserta Didik Membayar Biaya Sandang Untuk Bisa Mengikuti Kegiatan USM',
+            'image' => asset('images/candidates/tahap/4.png')
         ],
         [
             
-            'title' => 'Memilih Jadwal Ujian Saringan Masuk',
-            'description' => 'Calon peserta didik memilih jadwal untuk mengikuti kegiatan ujian saringan masuk',
+            'title' => 'Mengisi Dokumen-Dokumen Pendukung',
+            'description' => 'Calon Peserta Didik Mengisi Formulir Fomulir Yang Dibutuhkan Untuk Administrasi',
+            'image' => asset('images/candidates/tahap/5.png')
         ],
         [
             
-            'title' => 'Memilih Jadwal Ujian Saringan Masuk',
-            'description' => 'Calon peserta didik memilih jadwal untuk mengikuti kegiatan ujian saringan masuk',
+            'title' => 'Mengakses Modul-Modul Ujian Saringan Masuk',
+            'description' => 'Calon Peserta Didik Membaca & Mempelajari Materi - Materi Untuk Persiapan Kegiatan Ujian Saringan Masuk',
+            'image' => asset('images/candidates/tahap/6.png')
         ],
         [
             
-            'title' => 'Memilih Jadwal Ujian Saringan Masuk',
-            'description' => 'Calon peserta didik memilih jadwal untuk mengikuti kegiatan ujian saringan masuk',
+            'title' => 'Mengikuti Kegiatan Ujian Saringan Masuk',
+            'description' => 'Calon Peserta Didik Mengikuti Kegiatan Ujian Saringan Masuk',
+            'image' => asset('images/candidates/tahap/7.png')
         ],
         [
             
-            'title' => 'Memilih Jadwal Ujian Saringan Masuk',
-            'description' => 'Calon peserta didik memilih jadwal untuk mengikuti kegiatan ujian saringan masuk',
+            'title' => 'Melihat Hasil Ujian Saringan Masuk',
+            'description' => 'Calon Peserta Didik Melihat Hasil Dari Ujian Saringan Masuk',
+            'image' => asset('images/candidates/tahap/8.png')
         ],
         
     ];
 @endphp
+
 @include('_components._headerCandidate', [
     'title' => 'Dashboard Calon Peserta Didik'
 ])
-<main class="content">
-    <div class="accessoris">
-        <div class="rounded">
-            <div class="round"></div>
-        </div>
-        <div class="stars">
-            <img src="{{ asset('images/trinkets/star.svg') }}" alt="star">
-            <img src="{{ asset('images/trinkets/star.svg') }}" alt="star">
-        </div>
-    </div>
-    <div class="greeting">
-        <h2>Selamat Datang👋, {{ Auth::user()->fullname }}</h2>
+<div class="dashboard">
+    <p id="page-id">1</p>
+    
+    <div class="header">
+        <h1>Selamat Datang Athvi, </h1>
         <p>Halaman ini adalah tampilan terkait pendaftaran calon peserta didik secara online</p>
     </div>
-    <div class="wrapper-milestone">
-        <div class="information">
+    <div class="body">
+        <h2>Tahap - Tahap Pendaftaran Yang&nbsp;Harus&nbsp;Kamu&nbsp;Selesaikan</h2>
+        <p>Berikut adalah tahap-tahap yang harus kamu lakukan untuk menyelesaikan penerimaan calon pesera didik secara online!</p>
 
-                           <h3 class="title">Milestone yang harus kamu selesaikan!</h3>
-           <p>Berikut adalah tugas-tugas yang harus kamu lakukan untuk menyelesaikan tahap penerimaan calon peserta didik secara online!</p>
-        </div>
-     <div class="milestones">
-            @foreach ($milestones as $milestone)
-                    <div class="milestone">
-                   <div class="milestone-content">
-                        <h4>{{ $milestone['title'] }}</h4>
-                        <div class="center">
-                            <img src="{{ asset('images/usm/step'. $loop->index + 1 .'.png') }}" alt="step{{ $loop->index }}">
-                            <a class="btn-milestone">{{ $milestone['action-name'] ?? 'Lakukan Sekarang' }}</a>
-                        </div>
-                        <div class="detail-information" id="action-information">
-                            <div class="action">
-                                <h5>Detail Informasi</h5>
-                                @include('_components._sprite-icons', ['name' => 'drop-down', 'size' => 15])
-                             </div>
-                            <p class="hidden" id="description">{{ $milestone['description'] }}</p>
-                        </div>
-                   </div>
+        <div class="cards-wrapper">
+            @foreach ( $milestones as $step)
+                <div class="card {{ $loop->first ? "enabled" : "" }}">
+                    <h2>{{$step['title']}}</h2>
+                    <img src="{{ $step['image'] ?? $placeholder }}" alt="">
+                    <div class="wrapper-border">
+                        <a href="">Lakukan Sekarang</a>
+
+                    </div>
                 </div>
+
             @endforeach
         </div>
     </div>
-</main>
-
+</div>
 <script defer>
-    document.querySelectorAll('#action-information').forEach(e => {
-        const description = e.parentElement.querySelector('#description');
-        e.addEventListener('click', () => {
-            description.classList.toggle('hidden');
-        });
-    });
+
+let pageID = document.querySelector("#page-id").innerHTML
+let navID = document.querySelectorAll(".nav-menu")
+
+if (pageID === "1")
+{
+    navID[0].classList.add("active")
+}
 </script>
 
 @include('_components._footerCandidate')    

@@ -51,8 +51,16 @@ Route::name('candidate.')->prefix('candidate')->middleware([isLogin::class, isCa
 
         Route::get('/signup', [Candidate\AuthController::class, 'signupPage'])->name('signup-page');
         Route::post('/signup', [Candidate\AuthController::class, 'signup'])->name('signup');
+
+        Route::get('/signup/google', [Candidate\AuthController::class, 'signupGoogle'])->name('signup-google');
+        Route::get('/signup/google-callback', [Candidate\AuthController::class, 'signupGoogleCallback'])->name('signup-google-callback');
+
         Route::get('/login', [Candidate\AuthController::class, 'loginPage'])->name('login-page');
         Route::post('/login', [Candidate\AuthController::class, 'login'])->name('login');
+
+        Route::get('/login/google', [Candidate\AuthController::class, 'loginGoogle'])->name('login-google');
+        Route::get('/login/google-callback', [Candidate\AuthController::class, 'loginGoogleCallback'])->name('login-google-callback');
+
         Route::post('/logout', [Candidate\AuthController::class, 'logout'])->name('logout');
     });
 
@@ -64,20 +72,25 @@ Route::name('candidate.')->prefix('candidate')->middleware([isLogin::class, isCa
     Route::controller(Candidate\StageController::class)->prefix('stage')->name('stage.')->group(function () {
         Route::get('/stage-1', 'stage1')->name('stage1');
         Route::put('/stage-1', 'saveStage1')->name('save-stage1');
+        Route::get('/stage-1/saved', 'stage1Saved')->name('stage1-saved');
 
         Route::get('/stage-2', 'stage2')->name('stage2');
         Route::put('/stage-2', 'saveStage2')->name('save-stage2');
+        Route::get('/stage-2/saved', 'stage2Saved')->name('stage2-saved');
 
         Route::get('/stage-3', 'stage3')->name('stage3');
-        Route::put('/start-transaction', 'startTransaction')->name('start-transaction');
-        Route::get('/transaction-status', 'transactionStatus')->name('transaction-status');
+        Route::put('/stage-3', 'saveStage3')->name('save-stage3');
+        Route::get('/stage-3/saved', 'stage3Saved')->name('stage3-saved');
 
         Route::get('/stage-4', 'stage4')->name('stage4');
         Route::put('/stage-4', 'saveStage4')->name('save-stage4');
+        Route::get('/stage-4/saved', 'stage4Saved')->name('stage4-saved');
+        // Route::put('/start-transaction', 'startTransaction')->name('start-transaction');
+        // Route::get('/transaction-status', 'transactionStatus')->name('transaction-status');
 
         Route::get('/stage-5', 'stage5')->name('stage5');
-        Route::get('/stage-5/documents/{registrationDocument}', 'document')->name('stage5.document');
         Route::put('/stage-5', 'saveStage5')->name('save-stage5');
+        Route::get('/stage-5/saved', 'stage5Saved')->name('stage5-saved');
     });
 });
 
@@ -149,6 +162,7 @@ Route::name('admin.')->prefix('admin')->middleware([isLogin::class, isAdmin::cla
     Route::get('/portfolios/{portfolio}', [Admin\PortfolioController::class, 'detailPortfolio'])->name('detail-portfolio');
     Route::put('/portfolios/{portfolio}', [Admin\PortfolioController::class, 'updatePortfolio'])->name('update-portfolio');
     Route::delete('/portfolios/{portfolio}', [Admin\PortfolioController::class, 'deletePortfolio'])->name('delete-portfolio');
+
 
     Route::get('/facilities', [Admin\FacilityController::class, 'facility'])->name('facility');
     Route::get('/facilities-create', [Admin\FacilityController::class, 'createFacility'])->name('create-facility');
