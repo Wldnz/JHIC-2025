@@ -15,10 +15,10 @@
         <h3>Foto Foto Kegiatan</h3>
     </div>
     <div class="btq-content">
-        <div class="btq-kotak"><img src="{{ asset('images/btq/btq-placeholder.jpg') }}"></div>
         <div class="btq-kotak"><img src="{{ asset('images/btq/btq-document.jpg') }}"></div>
         <div class="btq-kotak"><img src="{{ asset('images/btq/btq-document1.png') }}"></div>
-        <div class="btq-kotak"><img src="{{ asset('images/btq/btq-placeholder.jpg') }}"></div>
+        <div class="btq-kotak"><img src="{{ asset('images/btq/btq-document2.jpg') }}"></div>
+        <div class="btq-kotak"><img src="{{ asset('images/btq/btq-document3.jpg') }}"></div>
     </div>
 
     <div class="btq-system">
