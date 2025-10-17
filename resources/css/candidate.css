@@ -170,6 +170,11 @@ img {
     width: inherit !important;
   }
 }
+@keyframes moving-teks {
+  100% {
+    right: 100vw;
+  }
+}
 body {
   font-family: "Montserrat", "sans-serif";
   background-color: #fff;
@@ -511,6 +516,11 @@ img {
 @media screen and (min-width: 98px) {
   .navigation-side {
     width: inherit !important;
+  }
+}
+@keyframes moving-teks {
+  100% {
+    right: 100vw;
   }
 }
 .profile:hover > ul {
@@ -1491,6 +1501,32 @@ nav .img-wrapper.burger-icon img {
   border-radius: 8px;
   font-size: clamp(0.6rem, 3.5vw, 2rem);
   font-weight: 500;
+}
+.wrapper-candidate .jadwal {
+  text-align: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.wrapper-candidate .jadwal h1 {
+  font-size: clamp(0.6rem, 5.5vw, 3.5rem);
+}
+.wrapper-candidate .jadwal .gelombang {
+  width: 100%;
+  background-color: #eaf7f9;
+  padding: 20px;
+  text-align: right;
+}
+.wrapper-candidate .jadwal .gelombang h2 {
+  font-size: clamp(0.6rem, 4.5vw, 3rem);
+}
+.wrapper-candidate .jadwal .gelombang h4 {
+  font-size: clamp(0.6rem, 3.5vw, 2rem);
+  font-weight: 500;
+}
+.wrapper-candidate .jadwal .gelombang:nth-child(2n) {
+  text-align: left;
 }
 .wrapper-candidate .content .stages {
   width: 100%;

@@ -457,7 +457,29 @@ nav
 
     .jadwal
     {
-        
+        text-align: center;
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+
+        h1{font-size: $font-size-4xl}   
+
+        .gelombang
+        {
+            width: 100%;
+            background-color: $color-secondary;
+            padding: 20px;
+            text-align: right;
+
+            h2{font-size: $font-size-3xl}
+            h4{font-size: $font-size-xl; font-weight: 500}
+
+            &:nth-child(2n)
+            {
+                text-align: left;
+            }
+        }
     }
 
     .content{

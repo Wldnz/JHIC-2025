@@ -320,14 +320,15 @@ body {
         .wrapper-moving-teks{
             width: 100%;
             position: relative;
-            min-height: 20px;
+            min-height: 2em;
             display: flex;
             align-items: center;
             justify-content: end;
             gap: 200px;
-            margin-bottom: 24px;
-
+            background-color: $color-secondary;
+            
             .moving-teks{
+                background-color: $color-secondary;
                 width: max-content;
                 padding: 8px;
                 gap: 10px;
