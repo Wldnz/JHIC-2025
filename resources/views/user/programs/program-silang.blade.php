@@ -12,7 +12,7 @@
     <h2>PROGRAM SILANG</h2>
 
     <div class="progsil-image">
-        <img src="{{ asset('images/program-silang/Frame 348.png') }}" alt="Program Silang Image">
+        <img src="{{ asset('images/program-silang/Progsil Image.jpg') }}" alt="Program Silang Image">
     </div>
 
     <div class="progsil-content">
@@ -40,13 +40,38 @@
         </div>
     </div>
 
-    <h3 class="artexample-text">Contoh Karya</h3>
     <div class="progsil-art">
-        <div class="art"></div>
-        <div class="art main"></div>
-        <div class="art"></div>
-    </div>
-    <p style="text-align: center; margin-top: 10px;">POGRAM SILANG <br> {JURUSAN}</p>
+        <h3>Contoh Karya</h3>
+
+        <div class="gallery-art">
+            <div class="keizory">
+                <div class="art">
+                    <img src="{{ asset('images/program-silang/XII RPL (BC).jpg') }}" alt title="X RPL Keizory Adzra (Karya Jurnalistik)" >
+                </div>
+                <div class="art">
+                    <img src="{{ asset('images/program-silang/XII RPL (BC)1.jpg') }}" alt title="X RPL Keizory Adzra (Karya Jurnalistik)">
+                </div>
+            </div>
+            <div class="hazril-naufal">
+                <div class="art">
+                    <img src="{{ asset('images/program-silang/XII BC (DKV).jpg') }}" alt title="XI Broadcast Hazril Naufal (Motion Graphic)">
+                </div>
+                <div class="art">
+                    <img src="{{ asset('images/program-silang/XII BC (DKV)1.jpg') }}" alt title="XI Broadcast Hazril Naufal (Motion Graphic)">
+                </div>
+            </div>
+            <div class="julian">
+                <div class="art">
+                    <img src="{{ asset('images/program-silang/Julian.jpg') }}" alt title="X Broadcast Julian (Produk Konten Sosial Media)">
+                </div>
+                <div class="art">
+                    <img src="{{ asset('images/program-silang/Julian1.jpg') }}" alt title="X Broadcast Julian (Produk Konten Sosial Media)">
+                </div>
+                <div class="art">
+                    <img src="{{ asset('images/program-silang/Julian2.jpg') }}" alt title="X Broadcast Julian (Produk Konten Sosial Media)">
+                </div>
+            </div>
+        </div>
 </div>
 
 @include("_components._footer")
