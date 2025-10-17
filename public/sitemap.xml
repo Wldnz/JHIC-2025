@@ -7,7 +7,7 @@
     <loc>http://localhost:8000/profile</loc>
             </url>
     <url>
-    <loc>http://localhost:8000/about</loc>
+    <loc>http://localhost:8000/uniforms</loc>
             </url>
     <url>
     <loc>http://localhost:8000/visi-misi</loc>
@@ -49,6 +49,9 @@
     <loc>http://localhost:8000/programs/bimbingan-konseling</loc>
             </url>
     <url>
+    <loc>http://localhost:8000/programs/extracurriculars</loc>
+            </url>
+    <url>
     <loc>http://localhost:8000/programs/program-kecakapan-hidup</loc>
             </url>
     <url>
@@ -56,32 +59,5 @@
             </url>
     <url>
     <loc>http://localhost:8000/programs/bi-channel</loc>
-            </url>
-    <url>
-    <loc>http://localhost:8000/programs/extracurriculars</loc>
-            </url>
-    <url>
-    <loc>http://localhost:8000/programs/extracurriculars/merpati-putih</loc>
-            </url>
-    <url>
-    <loc>http://localhost:8000/programs/extracurriculars/futsal</loc>
-            </url>
-    <url>
-    <loc>http://localhost:8000/programs/extracurriculars/basketball</loc>
-            </url>
-    <url>
-    <loc>http://localhost:8000/programs/extracurriculars/paduan-suara</loc>
-            </url>
-    <url>
-    <loc>http://localhost:8000/programs/extracurriculars/bicoustic</loc>
-            </url>
-    <url>
-    <loc>http://localhost:8000/programs/extracurriculars/tari-tradisional</loc>
-            </url>
-    <url>
-    <loc>http://localhost:8000/programs/extracurriculars/english-club</loc>
-            </url>
-    <url>
-    <loc>http://localhost:8000/programs/extracurriculars/paskibra</loc>
             </url>
 </urlset>

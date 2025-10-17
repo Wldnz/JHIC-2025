@@ -12,6 +12,7 @@ use App\Http\Requests\Candidate\SaveStage5Request;
 use App\Http\Requests\Candidate\StoreDocumentRequest;
 use App\Models\Candidate;
 use App\Models\CandidateDocument;
+use App\Models\CandidateMajor;
 use App\Models\CandidatePhase;
 use App\Models\Major;
 use App\Models\PaymentMethod;
@@ -43,15 +44,19 @@ class StageController extends Controller
             ->where('status', '=', 'settlement')
             ->count();
 
-        if ($formTransactionCount > 0) {
-            return redirect()->route('candidate.stage.stage-2');
-        }
-
         $payments = PaymentMethod::query()
             ->where('is_enabled', '=', true)
             ->get();
 
-        return view('candidate.stage.stage-1', compact( 'payments'));
+        $candidate = Candidate::with('candidateMajors')
+            ->where('user_id', '=', Auth::user()->id)
+            ->first();
+
+        $majors = Major::all();
+
+        $isPaid = $formTransactionCount;
+
+        return view('candidate.stage.stage-1', compact( 'payments', 'majors', 'isPaid', 'candidate'));
     }
 
     public function saveStage1(SaveStage1Request $request)
@@ -168,7 +173,12 @@ class StageController extends Controller
             return redirect()->route('candidate.stage.stage3');
         }
 
-        return view('candidate.stage.stage-2');
+        $formDocument = RegistrationDocument::query()
+            ->where('type', '=', 'form')
+            ->orderBy('updated_at', 'desc')
+            ->first(['download_file_url', 'mime_types', 'name']);
+
+        return view('candidate.stage.stage-2', compact('formDocument'));
     }
 
     public function saveStage2(SaveStage2Request $request)
@@ -180,12 +190,31 @@ class StageController extends Controller
 
         try {
             $candidate = Candidate::factory()->create([
+                'nisn' => $validated['nisn'],
                 'user_id' => $user->id,
                 'full_name' => $user->fullname,
             ]);
 
             if (!$candidate) {
                 throw new Exception("Gagal membuat data calon siswa");
+            }
+
+            foreach ($validated['majors'] as $majorId) {
+                $major = Major::find($majorId);
+                if (!$major) {
+                    throw new Exception("Major dengan ID \"{$majorId}\" tidak ditemukan");
+                }
+
+                $candidateMajor = CandidateMajor::create([
+                    'candidate_nisn' => $candidate->nisn,
+                    'user_id' => $user->id,
+                    'major_id' => $major->id,
+                    'major_long_name' => $major->long_name,
+                    'major_short_name' => $major->short_name,
+                ]);
+                if (!$candidateMajor) {
+                    throw new Exception("Gagal membuat data jurusan pilihan calon siswa");
+                }
             }
 
             $oldestRegistrationPhase = RegistrationPhase::query()
@@ -198,7 +227,7 @@ class StageController extends Controller
 
             $formDocument = StorageUtils::uploadNewCandidateDocument(
                 $candidate,
-                "Biodata Calon Siswa",
+                "Formulir Biodata",
                 'application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document',
                 $validated['biodata_form']->get(),
                 false,
@@ -238,13 +267,13 @@ class StageController extends Controller
 
     public function stage3()
     {
-        $formTransactionCount = Auth::user()->transactions()
-            ->where('type', '=', 'form')
-            ->where('status', '=', 'settlement')
-            ->count();
         $candidate = Auth::user()->candidate()->first();
+        $formDocument = $candidate->candidateDocuments()
+            ->where('type', '=', 'form')
+            ->orderBy('created_at', 'desc')
+            ->first();
 
-        if ($formTransactionCount <= 0 || !$candidate) {
+        if (!$candidate || !$formDocument) {
             return redirect()->route('candidate.stage.stage2');
         }
 
@@ -256,7 +285,8 @@ class StageController extends Controller
 
         $phases = RegistrationPhase::all();
         $sources = RegistrationSource::all();
-        return view('candidate.stage.stage-3', compact( 'phases', 'sources'));
+        $isSelectedPhase = $candidatePhase;
+        return view('candidate.stage.stage-3', compact( 'phases', 'sources', 'isSelectedPhase'));
     }
 
     public function saveStage3(SaveStage3Request $request)
@@ -333,21 +363,24 @@ class StageController extends Controller
         $candidate = Auth::user()->candidate()->first();
         $candidatePhase = $candidate->candidatePhase()->first();
 
+        
         if ($formTransactionCount <= 0 || !$candidate || !$candidatePhase) {
             return redirect()->route('candidate.stage.stage3');
         }
-
+        
         $usmTransactionCount = Auth::user()->transactions()
-            ->where('type', '=', 'usm')
+        ->where('type', '=', 'usm')
             ->where('status', '=', 'settlement')
             ->count();
 
-        if ($usmTransactionCount > 0) {
+        $isPaid = $usmTransactionCount > 0;
+
+        if ($isPaid > 0) {
             return redirect()->route('candidate.stage.stage5');
         }
 
         $payments = PaymentMethod::where('is_enabled', '=', '1')->get();
-        return view('candidate.stage.stage-4', compact( 'payments'));
+        return view('candidate.stage.stage-4', compact( 'payments','isPaid'));
     }
 
     public function saveStage4(SaveStage4Request $request)
@@ -462,16 +495,17 @@ class StageController extends Controller
             ->toArray();
         $registrationDocuments = RegistrationDocument::all();
 
+        $isAllUplouds = true;
+
         foreach ($registrationDocuments as $registrationDocument) {
             if (in_array($registrationDocument->name, $candidateDocuments)) {
                 continue;
             }
-
-            $documents = $registrationDocuments;
-            return view('candidate.stage.stage-5', compact( 'documents'));
+            $isAllUplouds = false;
         }
-
-        return redirect()->route('candidate.stage.stage5-saved');
+        
+        $documents = $registrationDocuments;
+        return view('candidate.stage.stage-5', compact( 'documents', 'isAllUplouds'));
     }
 
     public function saveStage5(SaveStage5Request $request)

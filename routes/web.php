@@ -10,6 +10,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\isLogin;
 use App\Http\Middleware\isAdmin;
 
+Route::get("/404", function () {
+    return view("exceptions.page-404");
+});
+
 // User-side
 Route::name('user.')->group(function () {
     Route::get('/', [User\Controller::class, 'index'])->name('index');
@@ -85,8 +89,6 @@ Route::name('candidate.')->prefix('candidate')->middleware([isLogin::class, isCa
         Route::get('/stage-4', 'stage4')->name('stage4');
         Route::put('/stage-4', 'saveStage4')->name('save-stage4');
         Route::get('/stage-4/saved', 'stage4Saved')->name('stage4-saved');
-        // Route::put('/start-transaction', 'startTransaction')->name('start-transaction');
-        // Route::get('/transaction-status', 'transactionStatus')->name('transaction-status');
 
         Route::get('/stage-5', 'stage5')->name('stage5');
         Route::put('/stage-5', 'saveStage5')->name('save-stage5');

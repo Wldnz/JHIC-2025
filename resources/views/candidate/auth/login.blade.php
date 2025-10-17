@@ -42,7 +42,7 @@
                 <div class="wrapper-input">
                     <label for="password">Password</label>
                     <div class="password">
-                        <input type="password" name="password" id="password" placeholder="admin123" minlength="8"
+                        <input type="password" name="password" id="password" placeholder="********" minlength="8"
                             value="{{ old('password') }}" required>
                         <img src="{{ asset("icons/Show.svg") }}" class="show">
                         <img src="{{ asset("icons/Hide.svg") }}" class="hide">
@@ -68,6 +68,10 @@
             </div>
         </form>
     </main>
+
+    <div class="navi-login">
+        <img src="{{ asset("icons/logo-sponsor.png") }}" alt="">
+    </div>
 
     @includeWhen(session()->has('alert'), '_components._alert-message', ['data' => session()->get('alert'), 'icon_name' => 'product'])
 

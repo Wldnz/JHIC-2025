@@ -2,22 +2,30 @@
     $placeholder = '';
 @endphp
 
-@include('_components._header')
+@include('_components._header', 
+[
+    'title' => $article->title . ' | SMK Bina Informatika',
+    'description' => 'SMK Bina Informatika | ' . $article->description,
+    'keywords' => 'smk, SMK Bina Informatika, teknologi, informatika, sekolah, berita, news, article, important, school',
+    ])
 
 <div class="detail-news">
     <h2>BI NEWS</h2>
 
-    <div class="searchbar">
-        <input type="text" placeholder="Cari Berita..." value="{{ $placeholder }}">
+    <form class="searchbar">
+        <input type="text" id="input-search" name="search" placeholder="Cari Berita..." value="{{ request('search') }}">
         <div class="search-icon">
-            <a href="">
+            <button
+                type="submit" 
+                class="button-search"
+            >
                 <img src="{{ asset('icons/search-icon.svg') }}" alt="Search">
-            </a>
+            </button>
         </div>
-    </div>
+    </form>
 
     <div class="detail-content">
-        <h3>SEKOLAH SISWA MENOLAK SEKOLAH GRATIS BLA BLA BLA AKU CINTA JHIC SELAMANYA TEST TEST TEST</h3>
+        <h3>{{ $article->title }}</h3>
 
         <div class="writeby-content">
             <div class="wrapper-writter">
@@ -25,28 +33,28 @@
                     <img src="{{ asset('icons/user.svg') }}">
                 </div>
                 <div class="user-upload">
-                    <p>Written by <b> Wildan Izhar Al-Haqq </b></p>
+                    <p>Written by <b> {{ $article->written_by }} </b></p>
                 </div>
             </div>
             <div class="date">
-                <p>Kamis, 16 Oktober 2025 20:30</p>
+                <p>{{ date_format($article->updated_at, "l, d F Y H:i") }}</p>
             </div>
         </div>
 
-        <img src="{{ asset('images/news/mamah aku menang.png') }}" alt="mamah aku menang">
-        <p class="img-description">
-            foto para juara yang memenangkan lomba bi got talent
-        </p>
+        <img src="{{ $article->thumbnail_url }}" alt="thumbnail-image">
     </div>
 
-    <div class="news-content">
-        <h3>19 Oktober, 25</h3>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-            magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-            commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
-            anim id est laborum.</p>
+    <div class="news-content" id="loading-viewer">
+        <span>Sedang Menarik Data...</span>
+    </div>
+    <div class="news-content" id="viewer">
     </div>
 </div>
 
 @include('_components._footer')
+
+<script defer>
+    const articleContentUrl = @js(route('user.news-content', ['article' => $article]))
+</script>
+
+@vite(['resources/js/handle/detail-news.js'])

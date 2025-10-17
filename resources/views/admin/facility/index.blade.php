@@ -54,21 +54,29 @@
                     </div>
                 </a>
                 <div class="floating-action">
-                    <a class="action-detail"
-                        href="{{ route('admin.delete-facility', ['facility' => $facility->id]) }}"
+                    <a class="action action-detail btn-action"
+                        href="{{ route('admin.detail-facility', ['facility' => $facility->id]) }}"
                     >
-                    Detail Facility
+                       <button class="btn-action" type="button">
+                            @include('_components._sprite-icons', [
+                                'name' => 'eye',
+                                'color' => 'white',
+                                'size' => 20,
+                            ])
+                            <span>Detail Facility</span>
+                       </button>
                     </a>
-                    <form class="action-delete"
+                    <form class="action"
                         action="{{ route('admin.delete-facility', ['facility' => $facility->id]) }}"
                         method="POST"
-                        id="media-floating-icon"
+                        id="action-delete"
                     >
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="action">
+                        <button type="submit" class="btn-action">
                             @include('_components._sprite-icons', [
                                 'name' => 'trash',
+                                'color' => 'white',
                                 'size' => 20,
                             ])
                             <span>Delete Facility</span>

@@ -25,11 +25,13 @@ class SaveStage2Request extends FormRequest
     public function rules(): array
     {
         return [
+            'nisn' => ['required', 'numeric', 'digits:10'],
             'biodata_form' => ['required', 'file', File::types([
                 'application/pdf',
                 'application/msword',
                 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
             ]), 'max:5000'],
+            'majors.*' => ['required', 'exists:majors,id'],
         ];
     }
 }

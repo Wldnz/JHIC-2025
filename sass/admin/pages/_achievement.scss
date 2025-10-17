@@ -1,13 +1,14 @@
+@use '../../admin/components/floating' as floating;
 @import "../../utils/variables";
-
 @mixin card {
     gap: 100px 20px;
     .wrapper-card-media-achievement {
         border: 2px solid $color-accent;
-        &:hover {
-        }
         border-radius: $border-radius;
         padding: 5px;
+
+        position: relative;
+
         .card-media {
             max-width: 300px;
             min-height: 350px;
@@ -59,5 +60,6 @@
                 }
             }
         }
+        @include floating.card;
     }
 }

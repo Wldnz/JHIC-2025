@@ -24,28 +24,46 @@
 
         <div class="navbar-full">
             <div class="header">
-                <div class="img-wrapper logo">
+                <a href="{{ route("user.index") }}" class="img-wrapper logo">
                     <img src="{{ asset("images/bi-full.png") }}" alt="">
-                </div>
+                </a>
                 <div class="img-wrapper close-icon">
                     <img class="close-btn" src="{{ asset("icons/Add_Plus.svg") }}" alt="">
                 </div>
             </div>
 
             <div class="body">
-                <a href="#" class="nav-menu">
+                <a href="{{ route("candidate.dashboard") }}" class="nav-menu">
                     <p><img src="{{ asset("icons/user.svg") }}">Dashboard</p>
                 </a>
-                <a href="#" class="nav-menu">
-                    <p><img src="{{ asset("icons/email.svg") }}">Ujian Saringan Masuk</p>
+                <a class="nav-menu expandable">
+                    <p><img src="{{ asset("icons/usm.svg") }}">Ujian Saringan Masuk</p>
+                    <img src="{{ asset("icons/arrow-down.svg") }}" alt="">
                 </a>
-                <a href="#" class="nav-menu">
-                    <p><img src="{{ asset("icons/telp.svg") }}">Contact</p>
+                <div class="branch">
+                    <a href="{{ route("candidate.schedule") }}"><img src="{{ asset("icons/Calendar.svg") }}" alt=""><p>Jadwal USM</p></a>
+                    <a href="{{ route("candidate.learning-materials") }}"><img src="{{ asset("icons/book.svg") }}" alt=""><p>Modul Pembelajaran USM</p></a>
+                </div>
+            </div>
+
+            <div class="footer">
+
+                <a href="mailto:info@smkbinainformatika.sch.id" class="nav-menu">
+                    <p><img src="{{ asset("icons/email.svg") }}">info@smkbina<wbr>informatika.sch.id</p>
                 </a>
-                <form action="{{ route('candidate.logout')  }}" method="POST" class="nav-menu">
+
+                <a href="https://wa.me/6281280063529" class="nav-menu">
+                    <p><img src="{{ asset("icons/wa.svg") }}">(+62) 8128-0063-529</p>
+                </a>
+
+                <form action="{{ route('candidate.logout')  }}" method="POST" class="nav-menu logout">
+                    <button type="submit">
+                        <p><img src="{{ asset("icons/Log_Out.svg") }}">Logout</p>
+                    </button>
                     @csrf
-                    <button class="btn" typee="submit"><img src="{{ asset("icons/telp.svg") }}">Logout</button>
+
                 </form>
+
             </div>
         </div>
 
@@ -56,6 +74,10 @@
 <script>
 document.querySelector(".open-btn").addEventListener("click", () => { document.querySelector(".navbar-full").classList.add("active"); document.body.style.overflow = "hidden"})
 document.querySelector(".close-btn").addEventListener("click", () => { document.querySelector(".navbar-full").classList.remove("active"); document.body.style.overflow = "auto"})
+
+document.querySelectorAll(".expandable").forEach(btn => {
+    btn.addEventListener("click", () => { btn.nextElementSibling.classList.toggle("active"); btn.children(1).style.transform = "rotate(180deg)" })
+})
 </script>
 
 @includeWhen(session()->has('alert'), '_components._alert-message', ['data' => session()->get('alert'), 'icon_name' => 'product'])

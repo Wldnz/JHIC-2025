@@ -34,6 +34,11 @@
             </div>
             <div class="wrapper-field">
                 <div class="wrapper-input">
+                    <label for="email">Fullname</label>
+                    <input type="email" name="email" id="email" placeholder="Raihan Rizky Sugiharto" minlength="8"
+                        value="{{ old('email') }}" required>
+                </div>
+                <div class="wrapper-input">
                     <label for="email">Email</label>
                     <input type="email" name="email" id="email" placeholder="example@gmail.com" minlength="8"
                         value="{{ old('email') }}" required>
@@ -41,7 +46,7 @@
                 <div class="wrapper-input">
                     <label for="password">Password</label>
                     <div class="password">
-                        <input type="password" name="password" id="password" placeholder="admin123" minlength="8"
+                        <input type="password" name="password" id="password" placeholder="********" minlength="8"
                             value="{{ old('password') }}" required>
                         <img src="{{ asset("icons/Show.svg") }}" class="show">
                         <img src="{{ asset("icons/Hide.svg") }}" class="hide">
@@ -52,7 +57,7 @@
                     <label for="password">Password Confirmation</label>
                     <div class="password">
                         <input type="password" name="password_confirmation" id="password-confirmation"
-                            placeholder="admin123" minlength="8" value="{{ old('password') }}" required>
+                            placeholder="********" minlength="8" value="{{ old('password') }}" required>
                         <img src="{{ asset("icons/Show.svg") }}" class="show">
                         <img src="{{ asset("icons/Hide.svg") }}" class="hide">
                     </div>
@@ -77,6 +82,10 @@
             </div>
         </form>
     </main>
+
+    <div class="navi-login">
+        <img src="{{ asset("icons/logo-sponsor.png") }}" alt="">
+    </div>
 
     @includeWhen(session()->has('alert'), '_components._alert-message', ['data' => session()->get('alert'), 'icon_name' => 'product'])
 

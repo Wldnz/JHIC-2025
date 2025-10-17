@@ -113,6 +113,12 @@ class AuthController extends Controller
             return redirect()->route('candidate.dashboard');
         }
 
+        AlertDataGenerator::generateAsFlashToSession(
+            AlertType::DANGER,
+            "Gagal login",
+            "Email atau password salah",
+            $request->session(),
+        );
         return back()->withInput($validated);
     }
 

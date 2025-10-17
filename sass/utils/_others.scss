@@ -1,6 +1,7 @@
 ::selection {
-    background-color: transparent;
-    color: rgb(0, 0, 156);
+    background: linear-gradient(135deg,#0fcbbc 0%, #5f77f7 41%, #8780fc 62%, #a387ff 100%);
+    background: dimgrey;
+    color: #fff;
     filter: none;
     &:hover {
         filter: none;

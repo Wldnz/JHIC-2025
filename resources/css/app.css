@@ -15,8 +15,9 @@ body {
 }
 
 ::selection {
-  background-color: transparent;
-  color: rgb(0, 0, 156);
+  background: linear-gradient(135deg, #0fcbbc 0%, #5f77f7 41%, #8780fc 62%, #a387ff 100%);
+  background: dimgrey;
+  color: #fff;
   filter: none;
 }
 ::selection:hover {
@@ -100,6 +101,27 @@ img {
     rotate: 360deg;
   }
 }
+@keyframes show-the-options-menu {
+  0% {
+    min-height: 180px;
+    overflow: hidden;
+  }
+  100% {
+    min-height: 120px;
+    overflow: initial;
+  }
+}
+@keyframes close-the-options-menu {
+  100% {
+    min-height: 120px;
+    overflow: hidden;
+  }
+  100% {
+    height: 0;
+    opacity: 0.4;
+    overflow: initial;
+  }
+}
 @media screen and (min-width: 98px) {
   .navigation-side {
     width: inherit !important;
@@ -113,8 +135,9 @@ body {
 }
 
 ::selection {
-  background-color: transparent;
-  color: rgb(0, 0, 156);
+  background: linear-gradient(135deg, #0fcbbc 0%, #5f77f7 41%, #8780fc 62%, #a387ff 100%);
+  background: dimgrey;
+  color: #fff;
   filter: none;
 }
 
@@ -161,8 +184,9 @@ body {
 }
 
 ::selection {
-  background-color: transparent;
-  color: rgb(0, 0, 156);
+  background: linear-gradient(135deg, #0fcbbc 0%, #5f77f7 41%, #8780fc 62%, #a387ff 100%);
+  background: dimgrey;
+  color: #fff;
   filter: none;
 }
 ::selection:hover {
@@ -334,8 +358,9 @@ body {
 }
 
 ::selection {
-  background-color: transparent;
-  color: rgb(0, 0, 156);
+  background: linear-gradient(135deg, #0fcbbc 0%, #5f77f7 41%, #8780fc 62%, #a387ff 100%);
+  background: dimgrey;
+  color: #fff;
   filter: none;
 }
 ::selection:hover {
@@ -417,6 +442,27 @@ img {
 @keyframes rotate-y-360 {
   100% {
     rotate: 360deg;
+  }
+}
+@keyframes show-the-options-menu {
+  0% {
+    min-height: 180px;
+    overflow: hidden;
+  }
+  100% {
+    min-height: 120px;
+    overflow: initial;
+  }
+}
+@keyframes close-the-options-menu {
+  100% {
+    min-height: 120px;
+    overflow: hidden;
+  }
+  100% {
+    height: 0;
+    opacity: 0.4;
+    overflow: initial;
   }
 }
 @media screen and (min-width: 98px) {
@@ -556,12 +602,11 @@ img {
   align-items: center;
 }
 .wrapper-login .login .wrapper-field .wrapper-input .password input {
+  background-color: #181818;
   border: none;
-  width: 90%;
+  width: 70%;
 }
 .wrapper-login .login .wrapper-field .wrapper-input .password img {
-  width: 10%;
-  padding: 7px;
   cursor: pointer;
   filter: brightness(0) saturate(100%) invert(17%) sepia(56%) saturate(3428%) hue-rotate(224deg) brightness(91%) contrast(90%);
 }
@@ -828,6 +873,14 @@ img {
   animation: closeSidebarCandidate 800ms forwards;
 }
 
+.open-media-menu {
+  animation: show-the-options-menu 200ms forwards;
+}
+
+.close-media-menu {
+  animation: close-the-options-menu 800ms forwards;
+}
+
 .button-submit-form {
   display: flex;
   padding: 10px;
@@ -970,8 +1023,9 @@ body {
 }
 
 ::selection {
-  background-color: transparent;
-  color: rgb(0, 0, 156);
+  background: linear-gradient(135deg, #0fcbbc 0%, #5f77f7 41%, #8780fc 62%, #a387ff 100%);
+  background: dimgrey;
+  color: #fff;
   filter: none;
 }
 ::selection:hover {
@@ -1124,8 +1178,9 @@ body {
 }
 
 ::selection {
-  background-color: transparent;
-  color: rgb(0, 0, 156);
+  background: linear-gradient(135deg, #0fcbbc 0%, #5f77f7 41%, #8780fc 62%, #a387ff 100%);
+  background: dimgrey;
+  color: #fff;
   filter: none;
 }
 ::selection:hover {
@@ -1262,8 +1317,9 @@ body {
 }
 
 ::selection {
-  background-color: transparent;
-  color: rgb(0, 0, 156);
+  background: linear-gradient(135deg, #0fcbbc 0%, #5f77f7 41%, #8780fc 62%, #a387ff 100%);
+  background: dimgrey;
+  color: #fff;
   filter: none;
 }
 ::selection:hover {
@@ -1315,8 +1371,9 @@ body {
 }
 
 ::selection {
-  background-color: transparent;
-  color: rgb(0, 0, 156);
+  background: linear-gradient(135deg, #0fcbbc 0%, #5f77f7 41%, #8780fc 62%, #a387ff 100%);
+  background: dimgrey;
+  color: #fff;
   filter: none;
 }
 ::selection:hover {
@@ -1372,11 +1429,12 @@ img {
 .news .searchbar {
   display: flex;
   justify-content: center;
+  align-items: center;
   margin-top: 20px;
   margin-left: 20px;
 }
 .news .searchbar input {
-  width: 200px;
+  width: 250px;
   height: 40px;
   border: 3px solid #485bb1;
   border-radius: 50px;
@@ -1388,7 +1446,17 @@ img {
   border: 2px solid #273b98;
 }
 .news .searchbar .search-icon {
+  margin-left: 5px;
+}
+.news .searchbar .search-icon button {
+  width: 40px;
+  height: 40px;
+  background-color: #273b98;
+  border-radius: 50%;
+  border: none;
   display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .news .searchbar a {
   box-sizing: border-box;
@@ -1548,8 +1616,9 @@ body {
 }
 
 ::selection {
-  background-color: transparent;
-  color: rgb(0, 0, 156);
+  background: linear-gradient(135deg, #0fcbbc 0%, #5f77f7 41%, #8780fc 62%, #a387ff 100%);
+  background: dimgrey;
+  color: #fff;
   filter: none;
 }
 ::selection:hover {
@@ -1605,6 +1674,7 @@ img {
 .detail-news .searchbar {
   display: flex;
   justify-content: center;
+  align-items: center;
   margin-top: 20px;
   margin-left: 20px;
 }
@@ -1621,8 +1691,17 @@ img {
   border: 2px solid #273b98;
 }
 .detail-news .searchbar .search-icon {
-  display: flex;
   margin-left: 5px;
+}
+.detail-news .searchbar .search-icon button {
+  width: 40px;
+  height: 40px;
+  background-color: #273b98;
+  border-radius: 50%;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .detail-news .searchbar a {
   box-sizing: border-box;
@@ -2145,7 +2224,6 @@ body .wrapper-user .dashboard .banner .center .sliding-banner {
   gap: 10px;
 }
 body .wrapper-user .dashboard .banner .center .sliding-banner .banner-content {
-  background-color: #000;
   scroll-snap-align: start;
   color: #fff;
   object-fit: contain;
@@ -2153,9 +2231,6 @@ body .wrapper-user .dashboard .banner .center .sliding-banner .banner-content {
   width: 100%;
   height: 100%;
   position: relative;
-}
-body .wrapper-user .dashboard .banner .center .sliding-banner .banner-content:nth-child(1) {
-  background-color: transparent;
 }
 body .wrapper-user .dashboard .banner .center .sliding-banner .banner-content .img {
   position: absolute;
