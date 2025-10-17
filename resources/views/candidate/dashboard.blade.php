@@ -60,7 +60,7 @@
     <p id="page-id">1</p>
 
     <div class="header">
-        <h1>Selamat Datang Athvi, </h1>
+        <h1>Selamat Datang, {{ auth()->user()->fullname }} </h1>
         <p>Halaman ini adalah tampilan terkait pendaftaran calon peserta didik secara online</p>
     </div>
     <div class="body">
