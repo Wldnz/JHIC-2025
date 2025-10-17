@@ -16,6 +16,7 @@ use App\Models\Major;
 use App\Models\RegistrationDocument;
 use App\Models\RegistrationPhase;
 use App\Models\RegistrationSource;
+use App\Models\Transaction;
 use App\Models\User;
 use App\Utilities\AlertDataGenerator;
 use App\Utilities\FileUploadUtils;
@@ -168,6 +169,8 @@ class AccountController extends Controller
         $articles = null;
         $sources = null;
         $documents = null;
+        $isFormPaid = false;
+        $isPhasePaid = false;
         if($account->role == 'candidate'){
             $candidate = Candidate::query()
             ->with([
@@ -185,11 +188,15 @@ class AccountController extends Controller
             $phases = RegistrationPhase::all();
             $sources = RegistrationSource::all(['id', 'name']);
             $documents = RegistrationDocument::all();
+            $isFormPaid = Transaction::where('user_id', '=', $account->id)
+                ->where('status', '=', 'settlement')
+                ->orWhere('status', '=', 'success')
+                ->where('type', 'form')->count() > 0;
         }else if($account->role == 'article_creator'){
             $articles = Article::all()
             ->where('writter_user_id', '=', $account->id);
         }
-        return view('admin.accounts.detail', compact('account', 'candidate', 'majors', 'phases', 'articles','sources', 'documents'));
+        return view('admin.accounts.detail', compact('account', 'candidate', 'majors', 'phases', 'articles','sources', 'documents', 'isFormPaid', 'isPhasePaid'));
     }
 
     public function downloadDocument(User $account, CandidateDocument $candidateDocument)

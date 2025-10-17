@@ -5,7 +5,6 @@
     <div class="stages">
         <div class="hero">
             <h2>Tahap Ketiga</h2>
-            <img src="{{ asset('images/usm/dashboard/step2.png') }}" alt="usm_step_1">
             <div class="description">
                 <h4>Memilah Gelombang Ujian Saringan Masuk</h4>
                 <p>Calon Pesertadidik dapat mendaftar sebelum tanggal / termin yang telah ditetapkan dan selama kuota masih mencukupi. 30 Pesertadidik untuk masing – masing Jurusan.</p>

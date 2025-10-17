@@ -14,7 +14,6 @@
     <div class="stages">
         <div class="hero">
             <h2>Tahap Kelima</h2>
-            <img src="{{ asset('images/usm/dashboard/step1.png') }}" alt="usm_step_1">
             <div class="description">
                 <h4>Mengisi Surat Pendukung Pendaftaran</h4>
                 <p>Calon peserta didik melakuakan pendaftaran tahap terakhir, yakni menguploud surat - surat pendukung</p>

@@ -14,7 +14,6 @@
     <div class="stages">
         <div class="hero">
             <h2>Tahap Kedua</h2>
-            <img src="{{ asset('images/usm/dashboard/step1.png') }}" alt="usm_step_1">
             <div class="description">
                 <h4>Mengisi Data Diri & Asal Sekolah</h4>
                 <p>Calon peserta didik melakuakan pendaftaran tahap pertama, yakni pendaftaran data diri</p>

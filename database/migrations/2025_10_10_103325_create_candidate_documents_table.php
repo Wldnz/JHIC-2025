@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('name', 255);
             $table->string('mime_types');
             $table->text('file_url');
+            $table->enum('type', ['form', 'usm']);
             $table->boolean('is_valid')->default(false);
             $table->enum('type', ['form', 'usm']);
             $table->timestamp('expired_at');

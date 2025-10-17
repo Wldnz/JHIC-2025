@@ -4,12 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login PSB</title>
+    <meta name="description" content="Login calon peserta didik unutk mendaftarkan sebagai siswa/i">
+    <title>Login Calon Peserta Didik | Penerimaan Siswa Baru</title>
+    <link rel="shortcut icon" href="{{ asset('images/logo-bi.png') }}" type="image/png">
+    @vite(["resources/css/candidate.css", "resources/js/app.js"])
 </head>
 
 <body>
-
-    @vite(["resources/css/candidate.css", "resources/js/app.js"])
     <main class="wrapper-login">
 
         <div class="star-group trinkets g1">
