@@ -61,7 +61,7 @@
                     <button type="submit" class="btn btn-submit w-full">
                         SIGN UP
                     </button>
-                    <a href="#" target="_blank"><img src="{{ asset("icons/google.svg") }}">
+                    <a href="{{ route('candidate.signup-google') }}" target="_blank"><img src="{{ asset("icons/google.svg") }}">
                         <p>Sign Up with Google</p>
                     </a>
                 </div>

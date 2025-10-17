@@ -52,8 +52,10 @@
                 <div class="w-buttons">
                     <button class="submit-form" type="submit">Simpan Data</button>
                     <div class="pages">
-                        <button class="pagination-action" type="button">Sebelumnya</button>
-                        <button class="pagination-action" type="button">Selanjutnya</button>
+                        <a href="{{ route('candidate.dashboard') }}" role="button" class="pagination-action">Sebelumnya</a>
+                        <a href="{{ route('candidate.stage.stage2') }}" role="button" class="pagination-action">Selanjutnya</a>
+                        {{-- <button class="pagination-action" type="button">Sebelumnya</button> --}}
+                        {{-- <button class="pagination-action" type="button">Selanjutnya</button> --}}
                     </div>
                 </div>
             </div>

@@ -20,7 +20,7 @@
                 <p>Calon peserta didik melakuakan pendaftaran tahap pertama, yakni melakukan pembayaran untuk mengakases formulir pendaftaran</p>
             </div>
         </div>
-        <form class="form-stage" action={{ route('candidate.stage.save-stage1') }} method="POST" enctype="multipart/form-data">
+        <form class="form-stage" action={{ route('candidate.stage.save-stage4') }} method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <h2>{{ Auth::user()->fullname }}, Langkah pertama ini kamu diwajibkan untuk mengisi data diri kamu ya!</h2>

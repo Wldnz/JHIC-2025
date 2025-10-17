@@ -20,7 +20,7 @@
                 <p>Calon peserta didik melakuakan pendaftaran tahap terakhir, yakni menguploud surat - surat pendukung</p>
             </div>
         </div>
-        <form class="form-stage" action={{ route('candidate.stage.save-stage1') }} method="POST" enctype="multipart/form-data">
+        <form class="form-stage" action={{ route('candidate.stage.save-stage5') }} method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="fields fields-document">
@@ -29,15 +29,17 @@
                         <div class="wrapper-file">
                             <p class="floating-title">{{ $document->name }} <span>*</span></p>
                             <p class="description">{{ $as ?? 'Belum ada file yang diuploud nih' }}</p>
-                            <input type="file" accept="{{ $document->mime_types }}" id="{{ $document->name }}" name="{{ $document->name }}" aria-describeBy="biodata" @required($document->is_required)>
+                            <input type="file" accept="{{ $document->mime_types }}" id="{{ $document->name }}" name="{{ $document->id }}" aria-describeBy="biodata" @required($document->is_required)>
                         </div>
-                        <span class="download">
-                            Download File : <a class="link"
-                            href="{{ $document->download_file_url }}" 
-                            download="{{ $document->name }}"
-                            >Klik Disini..</a>
-                        </span>
-                    </div>             
+                        @if ($document->download_file_url)
+                            <span class="download">
+                                Download File : <a class="link"
+                                href="{{ $document->download_file_url }}"
+                                download="{{ $document->name }}"
+                                >Klik Disini..</a>
+                            </span>
+                        @endif
+                    </div>
                 @endforeach
             </div>
             <div class="s-submit">

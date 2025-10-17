@@ -11,7 +11,7 @@
                 <p>Calon Pesertadidik dapat mendaftar sebelum tanggal / termin yang telah ditetapkan dan selama kuota masih mencukupi. 30 Pesertadidik untuk masing – masing Jurusan.</p>
             </div>
         </div>
-        <form class="form-stage" action={{ route('candidate.stage.save-stage2') }} method="POST" enctype="multipart/form-data">
+        <form class="form-stage" action={{ route('candidate.stage.save-stage3') }} method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <h2>Untuk Lanjut Ke Tahap Selanjutnya, Kamu Diwajibkan Memilih Gelombang USM Yang Tersedia</h2>

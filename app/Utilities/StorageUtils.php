@@ -4,6 +4,7 @@ namespace App\Utilities;
 use App\Helpers\GdriveFileInfo;
 use App\Models\Candidate;
 use App\Models\CandidateDocument;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
 use Throwable;
@@ -15,7 +16,7 @@ class StorageUtils
     public static $registrationDocumentsDir = 'registration-documents';
     public static $candidateDocumentsDir = 'candidate-documents';
 
-    public static function uploadNewCandidateDocument(Candidate $candidate, string $fileName, string $fileMimetypes, string $fileContent, bool $isValid = false)
+    public static function uploadNewCandidateDocument(Candidate $candidate, string $fileName, string $fileMimetypes, string $fileContent, bool $isValid = false, string $documentType = 'usm')
     {
         try {
             $currentTimestamps = microtime(true);
@@ -34,6 +35,8 @@ class StorageUtils
                 'mime_types' => $fileMimetypes,
                 'file_url' => $gdrivePath,
                 'is_valid' => $isValid,
+                'expired_at' => Carbon::parse($candidate->registrationPhase->ended_at)->addDays(5),
+                'type' => $documentType,
             ]);
         } catch (Throwable $e) {
             logger()->error($e);
@@ -73,6 +76,19 @@ class StorageUtils
             logger()->error($e);
             report($e);
             return null;
+        }
+    }
+
+    public static function deleteAllCandidateDocuments(Candidate $candidate)
+    {
+        try {
+            $gdrivePath = self::$candidateDocumentsDir . "/{$candidate->nisn}";
+            Gdrive::deleteDir($gdrivePath);
+            return true;
+        } catch (Throwable $e) {
+            logger()->error($e);
+            report($e);
+            return false;
         }
     }
 }

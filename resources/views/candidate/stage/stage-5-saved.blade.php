@@ -10,7 +10,7 @@
                 <p>Perjalanan Mu Masih Panjang Tahu, Segera Persiapkan Dirimu Untuk Ujian Saringan Masuk Dengan Mengakses Modul - Modul Yang Sudah Disediakan</p>
                 <div class="w-buttons">
                     <div class="pages pages-1">
-                        <button class="pagination-action" type="button" onclick="location.href='{{ route('candidate.stage.dashboard') }}'">Lihat Modul</button>
+                        <button class="pagination-action" type="button" onclick="location.href='{{ route('candidate.dashboard') }}'">Lihat Modul</button>
                     </div>
                 </div>
             </div>

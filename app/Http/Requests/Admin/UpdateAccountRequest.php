@@ -101,6 +101,10 @@ class UpdateAccountRequest extends FormRequest
         $candidateRegistrationPhaseRules = [
             'phase.id'              => ['nullable', 'exists:registration_phases,id'],
         ];
+        $candidateMajorsRules = [
+            'majors.*.id'               => ['required', 'string'],
+            'majors.*.major_id'         => ['required', 'string'],
+        ];
         $candidateGuardianRules = [
             'candidate_guardian_name'                   => ['nullable', 'string', 'min:1', 'max:255'],
             'candidate_guardian_birthdate'              => ['required', 'date', 'date_format:Y-m-d'],
@@ -130,7 +134,7 @@ class UpdateAccountRequest extends FormRequest
             return $baseRules;
         }
 
-        $resultRules = array_merge($baseRules, $candidateDocumentsRules);
+        $resultRules = array_merge($baseRules, $candidateDocumentsRules, $candidateMajorsRules);
 
         if ($this->has('candidate_nisn')) {
             $resultRules = array_merge($resultRules, $candidateRules);

@@ -51,7 +51,7 @@
                     <button type="submit" class="btn btn-submit w-full">
                         LOGIN
                     </button>
-                    <a href="#" target="_blank"><img src="{{ asset("icons/google.svg") }}">
+                    <a href="{{ route('candidate.login-google') }}" target="_blank"><img src="{{ asset("icons/google.svg") }}">
                         <p>Sign In with Google</p>
                     </a>
                 </div>
