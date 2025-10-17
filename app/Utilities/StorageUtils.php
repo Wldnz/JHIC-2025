@@ -4,6 +4,7 @@ namespace App\Utilities;
 use App\Helpers\GdriveFileInfo;
 use App\Models\Candidate;
 use App\Models\CandidateDocument;
+use App\Models\RegistrationPhase;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
@@ -35,7 +36,11 @@ class StorageUtils
                 'mime_types' => $fileMimetypes,
                 'file_url' => $gdrivePath,
                 'is_valid' => $isValid,
-                'expired_at' => Carbon::parse($candidate->registrationPhase->ended_at)->addDays(5),
+                'expired_at' => $candidate->registrationPhase()->count() > 0 ?
+                    Carbon::parse($candidate->registrationPhase->ended_at)->addDays(5) :
+                    Carbon::parse(
+                        RegistrationPhase::query()->orderBy('ended_at', 'desc')->first()->ended_at
+                    )->addDays(5),
                 'type' => $documentType,
             ]);
         } catch (Throwable $e) {

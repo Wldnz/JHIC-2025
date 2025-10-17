@@ -1103,35 +1103,31 @@ img {
   justify-content: center;
 }
 .btq .btq-text p {
-  max-width: 90%;
   text-align: justify;
-  font-size: calc(clamp(0.6rem, 2vw, 1.5rem) + 3px);
+  font-size: clamp(0.6rem, 3.5vw, 2rem);
 }
 .btq .btq-method {
   display: flex;
   justify-content: center;
-  margin: 40px 0 20px 0;
+  margin-block: 15px;
+}
+.btq .btq-method h3 {
+  font-size: clamp(0.6rem, 4.5vw, 3rem);
 }
 .btq .btq-content {
-  width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 15px;
   justify-content: center;
 }
-.btq .btq-content .btq-kotak {
-  min-width: 250px;
-  width: 100%;
-  height: 500px;
-  max-height: 500px;
-}
 .btq .btq-content .btq-kotak img {
+  aspect-ratio: 4/4;
   width: 100%;
-  height: 100%;
   object-fit: cover;
   border-radius: 10px;
 }
 .btq .btq-system h3 {
+  font-size: clamp(0.6rem, 4.5vw, 3rem);
   margin-top: 40px;
   text-align: center;
 }
@@ -1139,43 +1135,66 @@ img {
   display: flex;
   justify-content: center;
   margin-top: 20px;
-  gap: 30px;
   flex-wrap: wrap;
-  margin-bottom: 25px;
 }
 .btq .btq-system .btq-system1 .btq-kotak1 {
   width: 90%;
-  height: 160px;
   border-radius: 10px;
 }
 .btq .btq-system .btq-system1 .btq-kotak1 h3 {
+  font-size: clamp(0.6rem, 4vw, 2.5rem);
   text-align: left;
   margin-top: 10px;
   margin-left: 15px;
 }
 .btq .btq-system .btq-system1 .btq-kotak1 p {
+  font-size: clamp(0.6rem, 3.5vw, 2rem);
   text-align: justify;
   margin: 10px 15px;
 }
 .btq .btq-system .btq-system1 .btq-kotak1 .kelompok-ba h3 {
+  font-size: clamp(0.6rem, 4vw, 2.5rem);
   text-align: right;
   margin-top: 10px;
   margin-right: 15px;
 }
 .btq .btq-system .btq-system1 .btq-kotak1 .kelompok-ba p {
+  font-size: clamp(0.6rem, 3.5vw, 2rem);
   text-align: justify;
   margin: 10px 15px;
 }
 
-@media (max-width: 768px) {
-  .btq-content {
-    grid-template-columns: 1fr !important;
+@media screen and (min-width: 768px) {
+  .btq .btq-text p {
+    font-size: 19px;
+    margin: 10px 15px;
   }
-  .btq-system h3 {
-    font-size: 18px;
+  .btq .btq-method h3 {
+    font-size: clamp(0.6rem, 4vw, 2.5rem);
   }
-  .btq-system .btq-kotak1 {
-    font-size: 15px;
+  .btq .btq-content .btq-kotak {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .btq .btq-content .btq-kotak img {
+    box-sizing: cover;
+    max-width: 70%;
+  }
+  .btq .btq-system h3 {
+    font-size: clamp(0.6rem, 4vw, 2.5rem);
+  }
+  .btq .btq-system .btq-system1 .btq-kotak1 h3 {
+    font-size: clamp(0.6rem, 3.5vw, 2rem);
+  }
+  .btq .btq-system .btq-system1 .btq-kotak1 p {
+    font-size: 23px;
+  }
+  .btq .btq-system .btq-system1 .btq-kotak1 .kelompok-ba h3 {
+    font-size: clamp(0.6rem, 3.5vw, 2rem);
+  }
+  .btq .btq-system .btq-system1 .btq-kotak1 .kelompok-ba p {
+    font-size: 23px;
   }
 }
 body {
@@ -1236,6 +1255,7 @@ img {
 }
 .progsil .progsil-image img {
   width: 100%;
+  border-radius: 5px;
 }
 .progsil .progsil-content h3 {
   padding: 20px;
@@ -1253,24 +1273,69 @@ img {
 .progsil .progsil-content .progsil-text p {
   font-size: calc(clamp(0.6rem, 2vw, 1.5rem) + 3px);
 }
-.progsil .artexample-text {
-  margin: 20px 0;
+.progsil .progsil-art {
+  width: 100%;
+}
+.progsil .progsil-art h3 {
+  margin-block: 15px;
   text-align: center;
 }
-.progsil .progsil-art {
+.progsil .progsil-art .gallery-art {
   display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+.progsil .progsil-art .gallery-art .keizory {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.progsil .progsil-art .gallery-art .keizory .art img {
   width: 100%;
-  gap: 10px;
+  border-radius: 15px;
 }
-.progsil .progsil-art .art {
-  min-height: 400px;
-  width: 10%;
-  background-color: whitesmoke;
+.progsil .progsil-art .gallery-art .hazril-naufal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.progsil .progsil-art .art.main {
-  width: 80%;
+.progsil .progsil-art .gallery-art .hazril-naufal .art img {
+  width: 100%;
+  border-radius: 15px;
+}
+.progsil .progsil-art .gallery-art .julian {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.progsil .progsil-art .gallery-art .julian .art img {
+  width: 100%;
+  border-radius: 15px;
 }
 
+@media screen and (min-width: 768px) {
+  .progsil .progsil-image {
+    display: flex;
+    justify-content: center;
+  }
+  .progsil .progsil-image img {
+    width: 80%;
+  }
+  .progsil .progsil-content h3 {
+    font-size: clamp(0.6rem, 2vw, 1.5rem);
+  }
+  .progsil .progsil-content .progsil-text p {
+    font-size: clamp(0.6rem, 2vw, 1.5rem);
+  }
+  .progsil .progsil-art h3 {
+    margin-block: 15px;
+    font-size: clamp(0.6rem, 2vw, 1.5rem);
+  }
+  .progsil .progsil-art .gallery-art {
+    display: flex;
+    justify-content: center;
+  }
+}
 body {
   font-family: "Montserrat", "sans-serif";
   background-color: #fff;

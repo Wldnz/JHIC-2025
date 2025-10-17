@@ -76,7 +76,7 @@ document.querySelector(".open-btn").addEventListener("click", () => { document.q
 document.querySelector(".close-btn").addEventListener("click", () => { document.querySelector(".navbar-full").classList.remove("active"); document.body.style.overflow = "auto"})
 
 document.querySelectorAll(".expandable").forEach(btn => {
-    btn.addEventListener("click", () => { btn.nextElementSibling.classList.toggle("active"); btn.children(1).style.transform = "rotate(180deg)" })
+    btn.addEventListener("click", () => { btn.nextElementSibling.classList.toggle("active");})
 })
 </script>
 
