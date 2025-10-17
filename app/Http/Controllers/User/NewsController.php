@@ -31,7 +31,7 @@ class NewsController extends Controller
         return view('user.news.index', compact('articles'));
     }
 
-    public function newsDetail($article)
+    public function newsDetail(Article $article)
     {
         return view('user.news.detail', compact('article'));
     }

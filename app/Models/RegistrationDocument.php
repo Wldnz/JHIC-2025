@@ -12,6 +12,7 @@ class RegistrationDocument extends Model
         'name',
         'mime_types',
         'is_required',
-        'file_download_url',
+        'download_file_url',
+        'type',
     ];
 }

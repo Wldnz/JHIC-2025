@@ -108,14 +108,16 @@ class NewsController extends Controller
                 throw new Exception("Gagal menambahkan artikel dengan judul \"{$validated['title']}\"");
             }
 
+            $keywordIds = [];
             foreach($validated['tags'] as $tag) {
                 $keyword = Keyword::createOrFirst([
                     'name' => $tag,
                 ], [
                     'name' => $tag
                 ]);
-                $article->keywords()->attach($keyword->id);
+                $keywordIds[] = $keyword->id;
             }
+            $article->keywords()->attach($keywordIds);
 
             DB::commit();
 
@@ -180,21 +182,27 @@ class NewsController extends Controller
             );
             $description = substr($validated['content'], 0, 255);
 
+            $deletedKeywordIds = [];
             foreach ($news->keywords as $keyword) {
                 if (!in_array($keyword->name, $validated['tags'])) {
                     $news->keywords()->detach($keyword->id);
-                    $keyword->delete();
+                    if ($keyword->articles()->count() <= 0) {
+                        $deletedKeywordIds[] = $keyword->id;
+                    }
                 }
             }
+            Keyword::destroy($deletedKeywordIds);
 
+            $keywordIds = [];
             foreach ($validated['tags'] as $tag) {
                 $keyword = Keyword::createOrFirst([
                     'name' => $tag,
                 ], [
                     'name' => $tag
                 ]);
-                $news->keywords()->syncWithoutDetaching($keyword->id);
+                $keywordIds[] = $keyword->id;
             }
+            $news->keywords()->syncWithoutDetaching($keywordIds);
 
             $isUpdated = $news->update([
                 'title' => $validated['title'],

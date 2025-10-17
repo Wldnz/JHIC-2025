@@ -933,6 +933,7 @@ img {
 .wrapper-login {
   width: 100vw;
   height: 100dvh;
+}
 .wrapper-login {
   width: 100vw;
   height: 100dvh;
@@ -990,14 +991,12 @@ img {
 }
 .wrapper-login .login .wrapper-field {
   margin-top: 30px;
-.wrapper-login .login .wrapper-field {
   margin-top: 20px;
   display: flex;
   flex-direction: column;
   gap: 40px;
   gap: 10px;
 }
-.wrapper-login .login .wrapper-field .wrapper-input {
 .wrapper-login .login .wrapper-field .wrapper-input {
   display: flex;
   flex-direction: column;
@@ -1011,6 +1010,7 @@ img {
   font-size: clamp(0.6rem, 3.5vw, 2rem) !important;
   border-radius: 8px;
   border: 2px solid #273b98;
+}
 .wrapper-login .login .wrapper-field .wrapper-input label {
   font-size: clamp(0.6rem, 4vw, 2.5rem);
 }

@@ -12,6 +12,7 @@ use App\Http\Requests\Candidate\SaveStage5Request;
 use App\Http\Requests\Candidate\StoreDocumentRequest;
 use App\Models\Candidate;
 use App\Models\CandidateDocument;
+use App\Models\CandidateMajor;
 use App\Models\CandidatePhase;
 use App\Models\Major;
 use App\Models\PaymentMethod;
@@ -168,7 +169,7 @@ class StageController extends Controller
             return redirect()->route('candidate.stage.stage3');
         }
 
-        return view('candidate.stage.stage-2');
+        return view('candidate.stage.stage-2', compact('formDocument'));
     }
 
     public function saveStage2(SaveStage2Request $request)
@@ -188,6 +189,24 @@ class StageController extends Controller
                 throw new Exception("Gagal membuat data calon siswa");
             }
 
+            foreach ($validated['majors'] as $majorId) {
+                $major = Major::find($majorId);
+                if (!$major) {
+                    throw new Exception("Major dengan ID \"{$majorId}\" tidak ditemukan");
+                }
+
+                $candidateMajor = CandidateMajor::create([
+                    'candidate_nisn' => $candidate->nisn,
+                    'user_id' => $user->id,
+                    'major_id' => $major->id,
+                    'major_long_name' => $major->long_name,
+                    'major_short_name' => $major->short_name,
+                ]);
+                if (!$candidateMajor) {
+                    throw new Exception("Gagal membuat data jurusan pilihan calon siswa");
+                }
+            }
+
             $oldestRegistrationPhase = RegistrationPhase::query()
                 ->orderBy('ended_at', 'desc')
                 ->first();
@@ -198,7 +217,7 @@ class StageController extends Controller
 
             $formDocument = StorageUtils::uploadNewCandidateDocument(
                 $candidate,
-                "Biodata Calon Siswa",
+                "Formulir Biodata",
                 'application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document',
                 $validated['biodata_form']->get(),
                 false,

@@ -30,6 +30,7 @@ class SaveStage2Request extends FormRequest
                 'application/msword',
                 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
             ]), 'max:5000'],
+            'majors.*' => ['required', 'exists:majors,id'],
         ];
     }
 }

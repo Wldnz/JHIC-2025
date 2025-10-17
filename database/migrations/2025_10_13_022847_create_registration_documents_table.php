@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('mime_types');
             $table->boolean('is_required')->default(true);
             $table->text('download_file_url')->nullable();
+            $table->enum('type', ['form', 'usm']);
             $table->timestamps();
         });
     }

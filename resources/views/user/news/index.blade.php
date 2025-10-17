@@ -16,7 +16,7 @@
         </div>
         <div class="news-group">
             @foreach ($articles as $article)
-            <a href="">
+            <a href="{{ route('user.news-detail', ['article' => $article]) }}">
                 <img src="{{ $article->thumbnail_url }}" alt="article-thumbnail-{{ $article->id }}" loading="lazy">
                 <div class="news-infodetail">
                     <div class="news-info">

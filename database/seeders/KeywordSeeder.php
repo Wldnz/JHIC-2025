@@ -16,7 +16,18 @@ class KeywordSeeder extends Seeder
     {
         $limit = fake()->numberBetween(1, Article::query()->count());
         $articles = Article::query()->inRandomOrder()->limit($limit)->get();
-        $words = fake()->words(10);
+        $words = [
+            'pendidikan',
+            'siswa',
+            'guru',
+            'sekolah',
+            'pembelajaran',
+            'ekstrakurikuler',
+            'prestasi',
+            'kurikulum',
+            'ujian',
+            'kegiatan sekolah'
+        ];
 
         $keywordCount = fake()->numberBetween(3, 10);
         $keywords = [];
