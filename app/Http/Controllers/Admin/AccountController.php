@@ -180,6 +180,7 @@ class AccountController extends Controller
                 'candidateMajors',
                 'candidateGuardian',
                 'candidateDocuments',
+                'candidateUSMResult',
                 'transactions'
             ])
             ->where('user_id', '=', $account->id)

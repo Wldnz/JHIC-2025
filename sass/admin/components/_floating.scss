@@ -1,0 +1,57 @@
+@import '../../utils/variables';
+
+@mixin card {
+    .floating-action {
+        width: max-content;
+        min-height: 120px;
+
+        position: absolute;
+        bottom: 20px;
+        right: -40px;
+
+        background-color: black;
+        border-radius: $border-radius;
+        border: 2px solid $color-accent;
+
+        display: none;
+        flex-direction: column;
+        gap: 10px;
+
+        z-index: 100;
+
+        .action {
+            min-height: 50px;
+            padding: 10px;
+
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            font-weight: bold;
+            font-size: $font-size-m;
+            color: white;
+
+            button {
+                display: flex;
+                justify-content: start;
+                font-size: inherit;
+                font-weight: inherit;
+                color: inherit;
+
+                &:hover {
+                    background-color: white;
+                    color: black;
+
+                    svg {
+                        fill: black;
+                        stroke: black;
+
+                        path {
+                            fill: black;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

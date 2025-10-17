@@ -24,7 +24,9 @@ function createKeyword({ name = null, id = null }) {
 function createTagsSender() {
     let keywordsHTML = '';
     keywords.forEach((key, index) => {
-        keywordsHTML += `<input type="hidden" name="tags[${index}]" id="tags_sender_${index}" value="${key.name}" readonly">`;
+        keywordsHTML += `
+        <input type="hidden" name="tags[${index}]" id="tags_sender_${index}" value="${key.id}" readonly">
+        <input type="hidden" name="tags[${index}]" id="tags_sender_${index}" value="${key.name}" readonly">`;
     });
     document.getElementById('tags_sender').innerHTML = keywordsHTML;
 }
@@ -51,7 +53,7 @@ function handleAddKeyword(keyword) {
     const id = `added_keyword_${new Date().getTime()}`;
     keywords.push({
         id,
-        name: "Keyword Baru"
+        name: keyword.name
     });
     loadKeywords();
 }
@@ -66,7 +68,8 @@ function handleUpdateKeyword(keyword) {
             }
         }
         return key;
-    })
+    });
+    createTagsSender();
 }
 
 function handleRemoveKeyword(keyword) {

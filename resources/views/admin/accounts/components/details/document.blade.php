@@ -10,8 +10,8 @@
                     <div class="container container-1">
                         <div class="wrapper-document">
                             <div class="wrapper-thumbnail">
-                                <input type="file" accept="{{ $document->mime_types }}" name="documents[{{ $cd->id }}][file]">
-                                <span>{{ $cd->name }}</span>
+                                <input type="file" accept="{{ $document->mime_types }}" name="documents[{{ $cd->id }}][file]" id="{{ $cd->name }}">
+                                <span id="{{ $document->name }}_preview_name">{{ $cd->name }}</span>
                             </div>
                             <a href="{{ route('admin.detail-account.download-document', ['account' => $candidate->user_id, 'candidateDocument' => $cd->id]) }}" download="{{ $cd->name }}" id="{{ $document->name }}_download">
                                 @include('_components._sprite-icons', ['name' => 'convert', 'size' => 20])
@@ -35,7 +35,7 @@
             <div class="container container-1">
                 <div class="wrapper-document">
                     <div class="wrapper-thumbnail">
-                        <input type="file" accept="{{ $document->mime_types }}" name="documents[added_{{ $document->name }}][file]" required>
+                        <input type="file" accept="{{ $document->mime_types }}" name="documents[added_{{ $document->name }}][file]" id="{{ $document->name }}" required>
                         <input type="hidden" name="documents[added_{{ $document->name }}][name]" value="{{ $document->name }}">
                         <input type="hidden" name="documents[added_{{ $document->name }}][mime_types]" value="{{ $document->mime_types }}">
                         <span id="{{ $document->name }}_preview_name">{{ $document->name }} (Tambahkan Uploud)</span>
@@ -57,14 +57,13 @@
     document.querySelectorAll('.wrapper-thumbnail').forEach(e => {
         if(e.children[0].type === 'file'){
             e.children[0].addEventListener('change', (event) => {
-                // const input_isUpdated = document.getElementById(event.target.name + '_updated');
-                const input_isDownload = document.getElementById(event.target.name + '_download');
-                const preview_name = document.getElementById(event.target.name + '_preview_name');
+                const input_isDownload = document.getElementById(event.target.id + '_download');
+                const preview_name = document.getElementById(event.target.id + '_preview_name');
                 const file = event.target.files[0];
                 // if(input_isDownload && file) input_isUpdated.value = 1;
                 // if(input_isDownload && !file) input_isUpdated.value = 0;
                 if(file) preview_name.textContent = file.name;
-                if(!file) preview_name.textContent = event.target.name + ' (Tambahkan Dokumen Disini)';
+                if(!file) preview_name.textContent = event.target.id + ' (Tambahkan Dokumen Disini)';
             });
         }
     });
