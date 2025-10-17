@@ -74,6 +74,7 @@ $width-mobile: 100vw;
         min-height: 120px;
         overflow: hidden;
     }
+
     100% {
         height: 0;
         opacity: .4;
@@ -87,5 +88,11 @@ $width-mobile: 100vw;
 
     .navigation-side {
         width: inherit !important;
+    }
+}
+
+@keyframes moving-teks {
+    100% {
+        right: 100vw;
     }
 }

@@ -7,9 +7,9 @@
     <meta content="{{ $title  ?? "SMK BINA INFORMATIKA"  }}" name="{{ $description ?? 'Smk Bina Informatika Bintaro, adalah sebuah sekolah kejuruaan yang memiliki 6 jurusan' }}">
     <meta content="{{ $title  ?? "SMK BINA INFORMATIKA"  }}" name="{{ $keywords ?? 'SMK BINA INFORMATIKA BINTARO, SEKOLAH SMK BINTARO, SMK JURUSAN, (RPL, TKJ, ANIMASI, DKV, BC, GAMEDEV), Pendaftaran Online SMK' }}">
     @vite(["resources/css/app.css", "resources/js/app.js"])
+    <link rel="shortcut icon" href="{{ asset('images/logo-bi.png') }}" type="image/png">
 </head>
 <body>
-
     <nav class="navigation-user">
         <div class="left"><a href="{{ route('user.index') }}"><img src="https://smkbinainformatika.sch.id/wp-content/uploads/2022/11/logo.png"></a></div>
         <div class="center">
@@ -41,13 +41,10 @@
                 <a class="expandable-pc">PROGRAM</a>
                     <div class="branch">
                         <a href="{{ route("user.programs.extracurriculars") }}">Extracurricular </a>
-                        <a href="{{ route("user.programs.bi-channel") }}">BI Channel</a>
                         <a href="https://webosis-smkbi.wuaze.com/" target="blank">OSIS</a>
                         <a href="{{ route("user.programs.program-silang") }}">Progsil</a>
                         <a href="{{ route("user.programs.baca-tulis-quran") }}">BTQ</a>
                         <a href="{{ route("candidate.index") }}">PSB</a>
-                        <a href="{{ route("user.programs.bimbingan-konseling") }}">Bimbingan Konseling</a>
-                        <a href="{{ route("user.programs.project-works") }}">Project Work</a>
                     </div>
                 </div>
                 <div class="expandable-wrapper">
@@ -86,13 +83,10 @@
             <a class="expandable">PROGRAM <img src="{{ asset("icons/arrow-down.svg") }}" alt=""></a>
             <div class="branch">
                 <a href="{{ route("user.programs.extracurriculars") }}">Extracurricular </a>
-                <a href="{{ route("user.programs.bi-channel") }}">BI Channel</a>
                 <a href="https://webosis-smkbi.wuaze.com/" target="blank">OSIS</a>
                 <a href="{{ route("user.programs.program-silang") }}">Progsil</a>
                 <a href="{{ route("user.programs.baca-tulis-quran") }}">BTQ</a>
                 <a href="{{ route("candidate.index") }}">PSB</a>
-                <a href="{{ route("user.programs.bimbingan-konseling") }}">Bimbingan Konseling</a>
-                <a href="{{ route("user.programs.project-works") }}">Project Work</a>
             </div>
             <a href="{{ route('user.news') }}">NEWS <img src="{{ asset("icons/majors icons/non.png") }}" alt=""></a>
 
