@@ -21,6 +21,10 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->append(FrameGuard::class);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
+        $exceptions->render(function (NotFoundHttpException $exception, Request $request) {
+            return response()->view("exceptions.page-404", status: 404);
+        });
+
         $exceptions->render(function (Exception $exception, Request $request) {
             logger()->error($exception);
             report($exception);

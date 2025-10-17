@@ -988,12 +988,12 @@ img {
 
 .wrapper-login {
   width: 100vw;
-  height: 100dvh;
-  overflow: hidden;
+  height: 110dvh;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
+  padding: 50px 0 0 0;
 }
 .wrapper-login .login {
   width: 80%;
@@ -1052,14 +1052,13 @@ img {
   border: 1px solid #273b98;
   border-radius: 8px;
   align-items: center;
+  padding: 0 5px 0 0;
 }
 .wrapper-login .login .wrapper-field .wrapper-input .password input {
   border: none;
   width: 90%;
 }
 .wrapper-login .login .wrapper-field .wrapper-input .password img {
-  width: 10%;
-  padding: 7px;
   cursor: pointer;
   filter: brightness(0) saturate(100%) invert(17%) sepia(56%) saturate(3428%) hue-rotate(224deg) brightness(91%) contrast(90%);
 }
@@ -1150,6 +1149,23 @@ img {
 .wrapper-login .star-group.g2 img:nth-child(2) {
   rotate: -10deg;
   margin-bottom: 20px;
+}
+
+.navi-login {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  height: 30px;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.navi-login img {
+  height: 100%;
+  width: auto;
+  object-fit: contain;
 }
 
 @media only screen and (min-width: 425px) {
