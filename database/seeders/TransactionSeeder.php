@@ -55,7 +55,6 @@ class TransactionSeeder extends Seeder
                     'payment_method_id' => $paymentMethod->id,
                     'payment_method_display_name' => $paymentMethod->display_name,
                     'total_cost' => 5_787_900,
-                    'type' => fake()->randomElement(['usm','form']),
                     'expired_at' => now()->addHours(rand(12, 24)),
                     'status' => $haveSuccessTransaction ?
                         fake()->randomElement($this->availableStatusesWithoutSuccess) :
