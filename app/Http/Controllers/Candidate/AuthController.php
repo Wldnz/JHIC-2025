@@ -76,6 +76,15 @@ class AuthController extends Controller
             return redirect()->route('candidate.signup-page');
         }
 
+        $existingUser = User::query()
+            ->where('email', '=', $user->getEmail())
+            ->first();
+
+        if ($existingUser) {
+            Auth::login($existingUser, true);
+            return redirect()->route('candidate.dashboard');
+        }
+
         $newUser = new User();
         $newUser->fullname = $user->getName();
         $newUser->email = $user->getEmail();

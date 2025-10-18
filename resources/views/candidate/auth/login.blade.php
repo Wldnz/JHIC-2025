@@ -73,7 +73,7 @@
         <img src="{{ asset("icons/logo-sponsor.png") }}" alt="">
     </div>
 
-    @includeWhen(session()->has('alert'), '_components._alert-message', ['data' => session()->get('alert'), 'icon_name' => 'product'])
+    @includeWhen(session()->has('alert'), '_components._alert-message', ['data' => session()->get('alert'), 'icon_name' => 'account'])
 
     <script>
 
@@ -99,4 +99,3 @@
 </body>
 
 </html>
-@includeWhen(session()->has('alert'), '_components._alert-message', ['data' => session()->get('alert'), 'icon_name' => 'product'])

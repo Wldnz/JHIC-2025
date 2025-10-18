@@ -537,6 +537,7 @@ class StageController extends Controller
                 continue;
             }
             $isAllUplouds = false;
+            break;
         }
 
         $documents = $registrationDocuments;

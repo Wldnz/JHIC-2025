@@ -14,8 +14,9 @@ class Controller extends \App\Http\Controllers\Controller
 
     public function __construct(){
         if(Auth::check() && Auth::user()->role == 'candidate'){
-            $this->candidate = Candidate::where('user_id', '=', Auth::user()->id)
-                ->get();
+            $this->candidate = Candidate::query()
+                ->where('user_id', '=', Auth::user()->id)
+                ->first();
         }
     }
 
@@ -101,6 +102,28 @@ class Controller extends \App\Http\Controllers\Controller
     public function learningMaterials()
     {
         $candidate = $this->candidate;
-        return view('candidate.learning-materials', compact('candidate'));
+        $isAllUploads = true;
+
+        if ($candidate) {
+            $candidateDocuments = $this->candidate->candidateDocuments()
+                ->where('type', '=', 'usm')
+                ->get()
+                ->pluck('name')
+                ->toArray();
+            $registrationDocuments = RegistrationDocument::all();
+
+
+            foreach ($registrationDocuments as $registrationDocument) {
+                if (in_array($registrationDocument->name, $candidateDocuments)) {
+                    continue;
+                }
+                $isAllUploads = false;
+                break;
+            }
+        } else {
+            $isAllUploads = false;
+        }
+
+        return view('candidate.learning-materials', compact('candidate', 'isAllUploads'));
     }
 }
