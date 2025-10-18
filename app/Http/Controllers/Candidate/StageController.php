@@ -55,7 +55,7 @@ class StageController extends Controller
         $majors = Major::all();
 
         $isPaid = $formTransactionCount > 0;
-        if ($isPaid) {
+        if ($isPaid && $candidate) {
             return redirect()->route('candidate.stage.stage2');
         }
 
@@ -97,10 +97,9 @@ class StageController extends Controller
                     'user_id' => $user->id,
                     'full_name' => $user->fullname,
                 ]);
-            }
-
-            if (!$candidate) {
-                throw new Exception("Gagal membuat data calon siswa");
+                if (!$candidate) {
+                    throw new Exception("Gagal membuat data calon siswa");
+                }
             }
 
             $majors = Major::find($validated['majors']);

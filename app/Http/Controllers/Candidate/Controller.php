@@ -36,15 +36,15 @@ class Controller extends \App\Http\Controllers\Controller
             ->where('type', '=', 'form')
             ->where('status', '=', 'settlement')
             ->count();
+        $candidate = Auth::user()->candidate()->first();
 
-        if (!$stopCounting && $formTransactionCount > 0) {
+        if (!$stopCounting && $formTransactionCount > 0 && $candidate) {
             $currentStage = 2;
         } else {
             $stopCounting = true;
             return view('candidate.dashboard', compact('candidate', 'currentStage'));
         }
 
-        $candidate = Auth::user()->candidate()->first();
         $formDocument = $candidate->candidateDocuments()
             ->where('type', '=', 'form')
             ->orderBy('created_at', 'desc')
