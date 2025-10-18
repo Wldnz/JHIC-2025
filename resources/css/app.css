@@ -2126,14 +2126,15 @@ body .wrapper-user {
 body .wrapper-user .wrapper-moving-teks {
   width: 100%;
   position: relative;
-  min-height: 20px;
+  min-height: 2em;
   display: flex;
   align-items: center;
   justify-content: end;
   gap: 200px;
-  margin-bottom: 24px;
+  background-color: #eaf7f9;
 }
 body .wrapper-user .wrapper-moving-teks .moving-teks {
+  background-color: #eaf7f9;
   width: max-content;
   padding: 8px;
   gap: 10px;
