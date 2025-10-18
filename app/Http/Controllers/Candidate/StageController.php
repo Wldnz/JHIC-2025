@@ -86,7 +86,60 @@ class StageController extends Controller
                 throw new Exception("Metode pembayaran dengan code \"{$validated['payment_method']}\" tidak ditemukan");
             }
 
+            // Candidate creation logic
+
             $user = Auth::user();
+            $candidate = $user->candidate()->first();
+
+            if (!$candidate) {
+                $candidate = Candidate::factory()->create([
+                    'nisn' => $validated['nisn'],
+                    'user_id' => $user->id,
+                    'full_name' => $user->fullname,
+                ]);
+            }
+
+            if (!$candidate) {
+                throw new Exception("Gagal membuat data calon siswa");
+            }
+
+            $majors = Major::find($validated['majors']);
+            $candidateMajors = $candidate->candidateMajors()->get();
+            $existingCandidateMajorIds = [];
+
+            foreach ($validated['majors'] as $majorId) {
+                $major = $majors->find($majorId);
+                if (!$major) {
+                    throw new Exception("Major dengan ID \"{$majorId}\" tidak ditemukan");
+                }
+
+                $candidateMajor = $candidateMajors
+                    ->where('major_id', '=', $majorId)
+                    ->first();
+
+                if (!$candidateMajor) {
+                    $candidateMajor = CandidateMajor::create([
+                        'candidate_nisn' => $candidate->nisn,
+                        'user_id' => $user->id,
+                        'major_id' => $major->id,
+                        'major_long_name' => $major->long_name,
+                        'major_short_name' => $major->short_name,
+                    ]);
+                } else {
+                    $existingCandidateMajorIds[] = $candidateMajor->id;
+                }
+
+                if (!$candidateMajor) {
+                    throw new Exception("Gagal membuat data jurusan pilihan calon siswa");
+                }
+            }
+
+            $candidate->candidateMajors()
+                ->whereNotIn('id', $existingCandidateMajorIds)
+                ->delete();
+
+            // Transaction logic
+
             $snapId = "WEBBIPSB-TRX " . Str::uuid()->toString();
             $transaction = Transaction::create([
                 'candidate_nisn' => null,
@@ -204,51 +257,8 @@ class StageController extends Controller
 
         try {
             if (!$candidate) {
-                $candidate = Candidate::factory()->create([
-                    'nisn' => $validated['nisn'],
-                    'user_id' => $user->id,
-                    'full_name' => $user->fullname,
-                ]);
+                return redirect()->route('candidate.stage.stage1');
             }
-
-            if (!$candidate) {
-                throw new Exception("Gagal membuat data calon siswa");
-            }
-
-            $majors = Major::find($validated['majors']);
-            $candidateMajors = $candidate->candidateMajors()->get();
-            $existingCandidateMajorIds = [];
-
-            foreach ($validated['majors'] as $majorId) {
-                $major = $majors->find($majorId);
-                if (!$major) {
-                    throw new Exception("Major dengan ID \"{$majorId}\" tidak ditemukan");
-                }
-
-                $candidateMajor = $candidateMajors
-                    ->where('major_id', '=', $majorId)
-                    ->first();
-
-                if (!$candidateMajor) {
-                    $candidateMajor = CandidateMajor::create([
-                        'candidate_nisn' => $candidate->nisn,
-                        'user_id' => $user->id,
-                        'major_id' => $major->id,
-                        'major_long_name' => $major->long_name,
-                        'major_short_name' => $major->short_name,
-                    ]);
-                } else {
-                    $existingCandidateMajorIds[] = $candidateMajor->id;
-                }
-
-                if (!$candidateMajor) {
-                    throw new Exception("Gagal membuat data jurusan pilihan calon siswa");
-                }
-            }
-
-            $candidate->candidateMajors()
-                ->whereNotIn('id', $existingCandidateMajorIds)
-                ->delete();
 
             $formDocument = StorageUtils::uploadNewCandidateDocument(
                 $candidate,

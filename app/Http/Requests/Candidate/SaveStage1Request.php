@@ -25,6 +25,8 @@ class SaveStage1Request extends FormRequest
     {
         return [
             'payment_method' => ['required', 'string'],
+            'nisn' => ['required', 'numeric', 'digits:10'],
+            'majors.*' => ['required', 'exists:majors,id'],
         ];
     }
 }
