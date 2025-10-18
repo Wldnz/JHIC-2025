@@ -1,8 +1,4 @@
 @include('_components._headerAdmin', ['title' => 'Detail Student'])
-@php
-    $currentPath = explode('/admin/', url()->current())[1];
-    logger('x', [$student])
-@endphp
 <form class="content" method="POST" enctype="multipart/form-data">
     @csrf
     @method('PUT')

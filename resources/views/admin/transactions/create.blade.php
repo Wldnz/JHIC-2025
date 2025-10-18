@@ -1,22 +1,19 @@
 @include('_components._headerAdmin', ['title' => 'Adding Transaction'])
-@php
-    logger('as', [$candidates])
-@endphp
 <form class="content" method="post" action="{{ route('admin.store-transaction') }}" enctype="application/x-www-form-urlencoded">
     @csrf
     <h2>Data Pembeli</h2>
     <div class="form-data" id="student-siswa-form">
         <div class="wrapper-field container">
             <div class="wrapper-input">
-                <label for="candidate_nisn">NISN</label>
-                <input type="text" name="candidate_nisn" id="candidate_nisn" placeholder="Nis Siswa" value="{{ old('candidate_nisn','') }}" readonly required>
+                <label for="user_id">User ID</label>
+                <input type="text" name="user_id" id="user_id" placeholder="" value="{{ old('user_id','') }}" readonly required>
             </div>
             <div class="wrapper-input">
                 <label for="candidate_full_name">Nama Calon Siswa<span> *</span></label>
                 <select name="candidate_full_name" id="candidate_full_name" required>
                     <option value="">Pilih Nama Calon Siswa</option>
-                    @foreach ($candidates as $candidate)
-                        <option value="{{ $candidate->full_name }}" @selected(old('candidate_full_name', '')== $candidate->full_name)>{{ $candidate->full_name }}</option>
+                    @foreach ($users as $user)
+                        <option value="{{ $user->fullname }}" @selected(old('candidate_full_name', '')== $user->fullname)>{{ $user->fullname }}</option>
                     @endforeach
                 </select>
             </div>
@@ -50,9 +47,7 @@
             </div>
         </div>
     </div>
-    <div class="wrapper_order" id="wrapper_orders" style="display:none">
-
-    </div>
+    <div class="wrapper_order" id="wrapper_orders" style="display:none"></div>
     <button class="button-submit-form">
         <span>Tambahkan Transaksi</span>
         @include('_components._sprite-icons', ['name' => 'add', 'size' => 18])
@@ -61,13 +56,13 @@
 
 <script defer>
     document.getElementById('candidate_full_name').addEventListener('change', (e) => {
-        const candidates = @json($candidates);
-        const candidate = candidates.find(s => s.full_name == e.target.value);
-        const candidate_nisn =  document.getElementById('candidate_nisn');
-        if(candidate){
-            candidate_nisn.value = candidate.nisn;
+        const users = @json($users);
+        const user = users.find(s => s.fullname == e.target.value);
+        const user_id =  document.getElementById('user_id');
+        if(user){
+            user_id.value = user.id;
         }else{
-            candidate_nisn.value = "";
+            user_id.value = "";
         }
     });
 </script>

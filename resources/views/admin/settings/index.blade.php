@@ -1,8 +1,4 @@
 @include('_components._headerAdmin', ['title' => 'Settings'])
-@php
-    $currentPath = explode('/admin/', url()->current())[1];
-    logger('as', [$payments]);
-@endphp
 <form method="post" action="{{ route('admin.update-settings') }}" class="content">
     @method('PUT')
     @csrf

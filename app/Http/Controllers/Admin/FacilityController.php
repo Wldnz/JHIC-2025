@@ -20,6 +20,7 @@ class FacilityController extends Controller
     public function facility(Request $request)
     {
         $search = $request->get('search', '');
+        $search_type = $request->get('search_type', '');
         $page =  $request->get('page', 1);
 
         $max = $this->maxPage;
@@ -35,6 +36,11 @@ class FacilityController extends Controller
                 ->where('name', 'like', "%$search%")
                 ->orWhere('gallery_type_name', 'like', "%$search%")
                 ->orWhere('description', 'like', "%$search%");
+        }
+
+        if($search_type){
+            $facilities = $facilities
+                ->where('gallery_type_name', '=', $search_type);
         }
 
         $total = $search ? $facilities->count() : $stats['total'];

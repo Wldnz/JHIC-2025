@@ -1,8 +1,4 @@
 @include('_components._headerAdmin', ['title' => 'Adding Portfolio'])
-@php
-    $currentPath = explode('/admin/', url()->current())[1];
-    logger('as', [$students])
-@endphp
 <form class="content flex-row justify-between pad-0"
     method="POST"
     enctype="multipart/form-data"
@@ -98,13 +94,6 @@
                     <div class="wrapper-input">
                         <label for="link">Result<span>*</span></label>
                         <input type="url" name="link" id="link" minlength="6" placeholder="https://aplikasi.xyz" value{{ old('link', '') }} required>
-                    </div>
-                    <div class="wrapper-input">
-                        <label for="visible">Visible<span>*</span></label>
-                        <select name="visible" id="visible" required>
-                            <option value="public" @selected(old('type', '') == 'public')>Public</option>
-                            <option value="arhcive" @selected(old('type', '') == 'archive')>Archive</option>
-                        </select>
                     </div>
                 </div>
                 <button type="submit" class="btn btn-media">

@@ -121,18 +121,16 @@ function handleActiveAndNonActiveMainMenu() {
         const name = menu.id.split('-')[1];
         const isMultiple = menu.classList.contains('multiple');
         const display_name = menu.children[0];
-        if (isMultiple && name == pathname) {
-            console.log('ismultipler')
+        if (isMultiple) {
             const isCurrentLocation = locations[name].includes(pathname);
             if (isCurrentLocation) {
                 display_name.classList.add('active');
                 Array.from(menu.children)
-                    .find(sub => sub.id == pathname)
-                    ?.classList.add('active');
+                .find(sub => sub.id == pathname)
+                ?.classList.add('active');
                 handleSubMenu(menu, true);
             }
         } else if (name == pathname) {
-            console.log('active')
             display_name.classList.add('active');
         }
     });

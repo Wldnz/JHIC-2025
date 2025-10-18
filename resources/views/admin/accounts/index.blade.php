@@ -1,8 +1,4 @@
 @include('_components._headerAdmin', ['title' => 'Accounts Management'])
-@php
-    $currentPath = explode('/admin/', url()->current())[1];
-    logger('as', [$accounts])
-@endphp
 <main class="content">
       @include('_components._summary-section', [
         'title' => 'Accounts',

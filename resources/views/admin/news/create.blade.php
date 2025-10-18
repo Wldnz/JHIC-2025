@@ -1,7 +1,4 @@
 @include('_components._headerAdmin', ['title' => 'Adding Articles/Blogs/News'])
-@php
-    $currentPath = explode('/admin/', url()->current())[1];
-@endphp
 <form class="content flex-row justify-between pad-0" id="management-form-news" method="POST"
     enctype="multipart/form-data">
     @csrf

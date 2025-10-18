@@ -1,8 +1,4 @@
 @include('_components._headerAdmin', ['title' => "Articles/Blogs/News ($article->visited_times Pengunjung)"])
-@php
-    $currentPath = explode('/admin/', url()->current())[1];
-    logger('as', [$article])
-@endphp
 <form class="content flex-row justify-between pad-0" id="management-form-news"
     method="POST"
     enctype="multipart/form-data"
@@ -73,7 +69,7 @@
                     <div class="wrapper-hidden" id="tags_sender"></div>
                 </div>
                 <button type="button" class="btn btn-media" id="btn-submit-news">
-                    Tambahkan Artikel
+                    Simpan Perubahan
                 </button>
             </div>
         </div>

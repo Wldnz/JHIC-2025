@@ -1,8 +1,4 @@
 @include('_components._headerAdmin', ['title' => 'Portfolio Management'])
-@php
-    $currentPath = explode('/admin/', url()->current())[1];
-    logger('as', [$portfolios])
-@endphp
 <main class="content">
     @include('_components._summary-section',[
         'title' => 'Portfolios',
@@ -54,7 +50,7 @@
                <div class="wrapper-card-media"
                 href="{{ route('admin.detail-portfolio', ['portfolio' => $portfolio->id]) }}"
             >
-                <a class="card-media">
+                <a class="card-media" href="{{ route('admin.detail-portfolio', ['portfolio' => $portfolio->id]) }}">
                     <div class="wrapper-image">
                         <img src="{{  $portfolio->portfolioImages[0]['url'] ?? asset('images/default.png') }}" alt="wrapper-iamge">
                     </div>

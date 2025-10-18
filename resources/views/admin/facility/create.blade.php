@@ -1,7 +1,4 @@
 @include('_components._headerAdmin', ['title' => 'Adding Facility'])
-@php
-    $currentPath = explode('/admin/', url()->current())[1];
-@endphp
 <form class="content flex-row justify-between pad-0"
     method="POST"
     enctype="multipart/form-data"
@@ -57,13 +54,6 @@
                             @foreach ($availableFacilityTypes as $facilityType)
                                 <option value="{{ $facilityType->id }}" @selected(old('type', '') == $facilityType->id)>{{ $facilityType->name }}</option>
                             @endforeach
-                        </select>
-                    </div>
-                    <div class="wrapper-input">
-                        <label for="visible">Visible<span>*</span></label>
-                        <select name="visible" id="visible" required>
-                            <option value="public" @selected(old('type', '') == 'public')>Public</option>
-                            <option value="arhcive" @selected(old('type', '') == 'archive')>Archive</option>
                         </select>
                     </div>
                 </div>

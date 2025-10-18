@@ -1,7 +1,4 @@
 @include('_components._headerAdmin', ['title' => 'Adding Account'])
-@php
-    $currentPath = explode('/admin/', url()->current())[1];
-@endphp
 <form class="content" method="POST" enctype="multipart/form-data">
     @csrf
     <div class="profile-container">

@@ -33,13 +33,13 @@
                         <a class="sub-menu" href="{{ route("admin.news") }}" id="news">
                             <span>News</span>
                         </a>
-                        <a class="sub-menu" href="{{ route("admin.facility") }}" id="faciliti">
+                        <a class="sub-menu" href="{{ route("admin.facility") }}" id="facilities">
                             <span>Facility</span>
                         </a>
-                        <a class="sub-menu" href="{{ route("admin.portfolio") }}" id="portfolio">
+                        <a class="sub-menu" href="{{ route("admin.portfolio") }}" id="portfolios">
                             <span>Portfolio</span>
                         </a>
-                        <a class="sub-menu" href="{{ route("admin.achievement") }}" id="achievement">
+                        <a class="sub-menu" href="{{ route("admin.achievement") }}" id="achievements">
                             <span>Achievement</span>
                         </a>
                     </li>
@@ -49,10 +49,10 @@
                             @include('_components._sprite-icons', ['name' => 'account', "color" => $currentPath == 'accounts' ? '#273B98' : 'black', 'size' => 23])
                             <span>Accounts</span>
                         </a>
-                        <a class="sub-menu" href="{{ route("admin.accounts") }}" id="account">
+                        <a class="sub-menu" href="{{ route("admin.accounts") }}" id="accounts">
                             <span>Accounts</span>
                         </a>
-                        <a class="sub-menu" href="{{ route("admin.students") }}" id="student">
+                        <a class="sub-menu" href="{{ route("admin.students") }}" id="students">
                             <span>Students</span>
                         </a>
                     </li>

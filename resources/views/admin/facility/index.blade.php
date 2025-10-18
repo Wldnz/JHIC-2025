@@ -1,8 +1,4 @@
 @include('_components._headerAdmin', ['title' => 'Facilitities Management'])
-@php
-    $currentPath = explode('/admin/', url()->current())[1];
-    logger('as', [$facilities])
-@endphp
 <main class="content">
     @include('_components._summary-section', [
         'title' => 'Facilities',
@@ -21,7 +17,18 @@
             </a>
         </div>
         <div class="find-something">
-            <form class="wrapper-filter">
+            <form class="wrapper-filter" id="wrapper-filter">
+                <div class="wrapper-select">
+                    <select name="search_type" required>
+                        <option value="">Status: Semuanya</option>
+                        <option value="laboratorium" @selected(app('request')->get('search_type') == 'laboratorium')>Status: Laboratorium</option>
+                        <option value="classroom" @selected(app('request')->get('search_type') == 'classroom')>Status: Ruangan</option>
+                        <option value="public facility" @selected(app('request')->get('search_type') == 'public facility')>Status: Publik Fasilitas</option>
+                    </select>
+                    <div class="wrapper-icon">
+                        @include("_components._sprite-icons", ["name" => "drop-down", "size" => 20])
+                    </div>
+                </div>
             </form>
             <form class="wrapper-search">
                 <input type="text" name="search" placeholder="Cari Fasilitas Disini.."
