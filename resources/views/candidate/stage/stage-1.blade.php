@@ -51,7 +51,7 @@
                  <div class="wrapper-input">
                     <label for="nisn">Nomor Induk Nasional (NISN) <span>*</span></label>
                     <input type="text" inputmode="numeric"
-                    name="nisn" id="nisn" placeholder="Masukkan Nomor Induk Nasional" value="{{ old('nisn', ) }}" aria-describedby="Masukkan Nomor Induk Nasional"
+                    name="nisn" id="nisn" placeholder="Masukkan Nomor Induk Nasional" value="{{ old('nisn', $candidate ? $candidate->nisn : '') }}" aria-describedby="Masukkan Nomor Induk Nasional"
                     minlength="10" maxlength="10" @required(!$isPaid)
                     @disabled($isPaid)
                 >
