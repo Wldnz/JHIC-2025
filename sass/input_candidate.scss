@@ -611,6 +611,18 @@ nav
             }
         }
 
+        .jadwal
+        {
+
+            h1{font-size: $font-size-2xl}   
+
+            .gelombang
+            {
+                h2{font-size: $font-size-xl}
+                h4{font-size: $font-size-l; font-weight: 500}
+            }
+        }
+
         
     }
 }
@@ -726,6 +738,19 @@ nav
                     a{font-size: $font-size-s;}
                 }
 
+            }
+        }
+
+        .jadwal
+        {
+            padding: 30px 0 0 0;
+            width: 100%;
+            h1{font-size: $font-size-xl}   
+
+            .gelombang
+            {
+                h2{font-size: $font-size-l}
+                h4{font-size: $font-size-m}
             }
         }
     }

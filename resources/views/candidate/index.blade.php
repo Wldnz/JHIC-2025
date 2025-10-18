@@ -35,8 +35,11 @@
             ]
         ]
 @endphp
-@include('_components._header', ['title' => 'product'])
-
+@include('_components._header', [
+    'title' => 'PSB | SMK Bina Informatika',
+    'description' => 'Penerimaan Siswa Baru SMK Bina Informatika Bintaro',
+    'keywords' => 'SMK, SMK Bina Informatika, SMK Bina Informatika Bintaro, sekolah kejuruan, sekolah teknologi, sekolah informatika, pendidikan vokasi, sekolah IT, jurusan RPL, Rekayasa Perangkat Lunak, jurusan TKJ, Teknik Komputer dan Jaringan, jurusan BC, Broadcasting, jurusan GMDV, Game Development, jurusan DKV, Desain Komunikasi Visual, jurusan Anim, Animasi, sekolah desain, sekolah animasi, sekolah grafis, sekolah multimedia, sekolah terbaik di Bintaro, SMK IT Bintaro, SMK desain Bintaro, SMK animasi Bintaro'
+])
 <div class="psb">
     <div class="main">
         <h1>Penerimaan Siswa Baru</h1>

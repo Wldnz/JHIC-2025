@@ -30,11 +30,16 @@
         <h1>Gallery</h1>
         <div class="gallery-images">
             @foreach ($facilities as $gallery)
-                <span class="gallery-image">
+                <span class="gallery-image {{ $loop->iteration < 5 ? "show" : "" }}">
                     <img class="gallery-image-url" src="{{$gallery->url}}" alt="{{ $gallery->name }}">
                     <p class="gallery-name">{{ $gallery->name }}</p>
                 </span>
             @endforeach
+
+            <a href="{{ route("user.galleries") }}" class="button">
+                <p> Show More </p>
+            </a>
+
             <div class="gallery-full">
                 <div class="button-wrapper">
                     <p class="preview-gallery-name">Kamar Wildan</p>

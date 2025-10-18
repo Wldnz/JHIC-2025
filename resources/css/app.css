@@ -2125,26 +2125,36 @@ body .wrapper-user {
 }
 body .wrapper-user .wrapper-moving-teks {
   width: 100%;
-  position: relative;
-  min-height: 2em;
-  display: flex;
-  align-items: center;
-  justify-content: end;
-  gap: 200px;
-  background-color: #eaf7f9;
-}
-body .wrapper-user .wrapper-moving-teks .moving-teks {
-  background-color: #eaf7f9;
-  width: max-content;
-  padding: 8px;
-  gap: 10px;
-  position: absolute;
-  top: 0;
-  right: -100vw;
-  display: flex;
-  align-items: center;
   overflow: hidden;
-  animation: moving-teks 20s forwards infinite;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  background: #eaf7f9;
+  padding: 10px 0;
+}
+body .wrapper-user .wrapper-moving-teks .moving-track {
+  display: inline-flex;
+  gap: 100vw;
+  animation: scroll-text 20s linear infinite;
+  padding: 0 50px;
+}
+body .wrapper-user .wrapper-moving-teks .moving-track p {
+  display: inline-block;
+  white-space: nowrap;
+  color: #273b98;
+  font-size: clamp(0.6rem, 4vw, 2.5rem);
+  font-weight: 600;
+}
+body .wrapper-user .wrapper-moving-teks:hover .moving-track {
+  animation-play-state: paused;
+}
+@keyframes scroll-text {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
 }
 body .wrapper-user .dashboard {
   padding: 30px 0 0 0;
@@ -3850,6 +3860,10 @@ footer .copyright p {
   body .mobile-nav .down a {
     font-size: clamp(0.6rem, 2vw, 1.5rem);
   }
+  body .wrapper-user .wrapper-moving-teks .moving-track p {
+    font-size: clamp(0.6rem, 2vw, 1.5rem);
+    font-weight: 500;
+  }
   body .wrapper-user .dashboard .star-group {
     display: flex;
   }
@@ -4368,6 +4382,9 @@ footer .copyright p {
   }
   body .mobile-nav {
     display: none;
+  }
+  body .wrapper-user .wrapper-moving-teks .moving-track p {
+    font-size: clamp(0.4rem, 1.25vw, 1rem);
   }
   body .wrapper-user .dashboard .star-group-2 {
     right: 20vw;
