@@ -50,7 +50,7 @@ class Controller extends \App\Http\Controllers\Controller
     public function facilities()
     {
         $facilities = Gallery::query()
-            ->limit(200)
+            ->limit(6)
             ->get(['id', 'name', 'url', 'description', 'gallery_type_name']);
         return view('user.facilities', compact('facilities'));
     }
