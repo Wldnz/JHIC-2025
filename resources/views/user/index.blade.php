@@ -118,22 +118,27 @@
             'Ruangan B1' => asset("images/kelas king/b1.svg"),
         ];
     $movingTeks = [
-        'We Are The Open The Registration Gelombang 1 On 23 August - 06 November 2025',
+        'We Are The Open For Registration',
+        'Gelombang 1 On 23 August - 06 November 2025',
     ];
 @endphp
 @include('_components._header', 
 [
     'title' => 'SMK Bina Informatika',
     'description' => 'SMK Bina informatika | Website sekolah smk bina informatika bintaro',
-    'keywords' => 'SMK, SMK Bina Informatika, SMK Bina Informatika Bintaro, sekolah kejuruan, sekolah teknologi, sekolah informatika, pendidikan vokasi, sekolah IT, jurusan RPL, Rekayasa Perangkat Lunak, jurusan TKJ, Teknik Komputer dan Jaringan, jurusan BC, Broadcasting, jurusan GMDV, Graphic Media Design and Visual, jurusan DKV, Desain Komunikasi Visual, jurusan Anim, Animasi, sekolah desain, sekolah animasi, sekolah grafis, sekolah multimedia, sekolah terbaik di Bintaro, SMK IT Bintaro, SMK desain Bintaro, SMK animasi Bintaro'
+    'keywords' => 'SMK, SMK Bina Informatika, SMK Bina Informatika Bintaro, sekolah kejuruan, sekolah teknologi, sekolah informatika, pendidikan vokasi, sekolah IT, jurusan RPL, Rekayasa Perangkat Lunak, jurusan TKJ, Teknik Komputer dan Jaringan, jurusan BC, Broadcasting, jurusan GMDV, Game Development, jurusan DKV, Desain Komunikasi Visual, jurusan Anim, Animasi, sekolah desain, sekolah animasi, sekolah grafis, sekolah multimedia, sekolah terbaik di Bintaro, SMK IT Bintaro, SMK desain Bintaro, SMK animasi Bintaro'
     ])
-<div class="wrapper-moving-teks">
-    <div class="moving-teks">
-        @foreach ($movingTeks as $teks)
-            <p>{{ $teks }}</p>
-        @endforeach
-    </div>
+<div class="wrapper-moving-teks no-fade">
+  <div class="moving-track no-fade">
+    @foreach ($movingTeks as $teks)
+      <p class="no-fade">{{ $teks }}</p>
+    @endforeach
+    @foreach ($movingTeks as $teks)
+      <p class="no-fade">{{ $teks }}</p>
+    @endforeach
+  </div>
 </div>
+
 <div class="dashboard no-fade">
     <div class="banner">
         <div class="trinkets star-group star-group-1 no-fade">
@@ -211,7 +216,7 @@
         <h2>Gallery</h2>
         <div class="img-group">
             @foreach ($galleries as $gallery)
-                <span class="show gallery-img">
+                <span class="gallery-img {{ $loop->iteration < 3 ? "show" : "" }}">
                     <img src="{{$gallery->url}}" alt="{{ $gallery->name }}">
                     <h3>{{ $gallery->name }}</h3>
                 </span>

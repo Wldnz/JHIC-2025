@@ -32,8 +32,6 @@
                 <a href="{{ route("user.programs.program-silang") }}">Progsil</a>
                 <a href="{{ route("user.programs.baca-tulis-quran") }}">BTQ</a>
                 <a href="{{ route("candidate.index") }}">PSB</a>
-                <a href="{{ route("user.programs.bimbingan-konseling") }}">Bimbingan Konseling</a>
-                <a href="{{ route("user.programs.project-works") }}">Project Work</a>
         </div>
         <div class="links">
             <h3>Contact</h3>

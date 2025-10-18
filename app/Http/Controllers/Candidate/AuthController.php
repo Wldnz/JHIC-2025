@@ -51,7 +51,7 @@ class AuthController extends Controller
     public function signupGoogle()
     {
         logger(route('candidate.signup-google-callback'));
-        return Socialite::driver('google')
+        return Socialite::with('google')
             ->redirectUrl(route('candidate.signup-google-callback'))
             ->redirect();
     }
@@ -59,7 +59,10 @@ class AuthController extends Controller
     public function signupGoogleCallback(Request $request)
     {
         try {
-            $user = Socialite::driver('google')->stateless()->user();
+            $user = Socialite::driver('google')
+                ->redirectUrl(route('candidate.signup-google-callback'))
+                ->stateless()
+                ->user();
         } catch (Throwable $th) {
             logger()->error($th);
             report($th);
@@ -124,14 +127,17 @@ class AuthController extends Controller
     public function loginGoogle(Request $request)
     {
         logger(route('candidate.login-google-callback'));
-        return Socialite::driver('google')
+        return Socialite::with('google')
             ->redirectUrl(route('candidate.login-google-callback'))
             ->redirect();
     }
     public function loginGoogleCallback(Request $request)
     {
         try {
-            $user = Socialite::driver('google')->stateless()->user();
+            $user = Socialite::driver('google')
+                ->redirectUrl(route('candidate.login-google-callback'))
+                ->stateless()
+                ->user();
         } catch (Throwable $th) {
             logger()->error($th);
             report($th);

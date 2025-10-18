@@ -317,31 +317,47 @@ body {
         min-height: 80vh;
         padding: 80px 0 0 0;
 
-        .wrapper-moving-teks{
+
+        .wrapper-moving-teks {
             width: 100%;
-            position: relative;
-            min-height: 20px;
+            overflow: hidden;
+            white-space: nowrap;
             display: flex;
             align-items: center;
-            justify-content: end;
-            gap: 200px;
-            margin-bottom: 24px;
+            background: $color-secondary;
+            padding: 10px 0;
 
-            .moving-teks{
-                width: max-content;
-                padding: 8px;
-                gap: 10px;
-                
-                position: absolute;
-                top:0;
-                right: -100vw;
+            .moving-track {
+                display: inline-flex;
+                gap: 100vw;
+                animation: scroll-text 20s linear infinite;
+                padding: 0 50px;
 
-                display: flex;
-                align-items: center;
-                overflow: hidden;
-                animation: moving-teks 20s forwards infinite;
+                p {
+                    display: inline-block;
+                    white-space: nowrap;
+                    color: $color-accent;
+                    font-size: $font-size-2xl;
+                    font-weight: 600;
+                }
+            }
+
+            &:hover {
+                .moving-track {
+                animation-play-state: paused;
+                }
             }
         }
+
+        @keyframes scroll-text {
+        from {
+            transform: translateX(0);
+        }
+        to {
+            transform: translateX(-50%);
+        }
+        }
+
 
         .dashboard {
             padding: 30px 0 0 0;
@@ -2338,7 +2354,20 @@ footer {
             }
         }
 
-        .wrapper-user {
+        .wrapper-user 
+        {
+            .wrapper-moving-teks 
+            {
+                .moving-track 
+                {
+                    p 
+                    {
+                        font-size: $font-size-l;
+                        font-weight: 500;
+                    }
+                }
+            }
+
             .dashboard {
                 .star-group {
                     display: flex;
@@ -3035,6 +3064,18 @@ footer {
         }
 
         .wrapper-user {
+            
+            .wrapper-moving-teks 
+            {
+                .moving-track 
+                {
+                    p 
+                    {
+                        font-size: $font-size-m;
+                    }
+                }
+            }
+
             .dashboard {
                 .star-group {
                     &-2 {

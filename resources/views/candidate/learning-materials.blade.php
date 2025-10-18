@@ -26,8 +26,8 @@
         @foreach ($moduls as $modul)
             <div class="card">
                 <h2>Modul {{ $modul["nama"] }}</h2>
-                <img src="{{ asset("icons/Book.svg") }}" alt="">
-                <a download href="">Download Modul</a>
+                <img src="{{ asset("icons/book.svg") }}" alt="">
+                <a download href=" {{ $modul['link'] }}">Download Modul</a>
             </div>
         @endforeach
     </div>

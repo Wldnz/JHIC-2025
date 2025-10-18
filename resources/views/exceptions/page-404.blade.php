@@ -54,10 +54,12 @@
     <div>
 
         <img class="icon" src="{{ asset("icons/lag.svg") }}" alt="">
-        <h1>Connection Error</h1>
-        <p>Please Check Your Internet Connection</p>
+        <h1>PAGE NOT FOUND</h1>
+        <p>ERROR 404 : Please Make Sure The URL is Correct</p>
     </div>
-    <img class="logo" src="{{ asset("images/bi-full.png") }}" alt="">
+    <a href="{{ route("user.index") }}">
+        <img class="logo" src="{{ asset("images/bi-full.png") }}" alt="">
+    </a>
     
 </body>
 </html>
