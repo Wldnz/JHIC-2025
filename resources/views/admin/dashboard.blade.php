@@ -1,7 +1,4 @@
 @include('_components._headerAdmin', ["title" => "Dashboard"])
-@php
-    logger('product', [$stats, $summary])
-@endphp
 <main class="content">
     <div class="greeting">
         <h3>Selamat Datang, {{ Auth::user()->fullname }}</h3>

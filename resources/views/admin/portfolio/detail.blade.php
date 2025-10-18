@@ -1,8 +1,4 @@
 @include('_components._headerAdmin', ['title' => 'Detail Portfolio'])
-@php
-    $currentPath = explode('/admin/', url()->current())[1];
-    logger('as', [$portfolio, $students])
-@endphp
 <form class="content flex-row justify-between pad-0" method="POST" enctype="multipart/form-data">
     @method('PUT')
     @csrf
@@ -91,7 +87,7 @@
                         <label for="type">Portfolio Type<span>*</span></label>
                         <select name="type" id="type" required>
                             @foreach($availableLinkTypes as $key => $linkType)
-                                <option value="{{ $linkType }}" @selected(old('type', '') == $linkType)>{{ $key }}</option>
+                                <option value="{{ $linkType }}" @selected(old('type', $portfolio->link_type) == $linkType)>{{ $key }}</option>
                             @endforeach
                         </select>
                     </div>

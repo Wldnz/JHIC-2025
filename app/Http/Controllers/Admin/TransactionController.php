@@ -9,6 +9,7 @@ use App\Models\Candidate;
 use App\Models\PaymentMethod;
 use App\Models\Student;
 use App\Models\Transaction;
+use App\Models\User;
 use App\Utilities\AlertDataGenerator;
 use Illuminate\Http\Request;
 
@@ -63,22 +64,24 @@ class TransactionController extends Controller
 
     public function storeTransactionPage()
     {
-        $candidates = Candidate::all(['nisn', 'full_name']);
+        $users = User::query()
+            ->where('role', '=', 'candidate')
+            ->get(['id', 'fullname']);
         $payments = PaymentMethod::all();
 
-        return view('admin.transactions.create', compact('candidates', 'payments'));
+        return view('admin.transactions.create', compact('users', 'payments'));
     }
 
     public function storeTransaction(StoreTransactionRequest $request)
     {
         $validated = $request->validated();
 
-        $candidate = Candidate::find($validated['candidate_nisn']);
-        if (!$candidate) {
+        $user = User::find($validated['user_id']);
+        if (!$user) {
             AlertDataGenerator::generateAsFlashToSession(
                 AlertType::DANGER,
                 "Gagal menambahkan transaksi",
-                "Calon siswa dengan NISN {$validated['candidate_nisn']} tidak ditemukan",
+                "Akun dengan id {$validated['user_id']} tidak ditemukan",
                 $request->session(),
             );
             return back()->withInput($validated);
@@ -96,8 +99,8 @@ class TransactionController extends Controller
         }
 
         $transaction = Transaction::create([
-            'candidate_nisn' => $candidate->nisn,
-            'candidate_full_name' => $candidate->full_name,
+            'user_id' => $user->id,
+            'user_email' => $user->email,
             'payment_method_id' => $payment->id,
             'payment_method_display_name' => $payment->display_name,
             'total_cost' => $validated['total_cost'],
@@ -109,7 +112,7 @@ class TransactionController extends Controller
             AlertDataGenerator::generateAsFlashToSession(
                 AlertType::SUCCESS,
                 "Berhasil menambahkan transaksi",
-                "Transaksi oleh calon siswa ber-NISN {$validated['candidate_nisn']} berhasil ditambahkan",
+                "Transaksi oleh akun ber-ID {$validated['user_id']} berhasil ditambahkan",
                 $request->session(),
             );
             return redirect()->route('admin.transactions');
@@ -117,7 +120,7 @@ class TransactionController extends Controller
             AlertDataGenerator::generateAsFlashToSession(
                 AlertType::DANGER,
                 "Gagal menambahkan transaksi",
-                "Transaksi oleh calon siswa ber-NISN {$validated['candidate_nisn']} gagal ditambahkan",
+                "Transaksi oleh akun ber-ID {$validated['user_id']} gagal ditambahkan",
                 $request->session(),
             );
             return back()->withInput($validated);

@@ -11,6 +11,7 @@
 
 <body>
     @php
+    $currentPath = explode('/admin/', url()->current())[1];
     if(empty($title)) $title = "Bina Tata Usaha";
     $currentPath = explode('/admin/', url()->current())[1];
     @endphp

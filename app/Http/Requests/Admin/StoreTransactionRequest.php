@@ -24,7 +24,7 @@ class StoreTransactionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'candidate_nisn' => ['required', 'string', 'exists:candidates,nisn'],
+            'user_id' => ['required', 'string'],
             'total_cost' => ['required', 'integer', 'min:1'],
             'payment_method' => ['required', 'exists:payment_methods,code_name'],
             'has_paid' => ['required', 'boolean'],

@@ -1,7 +1,4 @@
 @include('_components._headerAdmin', ['title' => 'Transactions Management'])
-@php
-    $currentPath = explode('/admin/', url()->current())[1];
-@endphp
 <main class="content">
     @include('_components._summary-section',
     [

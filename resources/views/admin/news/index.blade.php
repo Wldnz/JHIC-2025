@@ -1,8 +1,4 @@
 @include('_components._headerAdmin', ['title' => 'Articles/Blogs/News Management'])
-@php
-    $currentPath = explode('/admin/', url()->current())[1];
-    logger('x', [$articles])
-@endphp
 <main class="content">
     @include('_components._summary-section',[
         'title' => 'Articles',

@@ -1,7 +1,5 @@
 @include('_components._headerAdmin', ['title' => 'Detail Account'])
 @php
-    $currentPath = explode('/admin/', url()->current())[1];
-    logger('as', [$account, $candidate, $sources]);
     $status_families = [
         'biological_child' => 'Anak Kandung',
         'step_child' => 'Anak Angkat',

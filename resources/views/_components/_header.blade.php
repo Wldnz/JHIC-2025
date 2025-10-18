@@ -41,7 +41,6 @@
                 <a class="expandable-pc">PROGRAM</a>
                     <div class="branch">
                         <a href="{{ route("user.programs.extracurriculars") }}">Extracurricular </a>
-                        <a href="https://webosis-smkbi.wuaze.com/" target="blank">OSIS</a>
                         <a href="{{ route("user.programs.program-silang") }}">Progsil</a>
                         <a href="{{ route("user.programs.baca-tulis-quran") }}">BTQ</a>
                         <a href="{{ route("candidate.index") }}">PSB</a>
@@ -83,7 +82,6 @@
             <a class="expandable">PROGRAM <img src="{{ asset("icons/arrow-down.svg") }}" alt=""></a>
             <div class="branch">
                 <a href="{{ route("user.programs.extracurriculars") }}">Extracurricular </a>
-                <a href="https://webosis-smkbi.wuaze.com/" target="blank">OSIS</a>
                 <a href="{{ route("user.programs.program-silang") }}">Progsil</a>
                 <a href="{{ route("user.programs.baca-tulis-quran") }}">BTQ</a>
                 <a href="{{ route("candidate.index") }}">PSB</a>

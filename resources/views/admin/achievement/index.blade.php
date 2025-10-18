@@ -1,8 +1,4 @@
 @include('_components._headerAdmin', ['title' => 'Achievements Management'])
-@php
-    $currentPath = explode('/admin/', url()->current())[1];
-    logger('achievements', [$achievements]);
-@endphp
 <main class="content">
     @include('_components._summary-section', [
         'title' => 'Achievement',
@@ -52,9 +48,8 @@
         <div class="wrapper-content-media flex-row items-start">
             @foreach ($achievements as $achievement)
                 <div class="wrapper-card-media-achievement"
-                href="{{ route('admin.detail-achievement', ['achievement' => $achievement->id]) }}"
             >
-                <a class="card-media">
+                <a class="card-media" href="{{ route('admin.detail-achievement', ['achievement' => $achievement->id]) }}">
                     <div class="wrapper-image">
                         <img src="{{ $achievement->thumbnail_url }}" alt="{{ $achievement->student_name }}">
                     </div>
