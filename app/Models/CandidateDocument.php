@@ -18,6 +18,7 @@ class CandidateDocument extends Model
         'file_url',
         'is_valid',
         'expired_at',
+        'type',
     ];
 
     protected $casts = [
