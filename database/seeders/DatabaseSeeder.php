@@ -4,7 +4,9 @@ namespace Database\Seeders;
 
 use App\Models\CandidateDocument;
 use App\Models\CandidatePhase;
+use App\Models\CandidateUSMResult;
 use App\Models\Keyword;
+use App\Models\MajorAlumnus;
 use App\Models\RegistrationDocument;
 use App\Models\User;
 use DB;
@@ -35,6 +37,7 @@ class DatabaseSeeder extends Seeder
         $this->resetAllModels();
         $this->call(UserSeeder::class);
         $this->call(MajorSeeder::class);
+        $this->call(MajorAlumnusSeeder::class);
         $this->call(StudentSeeder::class);
         $this->call(GalleryTypeSeeder::class);
         $this->call(PortfolioSeeder::class);
@@ -49,8 +52,9 @@ class DatabaseSeeder extends Seeder
         $this->call(CandidateGuardianSeeder::class);
         $this->call(CandidatePhaseSeeder::class);
         $this->call(CandidateDocumentSeeder::class);
+        $this->call(CandidateUSMResultSeeder::class);
         $this->call(PaymentMethodSeeder::class);
-        $this->call(TransactionSeeder::class);
+        // $this->call(TransactionSeeder::class);
         $this->call(ArticleSeeder::class);
         $this->call(KeywordSeeder::class);
     }
@@ -64,6 +68,7 @@ class DatabaseSeeder extends Seeder
 
         User::query()->truncate();
         Major::query()->truncate();
+        MajorAlumnus::query()->truncate();
 
         Student::query()->delete();
         DB::statement("ALTER TABLE " . (new Student())->getTable() . " AUTO_INCREMENT = 1");
@@ -89,10 +94,11 @@ class DatabaseSeeder extends Seeder
         CandidateGuardian::query()->truncate();
         CandidatePhase::query()->truncate();
         CandidateDocument::query()->truncate();
+        CandidateUSMResult::query()->truncate();
         PaymentMethod::query()->truncate();
 
-        Transaction::query()->delete();
-        DB::statement("ALTER TABLE " . (new Transaction())->getTable() . " AUTO_INCREMENT = 1");
+        // Transaction::query()->delete();
+        // DB::statement("ALTER TABLE " . (new Transaction())->getTable() . " AUTO_INCREMENT = 1");
 
         Article::query()->truncate();
         Keyword::query()->truncate();

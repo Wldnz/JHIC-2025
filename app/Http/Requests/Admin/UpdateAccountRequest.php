@@ -45,6 +45,7 @@ class UpdateAccountRequest extends FormRequest
      */
     public function authorize(): bool
     {
+        if (!$this->has('role')) return true;
         if (!Auth::check()) return false;
 
         $accountRole = $this->input('role');
@@ -73,7 +74,7 @@ class UpdateAccountRequest extends FormRequest
             'fullname'  => ['required', 'string', 'min:1', 'max:255'],
             'email'     => ['required', 'email', 'min:1', 'max:255'],
             'phone'     => ['required', 'string', 'min:11', 'max:12'],
-            'role'      => ['required', Rule::in(self::$availableRoles)],
+            'role'      => ['nullable', Rule::in(self::$availableRoles)],
         ];
         $candidateRules = [
             'candidate_nisn'        => ['nullable', 'string', 'exists:candidates,nisn'],
@@ -99,6 +100,10 @@ class UpdateAccountRequest extends FormRequest
         ];
         $candidateRegistrationPhaseRules = [
             'phase.id'              => ['nullable', 'exists:registration_phases,id'],
+        ];
+        $candidateMajorsRules = [
+            'majors.*.id'               => ['required', 'string'],
+            'majors.*.major_id'         => ['required', 'string'],
         ];
         $candidateGuardianRules = [
             'candidate_guardian_name'                   => ['nullable', 'string', 'min:1', 'max:255'],
@@ -129,18 +134,18 @@ class UpdateAccountRequest extends FormRequest
             return $baseRules;
         }
 
-        $resultRules = array_merge($baseRules, $candidateDocumentsRules);
+        $resultRules = array_merge($baseRules, $candidateDocumentsRules, $candidateMajorsRules);
 
-        if ($this->input('candidate_nisn')) {
+        if ($this->has('candidate_nisn')) {
             $resultRules = array_merge($resultRules, $candidateRules);
         }
-        if ($this->input('registration_source')) {
+        if ($this->has('registration_source')) {
             $resultRules = array_merge($resultRules, $candidateRegistrationSourceRules);
         }
-        if ($this->input('phase.id')) {
+        if ($this->has('phase.id')) {
             $resultRules = array_merge($resultRules, $candidateRegistrationPhaseRules);
         }
-        if ($this->input('candidate_guardian_name')) {
+        if ($this->has('candidate_guardian_name')) {
             $resultRules = array_merge($resultRules, $candidateGuardianRules);
         }
 

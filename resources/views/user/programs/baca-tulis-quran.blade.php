@@ -2,7 +2,12 @@
     $placeholder = "";
 @endphp
 
-@include("_components._header")
+@include('_components._header', 
+[
+    'title' => 'BTQ | SMK Bina Informatika',
+    'description' => 'Halaman website program btq sekolah SMK Bina Informatika',
+    'keywords' => 'SMK, SMK Bina Informatika, teknologi, informatika, sekolah, quran, baca tulis quran, arab, islam, muslim',
+    ])
 
 <div class="btq">
     <h2>BACA TULIS QUR'AN</h2>
@@ -15,10 +20,10 @@
         <h3>Foto Foto Kegiatan</h3>
     </div>
     <div class="btq-content">
-        <div class="btq-kotak"><img src="{{ asset('images/btq/btq-placeholder.jpg') }}"></div>
         <div class="btq-kotak"><img src="{{ asset('images/btq/btq-document.jpg') }}"></div>
-        <div class="btq-kotak"><img src="{{ asset('images/btq/btq-placeholder.jpg') }}"></div>
-        <div class="btq-kotak"><img src="{{ asset('images/btq/btq-placeholder.jpg') }}"></div>
+        <div class="btq-kotak"><img src="{{ asset('images/btq/btq-document1.png') }}"></div>
+        <div class="btq-kotak"><img src="{{ asset('images/btq/btq-document2.jpg') }}"></div>
+        <div class="btq-kotak"><img src="{{ asset('images/btq/btq-document3.jpg') }}"></div>
     </div>
 
     <div class="btq-system">

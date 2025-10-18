@@ -1,8 +1,4 @@
 @include('_components._headerAdmin', ['title' => 'Detail Achievement'])
-@php
-    $currentPath = explode('/admin/', url()->current())[1];
-    logger('as', [$achievement])
-@endphp
 <form class="content flex-row justify-between pad-0" method="post" enctype="multipart/form-data">
     @method('PUT')
     @csrf

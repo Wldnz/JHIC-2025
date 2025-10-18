@@ -1,8 +1,4 @@
 @include('_components._headerAdmin', ['title' => 'Achievements Management'])
-@php
-    $currentPath = explode('/admin/', url()->current())[1];
-    logger('achievements', [$achievements]);
-@endphp
 <main class="content">
     @include('_components._summary-section', [
         'title' => 'Achievement',
@@ -51,10 +47,9 @@
         </div>
         <div class="wrapper-content-media flex-row items-start">
             @foreach ($achievements as $achievement)
-                <a class="wrapper-card-media-achievement"
-                href="{{ route('admin.detail-achievement', ['achievement' => $achievement->id]) }}"
+                <div class="wrapper-card-media-achievement"
             >
-                <div class="card-media">
+                <a class="card-media" href="{{ route('admin.detail-achievement', ['achievement' => $achievement->id]) }}">
                     <div class="wrapper-image">
                         <img src="{{ $achievement->thumbnail_url }}" alt="{{ $achievement->student_name }}">
                     </div>
@@ -71,8 +66,38 @@
                             </div>
                         </div>
                     </div>
+                </a>
+                <div class="floating-action">
+                    <a class="action action-detail btn-action"
+                        href="{{ route('admin.detail-achievement', ['achievement' => $achievement->id]) }}"
+                    >
+                       <button class="btn-action" type="button">
+                            @include('_components._sprite-icons', [
+                                'name' => 'eye',
+                                'color' => 'white',
+                                'size' => 20,
+                            ])
+                            <span>Detail Achievement</span>
+                       </button>
+                    </a>
+                    <form class="action"
+                        action="{{ route('admin.delete-achievement', ['achievement' => $achievement->id]) }}"
+                        method="POST"
+                        id="action-delete"
+                    >
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn-action">
+                            @include('_components._sprite-icons', [
+                                'name' => 'trash',
+                                'color' => 'white',
+                                'size' => 20,
+                            ])
+                            <span>Delete Achievement</span>
+                        </button>
+                    </form>
                 </div>
-            </a>
+            </div>
             @endforeach
         </div>
         @include('_components._pagination-media', [
@@ -82,5 +107,5 @@
         ])
     </div>
 </main>
-
 @include('_components._footerAdmin')
+@vite('resources/js/handle/delete-media.js');

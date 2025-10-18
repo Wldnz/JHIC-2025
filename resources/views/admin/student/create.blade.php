@@ -1,7 +1,4 @@
-@include('_components._headerAdmin', ['title' => 'Detail Account'])
-@php
-    $currentPath = explode('/admin/', url()->current())[1];
-@endphp
+@include('_components._headerAdmin', ['title' => 'Adding Student'])
 <form class="content" method="POST" enctype="multipart/form-data">
     @csrf
     <div class="profile-container">
@@ -59,7 +56,7 @@
         </div>
     </div>
     <div class="wrapper-button">
-        <button class="btn" type="submit">Tambahakn Siswa</button>
+        <button class="btn" type="submit">Tambahkan Siswa</button>
     </div>
 </form>
 

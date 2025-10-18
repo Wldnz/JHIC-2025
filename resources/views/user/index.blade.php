@@ -4,49 +4,49 @@
     $newscontent =
         [
             [
-                asset("images/banner1/bg.png"),
-                asset("images/banner1/asset1.png"),
-                asset("images/banner1/asset2.png"),
-                asset("images/banner1/asset3.png"),
-                asset("images/banner1/asset4.png"),
-                asset("images/banner1/asset5.png"),
-                asset("images/banner1/asset6.png")
+                asset("images/dashboard/banner1/bg.png"),
+                asset("images/dashboard/banner1/asset1.png"),
+                asset("images/dashboard/banner1/asset2.png"),
+                asset("images/dashboard/banner1/asset3.png"),
+                asset("images/dashboard/banner1/asset4.png"),
+                asset("images/dashboard/banner1/asset5.png"),
+                asset("images/dashboard/banner1/asset6.png")
             ],
             [
-                asset("images/banner2/bg.png"),
-                asset("images/banner2/asset1.png"),
-                asset("images/banner2/asset2.png"),
-                asset("images/banner2/asset3.png"),
-                asset("images/banner2/asset4.png"),
-                asset("images/banner2/asset5.png"),
-                asset("images/banner2/asset6.png")
+                asset("images/dashboard/banner2/bg.png"),
+                asset("images/dashboard/banner2/asset1.png"),
+                asset("images/dashboard/banner2/asset2.png"),
+                asset("images/dashboard/banner2/asset3.png"),
+                asset("images/dashboard/banner2/asset4.png"),
+                asset("images/dashboard/banner2/asset5.png"),
+                asset("images/dashboard/banner2/asset6.png")
             ],
             [
-                asset("images/banner2/bg.png"),
-                asset("images/banner2/asset1.png"),
-                asset("images/banner2/asset2.png"),
-                asset("images/banner2/asset3.png"),
-                asset("images/banner2/asset4.png"),
-                asset("images/banner2/asset5.png"),
-                asset("images/banner2/asset6.png")
+                asset("images/dashboard/banner3/bg.png"),
+                asset("images/dashboard/banner3/asset1.png"),
+                asset("images/dashboard/banner3/asset2.png"),
+                asset("images/dashboard/banner3/asset3.png"),
+                asset("images/dashboard/banner3/asset4.png"),
+                asset("images/dashboard/banner3/asset5.png"),
+                asset("images/dashboard/banner3/asset6.png")
             ],
             [
-                asset("images/banner2/bg.png"),
-                asset("images/banner2/asset1.png"),
-                asset("images/banner2/asset2.png"),
-                asset("images/banner2/asset3.png"),
-                asset("images/banner2/asset4.png"),
-                asset("images/banner2/asset5.png"),
-                asset("images/banner2/asset6.png")
+                asset("images/dashboard/banner4/bg.png"),
+                asset("images/dashboard/banner4/asset1.png"),
+                asset("images/dashboard/banner4/asset2.png"),
+                asset("images/dashboard/banner4/asset3.png"),
+                asset("images/dashboard/banner4/asset4.png"),
+                asset("images/dashboard/banner4/asset5.png"),
+                asset("images/dashboard/banner4/asset6.png")
             ],
             [
-                asset("images/banner2/bg.png"),
-                asset("images/banner2/asset1.png"),
-                asset("images/banner2/asset2.png"),
-                asset("images/banner2/asset3.png"),
-                asset("images/banner2/asset4.png"),
-                asset("images/banner2/asset5.png"),
-                asset("images/banner2/asset6.png")
+                asset("images/dashboard/banner5/bg.png"),
+                asset("images/dashboard/banner5/asset1.png"),
+                asset("images/dashboard/banner5/asset2.png"),
+                asset("images/dashboard/banner5/asset3.png"),
+                asset("images/dashboard/banner5/asset4.png"),
+                asset("images/dashboard/banner5/asset5.png"),
+                asset("images/dashboard/banner5/asset6.png")
             ],
         ];
 
@@ -117,8 +117,28 @@
             'Lapangan Futsal' => asset("images/kelas king/lapfutsal.svg"),
             'Ruangan B1' => asset("images/kelas king/b1.svg"),
         ];
+    $movingTeks = [
+        'We Are The Open For Registration',
+        'Gelombang 1 On 23 August - 06 November 2025',
+    ];
 @endphp
-@include('_components._header', ['title' => 'product'])
+@include('_components._header', 
+[
+    'title' => 'SMK Bina Informatika',
+    'description' => 'SMK Bina informatika | Website sekolah smk bina informatika bintaro',
+    'keywords' => 'SMK, SMK Bina Informatika, SMK Bina Informatika Bintaro, sekolah kejuruan, sekolah teknologi, sekolah informatika, pendidikan vokasi, sekolah IT, jurusan RPL, Rekayasa Perangkat Lunak, jurusan TKJ, Teknik Komputer dan Jaringan, jurusan BC, Broadcasting, jurusan GMDV, Game Development, jurusan DKV, Desain Komunikasi Visual, jurusan Anim, Animasi, sekolah desain, sekolah animasi, sekolah grafis, sekolah multimedia, sekolah terbaik di Bintaro, SMK IT Bintaro, SMK desain Bintaro, SMK animasi Bintaro'
+    ])
+<div class="wrapper-moving-teks no-fade">
+  <div class="moving-track no-fade">
+    @foreach ($movingTeks as $teks)
+      <p class="no-fade">{{ $teks }}</p>
+    @endforeach
+    @foreach ($movingTeks as $teks)
+      <p class="no-fade">{{ $teks }}</p>
+    @endforeach
+  </div>
+</div>
+
 <div class="dashboard no-fade">
     <div class="banner">
         <div class="trinkets star-group star-group-1 no-fade">
@@ -196,25 +216,18 @@
         <h2>Gallery</h2>
         <div class="img-group">
             @foreach ($galleries as $gallery)
-                <span class="show gallery-img">
-                    <img src="{{$gallery->url}}" alt="{{ $gallery->name }}">
+                <span class="gallery-img {{ $loop->iteration < 3 ? "show" : "" }}" id="gallery-img">
+                    <img class="gallery-image-url" src="{{$gallery->url}}" alt="{{ $gallery->name }}" data-type="{{ $gallery->gallery_type_name }}">
                     <h3>{{ $gallery->name }}</h3>
                 </span>
             @endforeach
         </div>
         <div class="img-full no-fade">
             <div class="bar">
-                <p>Kelas A1</p>
+                <p class="preview-image-name">Kelas A1</p>
                 <img src="{{ asset("icons/Add_Plus.svg") }}" alt="" class="close-img-full">
             </div>
-            <img src="{{ $placeholder }}" alt="">
-            <div class="other-img">
-                <img src="{{ $placeholder }}" alt="" class="this">
-                <img src="{{ $placeholder }}" alt="">
-                <img src="{{ $placeholder }}" alt="">
-                <img src="{{ $placeholder }}" alt="">
-                <img src="{{ $placeholder }}" alt="">
-            </div>
+            <img class="preview-gallery-url" src="{{ $placeholder }}" alt="">
         </div>
         <button class="button" onclick="location.href='{{ route('user.galleries') }}'">VIEW ALL</button>
     </div>
@@ -329,7 +342,7 @@
 
     // ========================================================================================================================================
 
-    const gallery_img = document.querySelectorAll(".gallery-img")
+    const gallery_img = document.querySelectorAll("#gallery-img")
     const full_img = document.querySelector(".img-full")
     const close_full_img = document.querySelector(".close-img-full")
 
@@ -475,6 +488,24 @@
     })
 
 
+
+const gallery_preview_name = document.querySelector('.preview-image-name');
+const gallery_preview_image = document.querySelector('.preview-gallery-url');
+const wrapper_preview = document.querySelector(".img-full");
+const galleries = @json($galleries ?? []);
+
+document.querySelectorAll(".gallery-img").forEach(el =>  el.addEventListener("click", () => setPreviewImage(el, true)));
+
+function setPreviewImage(el, hasWrapper = false){
+        let _element = el; 
+        if(hasWrapper){
+            _element  = el.querySelector('.gallery-image-url');
+        }
+
+        gallery_preview_name.textContent = _element.alt;
+        gallery_preview_image.src = _element.src;
+        wrapper_preview.classList.add("active")
+}
 </script>
 
 

@@ -13,6 +13,7 @@
     .progsil-image {
         img {
             width: 100%;
+            border-radius: 5px;
         }
     }
 
@@ -38,23 +39,91 @@
         }
     }
 
-    .artexample-text {
-        margin: 20px 0;
-        text-align: center;
-    }
-
     .progsil-art {
-        display: flex;
         width: 100%;
-        gap: 10px;
+        h3 {
+            margin-block: 15px;
+            text-align: center;
+        }
 
-        .art {
-            min-height: 400px;
-            width: 10%;
-            background-color: grey;
+        .gallery-art {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
 
-            &.main {
+            .keizory {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                .art {
+                    img {
+                        width: 100%;
+                        border-radius: 15px;
+                    }
+                }
+            }
+
+            .hazril-naufal {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                .art {
+                    img {
+                        width: 100%;
+                        border-radius: 15px;
+                    }
+                }
+            }
+
+            .julian {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                .art {
+                    img {
+                        width: 100%;
+                        border-radius: 15px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .progsil {
+        .progsil-image {
+            display: flex;
+            justify-content: center;
+
+            img {
                 width: 80%;
+            }
+        }
+
+        .progsil-content {
+            h3 {
+                font-size: $font-size-l;
+            }
+
+            .progsil-text {
+                p {
+                    font-size: $font-size-l;
+                }
+            }
+        }
+
+        .progsil-art {
+            h3 {
+                margin-block: 15px;
+                font-size: $font-size-l;
+            }
+            .gallery-art {
+                display: flex;
+                justify-content: center;
             }
         }
     }

@@ -1,7 +1,12 @@
 @php
         $placeholder = "https://www.svgrepo.com/show/508699/landscape-placeholder.svg";
 @endphp
-@include('_components._header', ['title' => 'product'])
+@include('_components._header', 
+[
+    'title' => 'Profile | SMK Bina Informatika',
+    'description' => 'SMK Bina Informatika |Halaman profile website SMK Bina Informatika',
+    'keywords' => 'SMK, SMK Bina Informatika, SMK Bina Informatika Bintaro, sekolah kejuruan, sekolah teknologi, sekolah informatika, pendidikan vokasi, sekolah IT, jurusan RPL, Rekayasa Perangkat Lunak, jurusan TKJ, Teknik Komputer dan Jaringan, jurusan BC, Broadcasting, jurusan GMDV, Graphic Media Design and Visual, jurusan DKV, Desain Komunikasi Visual, jurusan Anim, Animasi, sekolah desain, sekolah animasi, sekolah grafis, sekolah multimedia, sekolah terbaik di Bintaro, SMK IT Bintaro, SMK desain Bintaro, SMK animasi Bintaro'
+    ])
 <div class="profile no-fade">
     <div class="main no-fade">
         <img src="{{asset("images/profile/bg.png")}}" alt="" class="bg no-fade">

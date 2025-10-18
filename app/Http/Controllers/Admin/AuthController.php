@@ -2,26 +2,23 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\AlertType;
 use App\Http\Controllers\Controller;
+use App\Utilities\AlertDataGenerator;
+use App\Utilities\RoleLevelChecker;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-    public function signupPage()
-    {
-        return view('admin.auth.signup');
-    }
-
-    public function signup(Request $request)
-    {
-        // handle signup logic here later
-        return back();
-    }
-
     public function loginPage()
     {
-        if (Auth::check()) return redirect()->route('admin.dashboard');
+        if (
+            Auth::check() &&
+            RoleLevelChecker::checkMinimumByRoleName(Auth::user(), 'article_creator')
+        ) {
+            return redirect()->route('admin.dashboard');
+        }
         return view('admin.auth.login');
     }
 
@@ -32,16 +29,25 @@ class AuthController extends Controller
             'password' => 'required|string|min:8'
         ]);
 
-        if (Auth::attempt($validated, true)) {
+        if (
+            Auth::attempt($validated, true) &&
+            RoleLevelChecker::checkMinimumByRoleName(Auth::user(), 'article_creator')
+        ) {
             $request->session()->regenerate();
             return redirect()->route('admin.dashboard');
         }
-        
+
+        AlertDataGenerator::generateAsFlashToSession(
+            AlertType::DANGER,
+            "Gagal login",
+            "Email atau password salah",
+            $request->session(),
+        );
         return back()->withInput($validated);
     }
 
     public function logout(Request $request)
-    {   
+    {
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         Auth::logout();

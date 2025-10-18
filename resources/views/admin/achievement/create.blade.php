@@ -1,7 +1,4 @@
 @include('_components._headerAdmin', ['title' => 'Adding Achievement'])
-@php
-    $currentPath = explode('/admin/', url()->current())[1];
-@endphp
 <form class="content flex-row justify-between pad-0" method="POST" enctype="multipart/form-data">
     @csrf
     <div class="wrapper-content-media-management">
@@ -118,7 +115,7 @@
                     </div>
                 </div>
                 <button type="submit" class="btn btn-media">
-                    Simpan Perubahan
+                    Tambahkan Prestasi
                 </button>
             </div>
         </div>

@@ -1,13 +1,22 @@
 @php
         $placeholder = "https://www.svgrepo.com/show/508699/landscape-placeholder.svg";
 @endphp
-@include('_components._header', ['title' => 'product'])
+@include('_components._header', 
+[
+    'title' => 'Visi Misi | SMK Bina Informatika',
+    'description' => 'SMK Bina Informatika | visi dan misi sekolah smk bina informatika',
+    'keywords' => 'SMK, SMK Bina Informatika, SMK Bina Informatika Bintaro, sekolah kejuruan, sekolah teknologi, sekolah informatika, pendidikan vokasi, sekolah IT, jurusan RPL, Rekayasa Perangkat Lunak, jurusan TKJ, Teknik Komputer dan Jaringan, jurusan BC, Broadcasting, jurusan GMDV, Graphic Media Design and Visual, jurusan DKV, Desain Komunikasi Visual, jurusan Anim, Animasi, sekolah desain, sekolah animasi, sekolah grafis, sekolah multimedia, sekolah terbaik di Bintaro, SMK IT Bintaro, SMK desain Bintaro, SMK animasi Bintaro'
+    ])
 <div class="vimi no-fade">
     <div class="wrapper no-fade">
         <img src="{{asset("images/profile/bg.png")}}" alt="" class="bg no-fade">
         <div class="text">
-            <h1>Misi SMK&nbsp;Bina&nbsp;Informatika</h1>
-            <p>Mencetak generasi berkarakter yang perofesional di bidang Teknologi Informasi dan Komunikasi berstandar Nasional dan Internasional pada tahun <span id="year"></span>.</p>
+            <h1>Visi SMK&nbsp;Bina&nbsp;Informatika</h1>
+            <p>1. Membudayakan program sekolah yang berkaitan dengan keunggulan budi pekerti akhlak mulia dan keunggulan prestasi  
+            <br><br>
+            2. Meningkatkan kualitas pendidikan dan kuantitas kelulusan yang relevan dengan kebutuhan dunia usaha dan industri.  
+            <br><br>
+            3. Membimbing generasi yang mampu menguasai ilmu pengetahuan dan teknologi dalam memenuhi pasar global.</p>
         </div>
         <div class="image">
             <img src="{{ asset("images/profile/bu sinta.png") }}" alt="">
@@ -19,12 +28,8 @@
             <img src="{{ asset("images/profile/pa budi.png") }}" alt="">
         </div>
         <div class="text">
-            <h1>Visi SMK&nbsp;Bina&nbsp;Informatika</h1>
-            <p>1. Membudayakan program sekolah yang berkaitan dengan keunggulan budi pekerti akhlak mulia dan keunggulan prestasi  
-            <br><br>
-            2. Meningkatkan kualitas pendidikan dan kuantitas kelulusan yang relevan dengan kebutuhan dunia usaha dan industri.  
-            <br><br>
-            3. Membimbing generasi yang mampu menguasai ilmu pengetahuan dan teknologi dalam memenuhi pasar global.</p>
+            <h1>Misi SMK&nbsp;Bina&nbsp;Informatika</h1>
+            <p>Mencetak generasi berkarakter yang perofesional di bidang Teknologi Informasi dan Komunikasi berstandar Nasional dan Internasional pada tahun <span id="year"></span>.</p>
         </div>
     </div>
 

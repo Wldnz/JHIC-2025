@@ -115,8 +115,8 @@ function closeSideBar() {
 
 // handle active and non active main-menu
 function handleActiveAndNonActiveMainMenu() {
-    let { locations, pathname: name } = getSetupData();
-    const pathname = (location.pathname).split(`/${name}/`)[1];
+    let { locations, pathname: currentPath } = getSetupData();
+    const pathname = (location.pathname).split(`/${currentPath}/`)[1];
     menu_chidrens.forEach(menu => {
         const name = menu.id.split('-')[1];
         const isMultiple = menu.classList.contains('multiple');
@@ -126,8 +126,8 @@ function handleActiveAndNonActiveMainMenu() {
             if (isCurrentLocation) {
                 display_name.classList.add('active');
                 Array.from(menu.children)
-                    .find(sub => sub.id == pathname)
-                    ?.classList.add('active');
+                .find(sub => sub.id == pathname)
+                ?.classList.add('active');
                 handleSubMenu(menu, true);
             }
         } else if (name == pathname) {

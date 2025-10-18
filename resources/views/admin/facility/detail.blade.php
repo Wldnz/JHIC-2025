@@ -1,8 +1,4 @@
 @include('_components._headerAdmin', ['title' => 'Detail Facility'])
-@php
-    $currentPath = explode('/admin/', url()->current())[1];
-    logger('fac', [$facility])
-@endphp
 <form class="content flex-row justify-between pad-0" method="POST" enctype="multipart/form-data">
     @method('PUT')
     @csrf
@@ -54,7 +50,7 @@
                         <label for="type">Facility Type<span>*</span></label>
                         <select name="type" id="type" required>
                             @foreach ($availableFacilityTypes as $facilityType)
-                                <option value="{{ $facilityType->id }}" @selected(old('type', '') == $facilityType->id)>{{ $facilityType->name }}</option>
+                                <option value="{{ $facilityType->id }}" @selected(old('type', $facility->gallery_type_id) == $facilityType->id)>{{ $facilityType->name }}</option>
                             @endforeach
                         </select>
                     </div>

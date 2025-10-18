@@ -42,7 +42,12 @@
             ]
         ]
 @endphp
-@include('_components._header', ['title' => 'product'])
+@include('_components._header', 
+[
+    'title' => 'Game Development | SMK Bina Informatika',
+    'description' => 'SMK Bina informatika | Jurusan game development adalah program studi yang mempersiapkan mahasiswa untuk menciptakan dan mengembangkan video game secara profesional, meliputi aspek teknis seperti pemrograman, desain grafis, dan kecerdasan buatan, serta aspek kreatif seperti desain gameplay, cerita, dan dunia virtual. Mahasiswa akan belajar siklus lengkap pengembangan game dari awal hingga rilis, termasuk teknologi seperti augmented reality (AR) dan virtual reality (VR).',
+    'keywords' => 'jurusan GMDV, Game Development, SMK Bina Informatika Bintaro, pengembangan game, pembuatan game, game design, coding game, Unity, Unreal Engine, desain karakter, gameplay, sekolah game dev Bintaro, jurusan game terbaik',
+    ])
 <div class="majors no-fade">
       <div class="main">
         <img src="{{ $major->banner }}" alt="">

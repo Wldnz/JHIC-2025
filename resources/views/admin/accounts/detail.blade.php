@@ -1,7 +1,5 @@
 @include('_components._headerAdmin', ['title' => 'Detail Account'])
 @php
-    $currentPath = explode('/admin/', url()->current())[1];
-    logger('as', [$account, $candidate, $sources]);
     $status_families = [
         'biological_child' => 'Anak Kandung',
         'step_child' => 'Anak Angkat',
@@ -76,33 +74,42 @@
                             value="{{ old('phone', $account->phone) }}" aria-describedby="phone" required>
                     </div>
                 @endif
-                <div class="wrapper-input">
-                    <label for="role">Role</label>
-                    <select name="role" id="role" required>
-                        <option @selected(old('role', $account->role) == 'candidate') value="candidate">Calon Peserta
-                            Didik</option>
-                        <option @selected(old('role', $account->role) == 'siswa') value="student">Siswa</option>
-                        <option @selected(old('role', $account->role) == 'article_creator') value="article_creator">
-                            Pembuat Artikel</option>
-                        @if ($account->role == 'super_admin')
-                            <option @selected(old('role', $account->role) == 'admin') value="admin">Administrasi
+                @if ($account->id != auth()->user()->id)
+                    <div class="wrapper-input">
+                        <label for="role">Role</label>
+                        <select name="role" id="role" required>
+                            @if ($account->role != 'article_creator' && $account->role != 'admin')
+                                <option @selected(old('role', $account->role) == 'candidate') value="candidate">
+                                    Calon Peserta Didik
+                                </option>
+                                <option @selected(old('role', $account->role) == 'siswa') value="student">
+                                    Siswa
+                                </option>
+                            @endif
+                            <option @selected(old('role', $account->role) == 'article_creator') value="article_creator">
+                                Pembuat Artikel
                             </option>
-                        @endif
-                    </select>
-                </div>
+                            @if (auth()->user()->role == 'super_admin')
+                                <option @selected(old('role', $account->role) == 'admin') value="admin">
+                                    Administrator
+                                </option>
+                            @endif
+                        </select>
+                    </div>
+                @endif
             </div>
         </div>
     </div>
     <div class="wrapper-content">
-        @includeWhen($account->role == 'candidate' && $candidate, 'admin.accounts.components.details.index')
+        @includeWhen($account->role == 'candidate' && $isFormPaid, 'admin.accounts.components.details.index')
         @includeWhen($account->role == 'article_creator' && $articles, 'admin.accounts.components.details.articles')
-        @if($account->role == 'candidate' && !$candidate)
+        @if($account->role == 'candidate' && !$isFormPaid)
             <div class="form-data-profile" id="candidate-document-form">
                 <div class="wrapper-form">
                     <div class="container container-1">
                         <div class="wrapper-document">
                             <div class="wrapper-thumbnail">
-                                <h4 class="text-center">Calon Peserta Didik Belum Mengisi Formulir</h4>
+                                <h4 class="text-center">Calon Peserta Didik Belum Membeli Formulir</h4>
                             </div>
                         </div>
                     </div>
@@ -124,7 +131,7 @@
     </div>
     <div class="wrapper-button">
         <button class="btn" type="submit">Simpan Perubahan</button>
-        <!-- <button class="btn btn-back" type="button" id="reset-password-btn">Reset Password</button> -->
+        <button class="btn btn-back" type="button" id="reset-password-btn">Reset Password</button>
     </div>
 </form>
 
@@ -138,20 +145,30 @@
     });
 
     let resetPassword = true;
-    // const handlerResetPassword = (e) => {
-    //     fetch("", {
-    //         headers : {
-    //             'Content-Type': 'application/json',
-    //         },
-    //         method : 'PATCH',
-    //         body : JSON.stringify( {
-    //             _token : csrfToken
-    //         })
-    //     })
-    //     .then(e => e.json())
-    //     .then(e => console.log(e));
-    // };
-    // document.getElementById('reset-password-btn').addEventListener('click', handlerResetPassword)
+    const handlerResetPassword = (e) => {
+        fetch(@js(route('admin.reset-password-account', ['account' => $account])), {
+            headers : {
+                'Content-Type': 'application/json',
+            },
+            method : 'PATCH',
+            body : JSON.stringify( {
+                _token : csrfToken
+            })
+        })
+        .then(response => {
+            if (!(response.status >= 300 && response.status < 400)) {
+                window.location.reload();
+                return;
+            }
+
+            const redirectUrl = response.headers.location;
+            if (redirectUrl) {
+                window.location.href = redirectUrl;
+            }
+        })
+        .catch(error => console.error(error));
+    };
+    document.getElementById('reset-password-btn').addEventListener('click', handlerResetPassword)
 </script>
 
 @include('_components._footerAdmin')

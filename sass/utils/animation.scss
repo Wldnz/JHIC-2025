@@ -1,4 +1,5 @@
-$width-mobile:100vw;
+$width-mobile: 100vw;
+
 @keyframes openSidebar {
     0% {
         width: 100px;
@@ -39,8 +40,8 @@ $width-mobile:100vw;
     }
 
     100% {
-       height: 0;
-       display: none;
+        height: 0;
+        display: none;
     }
 }
 
@@ -50,16 +51,48 @@ $width-mobile:100vw;
     }
 }
 
-@keyframes rotate-y-360{
-    100%{
+@keyframes rotate-y-360 {
+    100% {
         rotate: 360deg;
     }
 }
 
+@keyframes show-the-options-menu {
+    0% {
+        min-height: 180px;
+        overflow: hidden;
+    }
+
+    100% {
+        min-height: 120px;
+        overflow: initial;
+    }
+}
+
+@keyframes close-the-options-menu {
+    100% {
+        min-height: 120px;
+        overflow: hidden;
+    }
+
+    100% {
+        height: 0;
+        opacity: .4;
+        overflow: initial;
+    }
+
+}
 
 @media screen and (min-width:98px) {
     $width-mobile : 300px !important;
-    .navigation-side{
+
+    .navigation-side {
         width: inherit !important;
+    }
+}
+
+@keyframes moving-teks {
+    100% {
+        right: 100vw;
     }
 }

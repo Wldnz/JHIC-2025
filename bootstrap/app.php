@@ -19,8 +19,15 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->append(FrameGuard::class);
+        $middleware->validateCsrfTokens(except: [
+            'midtrans/*',
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
+        $exceptions->render(function (NotFoundHttpException $exception, Request $request) {
+            return response()->view("exceptions.page-404", status: 404);
+        });
+
         $exceptions->render(function (Exception $exception, Request $request) {
             logger()->error($exception);
             report($exception);

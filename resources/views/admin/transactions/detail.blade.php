@@ -1,6 +1,5 @@
 @include('_components._headerAdmin', ['title' => 'Detail Transaksi'])
 @php
-    logger('data', [$transaction]);
     $columns = [
         'Data Calon Peserta Didik' => [
             'data' => $transaction,
@@ -36,45 +35,16 @@
                         <input type="text" name="name" id="name" placeholder="Masukkan {{ $label }}"
                             value="{{ $column['data'][$key] ?? '' }}" readonly>
                     </div>
-                    @if($loop->last)
-                        @if($title == 'Data Transaksi')
-                            <div class="wrapper-input">
-                                <label for="status">Status Transaksi</label>
-                                @if($transaction['status'] == 'pending')
-                                    <select name="status" id="status" required>
-                                        <option value="{{ $transaction['status'] }}">{{ $transaction['status'] }}</option>
-                                        <option value="ongoing">Berlangsung (Sudah Bayar)</option>
-                                    </select>
-                                @else
-                                     <input type="text" name="status" id="status" placeholder="Masukkan status" value="{{ $transaction['status'] }}" readonly>
-                                @endif
-                            </div>
-                        @endif
+                    @if($title == 'Data Transaksi' && $loop->last)
+                        <div class="wrapper-input">
+                            <label for="status">Status Transaksi</label>
+                            <input type="text" name="status" id="status" placeholder="Masukkan status" value="{{ $transaction['status'] }}" readonly>
+                        </div>
                     @endif
                 @endforeach
             </div>
         </div>
     @endforeach
-    @if(false)
-        <button class="button-submit-form">
-            <span>Merubah Data Transaksi</span>
-            @include('_components._sprite-icons', ['name' => 'add', 'size' => 18])
-        </button>
-    @endif
 </form>
-
-<div class="alert-message" id="form-received_order" style='display:none'>
-    <form class="card-form" id="card-form-order_received" data-action='add' style='display:none'>
-        @csrf
-        <h4>Merubah Jumlah Produk Diterima</h4>
-        <div class="wrapper-input">
-            <label for="received_product">Jumlah Produk Diterima</label>
-            <input type="number" name="received_product" id="received_product" required>
-        </div>
-        <input type="hidden" name='id_order' id="id_received_order" readonly>
-        <button type="submit" class="btn-yes-anouncement btn-yes-anouncement-received" data-action="orderan">Merubah Orderan</button>
-        <button type="button" class="btn-close-anouncement btn-close-anouncement-received">Tutup Pemberitahuan</button>
-    </form>
-</div>
 
 @include('_components._footerAdmin')

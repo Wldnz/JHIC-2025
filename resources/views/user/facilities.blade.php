@@ -4,7 +4,7 @@
 @include('_components._header', [
     'title' => 'Fasilitas | SMK Bina Informatika',
     'description' => 'SMK BINA INFORMATIKA MEMILIKI BANYAK FASILITAS YANG DAPAT MEMBANTU SERTA MENGEMBANGKAN KEMAMPUSAN SISWA/I',
-    'keywords' => 'Fasilitas, facility, Virtuality, 3D Fasilitas, fasilitas keren-keren'
+    'keywords' => 'Fasilitas, facility, Virtuality, 3D Fasilitas, fasilitas sekolah, 3d, unity, game, javascript unity, gallery, blender, 3d game, unity engine'
 ])
 <div class="facility no-fade">
     <div class="unity">
@@ -30,11 +30,16 @@
         <h1>Gallery</h1>
         <div class="gallery-images">
             @foreach ($facilities as $gallery)
-                <span class="gallery-image">
+                <span class="gallery-image {{ $loop->iteration < 5 ? "show" : "" }}">
                     <img class="gallery-image-url" src="{{$gallery->url}}" alt="{{ $gallery->name }}">
                     <p class="gallery-name">{{ $gallery->name }}</p>
                 </span>
             @endforeach
+
+            <a href="{{ route("user.galleries") }}" class="button">
+                <p> Show More </p>
+            </a>
+
             <div class="gallery-full">
                 <div class="button-wrapper">
                     <p class="preview-gallery-name">Kamar Wildan</p>
@@ -42,9 +47,6 @@
                 </div>
                 <div class="img-wrapper">
                     <img class="preview-gallery-url" src="" alt="">
-                </div>
-                <div class="other-images">
-                    <img src="" alt="">
                 </div>
             </div>
         </div>
@@ -196,29 +198,24 @@
 
 const gallery_preview_name = document.querySelector('.preview-gallery-name');
 const gallery_preview_image = document.querySelector('.preview-gallery-url');
+const wrapper_preview = document.querySelector(".gallery-full");
 const other_images = document.querySelector('.other-images');
-const galleries = @json($facilities ?? []);
 
-document.querySelectorAll(".gallery-image").forEach(el => {
-    el.addEventListener("click", () => {
-        gallery_preview_name.textContent = el.querySelector('.gallery-name').textContent;
-        gallery_preview_image.src = el.querySelector('.gallery-image-url').src;
-        document.querySelector(".gallery-full").classList.add("active")
-        document.body.style.overflow = "hidden"
+document.querySelectorAll(".gallery-image").forEach(el =>  el.addEventListener("click", () => setPreviewImage(el, true)));
 
-        const { name, gallery_type_name } = galleries.find(g => g.name == el.querySelector('.gallery-name').textContent);
-        if(!name || !gallery_type_name) return;
-        const gs = galleries.filter(g => {
-            return g.name != name && g.gallery_type_name == gallery_type_name;
-        });
+function setPreviewImage(el, hasWrapper = false){
+        let _element = el; 
+        if(hasWrapper){
+            _element  = el.querySelector('.gallery-image-url');
+        }
 
-        let string_images = '';
-        gs.forEach(g => string_images += `<img src="${g.url}" alt="${g.name}">`);
-        other_images.innerHTML = string_images;
-    })
-})
+        gallery_preview_name.textContent = _element.alt;
+        gallery_preview_image.src = _element.src;
+        wrapper_preview.classList.add("active")
+}
+
 document.querySelector(".gallery-close").addEventListener("click", () => {
-    document.querySelector(".gallery-full").classList.remove("active")
+    wrapper_preview.classList.remove("active")
     document.body.style.overflow = "auto"
 })
 

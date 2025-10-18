@@ -10,11 +10,15 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\isLogin;
 use App\Http\Middleware\isAdmin;
 
+Route::get("/404", function () {
+    return view("exceptions.page-404");
+});
+
 // User-side
 Route::name('user.')->group(function () {
     Route::get('/', [User\Controller::class, 'index'])->name('index');
     Route::get('/profile', [User\Controller::class, 'profile'])->name('profile');
-    Route::get('/about', [User\Controller::class, 'about'])->name('about');
+    Route::get('/uniforms', [User\Controller::class, 'uniforms'])->name('uniforms');
     Route::get('/visi-misi', [User\Controller::class, 'visiMisi'])->name('visi-misi');
     Route::get('/galleries', [User\Controller::class, 'galleries'])->name('galleries');
     Route::get('/facilities', [User\Controller::class, 'facilities'])->name('facilities');
@@ -36,21 +40,10 @@ Route::name('user.')->group(function () {
         Route::get('/program-silang', 'programSilang')->name('program-silang');
         Route::get('/baca-tulis-quran', 'bacaTulisQuran')->name('baca-tulis-quran');
         Route::get('/bimbingan-konseling', 'bimbinganKonseling')->name('bimbingan-konseling');
+        Route::get('/extracurriculars', 'extracurriculars')->name('extracurriculars');
         Route::get('/program-kecakapan-hidup', 'programKecakapanHidup')->name('program-kecakapan-hidup');
         Route::get('/project-works', 'projectWorks')->name('project-works');
         Route::get('/bi-channel', 'biChannel')->name('bi-channel');
-
-        Route::controller(User\ExtracurricularsController::class)->prefix('extracurriculars')->name('extracurriculars.')->group(function () {
-            Route::get('/', 'index')->name('index');
-            Route::get('/merpati-putih', 'merpatiPutih')->name('merpati-putih');
-            Route::get('/futsal', 'futsal')->name('futsal');
-            Route::get('/basketball', 'basketball')->name('basketball');
-            Route::get('/paduan-suara', 'paduanSuara')->name('paduan-suara');
-            Route::get('/bicoustic', 'bicoustic')->name('bicoustic');
-            Route::get('/tari-tradisional', 'tariTradisional')->name('tari-tradisional');
-            Route::get('/english-club', 'englishClub')->name('english-club');
-            Route::get('/paskibra', 'paskibra')->name('paskibra');
-        });
     });
 
 });
@@ -62,8 +55,16 @@ Route::name('candidate.')->prefix('candidate')->middleware([isLogin::class, isCa
 
         Route::get('/signup', [Candidate\AuthController::class, 'signupPage'])->name('signup-page');
         Route::post('/signup', [Candidate\AuthController::class, 'signup'])->name('signup');
+
+        Route::get('/signup/google', [Candidate\AuthController::class, 'signupGoogle'])->name('signup-google');
+        Route::get('/signup/google-callback', [Candidate\AuthController::class, 'signupGoogleCallback'])->name('signup-google-callback');
+
         Route::get('/login', [Candidate\AuthController::class, 'loginPage'])->name('login-page');
         Route::post('/login', [Candidate\AuthController::class, 'login'])->name('login');
+
+        Route::get('/login/google', [Candidate\AuthController::class, 'loginGoogle'])->name('login-google');
+        Route::get('/login/google-callback', [Candidate\AuthController::class, 'loginGoogleCallback'])->name('login-google-callback');
+
         Route::post('/logout', [Candidate\AuthController::class, 'logout'])->name('logout');
     });
 
@@ -75,20 +76,23 @@ Route::name('candidate.')->prefix('candidate')->middleware([isLogin::class, isCa
     Route::controller(Candidate\StageController::class)->prefix('stage')->name('stage.')->group(function () {
         Route::get('/stage-1', 'stage1')->name('stage1');
         Route::put('/stage-1', 'saveStage1')->name('save-stage1');
+        Route::get('/stage-1/saved', 'stage1Saved')->name('stage1-saved');
 
         Route::get('/stage-2', 'stage2')->name('stage2');
         Route::put('/stage-2', 'saveStage2')->name('save-stage2');
+        Route::get('/stage-2/saved', 'stage2Saved')->name('stage2-saved');
 
         Route::get('/stage-3', 'stage3')->name('stage3');
-        Route::put('/start-transaction', 'startTransaction')->name('start-transaction');
-        Route::get('/transaction-status', 'transactionStatus')->name('transaction-status');
+        Route::put('/stage-3', 'saveStage3')->name('save-stage3');
+        Route::get('/stage-3/saved', 'stage3Saved')->name('stage3-saved');
 
         Route::get('/stage-4', 'stage4')->name('stage4');
         Route::put('/stage-4', 'saveStage4')->name('save-stage4');
+        Route::get('/stage-4/saved', 'stage4Saved')->name('stage4-saved');
 
         Route::get('/stage-5', 'stage5')->name('stage5');
-        Route::get('/stage-5/documents/{registrationDocument}', 'document')->name('stage5.document');
         Route::put('/stage-5', 'saveStage5')->name('save-stage5');
+        Route::get('/stage-5/saved', 'stage5Saved')->name('stage5-saved');
     });
 });
 
@@ -117,7 +121,7 @@ Route::name('admin.')->prefix('admin')->middleware([isLogin::class, isAdmin::cla
     Route::get('/accounts/{account}/documents/{candidateDocument}', [Admin\AccountController::class, 'downloadDocument'])->name('detail-account.download-document');
     Route::put('/accounts/{account}', [Admin\AccountController::class, 'updateAccount'])->name('update-account');
     Route::delete('/accounts/{account}', [Admin\AccountController::class, 'deleteAccount'])->name('delete-account');
-    Route::patch('/account/reset-password/{account}', [Admin\AccountController::class, 'resetPassword'])->name('reset-password-account');
+    Route::patch('/accounts/{account}/reset-password', [Admin\AccountController::class, 'resetPassword'])->name('reset-password-account');
 
     Route::get('/students', [Admin\AccountController::class, 'student'])->name('students');
     Route::get('/students-create', [Admin\AccountController::class, 'createStudent'])->name('create-student');
@@ -135,8 +139,10 @@ Route::name('admin.')->prefix('admin')->middleware([isLogin::class, isAdmin::cla
 
     Route::withoutMiddleware([isAdmin::class])->middleware([isCreator::class])->group(function () {
         Route::get('/dashboard', [Admin\Controller::class, 'dashboard'])->name('dashboard');
+
         Route::get('/accounts/{account}', [Admin\AccountController::class, 'detailAccount'])->name('detail-account');
         Route::put('/accounts/{account}', [Admin\AccountController::class, 'updateAccount'])->name('update-account');
+
         Route::get('/news', [Admin\NewsController::class, 'news'])->name('news');
         Route::get('/news-create', [Admin\NewsController::class, 'createNews'])->name('create-news');
         Route::post('/news-create', [Admin\NewsController::class, 'storeNews'])->name('store-news');
@@ -159,6 +165,7 @@ Route::name('admin.')->prefix('admin')->middleware([isLogin::class, isAdmin::cla
     Route::put('/portfolios/{portfolio}', [Admin\PortfolioController::class, 'updatePortfolio'])->name('update-portfolio');
     Route::delete('/portfolios/{portfolio}', [Admin\PortfolioController::class, 'deletePortfolio'])->name('delete-portfolio');
 
+
     Route::get('/facilities', [Admin\FacilityController::class, 'facility'])->name('facility');
     Route::get('/facilities-create', [Admin\FacilityController::class, 'createFacility'])->name('create-facility');
     Route::post('/facilities-create', [Admin\FacilityController::class, 'storeFacility'])->name('store-facility');
@@ -168,7 +175,7 @@ Route::name('admin.')->prefix('admin')->middleware([isLogin::class, isAdmin::cla
 });
 
 
-Route::name('midtrans.')->prefix('midtrans')->middleware([isLogin::class])->group(function () {
+Route::name('midtrans.')->prefix('midtrans')->group(function () {
     // URL ==> http://127.0.0.1:8000/midtrans/payment-notification
     Route::post('/payment-notification', [MidtransController::class, 'paymentNotification'])->name('payment-notification');
 });

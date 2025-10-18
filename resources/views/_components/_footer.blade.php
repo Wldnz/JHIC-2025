@@ -27,14 +27,11 @@
         </div>
         <div class="links">
             <h3>Programs</h3>
-                <a href="{{ route("user.programs.extracurriculars.index") }}">Extracurricular </a>
+                <a href="{{ route("user.programs.extracurriculars") }}">Extracurricular </a>
                 <a href="{{ route("user.programs.bi-channel") }}">BI Channel</a>
-                <a href="https://webosis-smkbi.wuaze.com/">OSIS</a>
                 <a href="{{ route("user.programs.program-silang") }}">Progsil</a>
                 <a href="{{ route("user.programs.baca-tulis-quran") }}">BTQ</a>
-                <a href="{{ route("candidate.index") }}">USM</a>
-                <a href="{{ route("user.programs.bimbingan-konseling") }}">Bimbingan Konseling</a>
-                <a href="{{ route("user.programs.project-works") }}">Project Work</a>
+                <a href="{{ route("candidate.index") }}">PSB</a>
         </div>
         <div class="links">
             <h3>Contact</h3>
@@ -46,7 +43,7 @@
     </div>
 
     <div class="copyright">
-        <p>Copyright Fazbear Entertainment 2025. All&nbsp;Rights&nbsp;Reserved</p>
+        <p>Copyright SMK Bina Informatika 2025. All&nbsp;Rights&nbsp;Reserved</p>
         <div class="logo">
             <img src="{{ asset("icons/logo-sponsor.png") }}" alt="">
         </div>

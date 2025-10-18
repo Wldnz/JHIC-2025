@@ -1,8 +1,4 @@
 @include('_components._headerAdmin', ['title' => 'Facilitities Management'])
-@php
-    $currentPath = explode('/admin/', url()->current())[1];
-    logger('as', [$facilities])
-@endphp
 <main class="content">
     @include('_components._summary-section', [
         'title' => 'Facilities',
@@ -21,7 +17,18 @@
             </a>
         </div>
         <div class="find-something">
-            <form class="wrapper-filter">
+            <form class="wrapper-filter" id="wrapper-filter">
+                <div class="wrapper-select">
+                    <select name="search_type" required>
+                        <option value="">Status: Semuanya</option>
+                        <option value="laboratorium" @selected(app('request')->get('search_type') == 'laboratorium')>Status: Laboratorium</option>
+                        <option value="classroom" @selected(app('request')->get('search_type') == 'classroom')>Status: Ruangan</option>
+                        <option value="public facility" @selected(app('request')->get('search_type') == 'public facility')>Status: Publik Fasilitas</option>
+                    </select>
+                    <div class="wrapper-icon">
+                        @include("_components._sprite-icons", ["name" => "drop-down", "size" => 20])
+                    </div>
+                </div>
             </form>
             <form class="wrapper-search">
                 <input type="text" name="search" placeholder="Cari Fasilitas Disini.."
@@ -53,28 +60,43 @@
                         </div>
                     </div>
                 </a>
-                <form class="floating-action"
-                    action="{{ route('admin.delete-facility', ['facility' => $facility->id]) }}"
-                    method="POST"
-                    id="media-floating-icon"
-                >
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="action">
-                        @include('_components._sprite-icons', [
-                            'name' => 'trash',
-                            'size' => 20,
-                        ])
-                        <span>Delete Facility</span>
-                    </button>
-                </form>
+                <div class="floating-action">
+                    <a class="action action-detail btn-action"
+                        href="{{ route('admin.detail-facility', ['facility' => $facility->id]) }}"
+                    >
+                       <button class="btn-action" type="button">
+                            @include('_components._sprite-icons', [
+                                'name' => 'eye',
+                                'color' => 'white',
+                                'size' => 20,
+                            ])
+                            <span>Detail Facility</span>
+                       </button>
+                    </a>
+                    <form class="action"
+                        action="{{ route('admin.delete-facility', ['facility' => $facility->id]) }}"
+                        method="POST"
+                        id="action-delete"
+                    >
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn-action">
+                            @include('_components._sprite-icons', [
+                                'name' => 'trash',
+                                'color' => 'white',
+                                'size' => 20,
+                            ])
+                            <span>Delete Facility</span>
+                        </button>
+                    </form>
+                </div>
             </div>
             @endforeach
         </div>
           @include('_components._pagination-media', [
-                'max' => $max,
-                'totalPage' => $total,
-                'page' => $page
+            'max' => $max,
+            'totalPage' => $total,
+            'page' => $page
         ])
     </div>
 </main>

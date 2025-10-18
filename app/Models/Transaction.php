@@ -15,29 +15,33 @@ class Transaction extends Model
 
     protected $fillable = [
         'candidate_nisn',
+        'user_id',
         'candidate_full_name',
+        'user_email',
+        'snap_id',
+        'snap_url',
         'payment_method_id',
         'payment_method_display_name',
         'total_cost',
         'expired_at',
         'status',
+        'type',
     ];
 
     protected $casts = [
         'expired_at' => 'datetime',
     ];
 
-    /**
-     * Get the candidate that owns the transaction.
-     */
     public function candidate(): BelongsTo
     {
         return $this->belongsTo(Candidate::class, 'candidate_nisn', 'nisn');
     }
 
-    /**
-     * Get the payment method that owns the transaction.
-     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function paymentMethod(): BelongsTo
     {
         return $this->belongsTo(PaymentMethod::class);
