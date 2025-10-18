@@ -21,6 +21,6 @@ class isCandidate
         if (RoleLevelChecker::checkMinimumByRoleName(Auth::user(), 'candidate')) {
             return $next($request);
         }
-        throw new NotFoundHttpException('Not Found');
+        throw new NotFoundHttpException();
     }
 }

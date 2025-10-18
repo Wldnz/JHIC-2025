@@ -21,6 +21,6 @@ class isAdmin
         if (RoleLevelChecker::checkMinimumByRoleName(Auth::user(), 'admin')) {
             return $next($request);
         }
-        throw new NotFoundHttpException('Not Found');
+        throw new NotFoundHttpException();
     }
 }

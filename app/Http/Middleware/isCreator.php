@@ -21,6 +21,6 @@ class isCreator
         if (RoleLevelChecker::checkMinimumByRoleName(Auth::user(), 'article_creator')) {
             return $next($request);
         }
-        throw new NotFoundHttpException('Not Found');
+        throw new NotFoundHttpException();
     }
 }
