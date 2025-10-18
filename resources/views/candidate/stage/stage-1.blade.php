@@ -123,9 +123,7 @@
 
     function makeObject(major){
         if(!major) return;
-        return `<input type="hidden" name="majors[${major.id}]" value="${major.id}" readonly>
-        <input type="hidden" name="majors[${major.id}]" value="${major.major_short_name}" readonly>
-        <input type="hidden" name="majors[${major.id}]" value="${major.major_long_name}" readonly>
+        return `<input type="hidden" name="majors[]" value="${major.id}" readonly>
         `
     }
 
