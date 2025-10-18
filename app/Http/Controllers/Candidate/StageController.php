@@ -224,12 +224,12 @@ class StageController extends Controller
             ->where('type', '=', 'form')
             ->where('status', '=', 'settlement')
             ->count();
+        $candidate = Auth::user()->candidate()->first();
 
-        if ($formTransactionCount <= 0) {
+        if ($formTransactionCount <= 0 || !$candidate) {
             return redirect()->route('candidate.stage.stage1');
         }
 
-        $candidate = Auth::user()->candidate()->first();
         $formDocument = $candidate->candidateDocuments()
             ->where('type', '=', 'form')
             ->orderBy('created_at', 'desc')
