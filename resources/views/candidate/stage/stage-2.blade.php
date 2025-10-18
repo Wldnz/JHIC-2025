@@ -43,8 +43,8 @@
                     <button class="submit-form" type="submit">Simpan Data</button>
                     @if ($formDocument)
                         <div class="pages">
-                            <button class="pagination-action" type="button" onclick="location.href='{{ route('candidate.stage1') }}'">Sebelumnya</button>
-                            <button class="pagination-action" type="button" onclick="location.href='{{ route('candidate.stage3') }}'">Selanjutnya</button>
+                            <button class="pagination-action" type="button" onclick="location.href='{{ route('candidate.stage.stage1') }}'">Sebelumnya</button>
+                            <button class="pagination-action" type="button" onclick="location.href='{{ route('candidate.stage.stage3') }}'">Selanjutnya</button>
                         </div>
                     @endif
                 </div>

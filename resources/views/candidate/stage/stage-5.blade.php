@@ -48,7 +48,7 @@
                     <div class="pages">
                        @if ($isAllUplouds)
                             <div class="pages">
-                                <button class="pagination-action" type="button" onclick="location.href='{{ route('candidate.stage4') }}'">Sebelumnya</button>
+                                <button class="pagination-action" type="button" onclick="location.href='{{ route('candidate.stage.stage4') }}'">Sebelumnya</button>
                             </div>
                         @endif
                     </div>

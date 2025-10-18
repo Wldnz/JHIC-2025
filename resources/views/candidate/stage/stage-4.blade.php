@@ -53,8 +53,8 @@
                     <div class="pages">
                         @if ($isPaid)
                             <div class="pages">
-                                <button class="pagination-action" type="button" onclick="location.href='{{ route('candidate.stage3') }}'">Sebelumnya</button>
-                                <button class="pagination-action" type="button" onclick="location.href='{{ route('candidate.stage5') }}'">Selanjutnya</button>
+                                <button class="pagination-action" type="button" onclick="location.href='{{ route('candidate.stage.stage3') }}'">Sebelumnya</button>
+                                <button class="pagination-action" type="button" onclick="location.href='{{ route('candidate.stage.stage5') }}'">Selanjutnya</button>
                             </div>
                         @endif
                     </div>
