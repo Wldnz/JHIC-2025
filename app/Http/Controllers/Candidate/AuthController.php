@@ -8,6 +8,7 @@ use App\Http\Requests\Candidate\LoginRequest;
 use App\Http\Requests\Candidate\SignupRequest;
 use App\Models\User;
 use App\Utilities\AlertDataGenerator;
+use App\Utilities\RoleLevelChecker;
 use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -111,7 +112,12 @@ class AuthController extends Controller
 
     public function loginPage()
     {
-        if (Auth::check()) return redirect()->route('candidate.dashboard');
+        if (
+            Auth::check() &&
+            RoleLevelChecker::checkMinimumByRoleName(Auth::user(), 'candidate')
+        ) {
+            return redirect()->route('candidate.dashboard');
+        }
         return view('candidate.auth.login');
     }
 
@@ -119,7 +125,10 @@ class AuthController extends Controller
     {
         $validated = $request->validated();
 
-        if (Auth::attempt($validated, true)) {
+        if (
+            Auth::attempt($validated, true) &&
+            RoleLevelChecker::checkMinimumByRoleName(Auth::user(), 'candidate')
+        ) {
             $request->session()->regenerate();
             return redirect()->route('candidate.dashboard');
         }
