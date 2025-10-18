@@ -24,7 +24,7 @@ class StoreStudentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nis' => ['required', 'string', 'min:17', 'max:17'],
+            'nis' => ['required', 'string', 'min:8', 'max:8'],
             'name' => ['required', 'string', 'min:1', 'max:255'],
             'birth_date' => ['required', 'date', 'date_format:Y-m-d'],
             'gender' => ['required', 'in:male,female'],
