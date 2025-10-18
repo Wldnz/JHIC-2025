@@ -332,7 +332,7 @@ class StageController extends Controller
         $sources = RegistrationSource::all();
         $isSelectedPhase = $candidatePhase != null;
 
-        return view('candidate.stage.stage-3', compact( 'phases', 'sources', 'isSelectedPhase'));
+        return view('candidate.stage.stage-3', compact('phases', 'sources', 'isSelectedPhase', 'candidatePhase'));
     }
 
     public function saveStage3(SaveStage3Request $request)
@@ -581,7 +581,7 @@ class StageController extends Controller
         }
 
         $documents = $registrationDocuments;
-        return view('candidate.stage.stage-5', compact( 'documents', 'isAllUplouds'));
+        return view('candidate.stage.stage-5', compact('documents', 'isAllUplouds', 'candidateDocuments'));
     }
 
     public function saveStage5(SaveStage5Request $request)
