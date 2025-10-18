@@ -3,9 +3,6 @@
 ])
 <main class="content">
     <div class="accessoris">
-        <!-- {{-- <div class="rounded">
-            <div class="round"></div>
-        </div> --}} -->
         <div class="stars">
             <img src="{{ asset('images/trinkets/star.svg') }}" alt="star">
             <img src="{{ asset('images/trinkets/star.svg') }}" alt="star">
@@ -27,13 +24,13 @@
                     <div class="wrapper-file">
                         <p class="floating-title">{{ $formDocument->name }} <span>*</span></p>
                         <p class="description">Belum ada file yang diuploud nih</p>
-                        <input type="file" accept="{{ $formDocument->mime_types }}" id="biodata_form" name="biodata_form" aria-describeBy="formulir" required>
+                        <input type="file" accept="{{ $formDocument->mime_types }}" id="biodata_form" name="biodata_form" aria-describeBy="formulir" @required($isUploud)>
                     </div>
                     <span class="download">
                         Download File : <a class="link"
                         href="{{ $formDocument->download_file_url ?? '' }}"
                         download="formulir Biodata Binfor 2026-2025"
-                        >Formulir Biodatau.docs</a>
+                        >Formulir Biodata.docs</a>
                     </span>
                 </div>
             </div>
@@ -41,7 +38,7 @@
                 <p>Dengan menekan tombol "Simpan", data yang Anda cantumkan di atas adalah benar dan dapat dipertanggungjawabkan.</p>
                 <div class="w-buttons">
                     <button class="submit-form" type="submit">Simpan Data</button>
-                    @if ($formDocument)
+                    @if ($isUploud)
                         <div class="pages">
                             <button class="pagination-action" type="button" onclick="location.href='{{ route('candidate.stage.stage1') }}'">Sebelumnya</button>
                             <button class="pagination-action" type="button" onclick="location.href='{{ route('candidate.stage.stage3') }}'">Selanjutnya</button>

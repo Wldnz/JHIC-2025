@@ -7,7 +7,7 @@
             @include('_components._sprite-icons', [ 'name' => 'success','size' => 120 ])
             <h2 class="">Pembayaran Berhasil!</h2>
             <div class="s-submit">
-                <p>Wah Wah Wah!, Pembayaran Yang Dilakukan Sudah Berhasil!, Silahkan Lanjutkan Perjalanan Mu!</p>
+                <p>{{ $message ?? 'Wah Wah Wah!, Pembayaran Yang Dilakukan Sudah Berhasil!, Silahkan Lanjutkan Perjalanan Mu!' }}</p>
                 <div class="w-buttons">
                     <div class="pages pages-1">
                         <button class="pagination-action" type="button" onclick="location.href='{{ route('candidate.stage.stage2') }}'">Lanjutkan Perjalanan</button>
