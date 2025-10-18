@@ -74,7 +74,7 @@
                     <button class="submit-form" type="submit">{{ $isPaid  ? 'Simpan Data' : 'Buat Transaksi' }}</button>
                     @if ($isPaid)
                         <div class="pages pages-1">
-                            <button class="pagination-action" type="button" onclikc="location.href='{{ route('candidate.stage.stage2')  }}'">Selanjutnya</button>
+                            <button class="pagination-action" type="button" onclick="location.href='{{ route('candidate.stage.stage2') }}'">Selanjutnya</button>
                         </div>
                     @endif
                 </div>

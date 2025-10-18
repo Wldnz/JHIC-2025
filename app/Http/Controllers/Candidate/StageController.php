@@ -57,9 +57,7 @@ class StageController extends Controller
 
     public function saveStage1(SaveStage1Request $request)
     {
-        $validated = $request->validated([
-            'nisn', 'majors'
-        ]);
+        $validated = $request->validated();
         DB::beginTransaction();
 
         try {
@@ -126,10 +124,6 @@ class StageController extends Controller
                 DB::commit();
                 return redirect()->route('candidate.stage.stage1-saved');
             }
-
-            $validated = $request->validated([
-                'payment_method'
-            ]);
 
             $paymentMethod = PaymentMethod::query()
                 ->where('code_name', '=', $validated['payment_method'])
@@ -257,6 +251,31 @@ class StageController extends Controller
         DB::beginTransaction();
 
         try {
+            $formDocument = $candidate->candidateDocuments()
+                ->where('type', '=', 'form')
+                ->where('name', '=', "Formulir Biodata")
+                ->first();
+
+            if ($formDocument) {
+                $isUploaded = StorageUtils::uploadCandidateDocument(
+                    $formDocument,
+                    $validated['biodata_form']->get(),
+                );
+                if (!$isUploaded) {
+                    throw new Exception("Gagal menyimpan dokumen biodata calon siswa");
+                }
+
+                $isUpdated = $formDocument->update([
+                    'is_valid' => false,
+                ]);
+                if (!$isUpdated) {
+                    throw new Exception("Gagal memperbarui data dokumen biodata calon siswa");
+                }
+
+                DB::commit();
+                return redirect()->route('candidate.stage.stage2-saved');
+            }
+
             $formDocument = StorageUtils::uploadNewCandidateDocument(
                 $candidate,
                 "Formulir Biodata",
@@ -271,7 +290,6 @@ class StageController extends Controller
             }
 
             DB::commit();
-
             return redirect()->route('candidate.stage.stage2-saved');
 
         } catch (Throwable $th) {

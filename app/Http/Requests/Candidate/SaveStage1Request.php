@@ -24,8 +24,8 @@ class SaveStage1Request extends FormRequest
     public function rules(): array
     {
         return [
-            'payment_method' => ['required', 'string'],
-            'nisn' => ['required', 'numeric', 'digits:10'],
+            'payment_method' => ['nullable', 'string'],
+            'nisn' => ['required_with:payment_method', 'numeric', 'digits:10'],
             'majors.*' => ['required', 'exists:majors,id'],
         ];
     }
