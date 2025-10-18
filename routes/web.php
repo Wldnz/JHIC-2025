@@ -175,7 +175,7 @@ Route::name('admin.')->prefix('admin')->middleware([isLogin::class, isAdmin::cla
 });
 
 
-Route::name('midtrans.')->prefix('midtrans')->middleware([isLogin::class])->group(function () {
+Route::name('midtrans.')->prefix('midtrans')->group(function () {
     // URL ==> http://127.0.0.1:8000/midtrans/payment-notification
     Route::post('/payment-notification', [MidtransController::class, 'paymentNotification'])->name('payment-notification');
 });
