@@ -29,6 +29,20 @@ class StorageUtils
                 $encryptedFileContent
             );
 
+            $isUsingRegistrationPhase = false;
+            if (!$candidate->registrationPhase()->count() > 0) {
+                $oldestRegistrationPhase = RegistrationPhase::query()
+                    ->orderBy('ended_at', 'desc')
+                    ->first();
+
+                $isUsingRegistrationPhase = (
+                    $oldestRegistrationPhase &&
+                    now() >= Carbon::parse($oldestRegistrationPhase->ended_at)
+                );
+            } else {
+                $isUsingRegistrationPhase = false;
+            }
+
             return CandidateDocument::create([
                 'candidate_nisn' => $candidate->nisn,
                 'user_id' => $candidate->user_id,
@@ -36,11 +50,9 @@ class StorageUtils
                 'mime_types' => $fileMimetypes,
                 'file_url' => $gdrivePath,
                 'is_valid' => $isValid,
-                'expired_at' => $candidate->registrationPhase()->count() > 0 ?
+                'expired_at' => $isUsingRegistrationPhase ?
                     Carbon::parse($candidate->registrationPhase->ended_at)->addDays(5) :
-                    Carbon::parse(
-                        RegistrationPhase::query()->orderBy('ended_at', 'desc')->first()->ended_at
-                    )->addDays(5),
+                    now()->addDays(5),
                 'type' => $documentType,
             ]);
         } catch (Throwable $e) {
