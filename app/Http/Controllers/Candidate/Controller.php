@@ -13,6 +13,7 @@ class Controller extends \App\Http\Controllers\Controller
     protected $candidate = null;
 
     public function __construct(){
+        parent::__construct();
         if(Auth::check() && Auth::user()->role == 'candidate'){
             $this->candidate = Candidate::query()
                 ->where('user_id', '=', Auth::user()->id)
