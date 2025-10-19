@@ -89,13 +89,15 @@
     @if ($portfolios->count() > 0)
     <div class="portfolio">
       <h3>{{ $major->name }} Portfolio</h3>
+
       <div class="body-portfolio">
         <div class="main-portfolio">
-          <img src="{{ $portfolios[0]->portfolioImages[0]->url }}" alt="">
+          <img src="{{ $portfolios[0]->portfolioImages[0]->url }}" alt="{{ $portfolios[0]->title }}">
           <h3>{{ $portfolios[0]->title }}</h3>
           <p>{{ $portfolios[0]->description }}</p>
           <h4>{{ $portfolios[0]->student_name }}</h4>
         </div>
+
         <div class="other-portfolio">
           @foreach ($portfolios as $portfolio)
             <div class="portfolios {{ $loop->first ? 'selected' : '' }}">
@@ -144,6 +146,12 @@
     @endforeach
   </div>
 </div>
+
+<script defer>
+  const porfolios = @json($portfolios ?? []);
+</script>
+
+@vite(['resources/js/handle/majors-portfolio.js'])
 
 <script>
   document.addEventListener("DOMContentLoaded", () => {

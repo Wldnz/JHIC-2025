@@ -130,12 +130,11 @@
           @endforeach
         </div>
       </div>
-    </div>
-  @endif
-
-<div class="alumni">
-  <h2>Alumni's Story</h2>
-  @foreach ($major->alumni as $alumni)
+      @endif
+      
+      <div class="alumni">
+        <h2>Alumni's Story</h2>
+        @foreach ($major->alumni as $alumni)
     <div class="alumni-tab">
       <div class="img-group">
         <img src="{{ $alumni[3] }}" alt="">
@@ -144,9 +143,15 @@
       <h4>{{ $alumni[1] }}</h4>
       <p>{{ $alumni[2] }}</p>
     </div>
-  @endforeach
+    @endforeach
+  </div>
 </div>
-</div>
+
+<script defer>
+  const portfolios = @json($portfolios ?? []);
+</script>
+
+@vite(['resources/js/handle/majors-portfolio.js'])
 
 <script>
   document.addEventListener("DOMContentLoaded", () => {

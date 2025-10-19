@@ -4,49 +4,64 @@
     $newscontent =
         [
             [
-                asset("images/dashboard/banner1/bg.png"),
-                asset("images/dashboard/banner1/asset1.png"),
-                asset("images/dashboard/banner1/asset2.png"),
-                asset("images/dashboard/banner1/asset3.png"),
-                asset("images/dashboard/banner1/asset4.png"),
-                asset("images/dashboard/banner1/asset5.png"),
-                asset("images/dashboard/banner1/asset6.png")
+                'destination' => route('candidate.index'),
+                'content' => [
+                    asset("images/dashboard/banner1/bg.png"),
+                    asset("images/dashboard/banner1/asset1.png"),
+                    asset("images/dashboard/banner1/asset2.png"),
+                    asset("images/dashboard/banner1/asset3.png"),
+                    asset("images/dashboard/banner1/asset4.png"),
+                    asset("images/dashboard/banner1/asset5.png"),
+                    asset("images/dashboard/banner1/asset6.png")
+                ],
             ],
             [
-                asset("images/dashboard/banner2/bg.png"),
-                asset("images/dashboard/banner2/asset1.png"),
-                asset("images/dashboard/banner2/asset2.png"),
-                asset("images/dashboard/banner2/asset3.png"),
-                asset("images/dashboard/banner2/asset4.png"),
-                asset("images/dashboard/banner2/asset5.png"),
-                asset("images/dashboard/banner2/asset6.png")
+               'destination' => route('candidate.index'),
+               'content' => [
+                    asset("images/dashboard/banner2/bg.png"),
+                    asset("images/dashboard/banner2/asset1.png"),
+                    asset("images/dashboard/banner2/asset2.png"),
+                    asset("images/dashboard/banner2/asset3.png"),
+                    asset("images/dashboard/banner2/asset4.png"),
+                    asset("images/dashboard/banner2/asset5.png"),
+                    asset("images/dashboard/banner2/asset6.png")
+               ]
             ],
             [
-                asset("images/dashboard/banner3/bg.png"),
-                asset("images/dashboard/banner3/asset1.png"),
-                asset("images/dashboard/banner3/asset2.png"),
-                asset("images/dashboard/banner3/asset3.png"),
-                asset("images/dashboard/banner3/asset4.png"),
-                asset("images/dashboard/banner3/asset5.png"),
-                asset("images/dashboard/banner3/asset6.png")
+               'destination' => route('candidate.index'),
+               'content' => [
+                    asset("images/dashboard/banner3/bg.png"),
+                    asset("images/dashboard/banner3/asset1.png"),
+                    asset("images/dashboard/banner3/asset2.png"),
+                    asset("images/dashboard/banner3/asset3.png"),
+                    asset("images/dashboard/banner3/asset4.png"),
+                    asset("images/dashboard/banner3/asset5.png"),
+                    asset("images/dashboard/banner3/asset6.png")
+               ]
             ],
             [
-                asset("images/dashboard/banner4/bg.png"),
-                asset("images/dashboard/banner4/asset1.png"),
-                asset("images/dashboard/banner4/asset2.png"),
-                asset("images/dashboard/banner4/asset3.png"),
-                asset("images/dashboard/banner4/asset4.png"),
-                asset("images/dashboard/banner4/asset5.png"),
-                asset("images/dashboard/banner4/asset6.png")
+               'destination' => route('candidate.index'),
+               'content' => [
+                    asset("images/dashboard/banner4/bg.png"),
+                    asset("images/dashboard/banner4/asset1.png"),
+                    asset("images/dashboard/banner4/asset2.png"),
+                    asset("images/dashboard/banner4/asset3.png"),
+                    asset("images/dashboard/banner4/asset4.png"),
+                    asset("images/dashboard/banner4/asset5.png"),
+                    asset("images/dashboard/banner4/asset6.png")
+               ]
             ],
             [
-                asset("images/dashboard/banner5/bg.png"),
-                asset("images/dashboard/banner5/asset1.png"),
-                asset("images/dashboard/banner5/asset2.png"),
-                asset("images/dashboard/banner5/asset3.png"),
-                asset("images/dashboard/banner5/asset4.png"),
-                asset("images/dashboard/banner5/asset5.png"),
-                asset("images/dashboard/banner5/asset6.png")
+                'destination' => 'https://esemkah.jh-beon.cloud/news/8',
+                'content' => [
+                    asset("images/dashboard/banner5/bg.png"),
+                    asset("images/dashboard/banner5/asset1.png"),
+                    asset("images/dashboard/banner5/asset2.png"),
+                    asset("images/dashboard/banner5/asset3.png"),
+                    asset("images/dashboard/banner5/asset4.png"),
+                    asset("images/dashboard/banner5/asset5.png"),
+                    asset("images/dashboard/banner5/asset6.png")
+                ]
             ],
         ];
 
@@ -108,15 +123,6 @@
             ],
         ];
 
-    $gallery =
-        [
-            'Ruangan A1' => asset("images/kelas king/a1.svg"),
-            'Ruangan A2' => asset("images/kelas king/a2.svg"),
-            'Ruangan A3' => asset("images/kelas king/a3.svg"),
-            'Lapangan Basket' => asset("images/kelas king/lapbasket.svg"),
-            'Lapangan Futsal' => asset("images/kelas king/lapfutsal.svg"),
-            'Ruangan B1' => asset("images/kelas king/b1.svg"),
-        ];
     $movingTeks = [
         'We Are Open For Registration',
         'Gelombang 1 On 23 August - 06 November 2025',
@@ -150,14 +156,10 @@
         <div class="center">
             <div class="sliding-banner">
                 @foreach ($newscontent as $asset)
-                    <a href="" class="banner-content">
-                        <img src="{{ $asset[0] }}" alt="" class="img selector">
-                        <img src="{{ $asset[1] }}" alt="" class="img img1 selector">
-                        <img src="{{ $asset[2] }}" alt="" class="img img2 selector">
-                        <img src="{{ $asset[3] }}" alt="" class="img img3 selector">
-                        <img src="{{ $asset[4] }}" alt="" class="img img4 selector">
-                        <img src="{{ $asset[5] }}" alt="" class="img img5 selector">
-                        <img src="{{ $asset[6] }}" alt="" class="img img6 selector">
+                    <a {{ isset($asset['destination']) ? 'href='.$asset['destination'] : '' }} class="banner-content">
+                       @foreach ($asset['content'] as $key=>$content)
+                            <img src="{{ $content }}" alt="" class="img img{{ $key }} selector">
+                        @endforeach
                     </a>
                 @endforeach
             </div>

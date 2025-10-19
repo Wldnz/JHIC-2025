@@ -146,6 +146,13 @@
     </div>
 </div>
 
+
+<script defer>
+  const portfolios = @json($portfolios ?? []);
+</script>
+
+@vite(['resources/js/handle/majors-portfolio.js'])
+
 <script>
 document.addEventListener("DOMContentLoaded", () => {
     const elements = [...document.querySelectorAll(

@@ -126,9 +126,7 @@
       </div>
     </div>
   @endif
-    </div>
-<!-- 
-    <div class="alumni">
+  <div class="alumni">
         <h2>Alumni's Story</h2>
         @foreach ($major->alumni as $alumni)
         <div class="alumni-tab">
@@ -141,7 +139,13 @@
         </div>
         @endforeach
     </div>
-</div> -->
+</div>
+
+<script defer>
+  const portfolios = @json($portfolios ?? []);
+</script>
+
+@vite(['resources/js/handle/majors-portfolio.js'])
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {
