@@ -125,6 +125,52 @@ class Controller extends \App\Http\Controllers\Controller
             $isAllUploads = false;
         }
 
+        if ($isAllUploads && $candidate) {
+            $candidate->load([
+                'candidateMajors' => function ($query) {
+                    $query
+                        ->select(['id', 'candidate_nisn', 'major_long_name'])
+                        ->limit(2);
+                }
+            ]);
+        }
+
         return view('candidate.learning-materials', compact('candidate', 'isAllUploads'));
+    }
+
+    public function usmResult()
+    {
+        $candidate = $this->candidate;
+        $isAllUploads = true;
+
+        if ($candidate) {
+            $candidateDocuments = $this->candidate->candidateDocuments()
+                ->where('type', '=', 'usm')
+                ->get()
+                ->pluck('name')
+                ->toArray();
+            $registrationDocuments = RegistrationDocument::query()
+                ->where('type', '=', 'usm')
+                ->get();
+
+            foreach ($registrationDocuments as $registrationDocument) {
+                if (in_array($registrationDocument->name, $candidateDocuments)) {
+                    continue;
+                }
+                $isAllUploads = false;
+                break;
+            }
+        } else {
+            $isAllUploads = false;
+        }
+
+        if ($isAllUploads && $candidate) {
+            $candidate->load([
+                'candidateUSMResult',
+                'candidateUSMResult.registrationPhase',
+            ]);
+        }
+
+        return view('candidate.usm-result', compact('candidate', 'isAllUploads'));
     }
 }

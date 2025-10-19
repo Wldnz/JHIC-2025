@@ -20,6 +20,12 @@ class AuthController extends Controller
 {
     public function signupPage()
     {
+        if (
+            Auth::check() &&
+            RoleLevelChecker::checkMinimumByRoleName(Auth::user(), 'candidate')
+        ) {
+            return redirect()->route('candidate.dashboard');
+        }
         return view('candidate.auth.signup');
     }
 
@@ -173,17 +179,32 @@ class AuthController extends Controller
             ->where('email', '=', $user->getEmail())
             ->first();
 
-        if (!$existingUser) {
+        if ($existingUser) {
+            Auth::login($existingUser, true);
+            return redirect()->route('candidate.dashboard');
+        }
+
+        $newUser = new User();
+        $newUser->fullname = $user->getName();
+        $newUser->email = $user->getEmail();
+        $newUser->phone = null;
+        $newUser->role = 'candidate';
+        $newUser->password = Hash::make(fake()->password(24, 32));
+        $newUser->remember_token = Str::random(10);
+
+        $isSaved = $newUser->save();
+
+        if (!$isSaved) {
             AlertDataGenerator::generateAsFlashToSession(
                 AlertType::DANGER,
                 "Gagal login",
-                "Gagal login menggunakan akun google, akun tidak ditemukan",
+                "Gagal login menggunakan akun google, akun gagal dibuat",
                 $request->session(),
             );
             return redirect()->route('candidate.login-page');
         }
 
-        Auth::login($existingUser, true);
+        Auth::login($newUser, true);
         return redirect()->route('candidate.dashboard');
     }
 
