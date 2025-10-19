@@ -43,6 +43,7 @@
                 <div class="branch">
                     <a href="{{ route("candidate.schedule") }}"><img src="{{ asset("icons/Calendar.svg") }}" alt=""><p>Jadwal USM</p></a>
                     <a href="{{ route("candidate.learning-materials") }}"><img src="{{ asset("icons/book.svg") }}" alt=""><p>Modul Pembelajaran USM</p></a>
+                    <a href="{{ route("candidate.usm-result") }}"><img src="{{ asset("icons/book.svg") }}" alt=""><p>Hasil Ujian Saringan Masuk</p></a>
                 </div>
             </div>
 
