@@ -3,9 +3,6 @@
 ])
 <main class="content">
     <div class="accessoris">
-        <!-- {{-- <div class="rounded">
-            <div class="round"></div>
-        </div> --}} -->
         <div class="stars">
             <img src="{{ asset('images/trinkets/star.svg') }}" alt="star">
             <img src="{{ asset('images/trinkets/star.svg') }}" alt="star">
@@ -22,7 +19,8 @@
         <form class="form-stage" action={{ route('candidate.stage.save-stage4') }} method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
-            <h2>{{ Auth::user()->fullname }}, Langkah pertama ini kamu diwajibkan untuk mengisi data diri kamu ya!</h2>
+            <h2>{{ !$isPaid ? Auth::user()->fullname .', Langkah keempat ini kamu diwajibkan membayar biaya sandang ya, untuk bisa mengikuti kegiatan ujian saringan masuk' : 'Kamu Sudah Bayar!, Silahkan merubah data jika terjadi kesalahan dalam pengimputan data!' }}</h2>
+            @if (!$isPaid)
             <h2>Informasi Pembayaran & Rekening Bank</h2>
             <div class="fields">
                 <div class="wrapper-input wrapper-information">
@@ -46,18 +44,21 @@
                     </div>
                 </div>
             </div>
+            @endif
             <div class="s-submit">
-                <p>Dengan menekan tombol "Simpan", data yang Anda cantumkan di atas adalah benar dan dapat dipertanggungjawabkan.</p>
+                @if (!$isPaid)
+                    <p>Dengan menekan tombol "Simpan", data yang Anda cantumkan di atas adalah benar dan dapat dipertanggungjawabkan.</p>
+                @endif
                 <div class="w-buttons">
-                    <button class="submit-form" type="submit">Buat Transaksi</button>
-                    <div class="pages">
-                        @if ($isPaid)
-                            <div class="pages">
-                                <button class="pagination-action" type="button" onclick="location.href='{{ route('candidate.stage.stage3') }}'">Sebelumnya</button>
-                                <button class="pagination-action" type="button" onclick="location.href='{{ route('candidate.stage.stage5') }}'">Selanjutnya</button>
-                            </div>
-                        @endif
-                    </div>
+                    @if (!$isPaid)
+                        <button class="submit-form" type="submit">Buat Transaksi</button>
+                    @endif
+                    @if ($isPaid)
+                        <div class="pages">
+                            <button class="pagination-action" type="button" onclick="location.href='{{ route('candidate.stage.stage3') }}'">Sebelumnya</button>
+                            <button class="pagination-action" type="button" onclick="location.href='{{ route('candidate.stage.stage5') }}'">Selanjutnya</button>
+                        </div>
+                    @endif
                 </div>
             </div>
         </form>

@@ -33,7 +33,7 @@
                         <select name="registration_source" id="registration_source" aria-describedby="registration_source" required>
                             <option value=""></option>
                             @foreach ($sources as $source)
-                                <option value="{{ $source->id }}" @selected(old('registration_source', '') == $source->id)>{{ $source->name }}</option>
+                                <option value="{{ $source->id }}" @selected(old('registration_source', $candidatePhase->registration_source_id ?? '') == $source->id)>{{ $source->name }}</option>
                             @endforeach
                         </select>
                         @include('_components._sprite-icons', [ 'name' => 'drop-down', 'size' => 25 ])
@@ -41,7 +41,7 @@
                 </div>
                 <div class="wrapper-input">
                     <label for="enrolling_reason">Alasan Masuk Sebagai Calon Peserta Didik<span>*</span></label>
-                    <input type="text" name="enrolling_reason" id="enrolling_reason" placeholder="Alasan Masuk" value="{{ old('enrolling_reason') }}" aria-describedby="Alasan Masuk" minlength="6" required>
+                    <input type="text" name="enrolling_reason" id="enrolling_reason" placeholder="Alasan Masuk" value="{{ old('enrolling_reason', $candidatePhase->enrolling_reason ?? '') }}" aria-describedby="Alasan Masuk" minlength="6" required>
                 </div>
             </div>
             <div class="s-submit">
@@ -61,7 +61,10 @@
 </main>
 
 <script defer>
-    let currentPhase = @json($candidate->RegistrationPhase ?? []);
+    let currentPhase = @json([
+        "selected_phase_id" => $candidatePhase->selected_phase_id ?? '',
+        "selected_phase_name" => $candidatePhase->selected_phase_name ?? '',
+    ]);
     const phases = @json($phases ?? []);
 
     function selectPhase(element){
@@ -80,7 +83,6 @@
             ...{
                 selected_phase_id : phase.id,
                 selected_phase_name : phase.name,
-                selected_phase_id : phase.id
             }
         }
     }
@@ -111,6 +113,8 @@
             loadSelectedPhase();
         });
     });
+
+    loadSelectedPhase();
 
 </script>
 

@@ -117,8 +117,7 @@
             <img src="{{ $achievement->thumbnail_url }}" alt="{{ $achievement->competition_name }}">
             <div class="info">
               <div class="img-wrapper">
-                <!-- <img src="{{ asset("icons/medal.svg") }}" alt=""> -->
-                @include('_components._sprite-icons', ['name' => 'rank-' . explode('_', $achievement->competition_position)[1] . '', 'size' => 50])
+                <img src="{{  asset('icons/medals/'. explode('_',$achievement->competition_position)[1] .'.svg') }}" alt="">
               </div>
               <div class="text">
                 <h4>{{ $achievement->student_name }}</h4>

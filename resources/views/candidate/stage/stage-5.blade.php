@@ -1,11 +1,25 @@
 @include('_components._headerCandidate', [
     'title' => 'Formulir Tahap Kelima'
 ])
+
+@php
+    $currentDocuments = [];
+    foreach($candidateDocuments as $candidateDocument){
+        foreach($documents as $key=>$document){
+            $isFound = array_search([ ['name' => $document->name] ], $currentDocuments);
+            if($document->name == $candidateDocument['name'] && !$isFound){
+                array_push($currentDocuments, $candidateDocument);
+            }else if($document->name != $candidateDocument['name'] && !$isFound){
+                array_push($currentDocuments, $document);
+            }
+            unset($documents[$key]);
+        }
+    }
+    if(count($currentDocuments) == 0) $currentDocuments = $documents;
+@endphp
+
 <main class="content">
     <div class="accessoris">
-        <!-- {{-- <div class="rounded">
-            <div class="round"></div>
-        </div> --}} -->
         <div class="stars">
             <img src="{{ asset('images/trinkets/star.svg') }}" alt="star">
             <img src="{{ asset('images/trinkets/star.svg') }}" alt="star">
@@ -23,20 +37,36 @@
             @csrf
             @method('PUT')
             <div class="fields fields-document">
-                @foreach ($documents as $document)
-                    <div class="wrapper-document">
-                        <div class="wrapper-file">
-                            <p class="floating-title">{{ $document->name }} <span>*</span></p>
-                            <p class="description">{{ $as ?? 'Belum ada file yang diuploud nih' }}</p>
-                            <input type="file" accept="{{ $document->mime_types }}" id="{{ $document->name }}" name="{{ $document->id }}" aria-describeBy="biodata" @required($document->is_required)>
+                @foreach ($currentDocuments as $document)
+                       @if($document['is_required'] ?? false)
+                        <div class="wrapper-document">
+                         <div class="wrapper-file">
+                            <p class="floating-title">{{ $document['name'] }} <span>*</span></p>
+                            <p class="description">Belum Uploud Dokumen</p>
+                            <input type="file" accept="{{ $document['mime_types'] }}" id="{{ $document['name'] }}" name="{{ $document['id'] }}" aria-describeBy="biodata"
+                              @required($document['is_required'])
+                              class="input-form-uploud"
+                            >
                         </div>
-                        @if ($document->download_file_url)
-                            <span class="download">
-                                Download File : <a class="link"
-                                href="{{ $document->download_file_url }}"
-                                download="{{ $document->name }}"
-                                >Klik Disini..</a>
-                            </span>
+                        @else
+                         <div class="wrapper-document">
+                         <div class="wrapper-file">
+                            <p class="floating-title">{{ $document['name'] }} {{  $document['is_valid'] ? ' (Valid)' : '' }} <span class="{{ $document['is_valid'] ? 'hidden' : ''  }}">*</span></p>
+                            <p class="description">{{ $document['is_valid']? 'Dokumen Sudah Valid' : 'Dokumen Sedang Diperiksa/Tidak Valid!' }}</p>
+                            <input type="file" accept="{{ $document['mime_types'] }}" id="{{ $document['name'] }}" name="{{ $document['id'] }}" aria-describeBy="biodata"
+                              @required(!$document['is_valid'])
+                              @disabled($document['is_valid'])
+                              class="input-form-uploud"
+                            >
+                        </div>
+                       @endif
+                    @if ($document['download_file_url'] ?? false)
+                        <span class="download">
+                            Download File : <a class="link"
+                            href="{{ $document['download_file_url'] }}"
+                            download="{{ $document['name'] }}"
+                            >Klik Disini..</a>
+                        </span>
                         @endif
                     </div>
                 @endforeach
@@ -59,13 +89,14 @@
 </main>
 
 <script defer>
-    let descriptionFile = null;
-    document.getElementById('biodata_form').addEventListener('change', (e) => {
-        if(descriptionFile == null) descriptionFile = e.target.parentElement.querySelector('.description');
-        const file = e.target.files[0];
-        if(!file) return;
-        descriptionFile.textContent = file.name;
-    });
+    document.querySelectorAll('.input-form-uploud').forEach(element => {
+       element.addEventListener('change', (e) => {
+            const descriptionFile = e.target.parentElement.querySelector('.description');
+            const file = e.target.files[0];
+            if(!file) return;
+            descriptionFile.textContent = file.name;
+        });
+    })
 </script>
 
 @include('_components._footerCandidate')

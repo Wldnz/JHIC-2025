@@ -7,7 +7,7 @@
             @include('_components._sprite-icons', [ 'name' => 'success','size' => 120 ])
             <h2 class="">Jadwal Kegiatan Ujian Saringan Masuk Berhasil Disimpan</h2>
             <div class="s-submit">
-                <p>Mantap!, Kamu Sudah Melakukan Perjalanan Sejauh Ini, Selanjutnya Adalah Biaya Sandang</p>
+                <p>{{ $message ?? 'Mantap!, Kamu Sudah Melakukan Perjalanan Sejauh Ini, Selanjutnya Adalah Biaya Sandang' }}</p>
                 <div class="w-buttons">
                     <div class="pages">
                         <button class="pagination-action" type="button" onclick="location.href='{{ route('candidate.stage.stage3') }}'">Kembali</button>

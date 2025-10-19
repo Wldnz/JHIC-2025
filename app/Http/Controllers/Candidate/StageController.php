@@ -230,7 +230,13 @@ class StageController extends Controller
             ->orderBy('updated_at', 'desc')
             ->first(['download_file_url', 'mime_types', 'name']);
 
-        return view('candidate.stage.stage-2', compact('formDocument'));
+        $isUploud = $candidate->candidateDocuments()
+                ->where('type', '=', 'form')
+                ->where('name', '=', "Formulir Biodata")
+                ->first();
+        $isUploud = $isUploud != null;
+
+        return view('candidate.stage.stage-2', compact('formDocument', 'isUploud'));
     }
 
     public function saveStage2(SaveStage2Request $request)
@@ -327,7 +333,7 @@ class StageController extends Controller
             return redirect()->route('candidate.stage.stage2');
         }
 
-        $candidatePhase = $candidate->candidatePhase()->first(['id']);
+        $candidatePhase = $candidate->candidatePhase()->first();
         $phases = RegistrationPhase::all();
         $sources = RegistrationSource::all();
         $isSelectedPhase = $candidatePhase != null;
@@ -563,7 +569,7 @@ class StageController extends Controller
         $candidateDocuments = $candidate->candidateDocuments()
             ->where('type', '=', 'usm')
             ->get()
-            ->pluck('name')
+            // ->pluck('name')
             ->toArray();
         $registrationDocuments = RegistrationDocument::query()
             ->where('type', '=', 'usm')

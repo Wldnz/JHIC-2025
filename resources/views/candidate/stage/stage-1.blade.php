@@ -19,7 +19,7 @@
         <form class="form-stage" action={{ route('candidate.stage.save-stage1') }} method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
-            <h2>{{ Auth::user()->fullname }}, Langkah pertama ini kamu diwajibkan untuk mengisi data diri kamu ya!</h2>
+            <h2>{{ Auth::user()->fullname }}, Langkah pertama ini kamu diwajibkan membayar biaya formulir ya!</h2>
             @if (!$isPaid)
                 <h2>Informasi Pembayaran & Rekening Bank</h2>
                 <div class="fields">
@@ -84,7 +84,7 @@
 </main>
 
 <script defer>
-    let currentMajors = @json($candidate->majors ?? []);
+    let currentMajors = @json($candidate->candidateMajors ?? []);
     const majors = @json($majors ?? []);
 
     function selectMajor(element){
