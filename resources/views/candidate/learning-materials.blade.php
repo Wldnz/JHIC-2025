@@ -18,24 +18,24 @@
     'title' => 'Materi - Materi Ujian Saringan Masuk'
 ])
 <main class="modul">
+    <div class="header">
+        <h1>{{ $isAllUploads ? 'Modul-modul untuk binforelajar persiapan USM' : 'Kamu Harus Membayar Biaya Sandang & Menyelesaikan 5 Tahapan Ya!' }}</h1>
+    </div>
     <div class="body">
-        <div class="header">
-            <h1>{{ $isAllUploads ? 'Modul-modul untuk belajar persiapan USM' : 'Kamu Harus Membayar Biaya Sandang & Menyelesaikan 5 Tahapan Ya!' }}</h1>
-        </div>
         @if ($isAllUploads)
-           @foreach ($candidate->candidateMajors ?? [] as $selectedMajor)
+            @foreach ($candidate->candidateMajors ?? [] as $selectedMajor) 
                 @foreach ($moduls as $modul)
-                    @if($selectedMajor->major_long_name == $modul['nama'])
+                     @if($selectedMajor->major_long_name == $modul['nama']) 
                         <div class="card">
                             <h2>Modul {{ $modul["nama"] }}</h2>
                             <img src="{{ asset("icons/book.svg") }}" alt="">
                             <a download href=" {{ $modul['link'] }}">Download Modul</a>
                         </div>
-                    @endif
+                     @endif 
                 @endforeach
-           @endforeach
+            @endforeach 
         @else
-        <div class="information-to-buy {{ $mascotLoad == 'BINA' ? 'information-to-buy-reverse' : '' }}">
+        <div class="information-to-buy {{ $mascotLoad == 'BINA' ? 'reverse' : '' }}">
             <img class="mascot-image" src="{{ asset('images/mascots/' . $mascotLoad . '.png') }}" alt="{{ $mascotLoad }}">
             <div class="message">
                  <h4>Haloo, Perkenalkan Aku {{ $mascotLoad }}</h4>

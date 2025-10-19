@@ -1466,9 +1466,14 @@ nav .img-wrapper.burger-icon img {
 }
 .wrapper-candidate .modul {
   width: 100%;
+  min-height: calc(100dvh - 80px);
   display: flex;
   flex-direction: column;
   gap: 30px;
+}
+.wrapper-candidate .modul .header {
+  width: 100%;
+  height: max-content;
 }
 .wrapper-candidate .modul .header h1 {
   font-size: clamp(0.6rem, 5.5vw, 3.5rem);
@@ -1476,6 +1481,7 @@ nav .img-wrapper.burger-icon img {
 }
 .wrapper-candidate .modul .body {
   width: 100%;
+  flex: 1;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -1512,6 +1518,25 @@ nav .img-wrapper.burger-icon img {
   font-size: clamp(0.6rem, 3.5vw, 2rem);
   font-weight: 500;
 }
+.wrapper-candidate .modul .body .information-to-buy {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: space-between;
+  align-items: center;
+}
+.wrapper-candidate .modul .body .information-to-buy .message {
+  padding: 0 5%;
+}
+.wrapper-candidate .modul .body .information-to-buy .message h4 {
+  font-size: clamp(0.6rem, 4vw, 2.5rem);
+}
+.wrapper-candidate .modul .body .information-to-buy .message p {
+  font-size: clamp(0.6rem, 3.5vw, 2rem);
+}
+.wrapper-candidate .modul .body .information-to-buy img {
+  width: 20%;
+}
 .wrapper-candidate .jadwal {
   text-align: center;
   align-items: center;
@@ -1537,6 +1562,67 @@ nav .img-wrapper.burger-icon img {
 }
 .wrapper-candidate .jadwal .gelombang:nth-child(2n) {
   text-align: left;
+}
+.wrapper-candidate .result {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  text-align: center;
+  gap: 20px;
+}
+.wrapper-candidate .result .header h1 {
+  font-size: clamp(0.6rem, 6.5vw, 4rem);
+}
+.wrapper-candidate .result .body {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.wrapper-candidate .result .body h1 {
+  font-size: clamp(0.6rem, 5.5vw, 3.5rem);
+  font-weight: 500;
+}
+.wrapper-candidate .result .body h1 span {
+  font-weight: 700;
+}
+.wrapper-candidate .result .body h2 {
+  font-size: clamp(0.6rem, 4vw, 2.5rem);
+  font-weight: 500;
+}
+.wrapper-candidate .result .body h3 {
+  font-size: clamp(0.6rem, 7.5vw, 4.5rem);
+  font-weight: 600;
+}
+.wrapper-candidate .result .body h4 {
+  font-size: clamp(0.6rem, 4vw, 2.5rem);
+  font-weight: 500;
+}
+.wrapper-candidate .result .body .reveal {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.wrapper-candidate .result .body .reveal h1, .wrapper-candidate .result .body .reveal h4 {
+  transition: 0.5s;
+  filter: blur(10px);
+}
+.wrapper-candidate .result .body .reveal::after {
+  content: "Click to Reveal";
+  filter: none;
+  position: absolute;
+  font-size: clamp(0.6rem, 4.5vw, 3rem);
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+.wrapper-candidate .result .body .reveal.active h1, .wrapper-candidate .result .body .reveal.active h4 {
+  filter: none;
+}
+.wrapper-candidate .result .body .reveal.active::after {
+  content: "";
 }
 .wrapper-candidate .content .stages {
   width: 100%;
@@ -2038,24 +2124,24 @@ nav .img-wrapper.burger-icon img {
     font-size: clamp(0.6rem, 2vw, 1.5rem);
   }
   .wrapper-candidate .modul .body .information-to-buy {
-    padding: 10px;
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-  }
-  .wrapper-candidate .modul .body .information-to-buy-reverse {
-    flex-direction: row-reverse;
-  }
-  .wrapper-candidate .modul .body .information-to-buy .mascot-image {
-    height: 10vh;
-    min-height: 400px;
+    width: 100%;
+    flex-direction: row;
   }
   .wrapper-candidate .modul .body .information-to-buy .message {
-    display: flex;
-    flex-direction: column;
-    justify-content: end;
-    gap: 10px;
-    max-width: 80%;
+    width: 100%;
+  }
+  .wrapper-candidate .modul .body .information-to-buy .message h4 {
+    font-size: clamp(0.6rem, 2vw, 1.5rem);
+  }
+  .wrapper-candidate .modul .body .information-to-buy .message p {
+    font-size: clamp(0.4rem, 1.25vw, 1rem);
+  }
+  .wrapper-candidate .modul .body .information-to-buy img {
+    width: max-content;
+    flex: unset;
+  }
+  .wrapper-candidate .modul .body .information-to-buy.reverse {
+    flex-direction: row-reverse;
   }
   .wrapper-candidate .jadwal h1 {
     font-size: clamp(0.6rem, 4vw, 2.5rem);
