@@ -21,7 +21,7 @@
         ],
         [
 
-            'title' => 'Melakukan Pembyara Biaya Sandang',
+            'title' => 'Melakukan Pembayaran Biaya Sandang',
             'description' => 'Calon Peserta Didik Membayar Biaya Sandang Untuk Bisa Mengikuti Kegiatan USM',
             'image' => asset('images/candidates/tahap/4.png')
         ],
