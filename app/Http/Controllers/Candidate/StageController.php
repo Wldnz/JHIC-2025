@@ -568,17 +568,18 @@ class StageController extends Controller
 
         $candidateDocuments = $candidate->candidateDocuments()
             ->where('type', '=', 'usm')
-            ->get()
-            // ->pluck('name')
-            ->toArray();
+            ->get();
         $registrationDocuments = RegistrationDocument::query()
             ->where('type', '=', 'usm')
             ->get();
+        $candidateDocumentNames = $candidateDocuments
+            ->pluck('name')
+            ->toArray();
 
         $isAllUplouds = true;
 
         foreach ($registrationDocuments as $registrationDocument) {
-            if (in_array($registrationDocument->name, $candidateDocuments)) {
+            if (in_array($registrationDocument->name, $candidateDocumentNames)) {
                 continue;
             }
             $isAllUplouds = false;
@@ -586,6 +587,8 @@ class StageController extends Controller
         }
 
         $documents = $registrationDocuments;
+        $candidateDocuments = $candidateDocuments->toArray();
+
         return view('candidate.stage.stage-5', compact('documents', 'isAllUplouds', 'candidateDocuments'));
     }
 
