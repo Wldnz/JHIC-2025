@@ -35,7 +35,7 @@
         border-radius: 16px;
 
         span {
-            font-size: $font-size-s;
+            font-size: $font-size-2xl;
         }
 
         .wrapper-button {
@@ -139,3 +139,27 @@
         }
     }
 }
+
+ @media screen and (min-width:425px) {
+        .card-message{
+            span{
+                font-size: $font-size-xl !important; 
+            }
+        }
+    }
+
+     @media screen and (min-width:525px) {
+        .card-message{
+            span{
+                font-size: $font-size-l !important; 
+            }
+        }
+    }
+
+         @media screen and (min-width:768px) {
+        .card-message{
+            span{
+                font-size: $font-size-m  !important; 
+            }
+        }
+    }

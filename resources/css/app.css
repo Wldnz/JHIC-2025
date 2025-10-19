@@ -271,7 +271,7 @@ img {
   border-radius: 16px;
 }
 .alert-message .card-message span {
-  font-size: clamp(0.2rem, 1vw, 0.85rem);
+  font-size: clamp(0.6rem, 3.5vw, 2rem);
 }
 .alert-message .card-message .wrapper-button {
   width: 70%;
