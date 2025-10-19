@@ -110,8 +110,9 @@ class Controller extends \App\Http\Controllers\Controller
                 ->get()
                 ->pluck('name')
                 ->toArray();
-            $registrationDocuments = RegistrationDocument::all();
-
+            $registrationDocuments = RegistrationDocument::query()
+                ->where('type', '=', 'usm')
+                ->get();
 
             foreach ($registrationDocuments as $registrationDocument) {
                 if (in_array($registrationDocument->name, $candidateDocuments)) {
