@@ -549,8 +549,7 @@ class StageController extends Controller
     public function stage5()
     {
         $requiredTransactionCount = Auth::user()->transactions()
-            ->where('type', '=', 'form')
-            ->orWhere('type', '=', 'usm')
+            ->whereIn('type', ['form', 'usm'])
             ->where('status', '=', 'settlement')
             ->limit(2)
             ->count();
