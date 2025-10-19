@@ -1151,6 +1151,16 @@ a {
   scale: 0.8;
 }
 
+.navigation-login-candidate {
+  width: 100vw;
+  min-height: 45px;
+  padding: 15px;
+  z-index: 2;
+}
+.navigation-login-candidate img {
+  height: 45px;
+}
+
 nav {
   z-index: 999;
   width: 100vw;
@@ -2026,6 +2036,26 @@ nav .img-wrapper.burger-icon img {
   }
   .wrapper-candidate .modul .body .card a {
     font-size: clamp(0.6rem, 2vw, 1.5rem);
+  }
+  .wrapper-candidate .modul .body .information-to-buy {
+    padding: 10px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .wrapper-candidate .modul .body .information-to-buy-reverse {
+    flex-direction: row-reverse;
+  }
+  .wrapper-candidate .modul .body .information-to-buy .mascot-image {
+    height: 10vh;
+    min-height: 400px;
+  }
+  .wrapper-candidate .modul .body .information-to-buy .message {
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    gap: 10px;
+    max-width: 80%;
   }
   .wrapper-candidate .jadwal h1 {
     font-size: clamp(0.6rem, 4vw, 2.5rem);

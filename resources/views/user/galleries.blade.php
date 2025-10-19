@@ -12,7 +12,7 @@
     <h1>Gallery</h1>
     <div class="gallery-images no-fade">
         @foreach ($galleries as $gallery )
-        <span class="gallery-image">
+        <span class="gallery-image show">
             <img class="gallery-image-url" src="{{$gallery->url}}" alt="{{ $gallery->name }}" data-type='{{ $gallery->gallery_type_name }}'>
         </span>
         @endforeach

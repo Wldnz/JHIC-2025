@@ -118,7 +118,7 @@
             'Ruangan B1' => asset("images/kelas king/b1.svg"),
         ];
     $movingTeks = [
-        'We Are The Open For Registration',
+        'We Are Open For Registration',
         'Gelombang 1 On 23 August - 06 November 2025',
     ];
 @endphp

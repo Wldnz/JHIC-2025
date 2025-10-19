@@ -61,6 +61,9 @@
             </div>
         </form>
     </main>
+     <div class="navi-login">
+        <img src="{{ asset("icons/logo-sponsor.png") }}" alt="">
+    </div>
     <script>
 
         let pwinput = document.querySelector("#password")

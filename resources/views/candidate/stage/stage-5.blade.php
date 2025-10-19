@@ -54,7 +54,6 @@
                             <p class="floating-title">{{ $document['name'] }} {{  $document['is_valid'] ? ' (Valid)' : '' }} <span class="{{ $document['is_valid'] ? 'hidden' : ''  }}">*</span></p>
                             <p class="description">{{ $document['is_valid']? 'Dokumen Sudah Valid' : 'Dokumen Sedang Diperiksa/Tidak Valid!' }}</p>
                             <input type="file" accept="{{ $document['mime_types'] }}" id="{{ $document['name'] }}" name="{{ $document['id'] }}" aria-describeBy="biodata"
-                              @required(!$document['is_valid'])
                               @disabled($document['is_valid'])
                               class="input-form-uploud"
                             >

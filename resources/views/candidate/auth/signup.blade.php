@@ -11,6 +11,13 @@
 </head>
 
 <body>
+
+    <div class="navigation-login-candidate">
+        <a href="{{ route('user.index') }}">
+            <img src="{{ asset('images/bi-full.png') }}" alt="logo-bina-informatika">
+        </a>
+    </div>
+    
     <main class="wrapper-login">
 
         <div class="star-group trinkets g1">

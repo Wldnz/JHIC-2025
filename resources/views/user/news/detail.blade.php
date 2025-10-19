@@ -12,7 +12,7 @@
 <div class="detail-news">
     <h2>BI NEWS</h2>
 
-    <form class="searchbar">
+    <form class="searchbar" action="{{ route('user.news') }}">
         <input type="text" id="input-search" name="search" placeholder="Cari Berita..." value="{{ request('search') }}">
         <div class="search-icon">
             <button

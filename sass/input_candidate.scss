@@ -31,6 +31,17 @@ $border-radius: 8px;
 
 // =======================================================================================================
 
+.navigation-login-candidate{
+    width: 100vw;
+    min-height: 45px;
+    
+    img{
+        height: 45px;
+    }
+    padding: 15px;
+    z-index: 2;
+}
+
 nav
 {
     z-index: 999;
@@ -607,6 +618,29 @@ nav
                     h2{font-size: calc($font-size-l * 1.2);}
                     a{font-size: $font-size-l;}
 
+                }
+                .information-to-buy{
+                    padding: 10px;
+                    display: flex;
+                    gap: 10px;
+                    flex-wrap: wrap;
+                    
+                    &-reverse{
+                        flex-direction: row-reverse;
+                    }
+
+                    .mascot-image{
+                        height: 10vh;
+                        min-height: 400px;
+                    }
+
+                    .message{
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: end;
+                        gap: 10px;
+                        max-width: 80%;
+                    }
                 }
             }
         }
