@@ -25,7 +25,7 @@
         @if ($isAllUploads)
            @foreach ($candidate->candidateMajors ?? [] as $selectedMajor)
                 @foreach ($moduls as $modul)
-                    @if($selectedMajormajor_long_name == $modul['name'])
+                    @if($selectedMajor->major_long_name == $modul['nama'])
                         <div class="card">
                             <h2>Modul {{ $modul["nama"] }}</h2>
                             <img src="{{ asset("icons/book.svg") }}" alt="">

@@ -633,6 +633,10 @@ class StageController extends Controller
             $candidateDocumentIdsToResetValid = [];
 
             foreach ($registrationDocuments as $registrationDocument) {
+                if (!array_key_exists($registrationDocument->id, $candidateDocumentPaths)) {
+                    continue;
+                }
+
                 $candidateDocument = CandidateDocument::query()
                     ->where('candidate_nisn', '=', $candidate->nisn)
                     ->where('name', '=', $registrationDocument->name)
@@ -673,7 +677,7 @@ class StageController extends Controller
                 }
             }
 
-            if (count($candidateDocumentIdsToResetValid) > 0) {
+            if ($candidateDocumentIdsToResetValid && count($candidateDocumentIdsToResetValid) > 0) {
                 CandidateDocument::query()
                     ->where('candidate_nisn', '=', $candidate->nisn)
                     ->whereIn('id', $candidateDocumentIdsToResetValid)

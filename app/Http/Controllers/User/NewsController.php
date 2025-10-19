@@ -22,17 +22,26 @@ class NewsController extends Controller
                 $query
                     ->where('title', 'like', "%$searchQuery%")
                     ->orWhere('description', 'like', "%$searchQuery%")
-                    ->orWhere('written_by', 'like', "%$searchQuery%");
+                    ->orWhere('written_by', 'like', "%$searchQuery%")
+                    ->orWhere('keywords.name', 'like', "%$searchQuery%")
+                    ->join('articles_keywords', 'articles.id', '=', 'articles_keywords.article_id')
+                    ->join('keywords', 'keywords.id', '=', 'articles_keywords.keyword_id');
             })
             ->orderByDesc('updated_at')
             ->limit(50)
-            ->get(['id', 'title', 'description', 'thumbnail_url', 'updated_at']);
+            ->get([
+                'articles.id',
+                'title',
+                'description',
+                'thumbnail_url',
+                'articles.updated_at',
+            ]);
 
         return view('user.news.index', compact('articles'));
     }
 
     public function newsDetail(Request $request, Article $article)
-    {   
+    {
         return view('user.news.detail', compact('article'));
     }
 
