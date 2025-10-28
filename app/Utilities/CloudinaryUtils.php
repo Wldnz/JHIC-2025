@@ -2,9 +2,12 @@
 namespace App\Utilities;
 
 use Illuminate\Http\UploadedFile;
+use Throwable;
 
 class CloudinaryUtils
 {
+    private static int $retryCount = 4;
+
     /**
      * Extract the public ID from a Cloudinary URL.
      *
@@ -36,11 +39,19 @@ class CloudinaryUtils
      * Uploads a given image file to Cloudinary and returns the uploaded URL.
      *
      * @param UploadedFile $file The image file to upload.
-     * @return string The uploaded URL.
+     * @return ?string The uploaded URL.
      */
     public static function uploadImageFile(UploadedFile $file) {
-        $uploadedUrl = cloudinary()->uploadApi()->upload($file->getRealPath())['secure_url'];
-        return $uploadedUrl;
+        for ($i = 0; $i < self::$retryCount; $i++) {
+            try {
+                $uploadedUrl = cloudinary()->uploadApi()->upload($file->getRealPath())['secure_url'];
+                return $uploadedUrl;
+            } catch (Throwable $th) {
+                report($th);
+                logger()->error($th);
+            }
+        }
+        return null;
     }
 
     /**
@@ -48,16 +59,24 @@ class CloudinaryUtils
      *
      * @param UploadedFile $file The new image file to upload.
      * @param string $publicId The public ID of the image to replace.
-     * @return string|null The URL of the uploaded image file, or null if the replacement failed.
+     * @return ?string The URL of the uploaded image file, or null if the replacement failed.
      */
     public static function replaceImageFile(UploadedFile $file, string $publicId) {
-        $response = cloudinary()->uploadApi()->destroy($publicId);
-        if ($response['result'] !== 'ok') {
-            return null;
-        }
+        for ($i = 0; $i < self::$retryCount; $i++) {
+            try {
+                $response = cloudinary()->uploadApi()->destroy($publicId);
+                if ($response['result'] !== 'ok') {
+                    return null;
+                }
 
-        $uploadedUrl = cloudinary()->uploadApi()->upload($file->getRealPath())['secure_url'];
-        return $uploadedUrl;
+                $uploadedUrl = cloudinary()->uploadApi()->upload($file->getRealPath())['secure_url'];
+                return $uploadedUrl;
+            } catch (Throwable $th) {
+                report($th);
+                logger()->error($th);
+            }
+        }
+        return null;
     }
 
     /**
@@ -67,8 +86,16 @@ class CloudinaryUtils
      * @return bool True if the deletion was successful, false otherwise.
      */
     public static function deleteImageFile(string $publicId) {
-        $response = cloudinary()->uploadApi()->destroy($publicId);
-        return $response['result'] !== 'ok';
+        for ($i = 0; $i < self::$retryCount; $i++) {
+            try {
+                $response = cloudinary()->uploadApi()->destroy($publicId);
+                return $response['result'] !== 'ok';
+            } catch (Throwable $th) {
+                report($th);
+                logger()->error($th);
+            }
+        }
+        return false;
     }
 }
 
