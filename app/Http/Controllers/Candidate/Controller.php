@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Candidate;
 
 use App\Models\Candidate;
 use App\Models\RegistrationDocument;
+use App\Models\RegistrationPhase;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -90,8 +91,14 @@ class Controller extends \App\Http\Controllers\Controller
 
     public function schedule()
     {
-        $candidate = $this->candidate;
-        return view('candidate.schedule', compact('candidate'));
+        // $candidate = $this->candidate;
+        // return view('candidate.schedule', compact('candidate'));
+        $registrationPhases = RegistrationPhase::all([
+            'name',
+            'started_at',
+            'ended_at',
+        ]);
+        return view('candidate.schedule', compact('registrationPhases'));
     }
 
     public function contact()
