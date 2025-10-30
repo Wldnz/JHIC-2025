@@ -146,6 +146,11 @@
 
     let resetPassword = true;
     const handlerResetPassword = (e) => {
+        const resetPasswordBtn = document.getElementById('reset-password-btn');
+
+        resetPasswordBtn.innerText = "Sedang diproses, mohon tunggu....";
+        resetPasswordBtn.disabled = true;
+
         fetch(@js(route('admin.reset-password-account', ['account' => $account])), {
             headers : {
                 'Content-Type': 'application/json',
@@ -166,7 +171,11 @@
                 window.location.href = redirectUrl;
             }
         })
-        .catch(error => console.error(error));
+        .catch(error => console.error(error))
+        .finally(() => {
+            resetPasswordBtn.innerText = "Reset Password";
+            resetPasswordBtn.disabled = false;
+        });
     };
     document.getElementById('reset-password-btn').addEventListener('click', handlerResetPassword)
 </script>
