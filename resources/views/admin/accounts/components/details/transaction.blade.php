@@ -9,7 +9,7 @@
                         aria-describedby="total_cost" value="{{ $trasanction->total_cost }}" disabled>
                 </div>
                 <div class="wrapper-input">
-                    <label for="payment_methode">Jenis Pembayara</label>
+                    <label for="payment_methode">Jenis Pembayaran</label>
                     <input type="text" name="payment_methode" id="payment_methode" placeholder="payment_methode"
                         aria-describedby="payment_methode"
                         value="{{ $trasanction->payment_method_display_name }}" disabled>

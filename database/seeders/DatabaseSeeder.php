@@ -54,7 +54,7 @@ class DatabaseSeeder extends Seeder
         $this->call(CandidateDocumentSeeder::class);
         $this->call(CandidateUSMResultSeeder::class);
         $this->call(PaymentMethodSeeder::class);
-        // $this->call(TransactionSeeder::class);
+        $this->call(TransactionSeeder::class);
         $this->call(ArticleSeeder::class);
         $this->call(KeywordSeeder::class);
     }
@@ -97,8 +97,8 @@ class DatabaseSeeder extends Seeder
         CandidateUSMResult::query()->truncate();
         PaymentMethod::query()->truncate();
 
-        // Transaction::query()->delete();
-        // DB::statement("ALTER TABLE " . (new Transaction())->getTable() . " AUTO_INCREMENT = 1");
+        Transaction::query()->delete();
+        DB::statement("ALTER TABLE " . (new Transaction())->getTable() . " AUTO_INCREMENT = 1");
 
         Article::query()->truncate();
         Keyword::query()->truncate();

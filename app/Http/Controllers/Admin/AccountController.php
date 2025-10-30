@@ -11,7 +11,9 @@ use App\Mail\SendNewAccountPassword;
 use App\Models\Article;
 use App\Models\Candidate;
 use App\Models\CandidateDocument;
+use App\Models\CandidateGuardian;
 use App\Models\CandidateMajor;
+use App\Models\CandidatePhase;
 use App\Models\Major;
 use App\Models\RegistrationDocument;
 use App\Models\RegistrationPhase;
@@ -173,29 +175,31 @@ class AccountController extends Controller
         $isPhasePaid = false;
         if($account->role == 'candidate'){
             $candidate = Candidate::query()
-            ->with([
-                'candidatePhase',
-                'registrationPhase',
-                'registrationSource',
-                'candidateMajors',
-                'candidateGuardian',
-                'candidateDocuments',
-                'candidateUSMResult',
-                'transactions'
-            ])
-            ->where('user_id', '=', $account->id)
-            ->first();
+                ->with([
+                    'candidatePhase',
+                    'registrationPhase',
+                    'registrationSource',
+                    'candidateMajors',
+                    'candidateGuardian',
+                    'candidateDocuments',
+                    'candidateUSMResult',
+                    'transactions'
+                ])
+                ->where('user_id', '=', $account->id)
+                ->first();
             $majors = Major::all();
             $phases = RegistrationPhase::all();
             $sources = RegistrationSource::all(['id', 'name']);
             $documents = RegistrationDocument::all();
-            $isFormPaid = Transaction::where('user_id', '=', $account->id)
+            $isFormPaid = Transaction::query()
+                ->where('user_id', '=', $account->id)
                 ->where('status', '=', 'settlement')
                 ->orWhere('status', '=', 'success')
                 ->where('type', 'form')->count() > 0;
         }else if($account->role == 'article_creator'){
-            $articles = Article::all()
-            ->where('writter_user_id', '=', $account->id);
+            $articles = Article::query()
+                ->where('writter_user_id', '=', $account->id)
+                ->get();
         }
         return view('admin.accounts.detail', compact('account', 'candidate', 'majors', 'phases', 'articles','sources', 'documents', 'isFormPaid', 'isPhasePaid'));
     }
@@ -216,6 +220,273 @@ class AccountController extends Controller
     }
 
     public function updateAccount(UpdateAccountRequest $request, User $account)
+    {
+        $validated = $request->validated();
+        DB::beginTransaction();
+
+        try {
+            $validated['role'] ??= null;
+            $updatedData = [
+                'fullname' => $validated['fullname'],
+                'email' => $validated['email'],
+                'phone' => $validated['phone'],
+                'role' => $validated['role'] ?? Auth::user()->role,
+            ];
+            $isUpdated = $account->update($updatedData);
+
+            if (!$isUpdated) {
+                throw new Exception("Gagal mengupdate akun dengan nama lengkap \"{$account->fullname}\" dan email \"{$account->email}\"");
+            }
+
+            if ($validated['role'] != 'candidate' && $validated['role'] != 'student') {
+                DB::commit();
+
+                AlertDataGenerator::generateAsFlashToSession(
+                    AlertType::SUCCESS,
+                    "Berhasil mengupdate akun",
+                    "Berhasil mengupdate akun dengan nama lengkap \"{$account->fullname}\" dan email \"{$account->email}\"",
+                    $request->session()
+                );
+                return Auth::user()->id == $account->id ?
+                    back() :
+                    redirect()->route('admin.accounts');
+            }
+
+            $validated['role'] = 'candidate';
+            $validated['candidate_nisn'] ??= null;
+
+            $candidate = Candidate::find($validated['candidate_nisn']);
+            $candidate->load([
+                'registrationPhase',
+                'candidatePhase',
+                'candidateMajors',
+                'candidateGuardian',
+            ]);
+
+            if (!$candidate) {
+                throw new Exception("Calon siswa dengan NISN \"{$validated['candidate_nisn']}\" tidak ditemukan");
+            }
+
+            $isUpdated = $candidate->update([
+                'full_name' => $validated['fullname'],
+                'short_name' => $validated['candidate_short_name'],
+                'birthdate' => $validated['candidate_birth_date'],
+                'birthplace' => $validated['candidate_birth_place'],
+                'gender' => $validated['gender'],
+                'citizenship' => $validated['citizenship'],
+                'religion' => $validated['religion'],
+                'address' => $validated['address'],
+                'status_family' => $validated['status_family'],
+                'order_family' => $validated['order_family'],
+                'sum_siblings' => $validated['sum_siblings'],
+                'sum_half_siblings' => $validated['sum_half_siblings'],
+                'sum_adopted_siblings' => $validated['sum_adopted_siblings'],
+                'phone' => $validated['phone'],
+                'origin_school' => $validated['origin_school'],
+                'origin_school_address' => $validated['origin_school_address'],
+            ]);
+            if (!$isUpdated) {
+                throw new Exception("Gagal mengupdate data calon siswa");
+            }
+
+            $registrationSource = RegistrationSource::find($validated['registration_source']);
+            if (!$registrationSource) {
+                throw new Exception("Data asal pendaftaran tidak ditemukan");
+            }
+
+            $registrationPhase = RegistrationPhase::find($validated['phase']['id']);
+            if (!$registrationPhase) {
+                throw new Exception("Data gelombang pendaftaran tidak ditemukan");
+            }
+
+            $isUpdated = CandidatePhase::updateOrCreate([
+                'candidate_nisn' => $candidate->nisn,
+            ], [
+                'selected_phase_id' => $registrationPhase->id,
+                'selected_phase_name' => $registrationPhase->name,
+                'registration_source_id' => $registrationSource->id,
+                'registration_source' => $registrationSource->name,
+                'enrolling_reason' => $validated['enrolling_reason'],
+            ]);
+            if (!$isUpdated) {
+                throw new Exception("Gagal mengupdate data pilihan gelombang calon siswa");
+            }
+
+            $isUpdated = CandidateGuardian::updateOrCreate([
+                'candidate_nisn' => $candidate->nisn,
+            ], [
+                'full_name' => $validated['candidate_guardian_name'],
+                'birthdate' => $validated['candidate_guardian_birthdate'],
+                'birthplace' => $validated['candidate_guardian_birthplace'],
+                'education' => $validated['candidate_guardian_education'],
+                'job' => $validated['candidate_guardian_job'],
+                'monthly_income' => $validated['candidate_guardian_monthly_income'],
+                'citizenship' => $validated['candidate_guardian_citizenship'],
+                'religion' => $validated['candidate_guardian_religion'],
+                'city' => $validated['candidate_guardian_city'],
+                'district' => $validated['candidate_guardian_district'],
+                'sub_district' => $validated['candidate_guardian_sub_district'],
+                'rt_rw' => $validated['candidate_guardian_rt_rw'],
+                'postal_code' => $validated['candidate_guardian_postal_code'],
+                'home_address' => $validated['candidate_guardian_address'],
+                'office_phone_number' => $validated['candidate_guardian_office_phone_number'],
+                'home_phone_number' => $validated['candidate_guardian_home_phone_number'],
+                'phone_number' => $validated['candidate_guardian_phone_number'],
+            ]);
+            if (!$isUpdated) {
+                throw new Exception("Gagal mengupdate data pilihan gelombang calon siswa");
+            }
+
+            $splittedDocumentsData = FileUploadUtils::splitFileUploads($request, 'documents');
+
+            $candidateDocuments = CandidateDocument::query()
+                ->where('candidate_nisn', $validated['candidate_nisn'])
+                ->get();
+
+            foreach ($candidateDocuments as $candidateDocument) {
+                $documentData = $request->validate([
+                    "documents.{$candidateDocument->id}.file" => ["mimetypes:{$candidateDocument->mime_types}"],
+                ]);
+                if ($documentData) {
+                    StorageUtils::uploadCandidateDocument(
+                        $candidateDocument,
+                        $documentData['documents'][$candidateDocument->id]['file']->get()
+                    );
+                }
+                $candidateDocument->update([
+                    'is_valid' => $validated['documents'][$candidateDocument->id]['is_valid']
+                ]);
+            }
+
+            foreach ($splittedDocumentsData->addedFilesData as $newDocumentData) {
+                $candidateDocument = StorageUtils::uploadNewCandidateDocument(
+                    $candidate,
+                    $newDocumentData['name'],
+                    $newDocumentData['mime_types'],
+                    $newDocumentData['file']->get(),
+                    $newDocumentData['is_valid'],
+                );
+
+                if (!$candidateDocument) {
+                    throw new Exception("Gagal mengupload dokumen ke cloud");
+                }
+            }
+
+            $keepedCandidateMajorsId = [];
+            foreach ($validated['majors'] as $majorData) {
+                if (str_starts_with($majorData['id'], 'added_')) {
+                    $major = Major::find($majorData['major_id']);
+                    if (!$major) {
+                        throw new Exception("Jurusan dengan id \"{$majorData['major_id']}\" tidak ditemukan");
+                    }
+
+                    $candidateMajor = CandidateMajor::create([
+                        'candidate_nisn' => $candidate->nisn,
+                        'user_id' => $candidate->user_id,
+                        'major_id' => $major->id,
+                        'major_long_name' => $major->long_name,
+                        'major_short_name' => $major->short_name,
+                    ]);
+                    if (!$candidateMajor) {
+                        throw new Exception("Gagal membuat data jurusan calon siswa");
+                    }
+
+                    $keepedCandidateMajorsId[] = $candidateMajor->id;
+                    continue;
+                }
+
+                $keepedCandidateMajorsId[] = $majorData['id'];
+            }
+
+            $candidate->candidateMajors()
+                ->whereNotIn('id', $keepedCandidateMajorsId)
+                ->delete();
+
+            DB::commit();
+
+            AlertDataGenerator::generateAsFlashToSession(
+                AlertType::SUCCESS,
+                "Berhasil mengupdate akun",
+                "Berhasil mengupdate akun calon siswa dengan nama lengkap \"{$account->fullname}\" dan email \"{$account->email}\"",
+                $request->session()
+            );
+            return redirect()->route('admin.accounts');
+
+        } catch (Throwable $th) {
+            DB::rollBack();
+
+            logger()->error($th);
+            report($th);
+
+            AlertDataGenerator::generateAsFlashToSession(
+                AlertType::DANGER,
+                "Gagal mengupdate akun",
+                $th->getMessage(),
+                $request->session(),
+            );
+
+            return back()->withInput($request->all());
+        }
+    }
+
+    public function deleteAccount(Request $request, User $account)
+    {
+        $isDeleted = $account->delete();
+
+        if ($isDeleted) {
+            AlertDataGenerator::generateAsFlashToSession(
+                AlertType::SUCCESS,
+                "Berhasil menghapus akun",
+                "Berhasil menghapus akun calon siswa dengan nama lengkap \"{$account->fullname}\" dan email \"{$account->email}\"",
+                $request->session(),
+            );
+        } else {
+            AlertDataGenerator::generateAsFlashToSession(
+                AlertType::DANGER,
+                "Gagal menghapus akun",
+                "Gagal menghapus akun calon siswa dengan nama lengkap \"{$account->fullname}\" dan email \"{$account->email}\"",
+                $request->session(),
+            );
+        }
+
+        return back();
+    }
+
+    public function resetPassword(Request $request, User $account)
+    {
+        $password = fake()->password(24, 32);
+
+        $account->password = Hash::make($password);
+        $account->remember_token = Str::random(10);
+
+        $isUpdated = $account->save();
+        if (!$isUpdated) {
+            AlertDataGenerator::generateAsFlashToSession(
+                AlertType::DANGER,
+                "Gagal mereset password",
+                "Gagal mengupdate password dari akun",
+                $request->session(),
+            );
+            return back();
+        }
+
+        Mail::to($account->email)
+            ->queue(new SendAccountResetPassword(
+                $account,
+                $password
+            ));
+
+        AlertDataGenerator::generateAsFlashToSession(
+            AlertType::SUCCESS,
+            "Berhasil mereset password",
+            "Berhasil mereset password akun dan password telah dikirimkan ke email \"{$account->email}\"",
+            $request->session(),
+        );
+
+        return back();
+    }
+
+    public function updateAccountOld(UpdateAccountRequest $request, User $account)
     {
         $validated = $request->validated();
         DB::beginTransaction();
@@ -421,62 +692,5 @@ class AccountController extends Controller
 
             return back()->withInput($request->all());
         }
-    }
-
-    public function deleteAccount(Request $request, User $account)
-    {
-        $isDeleted = $account->delete();
-
-        if ($isDeleted) {
-            AlertDataGenerator::generateAsFlashToSession(
-                AlertType::SUCCESS,
-                "Berhasil menghapus akun",
-                "Berhasil menghapus akun calon siswa dengan nama lengkap \"{$account->fullname}\" dan email \"{$account->email}\"",
-                $request->session(),
-            );
-        } else {
-            AlertDataGenerator::generateAsFlashToSession(
-                AlertType::DANGER,
-                "Gagal menghapus akun",
-                "Gagal menghapus akun calon siswa dengan nama lengkap \"{$account->fullname}\" dan email \"{$account->email}\"",
-                $request->session(),
-            );
-        }
-
-        return back();
-    }
-
-    public function resetPassword(Request $request, User $account)
-    {
-        $password = fake()->password(24, 32);
-
-        $account->password = Hash::make($password);
-        $account->remember_token = Str::random(10);
-
-        $isUpdated = $account->save();
-        if (!$isUpdated) {
-            AlertDataGenerator::generateAsFlashToSession(
-                AlertType::DANGER,
-                "Gagal mereset password",
-                "Gagal mengupdate password dari akun",
-                $request->session(),
-            );
-            return back();
-        }
-
-        Mail::to($account->email)
-            ->queue(new SendAccountResetPassword(
-                $account,
-                $password
-            ));
-
-        AlertDataGenerator::generateAsFlashToSession(
-            AlertType::SUCCESS,
-            "Berhasil mereset password",
-            "Berhasil mereset password akun dan password telah dikirimkan ke email \"{$account->email}\"",
-            $request->session(),
-        );
-
-        return back();
     }
 }
