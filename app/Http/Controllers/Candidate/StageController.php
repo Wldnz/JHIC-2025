@@ -25,6 +25,7 @@ use DB;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Concurrency;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -630,52 +631,66 @@ class StageController extends Controller
             $candidate,
             $candidateDocumentPaths,
         ) {
+            $candidateDocuments = $candidate
+                ->candidateDocuments()
+                ->where('type', '=', 'usm')
+                ->get();
+
             $candidateDocumentIdsToResetValid = [];
+            $uploadDocumentClosures = [];
 
             foreach ($registrationDocuments as $registrationDocument) {
                 if (!array_key_exists($registrationDocument->id, $candidateDocumentPaths)) {
                     continue;
                 }
 
-                $candidateDocument = CandidateDocument::query()
-                    ->where('candidate_nisn', '=', $candidate->nisn)
+                $candidateDocument = $candidateDocuments
                     ->where('name', '=', $registrationDocument->name)
-                    ->where('type', '=', 'usm')
                     ->first();
 
-                if ($candidateDocument) {
-                    $isUpdated = StorageUtils::uploadCandidateDocument(
-                        $candidateDocument,
-                        Storage::disk('local')->get($candidateDocumentPaths[$registrationDocument->id])
+                $uploadDocumentClosures[] = function () use (
+                    $candidate,
+                    $candidateDocument,
+                    $candidateDocumentPaths,
+                    $registrationDocument,
+                    &$candidateDocumentIdsToResetValid,
+                ) {
+                    if ($candidateDocument) {
+                        $isUpdated = StorageUtils::uploadCandidateDocument(
+                            $candidateDocument,
+                            Storage::disk('local')->get($candidateDocumentPaths[$registrationDocument->id])
+                        );
+                        if (!$isUpdated) {
+                            throw new Exception("Gagal menyimpan data file \"{$registrationDocument->name}\"");
+                        }
+
+                        $candidateDocumentIdsToResetValid[] = $candidateDocument->id;
+                        return;
+                    }
+
+                    $candidateDocument = StorageUtils::uploadNewCandidateDocument(
+                        $candidate,
+                        $registrationDocument->name,
+                        $registrationDocument->mime_types,
+                        Storage::disk('local')->get($candidateDocumentPaths[$registrationDocument->id]),
+                        false,
+                        'usm',
                     );
-                    if (!$isUpdated) {
+                    if (!$candidateDocument) {
                         throw new Exception("Gagal menyimpan data file \"{$registrationDocument->name}\"");
                     }
 
-                    $candidateDocumentIdsToResetValid[] = $candidateDocument->id;
-                    continue;
-                }
-
-                $candidateDocument = StorageUtils::uploadNewCandidateDocument(
-                    $candidate,
-                    $registrationDocument->name,
-                    $registrationDocument->mime_types,
-                    Storage::disk('local')->get($candidateDocumentPaths[$registrationDocument->id]),
-                    false,
-                    'usm',
-                );
-                if (!$candidateDocument) {
-                    throw new Exception("Gagal menyimpan data file \"{$registrationDocument->name}\"");
-                }
-
-                $isUploaded = StorageUtils::uploadCandidateDocument(
-                    $candidateDocument,
-                    Storage::disk('local')->get($candidateDocumentPaths[$registrationDocument->id])
-                );
-                if (!$isUploaded) {
-                    throw new Exception("Gagal menyimpan data file \"{$registrationDocument->name}\"");
-                }
+                    $isUploaded = StorageUtils::uploadCandidateDocument(
+                        $candidateDocument,
+                        Storage::disk('local')->get($candidateDocumentPaths[$registrationDocument->id])
+                    );
+                    if (!$isUploaded) {
+                        throw new Exception("Gagal menyimpan data file \"{$registrationDocument->name}\"");
+                    }
+                };
             }
+
+            Concurrency::run($uploadDocumentClosures);
 
             if ($candidateDocumentIdsToResetValid && count($candidateDocumentIdsToResetValid) > 0) {
                 CandidateDocument::query()
